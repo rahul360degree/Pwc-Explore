@@ -1,0 +1,4 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName">
+    <ltng:require styles="{!$Resource.PedQuickActionWidthCSS}"/>
+    <c:pedOrderRiskMatrix recordId="{!v.recordId}" onclose="{!c.closeQuickAction}" />
+</aura:component>

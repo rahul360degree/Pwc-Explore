@@ -1,0 +1,35 @@
+<template>
+    <td>
+        <lightning-input type="checkbox" checked={isChecked} onchange={handleCheckboxChecked}></lightning-input>
+    </td>
+    <td>
+        <template if:true={assetBenefit.Plan__r}>
+            <div class="slds-truncate">{assetBenefit.Plan__r.Name}</div>
+        </template>
+        <template if:false={assetBenefit.Plan__r}>
+            <div class="slds-truncate">{assetBenefit.Name}</div>
+        </template>
+    </td>
+    <td>
+        <template if:true={assetBenefit.Plan__r}>
+            <div class="slds-truncate">{assetBenefit.Plan__r.Plan_Type__c}</div>
+        </template>
+        <template if:false={assetBenefit.Plan__r}>
+            <div class="slds-truncate">{assetBenefit.Plan_Type__c}</div>
+        </template>
+    </td>
+    <template for:each={columnValues} for:item="column"> 
+        <td key={column}>
+            <template if:true={column.isPicklist}>
+                <div>
+                    <lightning-combobox variant="label-hidden" value={column.value} options={column.options} onchange={handleFieldValueChange} label={column.fieldApiName}></lightning-combobox>
+                </div>
+            </template>
+            <template if:false={column.isPicklist}>
+                <div>
+                    <lightning-input variant="label-hidden" value={column.value} type={column.fieldType} onchange={handleFieldValueChange} label={column.fieldApiName}></lightning-input>
+                </div>
+            </template>
+        </td>
+    </template>
+</template>

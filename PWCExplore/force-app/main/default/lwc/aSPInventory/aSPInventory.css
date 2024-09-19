@@ -1,0 +1,16 @@
+.search-wrapper {
+    margin-bottom: 1rem;
+}
+
+.search-wrapper lightning-input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #d8dde6;
+}
+
+/* Optional: Add styles for focus state */
+.search-wrapper lightning-input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 3px rgba(74, 144, 226, 0.5);
+}

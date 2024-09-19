@@ -1,0 +1,34 @@
+<!--
+  @description       : 
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 10-27-2022
+  @last modified by  : vrajpoot@godrej.com
+-->
+<apex:page standardController="Report" recordSetVar="reports" 
+              tabStyle="Report" sidebar="false" showHeader="false" showChat="false" showQuickActionVfHeader="false">    
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageMessages />
+            <apex:pageBlock >
+                <apex:panelGrid columns="2">
+                    <apex:outputLabel value="View:"/>
+                    <apex:selectList value="{!filterId}" size="1">
+                        <apex:actionSupport event="onchange" rerender="report_table"/>
+                        <apex:selectOptions value="{!listviewoptions}"/>
+                    </apex:selectList>
+                </apex:panelGrid>
+            </apex:pageBlock>
+
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!reports}" var="report" id="report_table">
+                
+                <apex:column >
+                    <apex:outputLink value="/{!report.Id}">{!report.DeveloperName}</apex:outputLink>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

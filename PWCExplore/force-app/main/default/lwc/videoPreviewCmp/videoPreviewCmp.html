@@ -1,0 +1,34 @@
+<template>
+
+    <div if:true={showDiv}>
+        <lightning-card title={currentVideoFile.fileName} icon-name="doctype:video">
+            <div class="slds-grid slds-wrap">
+                <div
+                    class="slds-col slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--12-of-12 slds-p-around_small">
+                    <video width='100%' height="100%" controls="controls">
+                        <source src={currentVideoFile.videoFileUrl} type="video/mp4" />
+                    </video>
+                </div>
+
+                <div
+                    class="slds-col slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--12-of-12 slds-p-around_small slds-align_absolute-center">
+                    <lightning-button-icon size="large" icon-name="utility:back" class="slds-p-around_small"
+                        data-id={currentVideoFile.index} variant="brand" onclick={previousVideo}>
+                    </lightning-button-icon>
+                    <lightning-button-icon size="large" icon-name="utility:forward" class="slds-p-around_small"
+                        data-id={currentVideoFile.index} variant="brand" onclick={nextVideo}>
+                    </lightning-button-icon>
+                </div>
+            </div>
+        </lightning-card>
+    </div>
+
+    <div if:true={loading}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+
+
+
+
+
+</template>

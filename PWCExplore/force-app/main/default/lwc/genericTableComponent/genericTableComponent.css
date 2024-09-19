@@ -1,0 +1,32 @@
+.dataTable-component {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.padding_1rem {
+    padding: 1rem;
+ }
+
+ .component-container {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 2em;
+ }
+
+ .scrollable-child-container {
+    /*position: absolute;*/
+    top: 3em; /* compensation for the navigation bar */
+    left: 2em;
+    right: 2em;
+    bottom: 2em;
+ }
+
+ .search-container {
+    margin-bottom: 2em;
+    margin-left: 2em;
+ }
+
+ .page-number-input {
+    width: 4em;
+ }

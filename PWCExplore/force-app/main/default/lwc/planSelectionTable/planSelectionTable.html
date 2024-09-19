@@ -1,0 +1,29 @@
+<template>
+    <table class="slds-table slds-table_bordered" style="table-layout:fixed">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th scope="col">
+                   Select
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Asset">Plan</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Plans">Plan Type</div>
+                </th>
+                <template for:each={benefitFields} for:item="benefitField"> 
+                    <th key={benefitField.fieldLabel} scope="col">
+                        <div class="slds-truncate" title={benefitField.fieldLabel}>{benefitField.fieldLabel}</div>
+                    </th>
+                </template>
+            </tr>
+        </thead>
+        <tbody>
+            <template if:false={isLoading}>
+                <template for:each={allPlans} for:item="plan">
+                    <c-plan-table-row benefit-fields={benefitFields} key={plan.assetBenefit.Id} asset-benefit={plan.assetBenefit} is-checked={plan.isSelected}></c-plan-table-row>
+                </template>
+            </template>
+        </tbody>
+    </table>
+</template>

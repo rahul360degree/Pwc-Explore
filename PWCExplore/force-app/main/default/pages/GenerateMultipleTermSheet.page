@@ -1,0 +1,230 @@
+<!------------------------------------------------------------------------
+Author:        Jayasurya Gunasekharan
+Company:       Stetig
+Description:   Visualforce page to select master record for Head of terms and display multiple premises on one screen.
+Inputs:        multipremiseTermsheet.vfp, GenerateMultipleTermSheet.vfp, multipremiseTermsheet.apxc
+Last Modified: 07/10/2021
+Test Class:    
+---------------------------------------------------------------------------->
+
+<apex:page renderAs="pdf" showHeader="false" applyHtmlTag="false" controller="multipremiseTermsheet">
+    <html lang="en">
+        
+        <head>
+            <style type = "text/css">
+                @page {
+                size: A4;
+                margin:10px 80px;
+                <apex:outputPanel layout="none" rendered="{!IF(!isApproved, true, false)}">
+                    background: url("{!$Resource.Unapproved_Watermark}") no-repeat center center;
+                </apex:outputPanel>
+                @bottom-center {          
+                content: "Page " counter(page) " of " counter(pages);
+                
+                }
+                }
+                body{
+                margin:0;
+                padding:0;            
+                font-family:"Google Sans", Roboto, arial, sans-serif;
+                font-family: "proxima-nova",sans-serif;
+                font-size:15px;
+                }                
+                
+                @page {
+                margin-top: 100px;
+                margin-bottom: 160px;
+                <apex:outputPanel layout="none" rendered="{!IF(!isApproved, true, false)}">
+                    background: url("{!$Resource.Unapproved_Watermark}") no-repeat center center;
+                </apex:outputPanel>
+                
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                }            
+                .header{
+                position: running(header);
+                }
+                .footer {
+                display:block;
+                position: running(footer);
+                z-index:-999;
+                }            
+                .pagenumber:before {
+                content: counter(page);
+                }
+                .pagecount:before {
+                content: counter(pages);
+                }
+            </style>
+        </head>
+        
+        <body class="body">
+            <apex:form >
+                <!-------------------------------------------- First  Page ----------------------------------------------->
+                <div style="page-break-after:always;">
+                    <table width="100%">
+                        <tr>
+                            <td style="text-align:left;line-height:1.5;">Ref: {!HOT[0].Opportunity__r.Auto_Number__c}</td>
+                            <td style="text-align:right;line-height:1.5;"><apex:outputText value="{0,date, MMMM d',' yyyy}">
+                                <apex:param value="{!TODAY()}" />
+                                </apex:outputText></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:left;line-height:1.5;">To,</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:left;line-height:1.5;">
+                                <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!isIpcContact}">
+                                    Mr./ Ms. {!HOT[0].Opportunity__r.IPC_Contact__r.Name},
+                                </apex:outputPanel>
+                                <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!NOT(isIpcContact)}">
+                                    Mr./ Ms. {!HOT[0].Opportunity__r.Primary_contact__r.Name},
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%">
+                        <tr>
+                            <td style="text-align:left;padding:10px 0px;line-height:1.7;"><b>Sub:</b> <i>Proposal for Office Space at Godrej Business District on Leave &amp; License basis for your
+                                client {!HOT[0].Proposed_Licensee__c}. </i></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:10px 0px;line-height:1.7;">
+                                <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!isIpcContact}">
+                                    Dear {!HOT[0].Opportunity__r.IPC_Contact__r.FirstName},
+                                </apex:outputPanel>
+                                <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!NOT(isIpcContact)}">
+                                    Dear {!HOT[0].Opportunity__r.Primary_contact__r.FirstName},
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:10px 0px;line-height:1.7;">This is with reference to our ongoing discussions and site visit on <apex:outputText value="{0,date, MMMM d',' yyyy}">
+                                <apex:param value="{!TODAY()}" />
+                                </apex:outputText> regarding
+                                Office Space requirement in <b>Mumbai</b>, situated at Godrej Business District, Vikhroli for your client
+                                {!HOT[0].Proposed_Licensee__c}.</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:10px 0px;line-height:1.7;">As per our discussion, you have given us to understand that {!HOT[0].Opportunity__r.Company__c} will fall
+                                under the IT Office Space segment, as per prevailing IT/ITES Policy of Government of
+                                Maharashtra. In this regard we are sharing our proposal.</td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td style="text-align:left;padding:10px 0px;line-height:1.7;">Kindly get in touch with us if you have any further clarifications regarding the same.</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:10px 0px;line-height:1.7;">We look forward to a long-standing partnership with you and {!HOT[0].Proposed_Licensee__c}.</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:3px 0px;line-height:1;">Thanking You,</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:3px 0px;line-height:1;">Yours sincerely,</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:3px 0px;line-height:1;">For Godrej &amp; Boyce Mfg. Co. Ltd.,</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:6px 0px;line-height:1.5;"><br/><br/><br/></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:3px 0px;line-height:1;">Anup Mathew</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:3px 0px;line-height:1;">Sr. Vice President &amp; Business Head</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:3px 0px;line-height:1;">Godrej Construction</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding:3px 0px;line-height:1;"></td>
+                        </tr>
+                    </table>
+                </div>
+                <!-------------------------------------------- Second Page ----------------------------------------------->
+                <div style="page-break-after:always;">
+                    <table style="width:100%">
+                        <tr>
+                            <th style="text-align:right;padding:10px 0px;line-height:1.7;">
+                                <apex:outputText value="{0,date, MMMM d',' yyyy}">
+                                    <apex:param value="{!TODAY()}" />
+                                </apex:outputText>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center;padding:10px 0px;line-height:1.7;">Proposal - Multiple Term Sheet</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;padding:10px 0px;line-height:1.7;"><i><b>Prepared For:</b></i> {!HOT[0].Proposed_Licensee__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;padding:10px 0px;line-height:1.7;"><b><i>Prepared By:</i></b> {!HOT[0].Licensor__c}.</td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="padding:10px 0px;line-height:1.7;"><img src="https://gnb--gcleasedev--c.documentforce.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&versionId=0681s000000yIik&operationContext=DELIVERY&contentId=05T1s000003p13U&page=0&d=/a/1s0000000aLe/WHpQt5rhZsPFCrl2ANCYA0bw5BMmygVJprhV31iJvQQ&oid=00D1s0000000VxO&dpt=null&viewId=" width="630" alt="Banner"/></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:justify;padding:10px 0px;line-height:1.7;">
+                                <b>{!HOT[0].Licensor__c}</b>, known for its Quality,
+                                Integrity and Environmental
+                                commitment, has built a relationship of Trust with its consumers.
+                                <b>{!HOT[0].Building__r.Project__c}</b> at
+                                <b>{!HOT[0].Building__r.Location__c}</b>,
+                                <b>{!HOT[0].Building__r.City__c}</b> is strategically located and offers
+                                office space among its lush green premises.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:justify;padding:10px 0px;line-height:1.7;">
+                                Godrej is committed to delivering
+                                top-of-the-line customer experiences. The clientele at
+                                <b>{!HOT[0].Building__r.Project__c}</b> include both multinationals
+                                and Indian companies with varied requirements from sectors like Information Technology
+                                &amp; Consulting, Information Technology Enabled Services, Retail, Energy &amp;
+                                Power, Travel &amp; Hospitality and others. We are pleased to share with you
+                                our latest audio-visual testimonials from our customers. Please find here the
+                                QR code for the same. 
+                            </td>
+                        </tr>                       
+                    </table>
+                </div>
+                <div style="page-break-after:always;">
+                    <table width="100%" style="border-collapse:collapse;">
+                        <tr> 
+                            <th width="33.3%" style="text-align:center;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                Clauses                                 
+                            </th>
+                            <th width="66.7%" style="text-align:center;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                Premise Option                                
+                            </th>
+                        </tr>
+                    </table>
+                    <apex:repeat value="{!hotHeaderPremiseTermMap}" var="key">
+                        <table width="100%" style="border-collapse:collapse;">
+                            <tr> 
+                                <th width="25%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                    <apex:outputText value="{!key}" escape="false"/>                                   
+                                </th>
+                                <apex:repeat value="{!hotHeaderPremiseTermMap[key]}" var="Mapkey">
+                                    <apex:repeat value="{!hotHeaderPremiseTermMap[key][Mapkey]}" var="Mapkey2">
+                                        <td width="25%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                            <apex:outputText value="{!Mapkey}" escape="false"/>
+                                            <apex:outputText value="{!Mapkey2.Merged_Term_Value__c}" escape="false"/>
+                                        </td>
+                                    </apex:repeat>  
+                                </apex:repeat>
+                            </tr>
+                        </table>
+                    </apex:repeat>       
+                </div>
+            </apex:form>
+        </body> 
+    </html>
+</apex:page>

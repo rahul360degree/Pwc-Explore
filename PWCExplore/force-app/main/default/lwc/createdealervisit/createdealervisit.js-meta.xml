@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__Tab</target>
+        <target>lightning__FlowScreen</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <!-- <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="record" label="Dealer Visit" type="@salesforce/schema/Dealer_Visit__c" role="outputOnly" />
+        </targetConfig>
+    </targetConfigs> -->
+
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <propertyType name="T" extends="SObject" label="Input Type" description="Generic sObject data type used for input sObject properties" />
+            <property name="record" type="{T}" label="input value" />
+            <property name="isRefrigerators" label="Display Refrigerators" type="Boolean" role="inputOnly" />
+            <property name="isWashingMachine" label="Display isWashingMachine" type="Boolean" role="inputOnly" />
+            <property name="isForklift" label="Display Forklift" type="Boolean" role="inputOnly" />
+            <property name="selectedOptions" label="Selected Options" type="String" role="inputOnly" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

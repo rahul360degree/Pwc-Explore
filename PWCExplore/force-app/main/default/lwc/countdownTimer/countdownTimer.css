@@ -1,0 +1,25 @@
+.timerCountClass{
+    font-size: 40px;
+    color: green;
+}
+.timerExpired{
+    font-size: 40px;
+    color: red;
+    text-align: center;
+}
+
+
+.circle {
+    display: flex;
+    justify-content: center;
+    height: 90px;
+    width: 90px;
+    border-radius: 100%;
+    border: none;
+    text-align: center;
+    font-size: x-large;
+    box-shadow: inset 0px 0px 0px 10px #FF8D3A;
+  }
+  .circle div {
+    align-self: center;
+  }

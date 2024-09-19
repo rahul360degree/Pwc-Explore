@@ -1,0 +1,8 @@
+.succesMessage {
+    font-weight: bold;
+    color: green;
+}
+.errorMsg {
+    font-weight: bold;
+    color: red;
+}

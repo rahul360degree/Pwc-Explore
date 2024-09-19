@@ -1,0 +1,59 @@
+<!--
+  @description       : 
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 11-06-2022
+  @last modified by  : vrajpoot@godrej.com
+-->
+<aura:component controller="QuoteApprovalHandler" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <aura:attribute name="recordId" type="Id" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>  
+    <aura:attribute name="approvalStatusMessage" type="String" default= ""/>
+    <aura:attribute name="approvalComment" type="String" default= ""/>
+    <aura:attribute name="quoteRecord" type="Object"/>
+    <aura:attribute name="isInterio_B2B_Finished_Good" type="boolean"/>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      fields="Category__c, RecordType.Name, Approval_Status__c"
+                      targetFields="{!v.quoteRecord}"
+                      />
+    
+    <div>
+        
+        <aura:if isTrue="{! v.isInterio_B2B_Finished_Good}">
+            <aura:html tag="style">
+                .slds-modal__container {
+                width : 95% !important;
+                max-width : 95% !important;
+                }
+                .slds-modal__content{  
+                	overflow-x: scroll !important;  
+     			} 
+                
+            </aura:html>
+            <div > <!--class="slds-docked-composer__body slds-scrollable"-->
+                
+                    <c:interiob2bquotdetail isModal="true" quoteId="{!v.recordId}"  onclosemodal="{! c.closeModal}"></c:interiob2bquotdetail>
+                
+            </div>
+            
+            <aura:set attribute="else">
+                
+                <aura:if isTrue="{!and(!v.approvalStatusMessage, not(and(v.quoteRecord.RecordType.Name=='SSG', v.quoteRecord.Category__c==null)))}"> 
+                    <lightning:textarea value="{!v.approvalComment}" name="approval Text" label="Approval Comment" placeholder="type here..."/>
+                    <br/>
+                    <lightning:button class="slds-float_right" variant="brand" label="Submit" title="Submit for Approval" onclick="{!c.onSubmitForApproval}" />
+                    <aura:set attribute="else">
+                        {!v.approvalStatusMessage}
+                    </aura:set>
+                </aura:if>
+                <aura:if isTrue="{! and(v.quoteRecord.RecordType.Name=='SSG', v.quoteRecord.Category__c==null, (v.quoteRecord.Approval_Status__c=='Approval Required'))}">
+                    Please enter Category field.
+                </aura:if>
+            </aura:set>
+        </aura:if>
+        <lightning:spinner variant="brand" size="medium" aura:id="loadingSpinner" alternativeText="Loading Spinner" class="slds-hide" />
+    </div>
+    
+</aura:component>

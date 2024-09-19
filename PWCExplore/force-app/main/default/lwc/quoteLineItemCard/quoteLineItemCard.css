@@ -1,0 +1,12 @@
+.recordFormContainer {
+    background : white;
+    width: 100%;
+    height: 500px;
+    max-height: 550px;
+    overflow: auto;
+}
+
+.card_notification_container {
+    margin-left: 1em;
+    margin-right: 1em;
+}

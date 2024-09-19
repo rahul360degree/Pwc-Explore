@@ -1,0 +1,1572 @@
+<template>
+    <template if:true={showDetails}>
+        <div class={DivCSSType} style="padding-top:10px;">
+        <div style="font-size:18pt;text-align:center;">
+            <b>Commercial T&amp;C Checklist</b>
+        </div><br/>
+    <table border="1px;">
+           
+            <tr>
+                <th width="5%" style="padding:5px;">
+                    Sr.No.
+                </th>
+                <th width="20%" style="padding:5px;">
+                    Clause
+                </th>                    
+                <th width="32%" style="padding:5px;">
+                    Check
+                </th>
+                <th width="11%" style="padding:5px;">
+                    Y/N/NA
+                </th>
+                <th width="32%" style="padding:5px;">
+                    Agreed T&amp;C
+                </th>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    1
+                </td>
+                <td style="padding:5px;">
+                    Payment Terms
+                </td>
+                <td colspan="3">
+                    <table border="1px" width="75%">
+                        <tr>
+                            <td width="32%" style="padding:5px;">1. Minimum advance 45% </td>
+                            <td width="11%" style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_1_Decision_1__c" value={dataRecord.CCL_Clause_1_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_1_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                            </td>
+                            <td width="32%" style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_1_Input_1__c" value={dataRecord.CCL_Clause_1_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_1_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;">2. All payments net 30 days from date of invoice</td>
+                            <td style="padding:5px;">  
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_1_Decision_2__c" value={dataRecord.CCL_Clause_1_Decision_2__c} onchange={handleInputChange} data-name="CCL_Clause_1_Decision_2__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_1_Input_2__c" value={dataRecord.CCL_Clause_1_Input_2__c} onchange={handleInputChange} data-name="CCL_Clause_1_Input_2__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;">3. Partial delivery and partial invoicing </td>
+                            <td style="padding:5px;">  
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_1_Decision_3__c" value={dataRecord.CCL_Clause_1_Decision_3__c} onchange={handleInputChange} data-name="CCL_Clause_1_Decision_3__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_1_Input_3__c" value={dataRecord.CCL_Clause_1_Input_3__c} onchange={handleInputChange} data-name="CCL_Clause_1_Input_3__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                    </table>
+                </td>                
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    2
+                </td>
+                <td style="padding:5px;">
+                    Bank Guarantees / Corporate guarantees
+                </td>
+                <td colspan="3">
+                    <table border="1px" width="75%">
+                        <tr>
+                            <td width="32%" style="padding:5px;">Corporate guarantee is acceptable</td>
+                            <td width="11%" style="padding:5px;">  
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_2_Decision_1__c" value={dataRecord.CCL_Clause_2_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_2_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td width="32%" style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_2_Input_1__c" value={dataRecord.CCL_Clause_2_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_2_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;">Performance Bonds or Guarantee not to exceed 10%</td>
+                            <td style="padding:5px;">  
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_2_Decision_2__c" value={dataRecord.CCL_Clause_2_Decision_2__c} onchange={handleInputChange} data-name="CCL_Clause_2_Decision_2__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_2_Input_2__c" value={dataRecord.CCL_Clause_2_Input_2__c} onchange={handleInputChange} data-name="CCL_Clause_2_Input_2__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                    </table>
+                </td>       
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    3
+                </td>                    
+                <td style="padding:5px;">
+                    Liquidated Damages
+                </td>
+                <td colspan="3">
+                    <table border="1px" width="75%">
+                        <tr>
+                            <td width="32%" style="padding:5px;"><b>Document</b><br/>
+                                LD on Documentation shall not be applicable.</td>
+                            <td width="11%" style="padding:5px;">   
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_3_Decision_1__c" value={dataRecord.CCL_Clause_3_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_3_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td width="32%" style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_3_Input_1__c" value={dataRecord.CCL_Clause_3_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_3_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;"><b>Equipment Delivery</b><br/>
+                                0.5% of the undelivered part per week to a maximum of 5% of the undelivered part.</td>
+                            <td style="padding:5px;">    
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_3_Decision_2__c" value={dataRecord.CCL_Clause_3_Decision_2__c} onchange={handleInputChange} data-name="CCL_Clause_3_Decision_2__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_3_Input_2__c" value={dataRecord.CCL_Clause_3_Input_2__c} onchange={handleInputChange} data-name="CCL_Clause_3_Input_2__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;"><b>Performance LD</b><br/>
+                                5% of PO value</td>
+                            <td style="padding:5px;">    
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_3_Decision_3__c" value={dataRecord.CCL_Clause_3_Decision_3__c} onchange={handleInputChange} data-name="CCL_Clause_3_Decision_3__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_3_Input_3__c" value={dataRecord.CCL_Clause_3_Input_3__c} onchange={handleInputChange} data-name="CCL_Clause_3_Input_3__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;"><b>Remedial Work</b><br/>
+                                LD on Remedial work shall not be applicable.</td>
+                            <td style="padding:5px;">    
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_3_Decision_4__c" value={dataRecord.CCL_Clause_3_Decision_4__c} onchange={handleInputChange} data-name="CCL_Clause_3_Decision_4__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_3_Input_4__c" value={dataRecord.CCL_Clause_3_Input_4__c} onchange={handleInputChange} data-name="CCL_Clause_3_Input_4__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;"><b>Aggregate LD </b><br/>
+                                5% of PO value</td>
+                            <td style="padding:5px;">   
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_3_Decision_5__c" value={dataRecord.CCL_Clause_3_Decision_5__c} onchange={handleInputChange} data-name="CCL_Clause_3_Decision_5__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_3_Input_5__c" value={dataRecord.CCL_Clause_3_Input_5__c} onchange={handleInputChange} data-name="CCL_Clause_3_Input_5__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                    </table>
+                </td>   
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    4
+                </td>
+                <td style="padding:5px;">
+                    Guarantee Terms
+                </td>
+                <td colspan="3">
+                    <table border="1px;" width="75%">
+                        <tr>
+                            <td width="32%" style="padding:5px;">12 months from the date of commissioning or 18 months from the date of dispatch</td>
+                            <td width="11%" style="padding:5px;">    
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_4_Decision_1__c" value={dataRecord.CCL_Clause_4_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_4_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td width="32%" style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_4_Input_1__c" value={dataRecord.CCL_Clause_4_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_4_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;"><b>Remedial Guarantee</b><br/>
+                                12 months from the date of repair/replacement</td>
+                            <td style="padding:5px;">    
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_4_Decision_2__c" value={dataRecord.CCL_Clause_4_Decision_2__c} onchange={handleInputChange} data-name="CCL_Clause_4_Decision_2__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form></td>
+                            <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_4_Input_2__c" value={dataRecord.CCL_Clause_4_Input_2__c} onchange={handleInputChange} data-name="CCL_Clause_4_Input_2__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                                </td>
+                        </tr>
+                    </table>
+                </td>       
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    5
+                </td>
+                <td style="padding:5px;">
+                    Force Majeure
+                </td>
+                <td style="padding:5px;">
+                    Force majeure should include:<br/>
+                    - act of God or the public enemy<br/>
+                    - expropriation or confiscation of facilities<br/>
+                    - changes in applicable law<br/>
+                    - war, rebellion, civil disturbances - sabotage or riots<br/>
+                    - floods<br/>
+                    - unusually severe weather <br/>
+                    - fires, explosions<br/>
+                    - strikes or any other concerted acts of workers<br/><br/>
+
+                    Force majeure shall be applicable to all our sub-suppliers and sub-contractors.
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_5_Decision_1__c" value={dataRecord.CCL_Clause_5_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_5_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_5_Input_1__c" value={dataRecord.CCL_Clause_5_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_5_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    6
+                </td>
+                <td style="padding:5px;">
+                    Storage
+                </td>
+                <td style="padding:5px;">
+                    "7 days free storage. 
+                    Afterwards 1% of PO value per equipment per week."
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_6_Decision_1__c" value={dataRecord.CCL_Clause_6_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_6_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_6_Input_1__c" value={dataRecord.CCL_Clause_6_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_6_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    7
+                </td>
+                <td style="padding:5px;">
+                    Defect Liability
+                </td>
+                <td style="padding:5px;">
+                    10% of the PO value 
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_7_Decision_1__c" value={dataRecord.CCL_Clause_7_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_7_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_7_Input_1__c" value={dataRecord.CCL_Clause_7_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_7_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    8
+                </td>
+                <td style="padding:5px;">
+                    Cancellation clause
+                </td>
+                <td style="padding:5px;">
+                    "Early Termination Fee: Between Zero Date to the end of 1st Month (0 – 30 Days) : 7.5% of the Order Value In 2nd Month : (31 – 60 days) 25% of the Order Value In 3rd Month : (61 – 90 days) 40% of the Order Value In 4th Month : (91 – 120days) 55% of the Order Value In 5th Month: (121 – 150 days) 70% of the Order Value In 6th Month : (151 – 180 days) 85% of the Order Value Between beginning of 7th Month to the contractual delivery date (180 - ) days: 100% of the Order Value  "
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_8_Decision_1__c" value={dataRecord.CCL_Clause_8_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_8_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_8_Input_1__c" value={dataRecord.CCL_Clause_8_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_8_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    9
+                </td>
+                <td style="padding:5px;">
+                    Suspension
+                </td>
+                <td style="padding:5px;">
+                    Under no circumstances shall the suspension exceed 2 in no. and in aggregate to a max 30 days in entirety. In case the suspension exceeds above 2 conditions it should be treated as termination for convenience
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_9_Decision_1__c" value={dataRecord.CCL_Clause_9_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_9_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_9_Input_1__c" value={dataRecord.CCL_Clause_9_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_9_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    10
+                </td>
+                <td style="padding:5px;">
+                    PO amendment
+                </td>
+                <td style="padding:5px;">
+                    Within 10 days from agreed change order statement.
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_10_Decision_1__c" value={dataRecord.CCL_Clause_10_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_10_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_10_Input_1__c" value={dataRecord.CCL_Clause_10_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_10_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    11
+                </td>
+                <td style="padding:5px;">
+                    Governing Law &amp; Arbitration
+                </td>
+                <td style="padding:5px;">
+                    "Law : England &amp; Wales / India / Texas
+                    Place of arbitration: London / Singapore "
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_11_Decision_1__c" value={dataRecord.CCL_Clause_11_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_11_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                               <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_11_Input_1__c" value={dataRecord.CCL_Clause_11_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_11_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    12
+                </td>
+                <td style="padding:5px;">
+                    Insurance
+                </td>
+                <td style="padding:5px;">
+                    For equipment against any damage while in Godrej’s premises.
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_12_Decision_1__c" value={dataRecord.CCL_Clause_12_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_12_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_12_Input_1__c" value={dataRecord.CCL_Clause_12_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_12_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    13
+                </td>
+                <td style="padding:5px;">
+                    Limitation of Liability
+                </td>
+                <td style="padding:5px;">
+                    Limited to PO value
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_13_Decision_1__c" value={dataRecord.CCL_Clause_13_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_13_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_13_Input_1__c" value={dataRecord.CCL_Clause_13_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_13_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    14
+                </td>
+                <td style="padding:5px;">
+                    Consequential damages
+                </td>
+                <td style="padding:5px;">
+                    Neither Party shall be liable to the other whether by way of indemnity or in contract or  in tort (including negligence), for any loss of revenue, profit, anticipated profit, use, production, product, productivity, facility downtime, contract, business opportunity or indirect or consequential damages of any nature.
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_14_Decision_1__c" value={dataRecord.CCL_Clause_14_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_14_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_14_Input_1__c" value={dataRecord.CCL_Clause_14_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_14_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    15
+                </td>
+                <td style="padding:5px;">
+                    Export Control & Non Authorized Use / End Use Certificate
+                </td>
+                <td style="padding:5px;">
+                    "SCOMET license and restriction of non authorized use of the equipment.
+                    Sales to make sure to collect End User Certificate approval from buyer before PO"
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_15_Decision_1__c" value={dataRecord.CCL_Clause_15_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_15_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_15_Input_1__c" value={dataRecord.CCL_Clause_15_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_15_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    16
+                </td>
+                <td style="padding:5px;">
+                    Taxes
+                </td>
+                <td style="padding:5px;">
+                    Sales Taxes outside India
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_16_Decision_1__c" value={dataRecord.CCL_Clause_16_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_16_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_16_Input_1__c" value={dataRecord.CCL_Clause_16_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_16_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    17
+                </td>
+                <td style="padding:5px;">
+                    Transportation
+                </td>
+                <td style="padding:5px;">
+                    Transportation charges along with GST to be paid as mentioned in PO. No freight bills of transporter will be submitted.
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_17_Decision_1__c" value={dataRecord.CCL_Clause_17_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_17_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_17_Input_1__c" value={dataRecord.CCL_Clause_17_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_17_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    18
+                </td>
+                <td style="padding:5px;">
+                    Final documentation Submission in Soft Copy format
+                </td>
+                <td style="padding:5px;">
+                    As a part of green initiative, we are moving towards digitization and undertaking this drive . Main agenda is to save paper and contribute towards protection of environment by reduction of usage of papers . Considering the same , we shall 
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_18_Decision_1__c" value={dataRecord.CCL_Clause_18_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_18_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_18_Input_1__c" value={dataRecord.CCL_Clause_18_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_18_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    19
+                </td>
+                <td style="padding:5px;">
+                    Back Charges
+                </td>
+                <td style="padding:5px;">
+                    Back charges clause (only DIRECT)
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_19_Decision_1__c" value={dataRecord.CCL_Clause_19_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_19_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_19_Input_1__c" value={dataRecord.CCL_Clause_19_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_19_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    20
+                </td>
+                <td style="padding:5px;">
+                    INCOTERMS
+                </td>
+                <td style="padding:5px;">
+                    Order of preference - EXWORKS, FAS, FOB, DAP, DDP 
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_20_Decision_1__c" value={dataRecord.CCL_Clause_20_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_20_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_20_Input_1__c" value={dataRecord.CCL_Clause_20_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_20_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    21
+                </td>
+                <td style="padding:5px;">
+                    Payments covered under financial instruments (LC etc.)
+                </td>
+                <td style="padding:5px;">
+                    Preferred LC. 
+                </td>
+                <td style="padding:5px;">    
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="CCL_Clause_21_Decision_1__c" value={dataRecord.CCL_Clause_21_Decision_1__c} onchange={handleInputChange} data-name="CCL_Clause_21_Decision_1__c" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;"> 
+                                <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="CCL_Clause_21_Input_1__c" value={dataRecord.CCL_Clause_21_Input_1__c} onchange={handleInputChange} data-name="CCL_Clause_21_Input_1__c" variant="label-hidden" ></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>      
+            </table>
+
+        <br/><br/><br/><br/>
+        <div style="font-size:18pt;text-align:center;">
+            <b>Godrej & Boyce Mfg.Co.Ltd<br/>
+                Stage IIA - Go Nogo Decision Matrix<br/>
+                (Stage 2A is Risk Matrik to be done before actual bidding for a project)<br/></b>
+        </div>
+        <br/>
+
+        <table border="1px;">
+            <tr style="background-color: rgb(142, 169, 219);">
+                <td style="padding:5px;">
+                    <b>Sub-Heads</b>
+                </td>
+                <td style="padding:5px;">
+                    <b>Risk</b>
+                </td>
+                <td style="padding:5px;">
+                    <b>Impact</b>
+                </td>
+                <td style="padding:5px;">
+                    <b>Broad Measures</b>
+                </td>
+                <td colspan="2" style="padding:5px;">
+                    <b>How risky is this if left uncontrolled?	</b>
+                </td>
+                <td style="padding:5px;">
+                    &nbsp;
+                </td>
+                <td style="padding:5px;">
+                    <b>Any plans to mitigate risk?</b>
+                </td>
+                <td colspan="2" style="padding:5px;">
+                    <b>What level of risk remains if mitigated?	</b>
+                </td>
+                <td style="padding:5px;">
+                    &nbsp;
+                </td>
+                <td style="padding:5px;">
+                    <b>Do we need additional controls?</b>
+                </td>      
+            </tr>
+            <tr style="background-color: rgb(142, 169, 219);">
+                <td width="9%" style="padding:5px;">
+                    &nbsp;
+                </td>
+                <td width="15%" style="padding:5px;">
+                    <b>Our Assessment of Risk</b>
+                </td>
+                <td width="15%" style="padding:5px;">
+                    <b>What would be the result of this risk?</b>
+                </td>
+                <td width="15%" style="padding:5px;">
+                    <b>What are the measure to determine the level of risk</b>
+                </td>
+                <td width="3%" style="padding:5px;">
+                    <b>Likelihood</b>
+                </td>
+                <td width="3%" style="padding:5px;">
+                    <b>Consequence</b>
+                </td>
+                <td width="2%" style="padding:5px;">
+                    <b>Risk rating (uncontrolled)</b>
+                </td>
+                <td width="15%" style="padding:5px;">
+                    <b>What is in place to reduce the risk?</b>
+                </td>
+                <td width="3%" style="padding:5px;">
+                    <b>Likelihood</b>
+                </td>
+                <td width="3%" style="padding:5px;">
+                    <b>Consequence</b>
+                </td>
+                <td width="2%" style="padding:5px;">
+                    <b>Risk rating (controlled)</b>
+                </td>
+                <td width="15%" style="padding:5px;">
+                    <b>What else could we do to reduce this risk?</b>
+                </td>               
+            </tr>   
+             <tr>
+                <td style="padding:5px;">
+                    Transport of ODC Cargo
+                </td>
+                <td style="padding:5px;">
+                    Project requires transportation of ODC which may need road modification permission for Railway crossing, River Crossing, Transmission lines crossing etc
+                </td>
+                <td style="padding:5px;">
+                    Time and Cost escalation
+                </td>
+                <td style="padding:5px;">
+                    Long time in obtaining the required perissions, non-availabilty of road survey report.
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_1_Likelihood_1__c" value={dataRecord.RM_Table_1_Risk_1_Likelihood_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_1_Likelihood_1__c" data-likelihood="RM_Table_1_Risk_1_Likelihood_1__c" data-consequence="RM_Table_1_Risk_1_Consequence_1__c" data-riskrating="RMTable1Risk1Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_1_Consequence_1__c" value={dataRecord.RM_Table_1_Risk_1_Consequence_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_1_Consequence_1__c" data-likelihood="RM_Table_1_Risk_1_Likelihood_1__c" data-consequence="RM_Table_1_Risk_1_Consequence_1__c" data-riskrating="RMTable1Risk1Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk1Rating1}">
+                            <b>{RiskRating.RMTable1Risk1Rating1}</b>
+                </td>
+                <td style="padding:5px;">
+                      <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_1_Input_1__c" value={dataRecord.RM_Table_1_Risk_1_Input_1__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_1_Input_1__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_1_Likelihood_2__c" value={dataRecord.RM_Table_1_Risk_1_Likelihood_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_1_Likelihood_2__c" data-likelihood="RM_Table_1_Risk_1_Likelihood_2__c" data-consequence="RM_Table_1_Risk_1_Consequence_2__c" data-riskrating="RMTable1Risk1Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_1_Consequence_2__c" value={dataRecord.RM_Table_1_Risk_1_Consequence_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_1_Consequence_2__c" data-likelihood="RM_Table_1_Risk_1_Likelihood_2__c" data-consequence="RM_Table_1_Risk_1_Consequence_2__c" data-riskrating="RMTable1Risk1Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                 <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk1Rating2}">
+                            <b>{RiskRating.RMTable1Risk1Rating2}</b>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_1_Input_2__c" value={dataRecord.RM_Table_1_Risk_1_Input_2__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_1_Input_2__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>         
+            <tr>
+                <td style="padding:5px;">
+                    Contract
+                </td>
+                <td style="padding:5px;">
+                    Any price escalation due to scope variation as per the contract cannot be passed on to the Client
+                </td>
+                <td style="padding:5px;">
+                    Any price increase in future will impact the profitability
+                </td>
+                <td style="padding:5px;">
+                    NA
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_2_Likelihood_1__c" value={dataRecord.RM_Table_1_Risk_2_Likelihood_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_2_Likelihood_1__c" data-likelihood="RM_Table_1_Risk_2_Likelihood_1__c" data-consequence="RM_Table_1_Risk_2_Consequence_1__c" data-riskrating="RMTable1Risk2Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_2_Consequence_1__c" value={dataRecord.RM_Table_1_Risk_2_Consequence_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_2_Consequence_1__c" data-likelihood="RM_Table_1_Risk_2_Likelihood_1__c" data-consequence="RM_Table_1_Risk_2_Consequence_1__c" data-riskrating="RMTable1Risk2Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk2Rating1}">
+                            <b>{RiskRating.RMTable1Risk2Rating1}</b>
+                </td>
+                <td style="padding:5px;">
+                      <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_2_Input_1__c" value={dataRecord.RM_Table_1_Risk_2_Input_1__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_2_Input_1__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_2_Likelihood_2__c" value={dataRecord.RM_Table_1_Risk_2_Likelihood_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_2_Likelihood_2__c" data-likelihood="RM_Table_1_Risk_2_Likelihood_2__c" data-consequence="RM_Table_1_Risk_2_Consequence_2__c" data-riskrating="RMTable1Risk2Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_2_Consequence_2__c" value={dataRecord.RM_Table_1_Risk_2_Consequence_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_2_Consequence_2__c" data-likelihood="RM_Table_1_Risk_2_Likelihood_2__c" data-consequence="RM_Table_1_Risk_2_Consequence_2__c" data-riskrating="RMTable1Risk2Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                 <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk2Rating2}">
+                            <b>{RiskRating.RMTable1Risk2Rating2}</b>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_2_Input_2__c" value={dataRecord.RM_Table_1_Risk_2_Input_2__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_2_Input_2__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Contract
+                </td>
+                <td style="padding:5px;">
+                    Unrealistic delivery time
+                </td>
+                <td style="padding:5px;">
+                    Financial Impact
+                </td>
+                <td style="padding:5px;">
+                    Delivery time required by the contract is very aggressive as compared to the standard delivery time
+                </td>
+               <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_3_Likelihood_1__c" value={dataRecord.RM_Table_1_Risk_3_Likelihood_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_3_Likelihood_1__c" data-likelihood="RM_Table_1_Risk_3_Likelihood_1__c" data-consequence="RM_Table_1_Risk_3_Consequence_1__c" data-riskrating="RMTable1Risk3Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_3_Consequence_1__c" value={dataRecord.RM_Table_1_Risk_3_Consequence_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_3_Consequence_1__c" data-likelihood="RM_Table_1_Risk_3_Likelihood_1__c" data-consequence="RM_Table_1_Risk_3_Consequence_1__c" data-riskrating="RMTable1Risk3Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk3Rating1}">
+                            <b>{RiskRating.RMTable1Risk3Rating1}</b>
+                </td>
+                <td style="padding:5px;">
+                      <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_3_Input_1__c" value={dataRecord.RM_Table_1_Risk_3_Input_1__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_3_Input_1__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_3_Likelihood_2__c" value={dataRecord.RM_Table_1_Risk_3_Likelihood_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_3_Likelihood_2__c" data-likelihood="RM_Table_1_Risk_3_Likelihood_2__c" data-consequence="RM_Table_1_Risk_3_Consequence_2__c" data-riskrating="RMTable1Risk3Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_3_Consequence_2__c" value={dataRecord.RM_Table_1_Risk_3_Consequence_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_3_Consequence_2__c" data-likelihood="RM_Table_1_Risk_3_Likelihood_2__c" data-consequence="RM_Table_1_Risk_3_Consequence_2__c" data-riskrating="RMTable1Risk3Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                 <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk3Rating2}">
+                            <b>{RiskRating.RMTable1Risk3Rating2}</b>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_3_Input_2__c" value={dataRecord.RM_Table_1_Risk_3_Input_2__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_3_Input_2__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Client
+                </td>
+                <td style="padding:5px;">
+                    Past record of Client in deducting LD for the delays
+                </td>
+                <td style="padding:5px;">
+                    Financial Impact
+                </td>
+                <td style="padding:5px;">
+                    NA
+                </td>
+               <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_4_Likelihood_1__c" value={dataRecord.RM_Table_1_Risk_4_Likelihood_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_4_Likelihood_1__c" data-likelihood="RM_Table_1_Risk_4_Likelihood_1__c" data-consequence="RM_Table_1_Risk_4_Consequence_1__c" data-riskrating="RMTable1Risk4Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_4_Consequence_1__c" value={dataRecord.RM_Table_1_Risk_4_Consequence_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_4_Consequence_1__c" data-likelihood="RM_Table_1_Risk_4_Likelihood_1__c" data-consequence="RM_Table_1_Risk_4_Consequence_1__c" data-riskrating="RMTable1Risk4Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk4Rating1}">
+                            <b>{RiskRating.RMTable1Risk4Rating1}</b>
+                </td>
+                <td style="padding:5px;">
+                      <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_4_Input_1__c" value={dataRecord.RM_Table_1_Risk_4_Input_1__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_4_Input_1__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_4_Likelihood_2__c" value={dataRecord.RM_Table_1_Risk_4_Likelihood_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_4_Likelihood_2__c" data-likelihood="RM_Table_1_Risk_4_Likelihood_2__c" data-consequence="RM_Table_1_Risk_4_Consequence_2__c" data-riskrating="RMTable1Risk4Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_4_Consequence_2__c" value={dataRecord.RM_Table_1_Risk_4_Consequence_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_4_Consequence_2__c" data-likelihood="RM_Table_1_Risk_4_Likelihood_2__c" data-consequence="RM_Table_1_Risk_4_Consequence_2__c" data-riskrating="RMTable1Risk4Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                 <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk4Rating2}">
+                            <b>{RiskRating.RMTable1Risk4Rating2}</b>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_4_Input_2__c" value={dataRecord.RM_Table_1_Risk_4_Input_2__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_4_Input_2__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Financial
+                </td>
+                <td style="padding:5px;">
+                    Exchange rate fluctuations
+                </td>
+                <td style="padding:5px;">
+                    Financial Impact
+                </td>
+                 <td style="padding:5px;">
+                    Any impact to margins due to exchange flucations
+                </td>
+               <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_5_Likelihood_1__c" value={dataRecord.RM_Table_1_Risk_5_Likelihood_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_5_Likelihood_1__c" data-likelihood="RM_Table_1_Risk_5_Likelihood_1__c" data-consequence="RM_Table_1_Risk_5_Consequence_1__c" data-riskrating="RMTable1Risk5Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_5_Consequence_1__c" value={dataRecord.RM_Table_1_Risk_5_Consequence_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_5_Consequence_1__c" data-likelihood="RM_Table_1_Risk_5_Likelihood_1__c" data-consequence="RM_Table_1_Risk_5_Consequence_1__c" data-riskrating="RMTable1Risk5Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk5Rating1}">
+                            <b>{RiskRating.RMTable1Risk5Rating1}</b>
+                </td>
+                <td style="padding:5px;">
+                      <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_5_Input_1__c" value={dataRecord.RM_Table_1_Risk_5_Input_1__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_5_Input_1__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_5_Likelihood_2__c" value={dataRecord.RM_Table_1_Risk_5_Likelihood_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_5_Likelihood_2__c" data-likelihood="RM_Table_1_Risk_5_Likelihood_2__c" data-consequence="RM_Table_1_Risk_5_Consequence_2__c" data-riskrating="RMTable1Risk5Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_5_Consequence_2__c" value={dataRecord.RM_Table_1_Risk_5_Consequence_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_5_Consequence_2__c" data-likelihood="RM_Table_1_Risk_5_Likelihood_2__c" data-consequence="RM_Table_1_Risk_5_Consequence_2__c" data-riskrating="RMTable1Risk5Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                 <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk5Rating2}">
+                            <b>{RiskRating.RMTable1Risk5Rating2}</b>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_5_Input_2__c" value={dataRecord.RM_Table_1_Risk_5_Input_2__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_5_Input_2__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Financial
+                </td>
+                <td style="padding:5px;">
+                    Delay in release of payment over and over the credit days allowed
+                </td>
+                <td style="padding:5px;">
+                    Financial Impact
+                </td>
+                <td style="padding:5px;">
+                    Payment period more that 90 days to be risky
+                </td>
+               <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_6_Likelihood_1__c" value={dataRecord.RM_Table_1_Risk_6_Likelihood_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_6_Likelihood_1__c" data-likelihood="RM_Table_1_Risk_6_Likelihood_1__c" data-consequence="RM_Table_1_Risk_6_Consequence_1__c" data-riskrating="RMTable1Risk6Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_6_Consequence_1__c" value={dataRecord.RM_Table_1_Risk_6_Consequence_1__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_6_Consequence_1__c" data-likelihood="RM_Table_1_Risk_6_Likelihood_1__c" data-consequence="RM_Table_1_Risk_6_Consequence_1__c" data-riskrating="RMTable1Risk6Rating1" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk6Rating1}">
+                            <b>{RiskRating.RMTable1Risk6Rating1}</b>
+                </td>
+                <td style="padding:5px;">
+                      <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_6_Input_1__c" value={dataRecord.RM_Table_1_Risk_6_Input_1__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_6_Input_1__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                     <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_6_Likelihood_2__c" value={dataRecord.RM_Table_1_Risk_6_Likelihood_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_6_Likelihood_2__c" data-likelihood="RM_Table_1_Risk_6_Likelihood_2__c" data-consequence="RM_Table_1_Risk_6_Consequence_2__c" data-riskrating="RMTable1Risk6Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_6_Consequence_2__c" value={dataRecord.RM_Table_1_Risk_6_Consequence_2__c} onchange={handleRMTable1LikeConChange} data-name="RM_Table_1_Risk_6_Consequence_2__c" data-likelihood="RM_Table_1_Risk_6_Likelihood_2__c" data-consequence="RM_Table_1_Risk_6_Consequence_2__c" data-riskrating="RMTable1Risk6Rating2" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                 <td style="padding:5px;text-align:center;" class = "{RiskRating.RMTable1Risk6Rating2}">
+                            <b>{RiskRating.RMTable1Risk6Rating2}</b>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_1_Risk_6_Input_2__c" value={dataRecord.RM_Table_1_Risk_6_Input_2__c} onchange={handleInputChange} data-name="RM_Table_1_Risk_6_Input_2__c" variant="label-hidden"></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+            </tr>           
+        </table>
+
+         <br/><br/>
+         <div style="width:20%">
+             <table border="1px;">
+             <tr>
+                <td width="50%" style="padding:5px;text-align:center;">
+                    <b>Risk Score</b>
+                </td>
+                <td width="50%" style="padding:5px;text-align:center;">
+                    <b>{RiskRating.riskScore}%</b>
+                </td>
+             </tr>
+         </table>
+         </div>
+        
+        <br/><br/>
+        <div style="font-size:14pt;">
+            <b>ABAC Poilcy Score<br/></b>
+        </div><br/>
+
+        <table border="1px;">
+            <tr style="background-color: rgb(142, 169, 219);">
+                <td style="padding:5px;text-align:center;">
+                    <b>Nature of Risk</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <b>Criteria</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <b>Criteria Weight</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <b>Sub Criteria</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                   <b>Sub Criteria Weight</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                   <b>Sub Criteria</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="20%" style="padding:5px;">
+                    Location 
+                </td>
+                <td width="20%" style="padding:5px;">
+                    Geographic location of Partner
+                </td>
+                <td width="10%" style="padding:5px;text-align:center;">
+                   25%
+                </td>
+                <td width="20%" style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_2_Sub_Criteria_1__c" value={dataRecord.RM_Table_2_Sub_Criteria_1__c} onchange={handleRMTable2CriteriaChange} data-name="RM_Table_2_Sub_Criteria_1__c" variant="label-hidden"  required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td width="10%" style="padding:5px;text-align:center;">
+                    {RiskRating.RMTable2SubCriteriaWeight1}%
+                </td>
+                <td width="20%" style="padding:5px;">
+                    Red flag countries - OFAC list, Refer Trace international classification
+                </td>                      
+            </tr>   
+             <tr>
+                <td style="padding:5px;">
+                    Nature of Business
+                </td>
+                <td style="padding:5px;">
+                    Products/Service in any any restricted list or not
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    40%
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_2_Sub_Criteria_2__c" value={dataRecord.RM_Table_2_Sub_Criteria_2__c} onchange={handleRMTable2CriteriaChange} data-name="RM_Table_2_Sub_Criteria_2__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    {RiskRating.RMTable2SubCriteriaWeight2}%
+                </td>
+                <td style="padding:5px;">
+                    SCOMET list - Foreign Trade(DGFT), Dual Use Export restriction- refer MTCR,  AG, WAI,  NSG classification.
+                </td> 
+            </tr>         
+            <tr>
+                <td style="padding:5px;">
+                    Scale of Business
+                </td>
+                <td style="padding:5px;">
+                    Contract Value of the tender
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    35%
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                                    <lightning-input-field field-name="RM_Table_2_Sub_Criteria_3__c" value={dataRecord.RM_Table_2_Sub_Criteria_3__c} onchange={handleRMTable2CriteriaChange} data-name="RM_Table_2_Sub_Criteria_3__c" variant="label-hidden" required></lightning-input-field>
+                                 </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    {RiskRating.RMTable2SubCriteriaWeight3}%
+                </td>
+                <td style="padding:5px;">
+                    Internal Estimates
+                </td> 
+            </tr>
+        </table>
+
+         <br/><br/>
+         <div style="width:20%">
+             <table border="1px;">
+             <tr>
+                <td width="50%" style="padding:5px;text-align:center;">
+                    <b>Overall Score</b>
+                </td>
+                <td width="50%" style="padding:5px;text-align:center;">
+                    <b>{RiskRating.RMTable2OverallScore}%</b>
+                </td>
+             </tr>
+             <tr>
+                <td width="50%" style="padding:5px;text-align:center;">
+                    <b>Risk Profile</b>
+                </td>
+                <td width="50%" style="padding:5px;text-align:center;">
+                    <b>{RiskRating.RMTable2RiskProfile}</b>
+                </td>
+             </tr>
+         </table>
+         </div>
+
+        <br/><br/><br/><br/>
+        <div style="font-size:18pt;text-align:center;">
+            <b>Godrej & Boyce Mfg.Co.Ltd<br/>
+                Stage II - Go Nogo Decision Matrix<br/>
+                (Stage 2 is binary decision matrix before actual bidding for a project and will be active only if Stage 1 Final decision is to Proceed)<br/></b>
+        </div>
+        <br/>
+        <table border="1px;">
+            <tr style="background-color: rgb(142, 169, 219);">
+                <td width="18%" style="padding:5px;text-align:center;">
+                    <b>Parameter</b>
+                </td>
+                <td width="16%" style="padding:5px;text-align:center;">
+                    <b>Description</b>
+                </td>
+                <td width="9%" style="padding:5px;text-align:center;">
+                    <b>Measure</b>
+                </td>
+                <td width="9%" style="padding:5px;text-align:center;">
+                    <b>Risk Levels</b>
+                </td>
+                <td width="9%" style="padding:5px;text-align:center;">
+                   <b>Escalation to</b>
+                </td>
+                <td width="13%" style="padding:5px;text-align:center;">
+                   <b>Terms in the draft received</b>
+                </td>
+                <td width="13%" style="padding:5px;text-align:center;">
+                   <b>Possible Mitigation</b>
+                </td>
+                <td width="13%" style="padding:5px;text-align:center;">
+                   <b>Any other comments</b>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Due Diligence verified in CLM 
+                </td>
+                <td style="padding:5px;">
+                    Legal compliance
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_1_Measure__c" value={dataRecord.DM_Table_1_Parameter_1_Measure__c} onchange={handleDMTable1ParameterMeasureChange1} data-name="DM_Table_1_Parameter_1_Measure__c" data-risklevel="DMTable1RiskLevel1" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class = "{RiskRating.DMTable1RiskLevel1}">
+                            <b>{RiskRating.DMTable1RiskLevel1}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    Regional Sales Head 
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_1_Input_1__c" value={dataRecord.DM_Table_1_Parameter_1_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_1_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_1_Input_2__c" value={dataRecord.DM_Table_1_Parameter_1_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_1_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_1_Input_3__c" value={dataRecord.DM_Table_1_Parameter_1_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_1_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>                      
+            </tr>   
+            <tr>
+                <td style="padding:5px;">
+                    Score on Risk Matrix is more that 50%
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    {RiskRating.riskScore}%
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_2_Measure__c" value={dataRecord.DM_Table_1_Parameter_2_Measure__c} onchange={handleDMTable1ParameterMeasureChange2} data-name="DM_Table_1_Parameter_2_Measure__c" data-risklevel="DMTable1RiskLevel2" variant="label-hidden" disabled></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel2}">
+                            <b>{RiskRating.DMTable1RiskLevel2}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    Regional Sales Head
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_2_Input_1__c" value={dataRecord.DM_Table_1_Parameter_2_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_2_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_2_Input_2__c" value={dataRecord.DM_Table_1_Parameter_2_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_2_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_2_Input_3__c" value={dataRecord.DM_Table_1_Parameter_2_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_2_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr> 
+            <tr>
+                <td style="padding:5px;">
+                    Score on ABAC Policy more than 30%?
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    {RiskRating.RMTable2OverallScore}%
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_3_Measure__c" value={dataRecord.DM_Table_1_Parameter_3_Measure__c} onchange={handleDMTable1ParameterMeasureChange2} data-name="DM_Table_1_Parameter_3_Measure__c" data-risklevel="DMTable1RiskLevel3" variant="label-hidden" disabled ></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel3}">
+                            <b>{RiskRating.DMTable1RiskLevel3}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    Regional Sales Head
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_3_Input_1__c" value={dataRecord.DM_Table_1_Parameter_3_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_3_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_3_Input_2__c" value={dataRecord.DM_Table_1_Parameter_3_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_3_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_3_Input_3__c" value={dataRecord.DM_Table_1_Parameter_3_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_3_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    New customer with no past experience
+                </td>
+                <td style="padding:5px;">
+                    Customer's credit worthiness, financial stability, size of organisation - Low Risk (Yes) / Moderate & High Risk (No)
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_4_Measure__c" value={dataRecord.DM_Table_1_Parameter_4_Measure__c} onchange={handleDMTable1ParameterMeasureChange1} data-name="DM_Table_1_Parameter_4_Measure__c" data-risklevel="DMTable1RiskLevel4" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel4}">
+                            <b>{RiskRating.DMTable1RiskLevel4}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    Regional Sales Head
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_4_Input_1__c" value={dataRecord.DM_Table_1_Parameter_4_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_4_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_4_Input_2__c" value={dataRecord.DM_Table_1_Parameter_4_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_4_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_4_Input_3__c" value={dataRecord.DM_Table_1_Parameter_4_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_4_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Restriciton of Liabilites exceeds DLP period ?
+                </td>
+                <td style="padding:5px;">
+                    Is the liability under the contract does exceed DLP period
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_5_Measure__c" value={dataRecord.DM_Table_1_Parameter_5_Measure__c} onchange={handleDMTable1ParameterMeasureChange2} data-name="DM_Table_1_Parameter_5_Measure__c" data-risklevel="DMTable1RiskLevel5" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel5}">
+                            <b>{RiskRating.DMTable1RiskLevel5}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    Head S&amp;M
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_5_Input_1__c" value={dataRecord.DM_Table_1_Parameter_5_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_5_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_5_Input_2__c" value={dataRecord.DM_Table_1_Parameter_5_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_5_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_5_Input_3__c" value={dataRecord.DM_Table_1_Parameter_5_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_5_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Is G&B joinly and severelly liable for acts of other contractors of client?
+                </td>
+                <td style="padding:5px;">
+                    NA
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_6_Measure__c" value={dataRecord.DM_Table_1_Parameter_6_Measure__c} onchange={handleDMTable1ParameterMeasureChange2} data-name="DM_Table_1_Parameter_6_Measure__c" data-risklevel="DMTable1RiskLevel6" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel6}">
+                            <b>{RiskRating.DMTable1RiskLevel6}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    Head S&amp;M
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_6_Input_1__c" value={dataRecord.DM_Table_1_Parameter_6_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_6_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_6_Input_2__c" value={dataRecord.DM_Table_1_Parameter_6_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_6_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_6_Input_3__c" value={dataRecord.DM_Table_1_Parameter_6_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_6_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Is the Governing Law as per Indian Law<br/>
+                    OR<br/>
+                    The governing Law is not Indian law but Tender Value below INR 50 crs and the governing Law is as per English Law?
+                </td>
+                <td style="padding:5px;">
+                    Low risk - <br/>
+                    1. If Governing law is as per Indian Law <br/>
+                    2. Tender Value below INR 50 crs and governing law is as per English Law.<br/><br/>
+
+                    High Risk - <br/>
+                    If it is not as per the above (Non-India and Non -English Laws or English law but Tender Value more than INR 50 crs)
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_7_Measure__c" value={dataRecord.DM_Table_1_Parameter_7_Measure__c} onchange={handleDMTable1ParameterMeasureChange1} data-name="DM_Table_1_Parameter_7_Measure__c" data-risklevel="DMTable1RiskLevel7" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel7}">
+                            <b>{RiskRating.DMTable1RiskLevel7}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    Head S&amp;M
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_7_Input_1__c" value={dataRecord.DM_Table_1_Parameter_7_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_7_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_7_Input_2__c" value={dataRecord.DM_Table_1_Parameter_7_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_7_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_7_Input_3__c" value={dataRecord.DM_Table_1_Parameter_7_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_7_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Are we assigning any IP rights under the contract?
+                </td>
+                <td style="padding:5px;">
+                    NA
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_8_Measure__c" value={dataRecord.DM_Table_1_Parameter_8_Measure__c} onchange={handleDMTable1ParameterMeasureChange2} data-name="DM_Table_1_Parameter_8_Measure__c" data-risklevel="DMTable1RiskLevel8" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel8}">
+                            <b>{RiskRating.DMTable1RiskLevel8}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    Head S&amp;M
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_8_Input_1__c" value={dataRecord.DM_Table_1_Parameter_8_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_8_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_8_Input_2__c" value={dataRecord.DM_Table_1_Parameter_8_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_8_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_8_Input_3__c" value={dataRecord.DM_Table_1_Parameter_8_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_8_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Is the liability unlimited under the charge back clause?
+                </td>
+                <td style="padding:5px;">
+                    NA
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_9_Measure__c" value={dataRecord.DM_Table_1_Parameter_9_Measure__c} onchange={handleDMTable1ParameterMeasureChange2} data-name="DM_Table_1_Parameter_9_Measure__c" data-risklevel="DMTable1RiskLevel9" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel9}">
+                            <b>{RiskRating.DMTable1RiskLevel9}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    Head S&amp;M
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_9_Input_1__c" value={dataRecord.DM_Table_1_Parameter_9_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_9_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_9_Input_2__c" value={dataRecord.DM_Table_1_Parameter_9_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_9_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_9_Input_3__c" value={dataRecord.DM_Table_1_Parameter_9_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_9_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Tender with more than 10% Liquidated Damages
+                </td>
+                <td style="padding:5px;">
+                    NA
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_10_Measure__c" value={dataRecord.DM_Table_1_Parameter_10_Measure__c} onchange={handleDMTable1ParameterMeasureChange2} data-name="DM_Table_1_Parameter_10_Measure__c" data-risklevel="DMTable1RiskLevel10" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel10}">
+                            <b>{RiskRating.DMTable1RiskLevel10}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    ERM
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_10_Input_1__c" value={dataRecord.DM_Table_1_Parameter_10_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_10_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_10_Input_2__c" value={dataRecord.DM_Table_1_Parameter_10_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_10_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_10_Input_3__c" value={dataRecord.DM_Table_1_Parameter_10_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_10_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                   Is G&B liable for consequential damages or remote losses covered in the Contract?
+                </td>
+                <td style="padding:5px;">
+                    NA
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_11_Measure__c" value={dataRecord.DM_Table_1_Parameter_11_Measure__c} onchange={handleDMTable1ParameterMeasureChange2} data-name="DM_Table_1_Parameter_11_Measure__c" data-risklevel="DMTable1RiskLevel11" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel11}">
+                            <b>{RiskRating.DMTable1RiskLevel11}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    ERM
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_11_Input_1__c" value={dataRecord.DM_Table_1_Parameter_11_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_11_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_11_Input_2__c" value={dataRecord.DM_Table_1_Parameter_11_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_11_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_11_Input_3__c" value={dataRecord.DM_Table_1_Parameter_11_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_11_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px;">
+                    Does the Liabitlity  (Limitation of liability clause) exceed the Contract Value?
+                </td>
+                <td style="padding:5px;">
+                    The total liability under the contract not to exceed 100% of Contract Value
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field  field-name="DM_Table_1_Parameter_12_Measure__c" value={dataRecord.DM_Table_1_Parameter_12_Measure__c} onchange={handleDMTable1ParameterMeasureChange2} data-name="DM_Table_1_Parameter_12_Measure__c" data-risklevel="DMTable1RiskLevel12" variant="label-hidden" required></lightning-input-field>
+                    </lightning-record-edit-form>
+                    <div class="error-message" data-id="FieldError"></div>
+                </td>
+                <td style="padding:5px;text-align:center;" class= "{RiskRating.DMTable1RiskLevel12}">
+                            <b>{RiskRating.DMTable1RiskLevel12}</b>
+                </td>
+                <td style="padding:5px;text-align:center;">
+                    ERM
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_12_Input_1__c" value={dataRecord.DM_Table_1_Parameter_12_Input_1__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_12_Input_1__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                    <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field field-name="DM_Table_1_Parameter_12_Input_2__c" value={dataRecord.DM_Table_1_Parameter_12_Input_2__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_12_Input_2__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+                <td style="padding:5px;">
+                   <lightning-record-edit-form object-api-name="Order_Risk_Matrix__c">
+                        <lightning-input-field  field-name="DM_Table_1_Parameter_12_Input_3__c" value={dataRecord.DM_Table_1_Parameter_12_Input_3__c} onchange={handleInputChange} data-name="DM_Table_1_Parameter_12_Input_3__c" variant="label-hidden"></lightning-input-field>
+                    </lightning-record-edit-form>
+                </td>
+            </tr>
+        </table>
+   </div>
+    </template>
+   
+    <div class="slds-docked-form-footer stickyFooter bottomfooter" style="margin-bottom:30px;">
+            <center>
+                <template if:true={showFooter}>
+                    <lightning-button variant="brand" label="Temp Save" title="Primary action" onclick={saveDetails} data-name="tempSave" class="slds-m-left_x-small" ></lightning-button>
+                    <lightning-button variant="brand" label="Save" title="Primary action" onclick={saveDetails} data-name="completeSave" class="slds-m-left_x-small" ></lightning-button>
+                </template>
+                <lightning-button variant="brand" label="Cancel" title="Primary action" onclick={cancelOperation} class="slds-m-left_x-small" ></lightning-button>
+            </center>
+    </div>   
+</template>

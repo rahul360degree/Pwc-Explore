@@ -1,0 +1,65 @@
+<apex:page Controller="ContactFinderNavigator" action="{!redirect}">
+<!-- Begin Default Content REMOVE THIS -->
+<h1>Congratulations</h1>
+This is your new Page
+
+ <apex:includeLightning />
+    <div  id="compContainer" />
+
+    <apex:form >
+        <apex:PageBlock >
+            <apex:CommandButton value="D&B Check" onclick="myFunction();" />
+    </apex:PageBlock>
+    </apex:form>
+    
+  <script>
+
+    function myFunction(){
+        alert('Coming to the Function');
+        
+         $Lightning.use("c:SearchApp", function() {
+         $Lightning.createComponent("c:SearchAuraCmp",
+             {PassesValueFromVF:maticha},
+             "compContainer",
+             function(cmp) {
+          console.log("c:VFPageApp loaded successfully in VF page");
+             }
+         );
+     });
+    }
+
+    const urlParams = new URLSearchParams(window.parent.location.search);
+    // Get a specific parameter value
+    const maticha = urlParams.get('mobileNum');
+    // Use the parameter value in your code
+    console.log(maticha);
+
+    
+    /*
+     $Lightning.use("c:SearchApp", function() {
+         $Lightning.createComponent("c:SearchAuraCmp",
+             {PassesValueFromVF:maticha},
+             "compContainer",
+             function(cmp) {
+          console.log("c:VFPageApp loaded successfully in VF page");
+             }
+         );
+     });
+
+     */
+  </script>
+    <div id="lightning" />
+    <script>
+        $Lightning.use("c:lcvfTest", function() {
+            $Lightning.createComponent("lightning:button",
+                { label : "Press Me!" },
+                "lightning",
+                function(cmp) {
+                    console.log("button was created");
+                    // do some stuff
+                }
+            );
+        });
+    </script>
+<!-- End Default Content REMOVE THIS -->
+</apex:page>

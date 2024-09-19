@@ -1,0 +1,11 @@
+<!-----------------------------------------------------
+Description       : ssdQuotePdf.vfp
+Author            : Sreekanth Jujare (sjujare@godrej.com)
+Company           : GITL
+Controller Class  : SsdQuotationController.apxc
+VF page           : ssdQuotePdf.vfp
+------------------------------------------------------->
+<apex:page standardController="Quote" extensions="SsdQuotationController"  action="{!createPDF}"  standardStylesheets="false" applyBodyTag="false" applyHTMLTag="false" sidebar="false" showHeader="false">
+    
+    
+</apex:page>

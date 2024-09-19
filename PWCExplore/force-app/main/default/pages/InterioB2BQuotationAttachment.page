@@ -1,0 +1,13 @@
+<!--* @description       : Interio B2B Quotation PDF Attachment in files
+    * @author            : snehalw@godrej.com
+    * @group             : 
+    * @last modified on  : 28-02-2023
+    * @last modified by  : snehalw@godrej.com
+-->
+<apex:page standardController="Quote" extensions="InterioB2BQuotatationController"  action="{!createPDF}"     standardStylesheets="false" applyBodyTag="false" applyHTMLTag="false" sidebar="false" showHeader="false">
+    
+
+
+  
+    
+</apex:page>

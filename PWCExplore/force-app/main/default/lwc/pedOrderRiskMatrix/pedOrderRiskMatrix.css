@@ -1,0 +1,32 @@
+table {
+    /*table-layout: fixed;*/
+    width: 100%;     
+}
+.tableLayout{
+    table-layout: fixed;
+}
+
+.inputClass{
+    width:200px;
+}
+
+.R {
+    background-color: red;
+}
+.A {
+    background-color: orange;
+}
+.Y {
+    background-color: yellow;
+}
+.G {
+    background-color:lightGreen;
+}
+
+.readOnlyDiv {
+    pointer-events: none;
+}
+
+.error-message {
+    color: red;
+}

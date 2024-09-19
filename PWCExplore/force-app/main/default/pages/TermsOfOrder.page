@@ -1,0 +1,124 @@
+<apex:page controller="SalesAcknowledgementController"
+           renderAs="pdf" 
+           applyBodyTag="false" 
+           showHeader="true" 
+           sidebar="true" 
+           standardStylesheets="true" 
+           applyHtmlTag="true">  
+    
+    <head>
+        <style type="text/css" media="print">
+            @page {
+                size: 8.27in 11.69in; 
+                margin: .5in .2in .5in .2in; 
+                zoom: 90%;
+                border-style: groove;
+                border-color: rgb(184, 187, 191);
+                @bottom-left {
+                    content: element(footer);
+                    color:#000;
+                }
+            }
+            
+            div.header {
+                padding: 5px;
+                background:#e6e4dc;
+                color:#000;
+                font-weight:bold;
+                page-break-inside: avoid;
+            }
+
+            div.footer {
+                padding: 5px;
+                height:100px;
+                position: running(footer);
+            }
+
+            .pagenumber:before {
+                content: counter(page);
+            }
+
+            body {font-family: "Arial" "Sans-Serif"; font-size:10px; }    
+
+            .terms{
+                font-size: 9px;
+            }
+
+            .liststyle{
+                font-size: 9px;
+                margin-bottom: 8px;
+            } 
+
+            .thankyou{
+                width: 50%;
+                border-style: groove;
+                border-color: rgb(128, 103, 103);
+                margin-top: px;
+            }
+
+            .thankyou ul{
+                list-style-type: none;
+                font-size: 9px;
+                padding-right: 10px;
+            }
+
+            .thankyou td{
+                padding-right: 17px;
+                padding-left: 17px;
+            }
+
+            .center-div{
+                margin: 0 auto;
+                width: 50%; 
+            }
+        </style>
+    </head>
+    <div>
+        <div class="footer" style="font-size:12px;color:rgb(128,128,128);text-align:left;">
+            <Strong>Page: <span class="pagenumber"></span></Strong>
+        </div>
+        <Center><div class="header" style="font-size:12px">TERMS OF ORDER</div></Center><br/>
+    </div>
+    <div class="terms" style="font-size:11px">   
+        <ul>
+            <li class="liststyle">I/We agree to make payment in full before delivery of goods or documents; delivery process will be initiated only after realization of 100% payment.</li>
+            <li class="liststyle">In case of part payment, the material will be reserved upto a maximum of 7 days from the order date. After that, the company reserves the right to de-reserve the material and allot the same to any other customer. </li>
+            <li class="liststyle">This order will not be binding on you unless and until it is confirmed by your Head Office. </li>
+            <li class="liststyle">You will not be bound to adhere to the planned delivery schedule mentioned overleaf and that I / We will neither claim compensation nor cancel the order if there be any delay through any cause whatsoever.</li>
+            <li class="liststyle">I am eligible to cancel the order and claim only the refund of amount paid by me if and only if the product is discontinued or held by company due to quality issues. </li>
+            <li class="liststyle">Delivery schedule is based on the manufacturing schedule, however in cases if the delivery period is exceeding beyond the committed delivery period, then I shall not be entitled for any compensation whatsoever. This will also not become a ground for cancellation. Not exceeding four weeks the order cannot be cancelled.</li>
+            <li class="liststyle">Prices stated herein is / are tentative and will be charged as ruling at the time of delivery.</li>
+            <li class="liststyle">Delivery you will make will be at my / your cost and entirely at my risk</li>
+            <li class="liststyle">You / your charging extra for redelivering article/s of the order, should I / We fail to take delivery due to any reason.</li>
+            <li class="liststyle">Central or State sales or Purchase tax, ED, Octroi, Entry tax or any other government levy or any impost as in force at the time of delivery, will be charged extra irrespective of the delivery time stated in the order.</li>
+            <li class="liststyle">This Order confirmation form should be retained by me and presented to the company for any future transactions; Order Confirmation no. should be used by me as reference for any further communication with the company.</li>
+            <li class="liststyle">In case of payment by cheque / DD, the date of payment will be considered only subject to realization of cheque / DD and this date of payment will be the cheque / DD realization date.</li>
+            <li class="liststyle">Goods once purchased cannot be returned or exchanged.</li>
+            <li class="liststyle">All refunds will be made in the form of account payee cheques net of Bank charges, as applicable and that it can take 15-20 days to release this refund cheque from the date of refund of material.</li>
+            <li class="liststyle">The ordered material can be brought into my / our premises through the doors / into the elevator / staircase.</li>
+            <li class="liststyle">In event of material not being able to be taken in the premises, order cancellation is subject to article being returned back in original (as and where) conditions and loading, unloading and transportation charges will be charged extra / separately (recovered from the payment made by the customer). </li>
+            <li class="liststyle">This order is governed by Force Majeure.</li>  
+        </ul>
+    </div>
+    <apex:pageBlock rendered="{!if(orderRec.RecordType.DeveloperName!='Interio_B2C_SCRIPT',true,false)}">
+      
+        <div class="thankyou center-div">
+        
+            <ul>
+                <li class="liststyle">Thank you for purchasing a Godrej Product</li>
+               
+                <li class="liststyle">Post Delivery a technician will contact you to assemble the product. </li>
+                <li class="liststyle">For any further assistance please contact us, we will get in touch with you within 02 days.</li>
+                <li class="liststyle">            
+                    <table>
+                        <tr>
+                            <td>Tel: 18002671122</td>
+                            <td>Email: <a> interiocare@godrej.com</a></td>
+                        </tr>
+                    </table>
+                </li>
+                <li style="text-align: center;">Web: <a href="www.godrejinterio.com">www.godrejinterio.com</a></li>
+            </ul>
+        </div>
+    </apex:pageBlock>
+</apex:page>

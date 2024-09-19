@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+<!-- 
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">            
+            <property name="LD_Request_Comments__c"  type="String" label="LD Request Comments" description="LD Request Comments" role="inputOnly" /> 
+            <property name="LD_Approver_Comments__c"  type="String" label="LD Approver Comments" description="LD Approver Comments" role="inputOnly" /> 
+
+        </targetConfig>
+    </targetConfigs> -->
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <propertyType name="T" extends="SObject" label="Select Object" description="Generic sObject data type used for input sObject properties" />
+            <property name="record" type="{T}" label="Quote Record" role="inputOnly"/>
+            <property name="userPersona" label="User Persona" type="String" role="inputOnly" />
+            <property name="updateRecord" type="{T}" label="Quote Record" role="outputOnly"/>
+            <property name="headPendingText" type="String" label="Email Text For Head" role="outputOnly"/>
+            <property name="cptPendingText" type="String" label="Email Text For CPT" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+
+</LightningComponentBundle>

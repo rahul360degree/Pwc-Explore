@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="gstn" type="String" label="Company GST Number" description="Enter the GST No" />
+            <property name="company" type="String" label="Company Detail" description="Return Company Respomnse" />
+            <property name="primary_bno" type="String" label="primary_bno" description="primary_bno" />
+            <property name="primary_flno" type="String" label="primary_flno"/>
+            <property name="primary_loc" type="String" label="primary_loc"/>
+            <property name="primary_st" type="String" label="primary_st"/>
+			<property name="primary_stcd" type="String" label="primary_stcd"/>
+            <property name="primary_pncd" type="String" label="primary_pncd"/>
+            <property name="primary_bnm" type="String" label="primary_bnm"/>
+            <property name="gstn_name" type="String" label="gstn_name"/>
+            <property name="gstn_registrationDate" type="String" label="gstn_registrationDate"/>
+            <property name="tradename" type="String" label="tradename"/>
+            <property name="company_status" type="String" label="company_status"/>
+            <property name="error" type="String" label="Error"/>
+            <property name="new_address_list" type="String[]" label="list of addresses" description="Non primary address list" />
+            <property name="new_address" type="String" label="address" description="Non primary address list" />
+            <property name="new_bno" type="String" label="new_bno" description="new_bno" />
+            <property name="new_flno" type="String" label="new_flno"/>
+            <property name="new_loc" type="String" label="new_loc"/>
+            <property name="new_st" type="String" label="new_st"/>
+            <property name="new_pncd" type="String" label="new_pncd"/>
+            <property name="new_bnm" type="String" label="new_bnm"/>
+        <!--    <propertyType name="T" extends="SObject" label="Address Object API name" description="Select the API Name of the SObject"/>
+            <property name="addressList" type="{T[]}" label="list of addresses" description="All Address List" />-->
+            <property name="addressList" type="@salesforce/schema/Address__c[]"/>
+            <property name="pinCodeList" type="String[]" label="list of secondary pincodes" description="Non primary address pincodes" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

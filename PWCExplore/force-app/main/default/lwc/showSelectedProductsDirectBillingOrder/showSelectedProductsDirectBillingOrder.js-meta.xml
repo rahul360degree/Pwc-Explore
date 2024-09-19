@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>55.0</apiVersion>
+	<isExposed>true</isExposed>
+	<masterLabel>Show Selected Products Direct Billing Order</masterLabel>
+	<description>Show Selected Products Direct Billing Order</description>
+	<targets>
+		<target>lightning__FlowScreen</target>
+		<target>lightning__RecordPage</target>
+	</targets>
+	<targetConfigs>		
+        <targetConfig targets="lightning__FlowScreen">
+            <propertyType name="T" extends="SObject" label="Input Type" description="Generic sObject data type used for input sObject properties" />
+            <property name="record" type="{T[]}" label="Order Products" />						           
+						<property name="logisticscompany" label="Logistics Company" type="String" role="inputOnly" />
+						<property name="lstOrderProducts" label="List of Order Products" type="@salesforce/schema/OrderItem[]" role="outputOnly" />
+        </targetConfig>
+		</targetConfigs>
+</LightningComponentBundle>

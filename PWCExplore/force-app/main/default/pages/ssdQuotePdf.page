@@ -1,0 +1,231 @@
+<!-----------------------------------------------------
+Description       : ssdQuotePdf.vfp
+Author            : Sreekanth Jujare (sjujare@godrej.com)
+Company           : GITL
+Controller Class  : SsdQuotationController.apxc
+Attachment VFP    : ssdQuoteAttachment.vfp
+------------------------------------------------------->
+
+<apex:page standardController="Quote" extensions="SsdQuotationController"   renderAs="pdf" standardStylesheets="false" applyBodyTag="false" applyHTMLTag="false" sidebar="false" showHeader="false">
+    <head>  
+        <style type="text/css" style="font-size: 12px;">
+            @page {
+            margin-top: 150px;
+            padding:0px;
+            margin-bottom: 200px;
+            
+            @top-left {
+            content: element(header);
+            }                           
+            @bottom-left {   
+            content: element(footer);
+            } 
+            }        
+            div.header {
+            margin-top:10px;
+            position: running(header);
+            width: 100%;
+            margin-right: 10px;
+            }
+            div.footer {       
+            position: running(footer);
+            width: 100%;
+            margin-left: 170px;
+            }
+            .footer {
+            display: flex;
+            justify-content: right;
+            align-items: right;
+            }
+            .headertable{
+            font-size:14px;
+            }
+            h2 {
+            width: 100%; 
+            text-align: left; 
+            border-bottom: 1px solid #000; 
+            line-height: 1em;
+            margin: 10px 0 10px; 
+            } 
+            
+            h2 span { 
+            
+            padding:0 10px; 
+            font-size: 14px;
+            }
+            div.pagebreak {
+            page-break-after: always;
+            }
+            
+            .col1{
+            width:23%; font-weight:bold;font-size: 14px; color:maroon;
+            }
+            .col2{
+            width:77%;
+            font-size: 14px;
+            }
+        </style> </head> 
+    
+    <div class="header">
+        <div  style="float:right">
+            <apex:image url="{!$Resource.SSD_Logo}" width="400" height="70"/> </div>
+    </div>
+    <div  class="footer" style="display: flex; justify-content: right; align-items: right;">
+        <div style="float: right;">
+            <apex:image url="{!$Resource.SSD_Footer}" width="940" height="200"/> </div>
+    </div>
+    <table width="100%" style="font-size: 14px;">
+        <tr>
+            <td>
+                <div id="left" align="left">
+                    {!quoteData.Opportunity.Enquiry_Number__c}/{!quoteData.QuoteNumber}
+                </div>
+            </td>
+            <td><div id="right" align="right">
+                <apex:outputText value="Date: {!TODAY()}"/>
+                </div>   </td></tr></table>
+    <br/>
+    <div style="font-size: 14px;">
+        To,<br/>
+<apex:outputPanel rendered="{!IF(quoteData.Contact.Salutation != null,true, false)}">{!quoteData.Contact.Salutation}&nbsp;</apex:outputPanel>
+<apex:outputPanel rendered="{!IF(quoteData.Contact.Name != '',true, false)}">{!quoteData.Contact.Name}<br/></apex:outputPanel>
+<apex:outputPanel rendered="{!IF(quoteData.Contact.Title != '',true, false)}">{!quoteData.Contact.Title}<br/></apex:outputPanel>
+<apex:outputPanel rendered="{!IF(quoteData.Account.Name != '',true, false)}">{!quoteData.Account.Name}<br/></apex:outputPanel>        
+<apex:outputPanel rendered="{!IF(quoteData.Address__c != '',true, false)}">{!quoteData.Address__c}<br/></apex:outputPanel><br/>
+ Subject: Quotation for <b>{!quoteData.Name}</b>
+        _____________________________________________________________________________________________________<br/>
+        <b>Dear Sir/Ma'am,</b><br/>
+        <p>
+            Thank you for your interest in our services, expressed through the above mentioned enquiry. We, at Godrej Security Solutions, are pleased to present to you a proposal for your perusal and look forward to partnering with you, to meet all your security needs with confidence and care.
+        </p>
+        <p>
+            As you would already know, Godrej enjoys a reputation of quality and trust built over a period of more than 100 years. With a wide and strong presence in the security solutions industry, Godrej Security Solutions continues to set newer benchmarks in the Security Equipment segment, across the globe. With its innovative designs and passion for quality, Godrej Security Solutions, is the leader in delivering the best products for customers across the spectrum.
+        </p>
+        <p>
+            Moreover, the recent recognition that Godrej has been awarded – the coveted ISO 9001:2008 from TUV Nord– only highlights the quality conscious approach further. The company also has SP and UL certifications. What sets us apart from our peers is the fact that our wide range of products not only comply with Indian standards but international ones as well, those that have been set by world renowned institutes. In addition we also have the ISO 14001:2004 and OHSAS 18001:2007 certifications which stand testimony to our commitment towards the Environment and Health &amp; Safety.
+        </p>
+        <p>
+            We are the largest suppliers of security equipment to the banking industry, and also to public institutions. Our list of esteemed customers include – The Reserve Bank of India, all Nationalized Banks, Private Banks, Central &amp; State Govt. offices. We are always on the lookout to meet and exceed the expectations of new customers, and forge new alliances.
+        </p>
+        <p>
+            Hope the offer incorporated herein is in line with your requirements. For any further query, please feel free to contact the undersigned. Thanking you and assuring you of our best services at all times, and a good association hereon.
+        </p>
+    </div>
+    <br/>
+    <div style="font-size: 14px;">
+        Yours faithfully,<br/>
+        For Godrej &amp; Boyce Mfg. Co. Ltd.,
+    </div>
+    <br/>
+    <div class="pagebreak" style="font-size: 14px;">
+        {!quoteData.Owner.Name}<br/>
+        {!quoteData.Owner.Title}<br/>
+        {!quoteData.Owner.Phone}
+    </div>
+    <!----- Page-Break------->
+    <div style= "font-weight:bold; font-size: 14pt; color: maroon">
+        Commercial Proposal 
+    </div> 
+    <div style= "font-size: 14px;">
+        <apex:variable var="rowcount" value="{!1}" />
+        <apex:pageBlock title="">
+            <table class="table" cellspacing="0" border="2" align="center" cellpadding="8">
+                <tr>
+                    <th>Sr No.</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Special Unit Price</th>
+                    <th>GST @ 18% pu</th>
+                    <th>Total Amount</th>
+                </tr>
+                <apex:repeat value="{!quoteData.QuoteLineItems}" var="qlis">
+                    <tr>
+                        <td>{!rowcount}</td>
+                        <td><apex:outputText value="{!qlis.Product2.Name}" /></td>
+                        <td><apex:outputText value="{!ROUND(qlis.Quantity,0)}"/></td>
+                        <td><apex:outputText value="{!qlis.UnitPrice}" /></td>
+                        <td><apex:outputText value="{!qlis.GST_per_unit_SSD__c}" /></td>
+                        <td><apex:outputText value="{!qlis.Sales_Price_Tax_Included__c}" /></td>
+                    </tr>
+                    <apex:variable var="rowcount" value="{!rowcount+1}" />
+                </apex:repeat>
+                <tr>
+                    <td></td>
+                    <td>Total</td>
+                    <td>{!totalQty}</td>
+                    <td>{!totalUnitPrice}</td>
+                    <td>{!totalGSTPu}</td>
+                    <td>{!totalAmount}</td>
+                </tr>
+            </table>
+        </apex:pageBlock>
+    </div>
+    <br/>  <b>Note: All Government leaves will be as applicable at the time of delivery</b><br/>
+    <br/>
+    <div style= "font-weight:bold; font-size: 14pt; color: maroon; text-decoration: underline;">
+        Terms &amp; Conditions
+    </div> 
+    <br/>
+    
+    <apex:outputPanel rendered="{!NOT(ISBLANK(quoteData.Special_Instructions__c))}">
+        <table class="headertable" cellspacing="0" style="width:100%;" >
+            <tr> 
+                <td class="col1">Special Instructions:</td>
+                <td class="col2">{!quoteData.Special_Instructions__c}</td>  
+            </tr>
+        </table><br/>
+    </apex:outputPanel>
+    <table class="headertable" cellspacing="0" style="width:100%;" >       
+        <tr>
+            <td style="width:23%; font-weight:bold;font-size: 14px; color:maroon;">Rates:</td>
+            <td style="width:77%;font-size: 14px;">The rates mentioned are inclusive of GST. However, should there be any change in the Government leaves / taxes, the same shall be charged as ruling at the time of delivery. In case of purchase of material against Tax Concession Form, the tax form needs to be submitted within one month failing which GST will be charged at full rate.</td>
+        </tr><br/><tr>
+        <td class="col1">Validity:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td class="col2">Offer valid for 30 days</td>
+        </tr><br/>
+        <tr>
+            <td style="width:23%; font-weight:bold;font-size: 14px; color:maroon;">Delivery Period:</td>
+            <td style="width:77%;font-size: 14px;"> Approximately {!quoteData.Delivery_Period__c} from receipt of your firm order for standard products. For customized/ non-standard products the delivery period may vary.</td>
+        </tr><br/>
+        <tr>
+            <td style="width:23%; font-weight:bold;font-size: 14px; color:maroon;">Terms of Delivery:</td>
+            <td style="width:77%;font-size: 14px;">Free up to ground floor. Delivery beyond ground floor is payable extra as per actuals (as per site visit report). Crane charges extra (if deployed). Attimari and any other local admin charges extra (wherever applicable). Second visit (if required) will be chargeable.</td>
+        </tr><br/>
+        <tr>
+            <td style="width:23%; font-weight:bold;font-size: 14px; color:maroon;">Payment:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td style="width:77%;font-size: 14px;">{!quoteData.Payment_Terms__c}</td>
+        </tr><br/>
+        <tr>
+            <td style="width:23%; font-weight:bold;font-size: 14px; color:maroon;">Installation:</td>
+            <td style="width:77%;font-size: 14px;">Our Physical Security Equipment like Safes, Record Cabinets, Lockers, and Doors etc. are heavy and voluminous products. We will take utmost care to deliver the products at your site by using the right equipment.  However, we will not be held responsible for any damage caused to the premises during installation.  Please arrange to check the load bearing capacity of your premises for the same.  You will also have to liaison with the landlord (in case of rented premises) for allowing us to use the lift shaft / window etc. (as the case may be) for smooth delivery.</td>
+        </tr><br/>
+        <tr>
+            <td style="width:23%; font-weight:bold;font-size: 14px; color:maroon;">Alteration/Cancellation:</td>
+            <td style="width:77%;font-size: 14px;">Since the above items will be manufactured specially to suit your requirement, we regret our inability to alter/cancel any item once the order is registered in our books</td>
+        </tr><br/>
+        <tr>
+            <td style="width:23%; font-weight:bold;font-size: 14px; color:maroon;">AMC:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td style="width:77%;font-size: 14px;">Can be made available.</td>
+        </tr><br/>
+        
+        <tr>
+            <td style="width:23%; font-weight:bold;font-size: 14px; color:maroon;">Warranty:</td>
+            <td style="width:77%;font-size: 14px;">One Year from the date of supply/installation for the new products against any manufacturing defects.</td>
+        </tr>
+        <tr>
+            <td style="width:23%; font-weight:bold;font-size: 14px; color:maroon;">Force Majeure:</td>
+            <td style="width:77%;font-size: 14px;"> Force Majeure clause will be applicable for this transaction.</td>
+        </tr><br/>
+    </table>
+    <br/><br/>
+    <div style="font-size: 14px;">
+        Yours faithfully,<br/>
+        For Godrej &amp; Boyce Mfg. Co. Ltd.,
+    </div>
+    <br/>
+    <div style="font-size: 14px;">
+        {!quoteData.Owner.Name}<br/>
+        {!quoteData.Owner.Title}<br/>
+        {!quoteData.Owner.Phone}
+    </div>
+</apex:page>

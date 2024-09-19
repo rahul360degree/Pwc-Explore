@@ -1,0 +1,15 @@
+<template>
+    <template if:true={quoteLineItems}>
+        <div class="slds-grid slds-grid_vertical slds-gutters">
+            <template for:each={quoteLineItems} for:item="quoteLineItem">
+                <div class="slds-col slds-p-vertical_medium" key={quoteLineItem.lineItem.Id}>
+                <lightning-card >
+                    <c-quote-line-item-card line-item-wrapper={quoteLineItem} oncardupdated={handleCardUpdateEvent}
+                        onrefreshparent={handleParentRefresh}>
+                    </c-quote-line-item-card>
+                </lightning-card>
+            </div>
+            </template>
+        </div>
+    </template>
+</template>

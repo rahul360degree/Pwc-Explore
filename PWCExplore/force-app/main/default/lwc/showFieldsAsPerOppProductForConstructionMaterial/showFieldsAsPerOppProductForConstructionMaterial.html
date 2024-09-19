@@ -1,0 +1,285 @@
+<!-- 
+  @author            : poonamc@godrej.com
+  @last modified on  : 18-08-2023
+  @last modified by  : poonamc@godrej.com
+-->
+
+<template>
+    
+    <template if:true= {showAAC}>
+        
+        <div class="input-row">
+            <div>
+                <lightning-input type="number" name="Estimated_Project_AAC_Qty_in_CBM__c" label="Estimated Project AAC Qty (in CBM)" 
+                value={opportunityRecord.Estimated_Project_AAC_Qty_in_CBM__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+            </div>
+            <div>
+                <lightning-input type="number" name="G_B_Quantity_AAC_Qty_in_CBM__c" label="G&B Quantity AAC Qty (in CBM)" 
+                value={opportunityRecord.G_B_Quantity_AAC_Qty_in_CBM__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+
+            </div>
+        </div>
+    </template>
+    
+    <template if:true= {showDuroplast}>
+        
+        <div class="input-row">
+            <div>
+                <lightning-input type="number" name="Estimated_Project_Duroplast_Qty_Bag__c" label="Estimated Project Duroplast Qty (Bag)" 
+                value={opportunityRecord.Estimated_Project_Duroplast_Qty_Bag__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+            </div>
+            <div>
+                <lightning-input type="number" name="G_B_Quantity_Duroplast_Qty_Bags__c" label="G&B Quantity Duroplast Qty (Bags)" 
+                value={opportunityRecord.G_B_Quantity_Duroplast_Qty_Bags__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+
+            </div>
+        </div>
+    </template>
+    
+    <template if:true= {showEasyFix}>
+        
+        <div class="input-row">
+            <div>
+
+                <lightning-input type="number" name="Estimated_Project_EasyFix_Qty_Bag__c" label="Estimated Project EasyFix Qty (Bag)" 
+                value={opportunityRecord.Estimated_Project_EasyFix_Qty_Bag__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+
+            </div>
+            <div>
+
+                <lightning-input type="number" name="G_B_Quantity_EasyFix_Qty_Bags__c" label="G&B Quantity EasyFix Qty (Bags)" 
+                value={opportunityRecord.G_B_Quantity_EasyFix_Qty_Bags__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+                
+            </div>
+        </div>
+    </template>
+
+    <template if:true= {showPavers}>
+        <div class="input-row">
+            <div>
+
+                <lightning-input type="number" name="Estimated_Project_Pavers_in_Sqm__c" label="Estimated Project Pavers (in Sqm)" 
+                value={opportunityRecord.Estimated_Project_Pavers_in_Sqm__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+
+            </div>
+            <div>
+
+                <lightning-input type="number" name="G_B_Quantity_Pavers_in_Sqm__c" label="G&B Quantity Pavers (in Sqm)" 
+                value={opportunityRecord.G_B_Quantity_Pavers_in_Sqm__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+                
+            </div>
+        </div>
+    </template>
+
+    <template if:true= {showCurb_Stone}>
+        <div class="input-row">
+            <div>
+
+                <lightning-input type="number" name="Estimated_Project_Curb_Stone_in_Nos__c" label="Estimated Project Curb Stone (in Nos)" 
+                value={opportunityRecord.Estimated_Project_Curb_Stone_in_Nos__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+
+            </div>
+            <div>
+
+                <lightning-input type="number" name="G_B_Quantity_Curb_Stone_in_Nos__c" label="G&B Quantity Curb Stone (in Nos)" 
+                value={opportunityRecord.G_B_Quantity_Curb_Stone_in_Nos__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+                
+            </div>
+        </div>
+    </template>
+
+    <template if:true= {showSolid_Concrete_Block}>
+        <div class="input-row">
+            <div>
+
+                <lightning-input type="number" name="Est_Project_Solid_Concrete_Block_Nos__c" label="Estimated Project Solid Concrete Block (Nos)" 
+                value={opportunityRecord.Est_Project_Solid_Concrete_Block_Nos__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+
+            </div>
+            <div>
+
+                <lightning-input type="number" name="G_B_Quantity_Solid_Concrete_Block_Nos__c" label="G&B Quantity Solid Concrete Block (Nos)" 
+                value={opportunityRecord.G_B_Quantity_Solid_Concrete_Block_Nos__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+                
+            </div>
+        </div>
+    </template>
+
+    <template if:true= {showTilefix}>
+        <div class="input-row">
+            <div>
+
+                <lightning-input type="number" name="Estimated_Project_Tilefix_Qty_Bag__c" label="Estimated Project Tilefix Qty (Bag)" 
+                value={opportunityRecord.Estimated_Project_Tilefix_Qty_Bag__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+
+            </div>
+            <div>
+
+                <lightning-input type="number" name="G_B_Quantity_Tilefix_Qty_Bags__c" label="G&B Quantity Tilefix Qty (Bags)" 
+                value={opportunityRecord.G_B_Quantity_Tilefix_Qty_Bags__c} onchange={handlefieldChange} readonly>
+                </lightning-input>
+                
+            </div>
+        </div>
+    </template>
+
+    <!-- select Products from Multiselected Picklist -->
+    <lightning-dual-listbox name="Products"
+                            label="Products"
+                            source-label="Available"
+                            selected-label="Selected"
+                            field-level-help="Select Products"
+                            options={options}
+                            onchange={handleChange}></lightning-dual-listbox>
+
+    
+    <template if:true= {selected}>
+        <template if:true= {containsAAC}>
+            <div class="input-row">
+                <div>
+                    <lightning-input type="number" name="Estimated_Project_AAC_Qty_in_CBM__c" label="Estimated Project AAC Qty (in CBM)" 
+                    value={opportunityRecord.Estimated_Project_AAC_Qty_in_CBM__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+                </div>
+                <div>
+                    <lightning-input type="number" name="G_B_Quantity_AAC_Qty_in_CBM__c" label="G&B Quantity AAC Qty (in CBM)" 
+                    value={opportunityRecord.G_B_Quantity_AAC_Qty_in_CBM__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+
+                </div>
+            </div>
+        </template>
+
+        <template if:true= {containsDuroplast}>
+            <div class="input-row">
+                <div>
+
+                    <lightning-input type="number" name="Estimated_Project_Duroplast_Qty_Bag__c" label="Estimated Project Duroplast Qty (Bag)" 
+                    value={opportunityRecord.Estimated_Project_Duroplast_Qty_Bag__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+
+                </div>
+                <div>
+
+                    <lightning-input type="number" name="G_B_Quantity_Duroplast_Qty_Bags__c" label="G&B Quantity Duroplast Qty (Bags)" 
+                    value={opportunityRecord.G_B_Quantity_Duroplast_Qty_Bags__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+
+                </div>
+            </div>
+        </template>
+
+        <template if:true= {containsEasyFix}>
+            <div class="input-row">
+                <div>
+
+                    <lightning-input type="number" name="Estimated_Project_EasyFix_Qty_Bag__c" label="Estimated Project EasyFix Qty (Bag)" 
+                    value={opportunityRecord.Estimated_Project_EasyFix_Qty_Bag__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+
+                </div>
+                <div>
+
+                    <lightning-input type="number" name="G_B_Quantity_EasyFix_Qty_Bags__c" label="G&B Quantity EasyFix Qty (Bags)" 
+                    value={opportunityRecord.G_B_Quantity_EasyFix_Qty_Bags__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+                    
+                </div>
+            </div>
+        </template>
+
+        <template if:true= {containsPavers}>
+            <div class="input-row">
+                <div>
+
+                    <lightning-input type="number" name="Estimated_Project_Pavers_in_Sqm__c" label="Estimated Project Pavers (in Sqm)" 
+                    value={opportunityRecord.Estimated_Project_Pavers_in_Sqm__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+
+                </div>
+                <div>
+
+                    <lightning-input type="number" name="G_B_Quantity_Pavers_in_Sqm__c" label="G&B Quantity Pavers (in Sqm)" 
+                    value={opportunityRecord.G_B_Quantity_Pavers_in_Sqm__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+                    
+                </div>
+            </div>
+        </template>
+
+        <template if:true= {containsCurb_Stone}>
+            <div class="input-row">
+                <div>
+
+                    <lightning-input type="number" name="Estimated_Project_Curb_Stone_in_Nos__c" label="Estimated Project Curb Stone (in Nos)" 
+                    value={opportunityRecord.Estimated_Project_Curb_Stone_in_Nos__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+
+                </div>
+                <div>
+
+                    <lightning-input type="number" name="G_B_Quantity_Curb_Stone_in_Nos__c" label="G&B Quantity Curb Stone (in Nos)" 
+                    value={opportunityRecord.G_B_Quantity_Curb_Stone_in_Nos__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+                    
+                </div>
+            </div>
+        </template>
+
+        <template if:true= {containsSolid_Concrete_Block}>
+            <div class="input-row">
+                <div>
+
+                    <lightning-input type="number" name="Est_Project_Solid_Concrete_Block_Nos__c" label="Estimated Project Solid Concrete Block (Nos)" 
+                    value={opportunityRecord.Est_Project_Solid_Concrete_Block_Nos__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+
+                </div>
+                <div>
+
+                    <lightning-input type="number" name="G_B_Quantity_Solid_Concrete_Block_Nos__c" label="G&B Quantity Solid Concrete Block (Nos)" 
+                    value={opportunityRecord.G_B_Quantity_Solid_Concrete_Block_Nos__c} onchange={handlefieldChange} required>
+                    </lightning-input>
+                    
+                </div>
+            </div>
+        </template>
+
+        <template if:true= {containsTilefix}>
+        <div class="input-row">
+            <div>
+
+                <lightning-input type="number" name="Estimated_Project_Tilefix_Qty_Bag__c" label="Estimated Project Tilefix Qty (Bag)" 
+                value={opportunityRecord.Estimated_Project_Tilefix_Qty_Bag__c} onchange={handlefieldChange} required>
+                </lightning-input>
+
+            </div>
+            <div>
+
+                <lightning-input type="number" name="G_B_Quantity_Tilefix_Qty_Bags__c" label="G&B Quantity Tilefix Qty (Bags)" 
+                value={opportunityRecord.G_B_Quantity_Tilefix_Qty_Bags__c} onchange={handlefieldChange} required>
+                </lightning-input>
+                
+            </div>
+        </div>
+    </template>
+
+        <div class="slds-m-top_small slds-m-bottom_medium">
+            <lightning-button variant="brand" label="Save" title="Primary action" onclick={checkValues} disabled={showSave} class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </template>
+    
+</template>

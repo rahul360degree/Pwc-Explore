@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Asset Form">
+        <div class="form-container">
+            <lightning-input class="input-field" label="Brand Name" value={brandName} onchange={handleBrandNameChange} required="true"></lightning-input>
+            <lightning-input class="input-field" label="Asset Type" value={assetType} onchange={handleAssetTypeChange}></lightning-input>
+            <lightning-input class="input-field" label="Asset Name" value={assetName} onchange={handleAssetNameChange}></lightning-input>
+            <lightning-input class="input-field" label="Capacity" type="number" value={capacity} onchange={handleCapacityChange}></lightning-input>
+            <lightning-input class="input-field" label="Age of Product" type="number" value={ageOfProduct} onchange={handleAgeOfProductChange}></lightning-input>
+            <lightning-input class="input-field" label="Manufacturing Date" type="date" value={manufacturingDate} onchange={handleManufacturingDateChange}></lightning-input>
+            <input class="file-input" type="file" accept=".jpg, .png" multiple onchange={handleFileChange}></input>
+            <lightning-button class="save-button" label="Save" onclick={handleSave} variant="brand"></lightning-button>
+        </div>
+    </lightning-card>
+</template>

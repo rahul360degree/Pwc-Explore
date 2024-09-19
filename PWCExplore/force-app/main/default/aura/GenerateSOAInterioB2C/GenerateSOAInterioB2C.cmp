@@ -1,0 +1,4 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" controller="AttachSOAController">
+	<aura:handler name="init" action="{!c.generateAndAttachPDFWithoutSync}" value="{!this}"/>
+    We're generating the acknowledgment for you. Please hold..
+</aura:component>

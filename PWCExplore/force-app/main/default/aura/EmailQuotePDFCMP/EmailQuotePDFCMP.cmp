@@ -1,0 +1,9 @@
+<aura:component implements="force:hasRecordId">
+	<aura:html tag="style">
+    	.cuf-scroller-content{background:#fff;}
+        .slds-modal__container { max-width: 40rem;}
+    </aura:html>
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="userContext" type="String"/>
+   	<c:emailQuotePDF recordId="{!v.recordId}" onclose="{!c.closePopup}"/>
+</aura:component>

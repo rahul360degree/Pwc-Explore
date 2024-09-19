@@ -1,0 +1,1147 @@
+<!--
+@description       : 
+@author            : vrajpoot@godrej.com
+@group             : 
+@last modified on  : 11-28-2022
+@last modified by  : vrajpoot@godrej.com
+-->
+<template>
+  <div>
+    <!-- <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+  class="slds-modal slds-fade-in-open slds-modal_large">
+  <div class="slds-modal__container">
+    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+      onclick={closeModal}>
+      <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+      </lightning-icon>
+      <span class="slds-assistive-text">Close</span>
+    </button>
+    <div class="slds-modal__header">
+      <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Product Summary</h1>
+    </div>
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"> -->
+    <template if:false={hideSpinner}>
+      <lightning-spinner alternative-text="Loading" variant="inverse"></lightning-spinner>
+    </template>
+    
+    <lightning-icon icon-name="action:back" onclick={closeModal} class="slds-m-around_xx-small"
+      alternative-text="Go Back" title="Go Back" size="x-small"></lightning-icon>
+  
+    <!--Display Approval/Resubmit comments-->
+    <template if:true={approvalComment}>
+  
+      <div key={approvalComment}>
+        <!-- <div class="tablediv"> -->
+        <div class="tablediv">
+          <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" style = {tablestyle}>
+            <!-- <table class={tablecss} role="grid"> -->
+            <tr class="slds-line-height_reset">
+              <th class={thclass}>
+                <div class={thdivcss}>
+                  <span class={spancss}>Sr No.</span>
+                </div>
+              </th>
+              <th class={thclass}>
+                <div class={thdivcss}>
+                  <span class={spancss} title="Comments">Comments</span>
+                </div>
+              </th>
+              <th class={thclass}>
+                <div class={thdivcss}>
+                  <span class={spancss} title="User">User</span>
+                </div>
+              </th>
+              
+              <th class={thclass}>
+                <div class={thdivcss}>
+                  <span class={spancss} title="Opportunity Owner">Opportunity Owner</span>
+                </div>
+              </th>
+              <th class={thclass}>
+                <div class={thdivcss}>
+                  <span class={spancss} title="Date">Date</span>
+                </div>
+              </th>
+              <th class={thclass}>
+                <div class={thdivcss}>
+                  <span class={spancss} title="Status">Status</span>
+                </div>
+              </th>
+  
+            </tr>
+            <template for:each={approvalComment} for:item="record" for:index="index">
+              <tr key={record.Id}>
+                <td class={tdclass}>
+                  <div class={spancss} title="index">
+                    {index}
+                  </div>
+                </td>
+                <td class={tdclass}>
+                  <div class={spancss} title={record.Approval_Comments__c}>
+                    {record.Approval_Comments__c}
+                  </div>
+                </td>
+                <td class={tdclass}>
+                  <div class={spancss} title={record.CreatedBy.Name}>
+                    {record.CreatedBy.Name}
+                  </div>
+                </td>
+                
+                <td class={tdclass}>
+                  <div class={spancss} title={record.Quote__r.Opportunity_Owner__r.Name}>
+                    {record.Quote__r.Opportunity_Owner__r.Name}
+                  </div>
+                </td>
+                <td class={tdclass}>
+                  <div class={spancss} title={record.CreatedDate}>
+                    {record.CreatedDate}
+                  </div>
+                </td>
+                <td class={tdclass}>
+                  <div class={spancss} title={record.Status__c}>
+                    {record.Status__c}
+                  </div>
+                </td>
+  
+                <!-- <template if:true={is_Salesperson_Persona}>
+                  Comments
+                </template> -->
+              </tr>
+            </template>
+          </table>
+        </div>
+      </div>
+  
+    </template>
+  
+    <div class="tablediv">
+      <template for:each={qliRecords} for:item="data">
+        <div key={data.lob}>
+          <br />
+          <div class="slds-text-heading_medium">
+            {data.lob}
+          </div>
+          <div class="tablediv">
+            <!-- <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"> -->
+            <table class={tablecss} role="grid" style = {tablestyle}>
+              <tr class="slds-line-height_reset">
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Name">Sr.No.</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Name">Product</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Product Description">Product Description</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="ProductCode">ProductCode</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Quantity">Quantity</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Price List Date">Price List Date</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="List Price">List Price</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Requested Customer Discount%">Requested Customer Discount %</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Requested Customer Discounted Basic Price">Requested Customer
+                      Discounted
+                      Basic Price</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);"> 
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved Customer Discount %">Approved Customer Discount %</span>
+                  </div>
+  
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved Customer Discounted Basic Price">Approved Customer Discounted
+                      Basic Price</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(248, 203, 173);">
+                  <div class={thdivcss}>
+                    <span class={spancss}
+                      title="Requested WD Retention % / SAC (on Requested Discounted Basic) % ">Requested WD Retention %
+                      /
+                      SAC (on Requested Discounted Basic) %</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(248, 203, 173);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Requested WD Retention %/ SAC (on Consumer Basic) ">Requested WD
+                      Retention %/ SAC (on Consumer Basic) </span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(248, 203, 173);">
+                  <div class={thdivcss}>
+                    <span class={spancss}
+                      title="Approved WD Retention % / SAC (on Approved Discounted Basic) %">Approved
+                      WD Retention % / SAC (on Approved Discounted Basic) %</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(248, 203, 173);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved WD Retention %  / SAC (on Consumer Basic) ">Approved WD
+                      Retention % / SAC (on Consumer Basic) </span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(142, 169, 219);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Requested WD/CONT % (on Requested Discounted Basic)">Requested WD/CONT
+                      %
+                      (on Requested Discounted Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(142, 169, 219);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Requested WD/CONT %  (on Consumer Basic)">Requested WD/CONT % (on
+                      Consumer Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(142, 169, 219);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved WD/CONT % (on Approved Discounted Basic) ">Approved WD/CONT %
+                      (on Approved Discounted Basic) </span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(142, 169, 219);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved WD/CONT % (on Consumer Basic)">Approved WD/CONT % (on Consumer
+                      Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss}
+                      title="Requested Net Realized Basic Discount (%) (on Consumer Basic)">Requested
+                      Net Realized
+                      Basic Discount (%) (on Consumer Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss}
+                      title="Requested Net Realized Basic Amount Rate / Unit(Rs.) (on Consumer Basic)">Requested Net
+                      Realized Basic Amount Rate / Unit(Rs.) (on Consumer Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved Net Realized Basic Discount (%) (On Consumer Basic)">Approved
+                      Net Realized
+                      Basic
+                      Discount (%) (On Consumer Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved Net Realized Basic Rate / Unit (S Consumer Basic)">Approved
+                      Net
+                      Realized Basic Rate / Unit (S Consumer Basic)</span>
+                  </div>
+  
+                </th>
+                <template if:true={displayCOP}>
+                  <th class={thclass} style="background-color: rgb(255, 230, 153);">
+                    <div class={thdivcss}>
+                      <span class={spancss} title="COP per Unit(Rs.)">COP per Unit(Rs.)</span>
+                    </div>
+                  </th>
+                  <th class={thclass} style="background-color: rgb(255, 230, 153);">
+                    <div class={thdivcss}>
+                      <span class={spancss} title="Requested COP Factor">Requested COP Factor</span>
+                    </div>
+                  </th>
+                  <th class={thclass} style="background-color: rgb(255, 230, 153);">
+                    <div class={thdivcss}>
+                      <span class={spancss} title="Approved COP Factor">Approved COP Factor</span>
+                    </div>
+                  </th>
+                </template>
+  
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    Status
+                  </div>
+                </th>
+  
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    Owner
+                  </div>
+                </th>
+  
+                <!-- <template if:true={is_Salesperson_Persona}>
+                  <th class={thclass}>
+                    <div class={thdivcss}>
+                      Remark
+                    </div>
+                  </th>
+                </template> -->
+              </tr>
+  
+              <template for:each={data.records} for:item="record">
+                <tr key={record.Id}>
+                  <td class={tdclass}>
+                    <div class={spancss} title={record.rowCount}>
+                      {record.rowCount}
+                    </div>
+                  </td>
+                  <td class={tdclass}>
+                    <div class={spancss} title={record.Product2.Name}>
+                      <a tabindex="-1" onclick={helperNavigation} data-id={record.Product2.Id} data-name="Product2">
+                        {record.Product2.Name}
+                      </a>
+                    </div>
+                  </td>
+                  <td class={tdclass}>
+                    <div class={spancss} title={record.Product2.Description}>
+                      {record.Product2.Description}
+                    </div>
+                  </td>
+                  <td class={tdclass}>
+                    <div class={spancss} title={record.Product2.Item__c}>
+                      {record.Product2.Item__c}
+                    </div>
+                  </td>
+                  <td class={tdclass}>{record.Quantity}</td>
+                  <td class={tdclass}>
+                    <div class={spancss} title={record.Effective_Pricebook_Date__c}>
+                      <!-- {record.Effective_Pricebook_Date__c } -->
+                      <lightning-formatted-date-time value={record.Effective_Pricebook_Date__c} year="numeric"
+                        month="short"></lightning-formatted-date-time>
+                    </div>
+                  </td>
+                  <td class={tdclass}>
+                    <lightning-formatted-number value={record.ListPrice} format-style="currency" currency-code="INR">
+                    </lightning-formatted-number>
+                  </td>
+                  <td class={tdclass} style="background-color: rgb(146, 208, 80);">
+                    <!--<lightning-formatted-number value={record.Requested_Customer_Discount__c}
+                      format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>-->
+                      <lightning-input type="number" value={record.Requested_Customer_Discount__c} data-id={record.Id}
+                      data-name="Requested_Customer_Discount__c" formatter="percent-fixed" step="0.01"
+                      placeholder="Requested Customer Discount %" onchange={handleInputChange}
+                      disabled={record.is_SubmitterFieldsReadOnly}></lightning-input>
+                  </td>
+                  <td class={tdclass}>
+                    <!-- <lightning-formatted-number value={record.UnitPrice} format-style="currency" currency-code="INR">
+                    </lightning-formatted-number>-->
+                    <lightning-input type="number" value={record.UnitPrice} data-id={record.Id}
+                      data-name="UnitPrice" formatter="currency" step="0.01" 
+                      placeholder="Requested Customer Discounted Basic Price" onchange={handleInputChange}
+                      disabled={record.is_SubmitterFieldsReadOnly}></lightning-input>
+                  </td>
+                  <td class={tdclass} style="background-color: rgb(146, 208, 80);">
+                    <lightning-input type="number" value={record.Approved_Customer_Discount__c} data-id={record.Id}
+                      data-name="Approved_Customer_Discount__c" formatter="percent-fixed" step="0.01"
+                      placeholder="Approved Customer Discount %" onchange={handleInputChange} 
+                      disabled={record.isReadOnly}></lightning-input>
+                  </td>
+                  <td class={tdclass}>
+  
+  
+                    <lightning-input type="number" value={record.Approved_Customer_Discounted_Basic_Price__c}
+                      data-id={record.Id} data-name="Approved_Customer_Discounted_Basic_Price__c" formatter="currency"
+                      step="0.01" placeholder="Approved Customer Discounted Basic Price" onchange={handleInputChange}
+                      disabled={record.isReadOnly}>
+                    </lightning-input>
+  
+                  </td>
+                  
+                  
+                  <td class={tdclass} style="background-color: rgb(248, 203, 173);">
+                    <lightning-formatted-number value={record.Req_WD_Ret_SAC_OnReqDiscBasic__c}
+                      format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                  </td>
+                  <td class={tdclass}>
+                    <lightning-formatted-number value={data.ReqWDRetentionAmtSAConConsumerBasic}
+                      format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                  </td>
+                  <td class={tdclass} style="background-color: rgb(248, 203, 173);">
+                    <lightning-input type="number" value={record.Approved_WD_Retention_On_ReqDiscbasic__c}
+                      data-id={record.Id} data-name="Approved_WD_Retention_On_ReqDiscbasic__c" formatter="percent-fixed"
+                      step="0.01" placeholder="Approved WD Retention % / SAC (on Approved Discounted Basic) %"
+                      onchange={handleInputChange} disabled={record.isReadOnly}></lightning-input>
+                  </td>
+                  <td class={tdclass}>
+                    <lightning-formatted-number value={data.ApprWDRetentionAmtSACConsumerBasicRs}
+                      format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                  </td>
+                  <td class={tdclass} style="background-color: rgb(142, 169, 219);">
+                   
+                      <lightning-input type="number" value={record.Requested_WD_CONT_Req_Disc_Basic__c} data-id={record.Id}
+                      data-name="Requested_WD_CONT_Req_Disc_Basic__c" formatter="percent-fixed" step="0.01"
+                      placeholder="Requested WD/CONT % (on Requested Discounted Basic) %" onchange={handleInputChange}
+                      disabled={record.is_SubmitterFieldsReadOnly}></lightning-input>
+                  </td>
+                  <!--<td class={tdclass}>
+                    <lightning-formatted-number value={record.Requested_WD_CONT_Req_Disc_Basic__c} format-style="percent-fixed"
+                      maximum-fraction-digits="2"> </lightning-formatted-number>
+                  </td>-->
+                  <td class={tdclass}>
+                    <lightning-formatted-number value={data.RequestedWDCONTAmountConsumerBasic}
+                      format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                  </td>
+  
+                  <td class={tdclass} style="background-color: rgb(142, 169, 219);">
+                    <lightning-input type="number" value={record.Approved_WD_CONT__c} data-name="Approved_WD_CONT__c"
+                      data-id={record.Id} formatter="percent-fixed" step="0.01"
+                      placeholder="Approved WD/CONT % (on Approved Discounted Basic) " onchange={handleInputChange}
+                      disabled={record.isReadOnly}>
+                    </lightning-input>
+                  </td>
+                  <td class={tdclass}>
+                    <lightning-formatted-number value={data.ApprovedWDCONTAmountConsumerBasic}
+                      format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                  </td>
+                  <td class={tdclass}>
+                    <lightning-formatted-number value={record.Req_Net_Rlizd_Bsc_Disc__c} format-style="percent-fixed"
+                      maximum-fraction-digits="2"> </lightning-formatted-number>
+                  </td>
+                  <td class={tdclass}>
+                    <lightning-formatted-number value={record.Req_Net_Realizd_BsicAmnt_Rate_Unit__c}
+                      format-style="currency" currency-code="INR"></lightning-formatted-number>
+                  </td>
+                  <td class={tdclass}>
+                    <lightning-formatted-number value={record.Approved_Net_Realized_Basic_Discount__c}
+                      format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                  </td>
+                  <td class={tdclass}>
+                    <lightning-formatted-number value={record.Approved_Net_Realized_Basic_Rate_Unit__c}
+                      format-style="currency" currency-code="INR"></lightning-formatted-number>
+                  </td>
+                  <template if:true={displayCOP}>
+                    <td class={tdclass}>
+                      <lightning-formatted-number value={record.COP__c} format-style="currency" currency-code="INR">
+                      </lightning-formatted-number>
+                    </td>
+                    <td class={tdclass}>
+                      <lightning-formatted-number value={record.Requested_COP_Factor__c} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </td>
+                    <td class={tdclass}>
+                      <lightning-formatted-number value={record.Approved_COP_Factor__c} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </td>
+                  </template>
+  
+                  <td class={tdclass}>{record.Approval_Status__c}</td>
+                  <td class={tdclass}>{record.Pending_With_Owner__c}</td>
+  
+                  <!-- <template if:true={is_Salesperson_Persona}>
+                    <td class={tdclass}>
+                      <lightning-input data-type="qli-comments" data-id={record.Id} placeholder="test input" type="text"
+                        class="inputClass">
+                      </lightning-input>
+  
+                    </td>
+                  </template> -->
+                </tr>
+  
+              </template>
+              <tr>
+                <th>
+                  <h2>Grand Total</h2>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>
+                  <lightning-formatted-number value={data.summation_listPrice} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationUnitPrice_Percentage}
+                      format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summation_unitPrice} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationApprovedCustomerDiscountedBasicPrice_Percentage}
+                      format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationApprovedCustomerDiscountedBasicPrice}
+                    format-style="currency" currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationReqWDRetSACOnReqDiscBasic} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationReqWDRetSACOnReqDiscBasic} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationAppWDRetReqDiscbasic} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationAppWDRetReqDiscbasic} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationReqWDCONT} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationReqWDCONT} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationApprovedWDCONT} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationApprovedWDCONT} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationReqNetRealizdBsicAmntRateUnit_Percentage}
+                      format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationReqNetRealizdBsicAmntRateUnit}
+                    format-style="currency" currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationApprovedNetRealizedBasicRateUnit_Percentage}
+                      format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                </th>
+                <th>
+                  <lightning-formatted-number value={data.summationApprovedNetRealizedBasicRateUnit}
+                    format-style="currency" currency-code="INR"></lightning-formatted-number>
+                </th>
+                <template if:true={displayCOP}>
+                  <th>
+                    <lightning-formatted-number value={data.summationCOPperUnit} format-style="currency"
+                      currency-code="INR"></lightning-formatted-number>
+                  </th>
+                  <th>
+                    <lightning-formatted-number value={data.summationRequestedCOPFactor} format-style="currency"
+                      currency-code="INR"></lightning-formatted-number>
+                  </th>
+                  <th>
+                    <lightning-formatted-number value={data.summationApprovedCOPFactor} format-style="currency"
+                      currency-code="INR"></lightning-formatted-number>
+                  </th>
+                </template>
+  
+                <th></th>
+                <th></th>
+                <!-- <template if:true={is_Salesperson_Persona}>
+                  <th></th>
+                </template> -->
+              </tr>
+  
+  
+  
+            </table>
+          </div>
+        </div>
+      </template>
+      <br/>
+      <template if:true={grandTotal}>
+        <div>
+          <div class="slds-text-heading_medium">Grand Total</div>
+          <div class="tablediv">
+            <table class={tablecss} role="grid" style = {tablestyle}>
+              <tr class="slds-line-height_reset">
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Name">Product</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="LOB/Product Line">LOB/Product Line</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Product Description">Product Description</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="ProductCode">ProductCode</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Quantity">Quantity</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Price List Date">Price List Date</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(198, 224, 180)">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="List Price">List Price</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Requested Customer Discount">Requested Customer Discount%</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Requested Customer Discounted Basic Price">Requested Customer
+                      Discounted
+                      Basic Price</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved Customer Discount %">Approved Customer Discount
+                      %</span>
+                  </div>
+  
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved Customer Discounted Basic Price">Approved Customer
+                      Discounted Basic Price</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(248, 203, 173);">
+                  <div class={thdivcss}>
+                    <span class={spancss}
+                      title="Requested WD Retention % / SAC (on Requested Discounted Basic) % ">Requested WD Retention %
+                      /
+                      SAC (on Requested Discounted Basic) %</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(248, 203, 173);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Requested WD Retention %/ SAC (on Consumer Basic) ">Requested WD
+                      Retention Amount / SAC (on Consumer Basic) Rs.</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(248, 203, 173);">
+                  <div class={thdivcss}>
+                    <span class={spancss}
+                      title="Approved WD Retention % / SAC (on Approved Discounted Basic) %">Approved
+                      WD Retention % / SAC (on Approved Discounted Basic) %</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(248, 203, 173);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved WD Retention %  / SAC (on Consumer Basic) ">Approved WD
+                      Retention % / SAC (on Consumer Basic) </span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(142, 169, 219);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Requested WD/CONT % (on Requested Discounted Basic)">Requested
+                      WD/CONT % (on Requested Discounted Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(142, 169, 219);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Requested WD/CONT %  (on Consumer Basic)">Requested WD/CONT % (on
+                      Consumer Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(142, 169, 219);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved WD/CONT % (on Approved Discounted Basic) ">Approved WD/CONT %
+                      (on Approved Discounted Basic) </span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(142, 169, 219);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved WD/CONT % (on Consumer Basic)">Approved WD/CONT % (on Consumer
+                      Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss}
+                      title="Requested Net Realized Basic Discount (%) (on Consumer Basic)">Requested
+                      Net Realized
+                      Basic
+                      Discount (%) (on Consumer Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss}
+                      title="Requested Net Realized Basic Amount Rate / Unit(Rs.) (on Consumer Basic)">Requested Net
+                      Realized Basic Amount Rate / Unit(Rs.) (on Consumer Basic)
+                    </span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved Net Realized Basic Discount (%) (On Consumer Basic)">Approved
+                      Net Realized
+                      Basic
+                      Discount (%) (On Consumer Basic)</span>
+                  </div>
+                </th>
+                <th class={thclass} style="background-color: rgb(146, 208, 80);">
+                  <div class={thdivcss}>
+                    <span class={spancss} title="Approved Net Realized Basic Rate / Unit (S Consumer Basic)">Approved
+                      Net
+                      Realized Basic Rate / Unit (S Consumer Basic)</span>
+                  </div>
+  
+                </th>
+                <template if:true={displayCOP}>
+                  <th class={thclass} style="background-color: rgb(255, 230, 153)">
+                    <div class={thdivcss}>
+                      <span class={spancss} title="COP per Unit(Rs.)">COP per Unit(Rs.)</span>
+                    </div>
+                  </th>
+                  <th class={thclass} style="background-color: rgb(255, 230, 153)">
+                    <div class={thdivcss}>
+                      <span class={spancss} title="Requested COP Factor">Requested COP Factor</span>
+                    </div>
+                  </th>
+                  <th class={thclass} style="background-color: rgb(255, 230, 153)">
+                    <div class={thdivcss}>
+                      <span class={spancss} title="Approved COP Factor">Approved COP Factor</span>
+                    </div>
+                  </th>
+                </template>  
+              </tr>
+              
+              <template for:each={qliRecords} for:item="data">
+              <tr key={data.lob} class="slds-line-height_reset">
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>
+                    <lightning-formatted-number value={data.summationReqWDRetSACOnReqDiscBasic_Percentage} 
+                    format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                  </th>
+                  <th>
+                    <lightning-formatted-number value={data.summationReqWDRetSACOnConsumerBasic_Percentage} 
+                    format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                  </th>
+                  <th>
+                    <lightning-formatted-number value={data.summationAppWDRetReqDiscBasic_Percentage} 
+                    format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                  </th>
+                  <th>
+                    <lightning-formatted-number value={data.summationAppWDRetConsumerBasic_Percentage} 
+                    format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                  </th>
+                  <th>
+                    <lightning-formatted-number value={data.summationReqWDCONTOnReqDiscBasic_Percentage} 
+                    format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                  </th>
+                  <th>
+                    <lightning-formatted-number value={data.summationReqWDCONTOnConsumerBasic_Percentage} 
+                    format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                  </th>
+                  <th>
+                    <lightning-formatted-number value={data.summationApprovedWDCONTOnReqDiscBasic_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                  </th>
+                  <th>
+                    <lightning-formatted-number value={data.summationApprovedWDCONTOnConsumerBasic_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                  </th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <template if:true={displayCOP}>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </template>
+                </tr>
+                  <tr key={data.lob} class="slds-line-height_reset">
+                    <th></th>
+                    <th>
+                      <h2>{data.lob}</h2>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>
+                      <lightning-formatted-number value={data.summation_listPrice} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationUnitPrice_Percentage}
+                      format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summation_unitPrice} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationApprovedCustomerDiscountedBasicPrice_Percentage}
+                      format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationApprovedCustomerDiscountedBasicPrice}
+                        format-style="currency" currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationReqWDRetSACOnReqDiscBasic} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationReqWDRetSACOnReqDiscBasic} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationAppWDRetReqDiscbasic} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationAppWDRetReqDiscbasic} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationReqWDCONT} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationReqWDCONT} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationApprovedWDCONT} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationApprovedWDCONT} format-style="currency"
+                        currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationReqNetRealizdBsicAmntRateUnit_Percentage}
+                      format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationReqNetRealizdBsicAmntRateUnit}
+                        format-style="currency" currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationApprovedNetRealizedBasicRateUnit_Percentage}
+                      format-style="percent-fixed" maximum-fraction-digits="2"></lightning-formatted-number>
+                    </th>
+                    <th>
+                      <lightning-formatted-number value={data.summationApprovedNetRealizedBasicRateUnit}
+                        format-style="currency" currency-code="INR"></lightning-formatted-number>
+                    </th>
+                    <template if:true={displayCOP}>
+                      <th>
+                        <lightning-formatted-number value={data.summationCOPperUnit} format-style="currency"
+                          currency-code="INR"></lightning-formatted-number>
+                      </th>
+                      <th>
+                        <lightning-formatted-number value={data.summationRequestedCOPFactor} format-style="currency"
+                          currency-code="INR"></lightning-formatted-number>
+                      </th>
+                      <th>
+                        <lightning-formatted-number value={data.summationApprovedCOPFactor} format-style="currency"
+                          currency-code="INR"></lightning-formatted-number>
+                      </th>
+                    </template>
+                  </tr>
+                  </template>
+              <tr class="slds-line-height_reset">
+                <th class={thclass} colspan="7"></th>
+                <th class={thclass}></th>
+                <th class={thclass}></th>
+                <th class={thclass}></th>
+                <th class={thclass}></th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalReqWDRetSACOnReqDiscBasic_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalReqWDRetSACOnReqConsBasic_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalAppWDRetReqDiscbasic_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalAppWDRetReqConsbasic_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalReqWDCONTReq_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalReqWDCONTCons_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalApprovedWDCONTDisc_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalApprovedWDCONTCons_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalReqNetRealizedDiscConsOnTotal_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                </th>
+                <th class={thclass}></th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalAppNetRelaizedDiscCOnsOnBasic_Percentage}
+                    format-style="percent-fixed" maximum-fraction-digits="2"> </lightning-formatted-number>
+                </th>
+                <th class={thclass}></th>
+                <template if:true={displayCOP}>
+                  <th class={thclass}></th>
+                  <th class={thclass}></th>
+                  <th class={thclass}></th>
+                </template>
+              </tr>
+              <tr class="slds-line-height_reset">
+                <th class={thclass}></th>
+                <th class={thclass}>Total</th>
+                <th class={thclass}></th>
+                <th class={thclass}></th>
+                <th class={thclass}></th>
+                <th class={thclass}></th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotal_listPrice} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotal_ReqCustDisc} format-style="percent-fixed"
+                    maximum-fraction-digits="2"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotal_unitPrice} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTota_AppCustDisc} format-style="percent-fixed"
+                    maximum-fraction-digits="2"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalApprovedCustomerDiscountedBasicPrice}
+                    format-style="currency" currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalReqWDRetSACOnReqDiscBasic}
+                    format-style="currency" currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalReqWDRetSACOnReqDiscBasic}
+                    format-style="currency" currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalAppWDRetReqDiscbasic} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalAppWDRetReqDiscbasic} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalReqWDCONT} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalReqWDCONT} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalApprovedWDCONT} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalApprovedWDCONT} format-style="currency"
+                    currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}></th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalReqNetRealizdBsicAmntRateUnit}
+                    format-style="currency" currency-code="INR"></lightning-formatted-number>
+                </th>
+                <th class={thclass}></th>
+                <th class={thclass}>
+                  <lightning-formatted-number value={grandTotal.grandTotalApprovedNetRealizedBasicRateUnit}
+                    format-style="currency" currency-code="INR"></lightning-formatted-number>
+                </th>
+                <template if:true={displayCOP}>
+                  <th class={thclass}>
+                    <lightning-formatted-number value={grandTotal.grandTotalCOPperUnit} format-style="currency"
+                      currency-code="INR"></lightning-formatted-number>
+                  </th>
+                  <th class={thclass}>
+                    <lightning-formatted-number value={grandTotal.grandTotalRequestedCOPFactor} format-style="currency"
+                      currency-code="INR"></lightning-formatted-number>
+                  </th>
+                  <th class={thclass}>
+                    <lightning-formatted-number value={grandTotal.grandTotalApprovedCOPFactor} format-style="currency"
+                      currency-code="INR"></lightning-formatted-number>
+                  </th>
+                </template>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </template>
+  
+  
+      <!--Display button for VP-->
+  
+      <!--
+      <lightning-layout horizontal-align="center">
+        <lightning-layout-item size="3">
+          <lightning-input name="apprvoal-comment" type="text" placeholder="Please add approver comments."
+            data-id="approvalComments" is-loading>
+          </lightning-input>
+        </lightning-layout-item>
+  
+        
+        <template if:true={is_Salesperson_Persona}>
+          <lightning-layout-item size="1">
+            <div class="slds-var-m-around_medium">
+              <lightning-button variant="success" label="Save" title="Save" data-id="saveAction"
+                onclick={handleApprovalClick} class="slds-m-top_x-small"></lightning-button>
+            </div>
+          </lightning-layout-item>
+        </template>
+        
+        <lightning-layout-item size="2">
+          <div class="slds-var-m-around_medium">
+            <lightning-button variant="success" label={approvalButtonLabel} title={approvalButtonLabel}
+              data-id={approvalButtonId} onclick={handleApprovalClick} class="slds-m-top_x-small">
+            </lightning-button>
+          </div>
+        </lightning-layout-item>
+  
+  
+        
+        <template if:false={is_Salesperson_Persona}>
+          <lightning-layout-item size="2">
+            <div class="slds-var-m-around_medium">
+              <lightning-button variant="brand" label="Resubmit" title="Resubmit" onclick={handleResubmit}
+                class="slds-m-top_x-small"></lightning-button>
+            </div>
+          </lightning-layout-item>
+        </template>
+  
+        
+        <template if:true={isVP_Persona}>
+          <lightning-layout-item size="1">
+            <div class="slds-var-m-around_medium">
+              <lightning-button variant="brand" label="Reject" title="Reject" data-id="By_Admin" onclick={handleReject}
+                class="slds-m-top_x-small"></lightning-button>
+            </div>
+          </lightning-layout-item>
+        </template>
+  
+      </lightning-layout>
+    -->
+  
+      
+      <lightning-layout horizontal-align="center">
+        
+          <lightning-layout-item size="4" >
+            <lightning-input  name="apprvoal-comment" type="text" placeholder="Please add approver comments."
+              data-id="approvalComments" is-loading >
+            </lightning-input>
+          </lightning-layout-item>
+  
+  
+          <lightning-layout-item size="3">
+            <div class="slds-var-m-around_medium">
+              <!-- Save action for Sales Person Buttons-->
+              <!--<template if:true={is_Salesperson_Persona}>-->
+                <lightning-button variant="success" label="Save" title="Save" name='saveAction' data-id="saveAction"
+                  onclick={handleApprovalClick} class="slds-m-top_x-small slds-m-left_x-small"></lightning-button>
+              <!--</template>-->
+              <!-- Except Sales Person Buttons-->
+  
+              <!--Approval Button for All Persona-->
+              <lightning-button variant="success" label={approvalButtonLabel} title={approvalButtonLabel}
+                data-id={approvalButtonId} onclick={handleApprovalClick} class="slds-m-top_x-small slds-m-left_x-small">
+              </lightning-button>
+  
+              <!--Re-submit button except Sales Persona -->
+             
+              <template if:true={showResubmitButton}>
+                
+                   <lightning-button variant="brand" label="Resubmit" title="Resubmit" onclick={handleResubmit}
+                  class="slds-m-top_x-small slds-m-left_x-small"></lightning-button> 
+
+              </template>
+              <template if:true={showStorageCheckbox}>
+                <lightning-input type="checkbox" label="Resubmit Storage Lines" name="checkboxName" checked={isResubmitStorageProducts} onchange={handleChange1}></lightning-input>
+
+              </template>
+              <template if:true={showDeskingCheckbox}>
+                <lightning-input type="checkbox" label="Resubmit Desking Lines" name="checkboxName" checked={isResubmitDeskingProducts} onchange={handleChange2}></lightning-input>
+
+              </template>
+              <!-- Reject Button only for VP -->
+              <template if:true={isVP_Persona}>
+                <lightning-button variant="brand" label="Reject" title="Reject" data-id="By_Admin" onclick={handleReject}
+                  class="slds-m-top_x-small slds-m-left_x-small"></lightning-button>
+              </template>
+            </div>
+          </lightning-layout-item>
+        
+      </lightning-layout>
+  
+  
+  
+      <lightning-icon icon-name="action:back" onclick={closeModal} class="slds-m-around_xx-small"
+        alternative-text="Go Back" title="Go Back" size="x-small"></lightning-icon>
+    </div>
+  
+  
+  
+  </div>
+  </template>

@@ -1,0 +1,37 @@
+<!--
+  @description       : 
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 03-27-2022
+  @last modified by  : vrajpoot@godrej.com
+-->
+<template>
+    <template if:true={record}>
+        <div data-name={record.ContentDocumentId} data-id={record.Id} onclick={handleClick} class="slds-show_inline-block">
+            <template if:true={record.FileType}>
+                <template if:true={docObj}>
+                    <template if:true={docObj.isPdf}>
+                        <lightning-icon icon-name="doctype:pdf" alternative-text="Pdf file" title="Pdf">
+                        </lightning-icon>
+                    </template>
+                    <template if:true={docObj.isExcel}>
+                        <lightning-icon icon-name="doctype:excel" alternative-text="Excel file" title="Excel">
+                        </lightning-icon>
+                    </template>
+                    <template if:true={docObj.Image}>
+                        <lightning-icon icon-name="doctype:image" alternative-text="Image file" title="Image">
+                        </lightning-icon>
+                    </template>
+                </template>
+            </template>
+            &nbsp; {record.Title}
+        </div>
+        <template if:true={usedInCommunity}>
+            <lightning-icon icon-name="utility:download" alternative-text="Download" title="Download"
+            data-name={record.ContentDocumentId} data-id={record.Id} 
+            onclick={handleDownload} size="xx-small"
+            class="slds-m-right_xx-small"
+            ></lightning-icon>
+        </template>
+    </template>
+</template>

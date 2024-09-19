@@ -1,0 +1,24 @@
+<!--
+  @description       : Display pending quotes for the Sanction
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 02-22-2023
+  @last modified by  : vrajpoot@godrej.com
+  @End Users         : Functional Head and CPT Group Users
+-->
+<template>      
+    <lightning-card title="Pending Quotes for Sanction Approval" >  
+            <template if:true={recordList}>      
+                <lightning-datatable
+                    key-field="Id"
+                    data={recordList}
+                    columns={columns}
+                    hide-checkbox-column="true"
+                    show-row-number-column="true">
+                </lightning-datatable>  
+            </template>      
+            <template if:true={error}>  
+                {error}>                  
+            </template>  
+    </lightning-card>
+</template>

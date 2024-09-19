@@ -1,0 +1,184 @@
+<template>
+    <template if:true={showModal}>
+        <section   
+        role = "dialog"
+        tabindex="-1"
+        class="slds-modal slds-fade-in-open">
+        <div class = "slds-modal__container">
+            <header class = "slds-modal__header">
+                <lightning-button-icon
+                class = "slds-modal__close"
+                title = "Close"
+                icon-name="utility:close"
+                icon-class="slds-button_icon-inverse"
+                onclick={handleDialogClose}
+                ></lightning-button-icon>
+
+                <h2 class = "slds-text-heading_medium slds-hyphenate">
+                    Edit Entry
+                </h2>
+            </header>
+
+            <div
+            class = "slds-modal__content slds-p-around_medium"
+            >
+        
+        <slot>
+            <template if:false={formsubmitted}>
+                <template if:true={profiledata.isAuditor}>
+                    
+                    <lightning-record-edit-form
+                    record-id={recordeditdataid}
+                    object-api-name="Service_Audit_Report_Line_Item__c"
+                    onsuccess={handleSuccess}>
+                    
+                    <div class = "auditor-fields">
+                        <!--lightning-spinner alternative-text="loading" size="medium"></lightning-spinner-->
+                        <lightning-messages> </lightning-messages>
+                        <lightning-output-field field-name="Observation_Question_LU__c"> </lightning-output-field>
+                        
+                        <template if:true={sarmetadata.isASPAudit}>
+                            <lightning-output-field data-id="Maximum_Score__c" field-name="Maximum_Score__c"> </lightning-output-field>  
+                            <lightning-input-field data-id="Achieved_Score__c" field-name="Achieved_Score__c" onchange={handleAchievedScoreChange} disabled={isDisabled}> </lightning-input-field>
+                            <span class="error-message"></span>
+                        </template>
+                        
+                        <lightning-input-field data-id="Observation_Details__c" field-name="Observation_Details__c" disabled={isDisabled}> </lightning-input-field>
+                        <lightning-input-field data-id="Recommendation__c" field-name="Recommendation__c" disabled={isDisabled}> </lightning-input-field>
+                        <lightning-output-field field-name="Corrective_Actions__c"> </lightning-output-field>
+                        <lightning-output-field field-name="Preventive_Actions__c"> </lightning-output-field>
+                        <lightning-input-field field-name="Response_Required__c"> </lightning-input-field>
+
+                        <template if:true={sarmetadata.isASPAudit}>
+                            <lightning-input-field data-id="Exclude_Observation__c" field-name="Exclude_Observation__c" onchange={handleExcludeObservationChange}> </lightning-input-field>
+                        </template>
+
+                        <!--template if:true={excludeObservation}>
+                            <lightning-input-field disabled = 'true' field-name="Exclude_Observation__c" onchange={handleExcludeObservationChange}> </lightning-input-field>
+                        </template>
+                        <template if:false={excludeObservation}>
+                            <lightning-input-field field-name="Exclude_Observation__c" onchange={handleExcludeObservationChange}> </lightning-input-field>
+                        </template-->
+                        
+                    </div>
+                    
+                    <lightning-button
+                        data-id="lightning-button"
+                        disabled={lightningButtonDisabled}
+                        class="slds-m-top_small"
+                        variant="brand"
+                        type="submit"
+                        name="update"
+                        label="Update"
+                        
+                    >
+                    </lightning-button>
+                </lightning-record-edit-form>
+            </template>
+
+            <template if:true={profiledata.isAuditee}>
+                <lightning-record-edit-form
+                record-id={recordeditdataid}
+                object-api-name="Service_Audit_Report_Line_Item__c">
+                <lightning-messages> </lightning-messages>
+                <lightning-output-field field-name="Observation_Question_LU__c"> </lightning-output-field>
+                <template if:true={sarmetadata.isASPAudit}>
+                    <lightning-output-field field-name="Maximum_Score__c"> </lightning-output-field>  
+                    <lightning-output-field  field-name="Achieved_Score__c"> </lightning-output-field>
+                </template>
+                <lightning-output-field field-name="Observation_Details__c"> </lightning-output-field>
+                <lightning-output-field  field-name="Recommendation__c"> </lightning-output-field>
+                <lightning-input-field field-name="Corrective_Actions__c"> </lightning-input-field>
+                <lightning-input-field field-name="Preventive_Actions__c"> </lightning-input-field>
+                <lightning-output-field field-name="Response_Required__c"> </lightning-output-field>
+                <template if:true={sarmetadata.isASPAudit}>
+                    <lightning-output-field field-name="Exclude_Observation__c"> </lightning-output-field>
+                </template>
+                <lightning-button
+                    class="slds-m-top_small"
+                    variant="brand"
+                    type="submit"
+                    name="update"
+                    label="Update"
+                >
+                </lightning-button>
+            </lightning-record-edit-form>
+        </template>
+            
+        </template>
+           
+           
+        <template if:true={formsubmitted}>
+            <template if:true={profiledata.isAuditor}>
+                <lightning-record-edit-form
+                record-id={recordeditdataid}
+                object-api-name="Service_Audit_Report_Line_Item__c"
+                onsubmit={handleSubmit}
+                onsuccess={handleSuccess}>
+
+                    <lightning-messages> </lightning-messages>
+                    <lightning-output-field field-name="Observation_Question_LU__c"> </lightning-output-field>
+                    <template if:true={sarmetadata.isASPAudit}>
+                        <lightning-output-field field-name="Maximum_Score__c"> </lightning-output-field>  
+                        <lightning-input-field disabled field-name="Achieved_Score__c"> </lightning-input-field>
+                    </template>
+                    <lightning-input-field disabled field-name="Observation_Details__c"> </lightning-input-field>
+                    <lightning-input-field disabled field-name="Recommendation__c"> </lightning-input-field>
+                    <lightning-output-field field-name="Corrective_Actions__c"> </lightning-output-field>
+                    <lightning-output-field field-name="Preventive_Actions__c"> </lightning-output-field>
+                    <lightning-input-field disabled field-name="Response_Required__c"> </lightning-input-field>
+                    <template if:true={sarmetadata.isASPAudit}>
+                        <lightning-input-field disabled field-name="Exclude_Observation__c"> </lightning-input-field>
+                    </template>
+                
+                <lightning-button
+                    class="slds-m-top_small"
+                    variant="brand"
+                    type="submit"
+                    name="update"
+                    label="Update"
+                    
+                >
+                </lightning-button>
+            </lightning-record-edit-form>
+        </template>
+
+        <template if:true={profiledata.isAuditee}>
+            <lightning-record-edit-form
+            record-id={recordeditdataid}
+            object-api-name="Service_Audit_Report_Line_Item__c">
+            <lightning-messages> </lightning-messages>
+            <lightning-output-field field-name="Observation_Question_LU__c"> </lightning-output-field>
+            <template if:true={sarmetadata.isASPAudit}>
+                <lightning-output-field field-name="Maximum_Score__c"> </lightning-output-field>  
+                <lightning-output-field field-name="Achieved_Score__c"> </lightning-output-field>
+            </template>
+            <lightning-output-field field-name="Observation_Details__c"> </lightning-output-field>
+            <lightning-output-field field-name="Recommendation__c"> </lightning-output-field>
+            <lightning-input-field field-name="Corrective_Actions__c"> </lightning-input-field>
+            <lightning-input-field field-name="Preventive_Actions__c"> </lightning-input-field>
+            <lightning-output-field field-name="Response_Required__c"> </lightning-output-field>
+            <template if:true={sarmetadata.isASPAudit}>
+                <lightning-output-field field-name="Exclude_Observation__c"> </lightning-output-field>
+            </template>
+            <lightning-button
+                class="slds-m-top_small"
+                variant="brand"
+                type="submit"
+                name="update"
+                label="Update"
+            >
+            </lightning-button>
+        </lightning-record-edit-form>
+    </template>
+        
+    </template>
+
+           
+        </slot>
+    </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

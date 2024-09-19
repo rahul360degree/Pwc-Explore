@@ -1,0 +1,104 @@
+<apex:page standardController="Visit__c" extensions="VisitDetailController" renderAs="pdf">
+    <div style="font-family: Arial, sans-serif;">
+        <apex:pageBlock title="">
+            <div style="border-style:solid; margin-bottom: 10px;">
+                    <h1 style="font-size: 18px; margin: 5px; background-color:#f2f2f2">
+                        VISIT DETAILS
+                    </h1>
+                </div>
+            <div style="font-family: Arial, sans-serif;font-size: 16px; background-color:#005580; color:white; padding: 5px; margin-bottom:5px">
+                <b>Details</b>
+            </div>
+            <table style = "width : 100%; border-collapse : collapse">
+                <tr style = "page-break-inside: avoid">
+                    <th style = "border : 1px solid black; padding : 5px; text-align:center">Field</th>
+                    <th style = "border : 1px solid black; padding : 5px; text-align:center">Value</th>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Visit Name</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.Name}</td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Account</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.Account__r.Name}</td>
+                </tr>
+                
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">PJP</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.PJP__c}</td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Visit Planned Date</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">
+                        <apex:outputText value="{0,date, d MMMM, yyyy}">
+                            <apex:param value="{!visit.Visit_Planned_Date__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Visit Start Date</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">
+                        <apex:outputText value="{0,date, d MMMM, yyyy}">
+                            <apex:param value="{!visit.Visit_Start_Date__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Visit End Date</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">
+                        <apex:outputText value="{0,date, d MMMM, yyyy}">
+                            <apex:param value="{!visit.Visit_End_Date__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Record Type</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.RecordType.Name}</td>
+                </tr>
+    
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Zone</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.Zone__c}</td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Status</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.Status__c}</td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Address</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.Address__c}</td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Pincode</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.Pincode__c}</td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Branch</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.Branch__c}</td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Visit Category</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.Visit_Category__c}</td>
+                </tr>
+            </table><br/>
+          
+            <div style="font-family: Arial, sans-serif;font-size: 16px; background-color:#800000; color:white; padding: 5px; margin-bottom:5px">
+                <b>Joint Visit</b>
+            </div>
+            <table style = "width : 100%; border-collapse : collapse">
+                <tr style = "page-break-inside: avoid">
+                    <th style = "border : 1px solid black; padding : 5px; text-align:center">Field</th>
+                    <th style = "border : 1px solid black; padding : 5px; text-align:center">Value</th>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Member Name</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.Member_Name__r.Name}</td>
+                </tr>
+                <tr style = "page-break-inside: avoid">
+                    <td style = "border : 1px solid black; padding : 5px; text-align:left">Member Designation</td>
+                    <td style = "border : 1px solid black; padding : 5px; text-align:center">{!visit.Member_Designation__c}</td>
+                </tr>
+            </table><br/>
+    </apex:pageBlock>
+    </div>
+</apex:page>

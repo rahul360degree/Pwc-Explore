@@ -1,0 +1,83 @@
+<!--
+  @Description       : 
+  @Author            : Varun Rajpoot
+  @last modified on  : 10-25-2023
+  @last modified by  : Varun Rajpoot
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   09-25-2023   Varun Rajpoot   Initial Version
+-->
+<template>
+  <div class="slds-theme_default">
+    <template if:true={showSpinner}>
+      <lightning-spinner alternative-text="Loading" class="spinnerCSS" variant="brand" style="position:fixed !important"></lightning-spinner>
+    </template>
+
+    <div class="slds-grid slds-wrap">
+
+      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
+        <div class="slds-align_absolute-center">
+          <div class="titleCSS slds-p-around_large">Month: {todaysMonth}</div>
+        </div>
+        <div class="slds-align_absolute-center">
+          <table class="weekdays">
+            <template for:each={calendarArray} for:item="cal" for:index="index">
+              <tr key={cal}>
+                <template for:each={cal} for:item="week">
+                  <td key={week}>
+                    <c-create-appliances-visits-helper week={week} holiday={holiday} start-day={todaysDate}
+                      row-index={index} ondayclick={handleHolidayClick}></c-create-appliances-visits-helper>
+                  </td>
+                </template>
+              </tr>
+            </template>
+          </table>
+        </div>
+
+        <div class="slds-align_absolute-center">
+          <lightning-button variant="destructive" label="Cancel" title="Cencel" onclick={handleCancel}
+            class="slds-p-around_large">
+          </lightning-button>
+          <lightning-button variant="success" label="Create" title="Create" onclick={createVisits}
+            class="slds-p-around_large">
+          </lightning-button>
+        </div>
+      </div>
+
+      <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
+        <div class="slds-m-around_large">
+          <div class="instruction-box">
+            <div class="titleCSS slds-p-around_large">Instructions:</div>
+            <ul class="slds-list_dotted slds-m-left_large slds-m-bottom_large">
+              <li class="instruction-points">
+                <b>To generate auto PJP with Dealer Visits, you need to add yourself as an account team member for all the accounts that you handle. Please note that, adding yourself as account owner will not generate auto PJPs.</b>
+            </li>
+
+              <li class="instruction-points">
+                  <b>To generate auto PJP with Dealer Visits, you need maintain dealer category (for direct accounts) / retailer category (for retailers) for all the accounts that you handle.</b>
+              </li>
+
+              <li class="instruction-points">
+                Visit plan will not be generated for dates highlighted in red.
+              </li>
+
+              <li class="instruction-points">                
+                Click and select dates (to highlight in red) for which visits must not be planned.
+              </li>
+
+              <li class="instruction-points">
+                Click and deselect dates highlighted in red for which visits must be planned.
+              </li>
+            
+              <li class="instruction-points">
+                User can't select past dates than the current date.
+              </li>
+          </ul>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>

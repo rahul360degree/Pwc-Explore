@@ -1,0 +1,43 @@
+<!--
+  @description       : 
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 08-04-2022
+  @last modified by  : vrajpoot@godrej.com
+slds-m-top_large
+-->
+<template>
+    <!-- size="x-small" -->
+    <!-- <div class={paddingClass}>
+        <div class="slds-align_absolute-center">
+            <lightning-icon icon-name="utility:dash" alternative-text="Substract" title="Substract"
+                onclick={handleDecement} class="decrement-icn slds-m-top_xx-small" size="medium"></lightning-icon>
+
+            <lightning-input type="number" data-name={apiname} value={value} placeholder=0 onchange={handleChangeEvent}
+                variant="label-hidden">
+            </lightning-input>
+
+            <lightning-icon icon-name="utility:add" alternative-text="Increment" title="Increment"
+                onclick={handleIncrement} class="increment-icn slds-m-top_xx-small" size="medium"></lightning-icon>
+
+        </div>
+    </div> -->
+    <div class={paddingClass}>
+        <ul class="slds-list_horizontal">
+            <li>
+                <lightning-icon icon-name="utility:dash" alternative-text="Substract" title="Substract"
+                    onclick={handleDecement} class="decrement-icn slds-m-top_xx-small" size="xx-small"></lightning-icon>
+            </li>
+            <li>
+                <lightning-input type="number" data-name={apiname} value={value} placeholder=0
+                    onchange={handleChangeEvent} variant="label-hidden">
+                </lightning-input>
+            </li>
+            
+            <li>
+                <lightning-icon icon-name="utility:add" alternative-text="Increment" title="Increment"
+                    onclick={handleIncrement} class="increment-icn slds-m-top_xx-small" size="xx-small"></lightning-icon>
+            </li>
+        </ul>
+    </div>
+</template>

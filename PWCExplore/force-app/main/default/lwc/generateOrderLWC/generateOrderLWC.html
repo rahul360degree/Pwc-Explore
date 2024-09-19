@@ -1,0 +1,195 @@
+<template>
+<div class="mainContainer">
+    <!-- Show spinner if data is loading -->
+    <template if:true={isLoading}>
+        <div class="demo-only" style="height:6rem">
+            <div class="slds-spinner_container">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Show data once data has been loaded -->
+    <template if:false={isLoading}>
+        <!-- Table / Card container -->
+        <div>
+            <!-- Create view for large screen form factors like desktop. -->
+            <template if:false={isMobile}>
+                <!-- Added New Screen for Locks B2C ISTD to Select Logistic Company and Area Code For IGST Fields -->
+                <template if:true={showAreaCodeScreen}>
+                    <lightning-record-edit-form object-api-name="Opportunity" record-type-id={opportunityRecord.RecordTypeId} >
+                        <lightning-input-field field-name="Sales_Branch_Name__c" value={opportunityRecord.Sales_Branch_Name__c} onchange={handleInputChange} data-name="Sales_Branch_Name__c"></lightning-input-field>
+                        <lightning-input-field field-name="Area_Code_For_IGST__c" value={opportunityRecord.Area_Code_For_IGST__c} onchange={handleInputChange} data-name="Area_Code_For_IGST__c"></lightning-input-field>
+                    </lightning-record-edit-form> 
+                    <!-- Next button -->
+                    <div class="slds-clearfix create_order_button-container">
+                        <div class="slds-float_right">
+                            <lightning-button variant="brand" label="Next" title="Next" 
+                                onclick={handleNext} class="slds-m-left_x-small">
+                            </lightning-button>
+                        </div>
+                    </div>
+                    </template>
+                    <template if:false={showAreaCodeScreen}>
+                        
+                <!-- Create Order button -->
+                <div class="slds-clearfix create_order_button-container">
+                    <div class="slds-float_right">
+                        <lightning-button variant="brand" label="Create Order" title="Create Order" 
+                            onclick={createOrderClicked} class="slds-m-left_x-small">
+                        </lightning-button>
+                    </div>
+                </div>
+
+                <!-- Container that houses lightning-datatable -->
+                <lightning-card>
+                    <lightning-layout vertical-align="center" class="x-large">
+                        <template if:false={hasValidationError}>
+                            <div class="lightning_datatable-container">
+                                <lightning-datatable
+                                    key-field="id"
+                                    suppress-bottom-bar
+                                    data={data}
+                                    columns={columns}
+                                    oncellchange={handleCellChange}
+                                    onrowselection={onRowSelected}
+                                    errors={errors}>
+                                </lightning-datatable>
+                            </div>
+                        </template>
+                    </lightning-layout>
+                </lightning-card>
+                <template if:true={isSSDQuote}>
+                        <tr>
+    <td style="width: 50%;">
+        <lightning-record-edit-form object-api-name="Order" record-type-id={orderRecordTypeId} >
+            <div style="display: flex;"  >
+                <div style="width: 100%;"> 
+                    <lightning-input-field field-name="Order_Won_Lost__c" value={stageName} onchange={handleInputChange}
+                        data-name="Order_Won_Lost__c" required="true"></lightning-input-field>
+                </div>
+                <div style="width: 100%;">
+                    <lightning-input-field field-name="Reason_for_Lost__c" value={reasonForLost}
+                        onchange={handleInputChange} data-name="Reason_for_Lost__c"></lightning-input-field>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </td>
+</tr>
+        <lightning-record-edit-form object-api-name="Order" record-type-id={orderRecordTypeId}>
+            <lightning-input-field field-name="Reason_for_Lost_If_others__c" value={reasonForLostOthers}
+                onchange={handleInputChange} data-name="Reason_for_Lost_If_others__c"></lightning-input-field>
+        </lightning-record-edit-form>
+    
+                        </template>
+            </template>
+            </template>
+
+            <!-- Create view for small screen form factors like mobile. -->
+            <template if:true={isMobile}>
+                <div class="table_mobilecard_container">
+                    <!-- Added New Screen for Locks B2C ISTD to Select Logistic Company and Area Code For IGST Fields -->
+                    <template if:true={showAreaCodeScreen}>
+                        <div class="slds-grid header_container">
+                            <!-- Cancel Button -->
+                            <div class="slds-size_1-of-2">
+                                <lightning-button variant="brand" label="Cancel" title="Cancel" 
+                                    onclick={cancelOperation} class="slds-m-left_x-small">
+                                </lightning-button>
+                            </div>                            
+                            <!-- Next button -->
+                            <div class="slds-size_1-of-2 slds-clearfix create_order_button-container">
+                                <div class="slds-float_right">
+                                    <lightning-button variant="brand" label="Next" title="Create Order" 
+                                        onclick={handleNext} class="slds-m-left_x-small">
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mobile_data_container" style="margin-top: 1rem;">
+                            <lightning-record-edit-form object-api-name="Opportunity" record-type-id={opportunityRecord.RecordTypeId} >
+                                <lightning-input-field field-name="Sales_Branch_Name__c" value={opportunityRecord.Sales_Branch_Name__c} onchange={handleFieldChange1} data-name="Sales_Branch_Name__c"></lightning-input-field>
+                                <lightning-input-field field-name="Area_Code_For_IGST__c" value={opportunityRecord.Area_Code_For_IGST__c} onchange={handleFieldChange2} data-name="Area_Code_For_IGST__c"></lightning-input-field>
+                            </lightning-record-edit-form> 
+                        </div>
+                        </template>
+                        <template if:false={showAreaCodeScreen}>
+                    <div class="slds-grid header_container">
+                        <!-- Cancel Button -->
+                        <div class="slds-size_1-of-2">
+                            <lightning-button variant="brand" label="Cancel" title="Cancel" 
+                                onclick={cancelOperation} class="slds-m-left_x-small">
+                            </lightning-button>
+                        </div>
+
+                        <!-- Create Order button -->
+                        <div class="slds-size_1-of-2 slds-clearfix create_order_button-container">
+                            <div class="slds-float_right">
+                                <lightning-button variant="brand" label="Create Order" title="Create Order" 
+                                    onclick={createOrderClicked} class="slds-m-left_x-small">
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1rem;">
+                        <lightning-input type="toggle" label="Select all?" class="allRowSelectionToggle" name="allRowSelectionToggle" 
+                            onchange={onallRowsSelected}
+                            message-toggle-active=""
+                            message-toggle-inactive="">
+                        </lightning-input>
+                    </div>
+                    
+                    <div class="mobile_data_container">
+                        <template for:each={data} for:item="dataValue">
+                            <lightning-card key={dataValue.id} class="padding_1rem">
+                                <div class="padding_1rem">
+                                    <!-- Non editable values. -->
+                                    <pre>
+                                        <p><strong>Name:</strong> {dataValue.name}</p>
+                                        <template if:true={isLocksB2CISTDQuote}>
+                                            <p><strong>Search Key II:</strong> {dataValue.search_key_II}</p>
+                                        </template>
+                                        <p><strong>Available Quantity:</strong> {dataValue.available_quantity}</p>
+                                    </pre>
+                                    <!-- Editable value container. -->
+                                    <span class="slds-grid">
+                                        <p><strong>Order Quantity:</strong></p>
+                                        <lightning-input type="number"  name={dataValue.id} label=" " value={dataValue.order_quantity} 
+                                            max={dataValue.available_quantity} class="mobile_order_quantity_input" placeholder="Enter order quantity"
+                                            id={dataValue.id} onchange={handleCellChangeMobile}
+                                            message-when-range-overflow = "Order quantity cannot be greater than available quantity.">
+                                        </lightning-input>
+                                    </span>
+                                    
+                                    <!-- Row selection toggle. -->
+                                    <span class="slds-grid">
+                                        <lightning-input type="toggle" label="Select Row?" class="rowSelected" name={dataValue.id} 
+                                            onchange={onRowSelectedMobile}
+                                            message-toggle-active="Selected"
+                                            message-toggle-inactive="Not Selected">
+                                        </lightning-input>
+                                    </span>
+                                </div>
+                            </lightning-card>
+                        </template>
+                    </div>
+                    <template if:true={isSSDQuote}>
+                        <lightning-record-edit-form object-api-name="Order" record-type-id={orderRecordTypeId}>
+                        <lightning-input-field field-name="Order_Won_Lost__c" value={stageName} onchange={handleInputChange} data-name="Order_Won_Lost__c"></lightning-input-field>
+                        <lightning-input-field field-name="Reason_for_Lost__c" value={reasonForLost} onchange={handleInputChange} data-name="Reason_for_Lost__c"></lightning-input-field>
+                        <lightning-input-field field-name="Reason_for_Lost_If_others__c" value={reasonForLostOthers} onchange={handleInputChange} data-name="Reason_for_Lost_If_others__c"></lightning-input-field>
+
+                    </lightning-record-edit-form>  
+                        </template>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+</div>
+</template>

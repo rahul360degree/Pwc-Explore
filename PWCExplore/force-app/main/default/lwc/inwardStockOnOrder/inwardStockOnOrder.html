@@ -1,0 +1,10 @@
+<template>
+    <lightning-card style="padding: 15px;">
+        <lightning-datatable
+            key-field="Id"
+            data={records}
+            columns={columns}
+            onsave={handleSave}
+            ></lightning-datatable>
+    </lightning-card>
+</template>

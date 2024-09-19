@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="Calls">
+        <div class="input-container slds-m-left_small slds-m-right_small">
+            <lightning-input class="input-field" label="Preiod" value={field1} onchange={handleInputChange}></lightning-input>
+            <lightning-input class="input-field" label="RM" value={field2} onchange={handleInputChange}></lightning-input>
+            <lightning-input class="input-field" label="SM" value={field3} onchange={handleInputChange}></lightning-input>
+            <lightning-input class="input-field" label="DM" value={field4} onchange={handleInputChange}></lightning-input>
+            <lightning-input class="input-field" label="BE" value={field5} onchange={handleInputChange}></lightning-input>
+            <lightning-input class="input-field" label="ASP" value={field6} onchange={handleInputChange}></lightning-input>
+            <lightning-button style="margin-top: 1.4%;" label="Submit" onclick={handleSubmit}></lightning-button>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_2-of-12">
+                    <p style="background:lightblue;height:20px;text-align: center;font-weight: 700;">Open Calls (Days)</p>
+                    <p style="background:lightpink;height:80px;text-align: center;padding-top: 32px;">1.1</p>
+                    <p style="background:lightblue;height:20px;text-align: center;font-weight: 700;">Target : 0.96</p>
+                </div>
+                <div class="slds-col slds-size_2-of-12">
+                    <p style="background:lightblue;height:20px;text-align: center;font-weight: 700;">CSN</p>
+                    <p style="background:lightpink;height:80px;text-align: center;padding-top: 32px;">86.44</p>
+                    <p style="background:lightblue;height:20px;text-align: center;font-weight: 700;">Target : 0</p>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,65 @@
+<template>
+    <lightning-card title="Display Logic">
+
+        <div class = "slds-p-around_medium">
+            
+            <template if:true={conditions.length}>
+                
+                <lightning-combobox label="Logic" value={logic} options={logicOptions} onchange={handleLogicChange}></lightning-combobox>
+                
+                <template for:each={conditions} for:item="condition" for:index="index">
+                   
+                    <div key={condition.id} 
+                        style = "display: flex; flex-direction: row; justify-content: center; align-items: center"
+                        class="slds-grid slds-wrap slds-gutters">
+                        
+                        <lightning-combobox 
+                            style = "width: 150px; padding-top: 10px"
+                            class="slds-col slds-size_3-of-10 slds-p-right_small" 
+                            label="Dependent Question" 
+                            value={condition.questionId} 
+                            options={questionOptions}
+                            data-index={index}
+                            data-field="questionId"
+                            onchange={handleConditionChange}>
+                            
+                        </lightning-combobox>
+                        <lightning-combobox 
+                            style = "width: 150px; padding-top: 10px"
+                            class="slds-col slds-size_3-of-10 slds-p-right_small" 
+                            label="Operator" 
+                            value={condition.operator} 
+                            options={operatorOptions}
+                            data-index={index}
+                            data-field="operator"
+                            onchange={handleConditionChange}>
+                        </lightning-combobox>
+
+                        <lightning-combobox 
+                            style = "width: 150px; padding-top: 10px"
+                            class="slds-col slds-size_3-of-10 slds-p-right_small" 
+                            label="Value" 
+                            value={condition.value} 
+                            options={condition.valueOptions}
+                            data-index={index}
+                            data-field="value"
+                            onchange={handleConditionChange}>
+                        </lightning-combobox>
+                        
+                        <div style="margin-top:30px">
+                            <lightning-icon class="slds-col slds-p-right_small slds-size_1-of-10" icon-name="utility:close" alternative-text="Remove" size="small" onclick={removeCondition} data-index={index}></lightning-icon>
+                        </div>
+                    
+                    </div>
+                </template>
+            </template>
+            
+            <div style= "padding-top:20px ; padding-bottom:10px">
+                <lightning-button  label="Add Condition" onclick={addCondition}></lightning-button>
+            </div>
+        </div>
+            
+            
+        
+    </lightning-card>
+</template>

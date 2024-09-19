@@ -1,0 +1,12 @@
+<template>
+    <div>
+        <lightning-input type="file" label={uploadLabel} name="fileUploader" accept={acceptedFormats}
+            multiple={allowMultiple} onchange={displayUploadedMessage}>
+        </lightning-input>
+        <p style="color: #008000;" class="slds-p-left_x-small slds-p-top_xx-small spinnerAndTextSection">{uploadMessage}</p>
+        <div if:true={showSpinner} class="slds-is-relative">
+            <lightning-spinner alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>
+    </div>
+</template>

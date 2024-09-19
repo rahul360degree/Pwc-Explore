@@ -1,0 +1,126 @@
+<template>
+    <div class = "accordion-container slds-card">
+        <ul class = "slds-accordion">
+            <template for:each={sections} for:item="section">
+                <li key = {section.Id} class = "slds-accordion__list-item">
+                    <section id = {section.Id} class = "slds-accordion__summary" style = 'display:flex; flex-direction: column; padding: 25px'> 
+                        <div class = "slds-accordion__summary" style="width: 100%; ">
+                            <h2 id = {section.Id} class="slds-accordion__summary-heading">
+                                <button id = {section.Id} onclick={onClickHandler} class="slds-button slds-button_reset slds-accordion__summary-action" title={section.Id} aria-controls="referenceId-45" aria-expanded="false" >
+                                    <lightning-icon id = {section.Id} style = "margin-right: 5px;" icon-name="utility:chevronright" size = "x-small" alternative-text="dropdown before" title="dropdown before"></lightning-icon>
+                                  <span id = {section.Id} class="slds-accordion__summary-content">
+                                      {section.name}
+                                  </span>  
+                              </button>
+                                <div style = "display: flex; flex-direction: row;">
+                                    <lightning-file-upload
+                                    label="Upload Files"
+                                    accept={acceptedFormats}
+                                    name="fileUploader"
+                                    record-id={section.Id}
+                                    onuploadfinished={handleUploadFinished}
+                                    multiple
+                                >
+                                </lightning-file-upload>
+                                </div> 
+                            </h2>
+                        </div>
+                        <div id = {section.Id} class = "slds_accordion__content" hidden = "" >
+                            <div style="display: flex; flex-direction: column; justify-content:center; align-items: center"> 
+                                <!--lightning-datatable
+                                    key-field="Id"
+                                    data={section.data}
+                                    columns={section.columns}
+                                    onrowaction={handleRowAction}
+                                    hide-checkbox-column>
+                                </lightning-datatable-->
+
+                                <!--template for:each={section.data} for:item="file">
+                                    <div key = {file.Id}>
+                                        <lightning-card
+                                            title = {file.Title}
+                                            icon-name= {file.Icon}
+                                            >   
+                                            <lightning-button-icon icon-name="utility:down" variant="border-filled" alternative-text="Show More" slot="actions"></lightning-button-icon>
+                                            <p class = "slds-p-horizontal_small">{file.Title}</p>
+                                        </lightning-card>
+                                    </div>
+                                </template-->
+
+                                <!--lightning-layout multiple-rows="true" pull-to-boundary="small">
+                                    <template for:each={section.data} for:item="file">
+                                        <lightning-layout-item key = {file.Id} size="2" class = "slds-var-p-around_x-small" style="background-color: orange; display: flex; flex-direction: row; justify-content: space-between">
+                                          
+                                            <lightning-card title = {file.Title} icon-name={file.Icon} style = "background-color: rgb(156, 69, 84);">
+                                                <div class = "slds-var-p-horizontal_small" style = "background-color: green;">
+                                                    <div style = "background-color: blue;">
+                                                        <lightning-button-icon icon-name="utility:down" variant="border-filled" alternative-text="Show More" slot="actions"></lightning-button-icon>
+                                                    </div>
+                                                    <div class = "slds-media__body" style = "display: flex; flex-direction: column">
+                                                        <div>
+                                                            <p class = "slds-var-m-bottom_xx-small" style = "font-weight: bold;">Document Title: </p>
+                                                            <p class = "slds-var-m-bottom_xx-small">{file.Title}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p class = "slds-var-m-bottom_xx-small" style = "font-weight: bold;">Created By: </p>
+                                                        <p class = "slds-var-m-bottom_xx-small">{file.CreatedBy}</p>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </lightning-card>
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout-->
+
+                                    <div style = "width: 95%;">
+                                        <lightning-layout multiple-rows = "true" vertical-align="center" class="x-large">
+                                            <template for:each={section.data} for:item="file">
+                                                <lightning-layout-item key = {file.Id} size = "4" padding="around-large" style="border: 0.5px solid #534e4e13">
+                                                    <div>
+                                                        <lightning-card variant = 'narrow'  icon-name= {file.Icon} title = {file.Title}>
+                                                                
+                                                            <lightning-button-menu data-id = {file.Id} icon-name="utility:down" variant="border-filled" alternative-text="Show More" slot="actions" onselect={handleOnSelect}>
+                                                                    <lightning-menu-item value = "view" title = "view" label="View File"></lightning-menu-item>
+                                                            </lightning-button-menu>
+    
+                                                            <div>
+                                                                <p class = "slds-var-m-bottom_xx-small" style = "font-weight: bold;">Document Title: </p>
+                                                                <p class = "slds-var-m-bottom_xx-small">{file.Title}</p>
+                                                            </div>
+                                                            <div>
+                                                                <p class = "slds-var-m-bottom_xx-small" style = "font-weight: bold;">Uploaded By: </p>
+                                                                <p class = "slds-var-m-bottom_xx-small">{file.CreatedBy}</p>
+                                                            </div>
+                                                        </lightning-card>
+                                                    </div>
+                                                </lightning-layout-item>
+    
+                                            </template>
+                                        </lightning-layout>
+                                    </div>
+
+
+                                <template if:true={section.NoFiles}>
+                                    <div style = "font-weight: 500;">
+                                        No files have been uploaded for this observation area.
+                                    </div>
+                                </template>
+                                
+                                <!--lightning-card 
+                                    title = {section.name}
+                                    icon-name = "doctype:txt">
+                                    <h1 slot = "title">Title</h1>
+                                    <p class="slds-p-horizontal_small">
+
+                                    </p>
+                                </lightning-card-->
+                            </div>
+                               
+                        </div>
+                    </section>
+                </li>
+            </template>
+        </ul>
+    </div>
+</template>

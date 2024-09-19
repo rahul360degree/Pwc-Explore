@@ -1,0 +1,164 @@
+<!------------------------------------------------------------------------
+Author:        Jayasurya Gunasekharan
+Company:       Stetig
+Description:   Visualforce page to select master record for Head of terms and display multiple premises on one screen.
+Inputs:        multipremiseTermsheet.vfp, GenerateMultipleTermSheet.vfp, multipremiseTermsheet.apxc
+Last Modified: 07/10/2021
+Test Class:    
+---------------------------------------------------------------------------->
+
+<apex:page controller="multipremiseTermsheet" lightningStylesheets="true">
+
+    <html>
+
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript">__sfdcSessionId = '{!$Api.Session_Id}';</script>
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css"
+        />
+        <script src="/soap/ajax/9.0/connection.js"></script>
+        <apex:slds />
+        <title>Multipremise Termsheet</title>
+    </head>
+    <style>
+        .slds h1,
+        .slds h2,
+        .slds h3,
+        .slds h4,
+        .slds h5,
+        .slds h6,
+        .slds th,
+        .slds td {
+            font-family: 'Lato';
+        }
+
+        .slds-scope .slds-table th,
+        .slds-scope .slds-table td {
+            padding: .25rem .5rem;
+            white-space: revert;
+            position: relative;
+            empty-cells: show;
+        }
+
+        .slds .slds-theme--shade {
+            background-color: aliceblue;
+        }
+
+        @page {
+
+            size: A4 landscape;
+            border: 1px solid black;
+            padding-left: 1px;
+            padding-right: 1px;
+        }
+    </style>
+
+    <body>
+        <div class="slds">
+            <!-- PRIMARY CONTENT WRAPPER -->
+            <div class="myapp">
+                <!-- GENERATE HoT-->
+                <div aria-labelledby="DSform">
+                    <!-- BOXED AREA -->
+                    <fieldset class="slds-box slds-theme--shade slds-container--large slds-container--center slds-grid--align-spread">
+                        <legend id="dsForm" class="slds-text-heading--medium slds-p-vertical--medium">Multipremise Termsheet Output Generation</legend>
+                        <apex:form >
+
+
+                            <apex:actionStatus id="status">
+                                <apex:facet name="start">
+                                    <div class="fadeMe">
+                                        &nbsp;
+                                    </div>
+                                    <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                        <div style="display: inline-block; padding: 2px; width: 125px;">
+                                            <img src="{!$Resource.spinner}" style="float: left; margin: 0px;" />
+                                            <span style="display: inline-block;">Please Wait...</span>
+                                        </div>
+                                    </div>
+                                </apex:facet>
+                            </apex:actionStatus>
+                            <apex:outputPanel id="messages">
+                                <apex:PageMessages id="pageMsgs" />
+                            </apex:outputPanel>
+
+                            <br/>
+                            <br/>
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                <thead>
+
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col" style="background-color: rgb(105 25 95 / 26%)">
+                                            <div class="slds-truncate" title="Select">Select</div>
+                                        </th>
+                                        <th class="" scope="col" style="background-color: rgb(105 25 95 / 26%)">
+                                            <div class="slds-truncate" title="Termsheet Name">Termsheet Name</div>
+                                        </th>
+                                        <th class="" scope="col" style="background-color: rgb(105 25 95 / 26%)">
+                                            <div class="slds-truncate" title="Approval Status">Approval Status</div>
+                                        </th>
+                                        <th class="" scope="col" style="background-color: rgb(105 25 95 / 26%)">
+                                            <div class="slds-truncate" title="Created By">Created By</div>
+                                        </th>
+                                        <th class="" scope="col" style="background-color: rgb(105 25 95 / 26%)">
+                                            <div class="slds-truncate" title="Created Date">Created Date</div>
+                                        </th>
+                                        <th class="" scope="col" style="background-color: rgb(105 25 95 / 26%)">
+                                            <div class="slds-truncate" title="Building Name">Netusable Area</div>
+                                        </th>
+                                        <th class="" scope="col" style="background-color: rgb(105 25 95 / 26%)">
+                                            <div class="slds-truncate" title="Premise">Premise</div>
+                                        </th>
+                                        <th class="" scope="col" style="background-color: rgb(105 25 95 / 26%)">
+                                            <div class="slds-truncate" title="Master HOT">Master HOT</div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!HOTWrapperList}" var="hw">
+                                        <tr class="slds-line-height_reset">
+                                            <td>
+                                                <apex:inputCheckbox value="{!hw.isSelected}" />
+                                            </td>
+                                            <td>
+                                                <apex:Outputtext value="{!hw.hot.Termsheet_Name__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:Outputtext value="{!hw.hot.Approval_Status__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:Outputtext value="{!hw.hot.CreatedBy.Name}" />
+                                            </td>
+
+                                            <td>
+                                                <apex:outputText value="{0,date,MM/dd/yy}">
+                                                    <apex:param value="{!hw.hot.CreatedDate}" /> </apex:outputText>
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!hw.hot.Net_usable_area_Area_Sq_ft__c}"> </apex:outputText>
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!hw.premiseDescription}"> </apex:outputText>
+                                            </td>
+                                            <td>
+                                                <apex:inputCheckbox value="{!hw.hot.Master_Record__c}" />
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                            <br />
+                            <center>
+                            	<apex:commandButton action="{!generateTerms}" value="Generate"/> 
+                            </center>
+                            <br />
+                        </apex:form>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    </html>
+</apex:page>

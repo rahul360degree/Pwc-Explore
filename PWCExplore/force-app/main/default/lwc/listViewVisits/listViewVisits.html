@@ -1,0 +1,19 @@
+<template>
+ 
+    <lightning-card title="Visit Records" icon-name="standard:tour">
+    <div if:true={data}>
+    <lightning-datatable
+        key-field="Id"
+        data={data}
+        columns={columns}
+        onrowaction={handlerowaction}
+        hide-checkbox-column="true"
+        variant="bordered">
+    </lightning-datatable>
+</div>
+<div if:false={data}>
+  <p> <b>   No PJP For this Month</b></p>
+</div>
+</lightning-card>
+
+</template>

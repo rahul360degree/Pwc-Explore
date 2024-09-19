@@ -1,0 +1,6 @@
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* This will divide the row into two equal columns */
+    gap: 40px; /* Add some spacing between the input fields */
+    width: 96%;
+}

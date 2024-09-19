@@ -1,0 +1,5 @@
+<apex:page StandardStylesheets="false" showHeader="false">
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>SalesTeam Performance Interio</h1>
+  <iframe title="INT - Sales Team Dashbard" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=b7e6fc46-9548-418c-9544-3424fdaa1aa1&filterPaneEnabled=false&autoAuth=true&isMobile=true&ctid=d44ff723-4fa7-405e-afc0-43c21e573043" frameborder="0" allowFullScreen="true"></iframe>
+</apex:page>

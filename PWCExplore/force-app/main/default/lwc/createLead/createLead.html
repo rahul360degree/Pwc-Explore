@@ -1,0 +1,357 @@
+<template>
+    <div class="slds-scrollable" style="height:30rem">
+        <br />
+
+        <lightning-card variant="Narrow" padding="around-large">
+
+            <div class="slds-card slds-p-around_medium">
+
+                <div class="slds-p-horizontal_small">
+                    <div class="row">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <div class="slds-combobox_container">
+                                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+                                        aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                        <div class="custom-box1 slds-box slds-p-around_medium slds-text-align_left">
+                                            <lightning-layout multiple-rows horizontal-align="left">
+                                                <lightning-layout-item flexibility="auto" padding="around-small">
+                                                    <c-search-component icon-name="standard:account"
+                                                        s-object-api-name="account" label="Child Account"
+                                                        onlookupupdate={lookupRecord}
+                                                        placeholder="Search Account here..." required>
+                                                    </c-search-component>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                            <lightning-layout multiple-rows horizontal-align="left">
+                                                <lightning-layout-item flexibility="auto" padding="around-small">
+                                                    <div class="slds-clearfix">
+                                                        <lightning-button variant="brand-outline" label="Add Account"
+                                                            onclick={handleOpenModal}
+                                                            class="slds-m-left_x-small slds-align_absolute-center">
+                                                        </lightning-button>
+                                                    </div>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                        </div>
+                                        <br />
+                                        <div class="custom-box1 slds-box slds-p-around_medium slds-text-align_left">
+                                            <lightning-layout multiple-rows horizontal-align="left">
+                                                <lightning-layout-item flexibility="auto" padding="around-small">
+                                                    <div if:false={hideContact}>
+                                                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                                                            role="none">
+                                                            <lightning-combobox label="Contact"
+                                                                dropdown-alignment="auto" options={contactOptions}
+                                                                onclick={selectContactHandler}
+                                                                onchange={selectContactHandler}>
+                                                            </lightning-combobox>
+                                                        </div>
+                                                        <div if:true={noContactMessage}>
+                                                            <p style=" font-weight: bold;color: red;">* No contact
+                                                                present for
+                                                                this
+                                                                Account, try creating a new one.</p>
+                                                        </div>
+                                                        <br />
+                                                        <template if:true={contactValueOld}>
+                                                            <lightning-input type="text" value={contactMobile}
+                                                                aria-activedescendant="option1" label='Mobile Number'
+                                                                aria-autocomplete="list" aria-controls="listbox-id-12"
+                                                                role="textbox">
+                                                            </lightning-input>
+                                                            <br />
+                                                            <lightning-input type="text" value={contactEmail}
+                                                                aria-activedescendant="option1" label='Email'
+                                                                aria-autocomplete="list" aria-controls="listbox-id-12"
+                                                                role="textbox">
+                                                            </lightning-input>
+                                                        </template>
+                                                    </div>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                            <lightning-layout multiple-rows horizontal-align="left">
+                                                <lightning-layout-item flexibility="auto" padding="around-small">
+                                                    <div class="slds-clearfix">
+                                                        <div if:false={hideContact}>
+                                                            <template if:true={createContactBool}>
+                                                                <lightning-input type="checkbox" label="Create Contact"
+                                                                    onchange={selectDeselectAll}
+                                                                    class="slds-align_absolute-center">
+                                                                </lightning-input>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                            <lightning-layout multiple-rows horizontal-align="left">
+                                                <lightning-layout-item flexibility="auto" padding="around-small">
+                                                    <template if:true={showContactDetails}>
+                                                        <div class="slds-p-horizontal_small">
+                                                            <div class="row">
+                                                                <div class="slds-form-element">
+                                                                    <div class="slds-form-element__control">
+                                                                        <div class="slds-combobox_container">
+                                                                            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+                                                                                aria-expanded="false"
+                                                                                aria-haspopup="listbox" role="combobox">
+                                                                                <lightning-input type="text"
+                                                                                    onchange={nameHandler}
+                                                                                    aria-activedescendant="option1"
+                                                                                    label='Full Name'
+                                                                                    aria-autocomplete="list"
+                                                                                    aria-controls="listbox-id-12"
+                                                                                    role="textbox">
+                                                                                </lightning-input>
+                                                                                <lightning-input type="text"
+                                                                                    value={mobileNumber}
+                                                                                    onchange={mobileNumberHandler}
+                                                                                    aria-activedescendant="option1"
+                                                                                    label='Mobile Number'
+                                                                                    aria-autocomplete="list"
+                                                                                    aria-controls="listbox-id-12"
+                                                                                    role="textbox">
+                                                                                </lightning-input>
+                                                                                <lightning-input type="text"
+                                                                                    value={email}
+                                                                                    onchange={emailHandler}
+                                                                                    aria-activedescendant="option1"
+                                                                                    label='Email'
+                                                                                    aria-autocomplete="list"
+                                                                                    aria-controls="listbox-id-12"
+                                                                                    role="textbox">
+                                                                                </lightning-input>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <section role="dialog" if:true={isshow} tabindex="-1" class="slds-modal slds-fade-in-open"
+                    aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+
+                    <!--Loading icon-->
+                    <template if:true={isLoading}>
+                        <div>
+                            <lightning-spinner alternative-text="Loading" size="large" variant="brand">
+                            </lightning-spinner>
+                        </div>
+                    </template>
+
+                    <div class="slds-modal__container ">
+                        <header class="slds-modal__header">
+                            <lightning-button-icon icon-name="utility:close" variant="bare" onclick={handleCloseModal}
+                                alternative-text="Close window" style="float: right;">
+                            </lightning-button-icon>
+                            <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Child Account </h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium slds-scrollable" style="height:25rem"
+                            id="modal-content-id-1">
+                            <lightning-record-edit-form object-api-name="Account" onsuccess={handleSuccess}>
+                                <lightning-messages>
+                                </lightning-messages>
+                                <lightning-input-field field-name="Name" value={parentAccountName}>
+
+                                </lightning-input-field>
+                                <lightning-input-field field-name="Type"></lightning-input-field>
+                                <lightning-input-field field-name="Business_Unit__c"></lightning-input-field>
+                                <lightning-input-field field-name="Sub_Division__c"></lightning-input-field>
+                                <div class="slds-m-top_medium">
+                                    <lightning-button class="slds-m-top_small" label="Cancel" onclick={handleReset}>
+                                    </lightning-button>&nbsp;
+                                    <lightning-button class="slds-m-top_small" variant="brand" type="submit"
+                                        onclick={handleSpinner} label="Save Record"></lightning-button>
+                                </div>
+
+                            </lightning-record-edit-form>
+
+                        </div>
+
+                    </div>
+                </section>
+
+                <br />
+                <div class="custom-box1 slds-box slds-p-around_medium slds-text-align_left">
+                    <lightning-layout multiple-rows horizontal-align="left">
+                        <lightning-layout-item flexibility="auto" padding="around-small">
+                            <div class="slds-p-horizontal_small">
+                                <div class="row">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-combobox_container">
+                                                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+                                                    aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                                    <template if:true={leadSourcePicklist.data}>
+                                                        <lightning-combobox label="Lead Source" value={leadSource}
+                                                            onclick={leadSourcePicklistHandler}
+                                                            options={leadSourcePicklist.data.values}
+                                                            onchange={leadSourcePicklistHandler} required>
+                                                        </lightning-combobox>
+                                                    </template>
+                                                    <div if:true={pickIpcSource}>
+                                                        <p style=" font-weight: bold;color: red;">* If Account is
+                                                            selected as
+                                                            UNDISCLOSED CUSTOMER, pick IPC as
+                                                            Lead Source</p>
+                                                    </div>
+                                                    <template if:true={ipcBool}>
+                                                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                                                            role="none">
+                                                            <lightning-input type="text" value={accountNameIpc}
+                                                                onchange={handleIpcKeyChange} onkeydown={handleIpcClick}
+                                                                onclick={handleIpcClick} onblur={handleIpcClick}
+                                                                aria-activedescendant="option1" label='IPC Account'
+                                                                aria-autocomplete="list" aria-controls="listbox-id-12"
+                                                                role="textbox" placeholder="Search IPC Account">
+                                                            </lightning-input>
+
+                                                            <div if:true={ipcError}>
+                                                                <p style=" font-weight: bold;color: red;">* Lead Source
+                                                                    is IPC,
+                                                                    Please Select an IPC</p>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <template if:true={showSearchedValuesIpc}>
+                                                            <div class="slds-box"
+                                                                style="height: 130px; overflow-y: scroll;">
+                                                                <ul class="" role="">
+                                                                    <template for:each={accountListIpc}
+                                                                        for:item="actObj">
+                                                                        <li class="slds-p-around_x-small"
+                                                                            style="cursor: pointer;" key={actObj.Id}
+                                                                            onclick={handleIpcSelection}
+                                                                            data-value={actObj.Id}
+                                                                            data-label={actObj.Name}>
+                                                                            {actObj.Name}
+                                                                        </li>
+                                                                    </template>
+                                                                </ul>
+                                                            </div>
+                                                            <div if:true={messageResultIpc}>
+                                                                <p style="font-weight: bold;color: red;">* No Result
+                                                                    Found!</p>
+                                                            </div>
+                                                        </template>
+
+                                                        <template if:false={addedIpcContactBool}>
+                                                            <lightning-combobox label="IPC Contact" value={contactIdIpc}
+                                                                options={contactOptionsIpc}
+                                                                onchange={selectContactHandlerIpc}
+                                                                onclick={selectContactHandlerIpc}>
+                                                            </lightning-combobox>
+                                                            <div if:true={ipcContactError}>
+                                                                <p style="font-weight: bold;color: red;">* Lead Source
+                                                                    is IPC,
+                                                                    Please Select an IPC Contact</p>
+                                                            </div>
+
+                                                            <div if:true={messageResultContactIpc}>
+                                                                <p style="font-weight: bold;color: red;">* No Result
+                                                                    Found!</p>
+                                                            </div>
+                                                        </template>
+
+
+                                                        <lightning-input type="checkbox" label="Create IPC Contact"
+                                                            onchange={selectDeselectAll1}>
+                                                        </lightning-input>
+                                                        <template if:true={showContactDetails1}>
+                                                            <!--Loading icon-->
+                                                            <template if:true={isLoading}>
+                                                                <div>
+                                                                    <lightning-spinner alternative-text="Loading"
+                                                                        size="large" variant="brand">
+                                                                    </lightning-spinner>
+                                                                </div>
+                                                            </template>
+
+                                                            <lightning-input type="text" value={contactValueIpc}
+                                                                onchange={nameHandlerIpc}
+                                                                aria-activedescendant="option1" label='Full Name'
+                                                                aria-autocomplete="list" aria-controls="listbox-id-12"
+                                                                role="textbox">
+                                                            </lightning-input>
+                                                            <lightning-input type="text" value={mobileNumberIpc}
+                                                                onchange={mobileNumberHandlerIpc}
+                                                                aria-activedescendant="option1" label='Mobile Number'
+                                                                aria-autocomplete="list" aria-controls="listbox-id-12"
+                                                                role="textbox">
+                                                            </lightning-input>
+                                                            <lightning-input type="text" value={emailIpc}
+                                                                onchange={emailHandlerIpc}
+                                                                aria-activedescendant="option1" label='Email'
+                                                                aria-autocomplete="list" aria-controls="listbox-id-12"
+                                                                role="textbox">
+                                                            </lightning-input>
+                                                            <br />
+                                                            <lightning-button variant="brand" label="Create Ipc Contact"
+                                                                onclick={createIpcContactHandler}
+                                                                class="slds-m-left_x-small slds-align_absolute-center">
+                                                            </lightning-button>
+                                                            <br />
+                                                        </template>
+
+                                                        <template if:true={addedIpcContactBool}>
+                                                            <lightning-input type="text" value={contactValueIpc}
+                                                                onchange={selectContactHandlerIpc}
+                                                                aria-activedescendant="option1" label='IPC Contact'
+                                                                aria-autocomplete="list" aria-controls="listbox-id-12"
+                                                                role="textbox" disabled>
+                                                            </lightning-input>
+
+                                                        </template>
+                                                    </template>
+
+                                                    <lightning-input type="text" value={location}
+                                                        onchange={locationHandler} aria-activedescendant="option1"
+                                                        label='Location' aria-autocomplete="list"
+                                                        aria-controls="listbox-id-12" role="textbox"
+                                                        placeholder="Enter Location" required>
+                                                    </lightning-input>
+                                                    <lightning-input type="number" value={spaceRequired}
+                                                        onchange={spaceRequiredHandler} aria-activedescendant="option1"
+                                                        label='Initial Space Needed' aria-autocomplete="list"
+                                                        aria-controls="listbox-id-12" role="textbox"
+                                                        placeholder="Enter Initial Space Needed (Sq.ft.)" required>
+                                                    </lightning-input>
+                                                    <lightning-input type="text" value={description}
+                                                        onchange={descriptionHandler} aria-activedescendant="option1"
+                                                        label='Description' aria-autocomplete="list"
+                                                        aria-controls="listbox-id-12" role="textbox"
+                                                        placeholder="Enter description" required>
+                                                    </lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <template if:true={spaceRequired}>
+                                <template if:true={description}>
+                                    <lightning-button variant="success" label="New Lead" onclick={createLeadHandler}
+                                        class="slds-m-left_x-small slds-align_absolute-center">
+                                    </lightning-button>
+                                </template>
+                            </template>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <p class="extrapadding" slot="footer"></p>
+            </div>
+        </lightning-card>
+    </div>
+</template>

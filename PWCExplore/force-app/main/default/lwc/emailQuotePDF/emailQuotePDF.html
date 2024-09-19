@@ -1,0 +1,21 @@
+<template>
+    <template if:true={hasTemplates}>
+        <lightning-combobox
+            name="template"
+            label="Select Template"
+            value={value}
+            placeholder="Select Template"
+            options={optionsList}
+            onchange={handleChange}></lightning-combobox><br/><br/>
+    </template>
+    <template if:false={hasTemplates}>
+        <br/><br/><div class="errorStyle">{error}</div><br/><br/>
+    </template>
+    <template if:true={hasTemplates}>
+        <lightning-button variant="brand" label="Save to Quote" title="Save to Quote" onclick={saveToQuote} class="slds-m-left_x-small floatRight"></lightning-button>
+    </template>
+    <!-- =======     FOR SPINNER USE ONLY     ======= -->
+    <div if:true={isLoading} class="slds-is-relative">
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+</template>

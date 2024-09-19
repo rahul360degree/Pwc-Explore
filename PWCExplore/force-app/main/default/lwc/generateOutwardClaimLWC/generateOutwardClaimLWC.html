@@ -1,0 +1,26 @@
+<template>
+    <lightning-card style="padding: 15px;">
+        <lightning-input type="text" label="Unique Claim NO." value="0000001" disabled style="padding: 15px;"></lightning-input>
+        <lightning-input type="date" label="Claim requested Date" value={claimRequestedDate} style="padding: 15px;"></lightning-input>
+        <lightning-combobox
+            label="Claim Type"
+            name="Claim Type"
+            value={value}
+            placeholder="Select Claim Type"
+            options={options}
+            onchange={handleChange} 
+            style="padding: 15px;">
+        </lightning-combobox>
+        <lightning-combobox
+            name="Claim Status"
+            label="Claim Status"
+            value={claimStatusValue}
+            placeholder="Select Claim Status"
+            options={claimStatusOptions}
+            onchange={handleClaimStatusChange}
+            disabled
+            style="padding: 15px;">
+        </lightning-combobox>
+        <lightning-button label="Generate" onclick={handleGenerate} style="padding: 15px;"></lightning-button>
+    </lightning-card>
+</template>

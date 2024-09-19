@@ -1,0 +1,16 @@
+<apex:page standardController="ServiceContract" extensions="ServiceContractPdfController" renderAs="pdf">
+    <p style ="text-align:left">
+        <b>Contract Issued To:<br/>
+        Name &amp; Address of Purchaser<br/></b>
+        {!serviceContract.Name}<br/>
+        {!serviceContract.BillingStreet}<br/>
+        {!serviceContract.BillingCity}|{!serviceContract.BillingState}<br/>
+        {!serviceContract.BillingPostalCode}<br/>
+        Please quote this reference in all your communications<br/>
+    	GODREJ &amp; Boyce Mfg. Co. Ltd.- Appliance Division (herein after called "the Company")hereby, provides<br/>
+        to the purchaser the benefits of the PROTECTION PLAN for the Functional Parts of the Godrej<br/>
+        Appliances, which is less than TEN YEARS OLD, AND IS FOUND IN WORKING CONDITION,<br/> 
+        subject to the Terms and Conditions given over-leaf.
+    </p>
+    
+</apex:page>

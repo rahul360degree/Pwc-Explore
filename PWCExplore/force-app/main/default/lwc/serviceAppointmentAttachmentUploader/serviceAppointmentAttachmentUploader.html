@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Service Appointment Attachment Uploader">
+        <div class="slds-m-around_medium">
+            <lightning-combobox
+            name="progress"
+            label="Status"
+            value={value}
+            placeholder="Select Progress"
+            options={options}
+            onchange={handleChange} ></lightning-combobox>
+            <lightning-input type="file" label="Upload File" onchange={handleFileChange}></lightning-input>
+            <h1>{recordId}</h1>
+        </div>
+    </lightning-card>
+</template>

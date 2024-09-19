@@ -1,0 +1,19 @@
+.padding_1rem {
+    padding: 1rem;
+}
+
+.mobile-content_container {
+    position: relative;
+    min-height: 50vh;
+    height: auto;
+    max-height: 60vh;
+    overflow-y: scroll;
+}
+
+.saveButton {
+    float: right;
+}
+
+.mobile-inclusionToggle {
+    display: flex;
+}

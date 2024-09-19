@@ -1,0 +1,24 @@
+/*.alignleft {
+	padding-left: 15px;
+	float: left;
+}
+.alignright {
+	float: right;
+	
+}
+.lightningCardHeader{
+	color: #0176D3;
+	text-transform: uppercase;
+}
+.borderCSS{
+	border-radius: 5px;
+    padding-top: 10px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #B9B9B9;
+    opacity: 1;
+	margin-top: 10px;
+}
+.clearBoth{
+    clear:both;
+  }
+  */

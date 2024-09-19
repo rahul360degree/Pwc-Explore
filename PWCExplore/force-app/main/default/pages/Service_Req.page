@@ -1,0 +1,120 @@
+<!-----------------------------------------------------------------
+Author:        Saurabh Mehta
+File Name:     ServiceReq.Vfp
+Company:       Stetig
+Description:   Visual force page on Service Request where we are taking inputs from page & converting it into PDF
+Inputs:        NA
+Last Modified: 07/10/2021
+  
+------------------------------------------------------------------------>
+<apex:page renderAs="PDF" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" controller="SRController" action="{!getDetails}">
+<html>
+        <head>
+            <style type="text/css" media="print">
+            @page {
+                size: A4; 
+                margin:10px 80px;
+                border: 1px solid black;
+                }
+                
+                body{
+                margin:0;
+                padding:0;            
+                font-family:"Google Sans", Roboto, arial, sans-serif;
+                font-family: "proxima-nova",sans-serif;
+                font-size:15px;
+                }                
+                
+                @page {
+                margin-top: 64px;
+                margin-bottom: 64px;
+                
+               
+                
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                }            
+                .header{
+                position: running(header);
+                }
+                
+            </style>  
+        </head>
+        <body>
+                <!---------------------------------Header And Footer For All Pages- ------------------------------------>
+                <div class="header">      
+                    <tr>
+                        <td width="10%" style="font-size;100pt; text-align:right;">
+                            <img src="{!$Resource.godrej_logo}" style="margin-top:70px;"/>
+                        </td> 
+                     </tr>
+                </div>
+                
+                <!-------------------------------------------- First  Page ----------------------------------------------->
+                <div style="page-break-after:always;">
+                     <table width="100%" style="border-collapse:collapse;">
+                        <tr>
+                            <td colspan ="4" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Job Request No: {!serviceRequest.Job_Request_Number__c}</td>
+                        </tr>
+                        <tr>
+                            <td colspan ="2" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Date : <apex:outputText value="{0,date,dd/MM/yy}"> <apex:param value="{!serviceRequest.Date__c}"/></apex:outputText></td>
+                            <td colspan ="2" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Time : <apex:outputText value="{0,number,00}"> <apex:param value="{!Hour(serviceRequest.Time__c)}"></apex:param></apex:outputText> : <apex:outputText value="{0,number,00}"> <apex:param value="{!Minute(serviceRequest.Time__c)}"/></apex:outputText></td>
+                        </tr>
+                        <tr>
+                            <td colspan ="4" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Name Of The Client: {!serviceRequest.Name_of_the_Client__c}</td>
+                        </tr>
+                        <tr>
+                            <td colspan ="2" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Request Given by: {!serviceRequest.Request_given_by__r.Name}</td>
+                            <td colspan ="2" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Client Contact: {!serviceRequest.ContactPhone}</td>
+                        </tr>
+                        <tr>
+                            <td colspan ="4" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Location: {!serviceRequest.Locations__c}</td>
+                        </tr>
+                        <tr>
+                            <td colspan ="4" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd"> Client Request:<apex:outputText value="{!serviceRequest.Client_Request__c}" escape="false"></apex:outputText></td>
+                        </tr>
+                        <tr>
+                            <td colspan ="2" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Type: {!serviceRequest.Type}</td>
+                            <td colspan ="1" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Leasing Case Category: {!serviceRequest.Leasing_Case_Category__c}</td>
+                            <td colspan ="1" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Sub Category: {!serviceRequest.Sub_Category__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Job Assigned To: {!serviceRequest.Assigned_To__c}</td>
+                            <td style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Representative: {!serviceRequest.Representative__c}</td>
+                            <td style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Agency: {!serviceRequest.Agency__c}</td>
+                            <td style="text-align:cleft;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Workman:{!serviceRequest.Workman__c}</td>
+                        </tr>
+                        <tr>
+                            <td colspan ="2" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Start Time : <apex:outputText value="{0,number,00}"> <apex:param value="{!Hour(serviceRequest.Start_Time__c)}"></apex:param></apex:outputText>: <apex:outputText value="{0,number,00}"> <apex:param value="{!Minute(serviceRequest.Start_Time__c)}"/></apex:outputText></td>
+                            <td colspan ="2" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">End Time : <apex:outputText value="{0,number,00}"> <apex:param value="{!Hour(serviceRequest.End_Time__c)}"></apex:param></apex:outputText>: <apex:outputText value="{0,number,00}"> <apex:param value="{!Minute(serviceRequest.End_Time__c)}"/></apex:outputText></td>
+                        </tr>
+                        <tr>
+                            <td colspan ="4" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Job Executed: <apex:outputText value="{!serviceRequest.Job_Executed__c}" escape="false"></apex:outputText> </td>
+                        </tr>
+                        <tr>
+                            <td colspan ="4" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Material used (If Any):<apex:outputText value="{!serviceRequest.Material_Used_if_any__c}" escape="false"></apex:outputText> </td>
+                        </tr>
+                        <tr>
+                            <td colspan ="4" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd" escape="false">Customer Assessment Feedback:<apex:outputText value="{!serviceRequest.Customer_Assessment_Feedback__c}" escape="false"></apex:outputText> </td>
+                        </tr>
+                        <tr>
+                            <td colspan ="4" style="text-align:left;line-height:1.5;padding:10px 5px;border:1px solid #ddd">Level of Satisfaction: {!serviceRequest.Level_of_Satisfaction__c}</td>
+                        </tr>  
+                        </table>
+                        <table width="100%" style="border-collapse:collapse;">
+                         <tr>
+                            <td style="text-align:left;line-height:5.5;padding:2px 2px 40px 5px;border:1px solid #ddd">HelpDesk</td>
+                            <td style="text-align:left;line-height:5.5;padding:2px 2px 40px 5px;border:1px solid #ddd">Client</td>
+                            <td style="text-align:left;line-height:5.5;padding:2px 2px 40px 5px;border:1px solid #ddd">Duty Manager</td>
+                            <td style="text-align:cleft;line-height:5.5;padding:2px 2px 40px 5px;border:1px solid #ddd">TM/SM/HM</td>
+                          <td style="text-align:left;line-height:5.5;padding:2px 2px 40px 5px;border:1px solid #ddd">Godrej &amp;Boyce</td>                     
+                        </tr> 
+                      </table>      
+                </div>
+        </body>
+    </html>   
+</apex:page>

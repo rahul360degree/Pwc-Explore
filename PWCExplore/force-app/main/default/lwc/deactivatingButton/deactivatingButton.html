@@ -1,0 +1,34 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    <template if:false={showSpinner}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+            <!-- modal header start -->
+            <header class="slds-modal__header">
+                <p>Select a reason for Closure.</p>
+            </header>
+        
+            <!-- modal body start -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-combobox
+                        name="Reason for Closure"
+                        label="Reason for Closure"
+                        value={reasonForClosure}
+                        options={picklistValues}
+                        placeholder="Select a Reason for Closure."
+                        onchange={handleChange}
+                        required
+                    ></lightning-combobox>
+                </div>
+
+                <!-- modal footer start -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleSave}>Save</button>
+                    <button class="slds-button slds-button_neutral" onclick={handleCancel}>Cancel</button>
+                </footer>
+            </div>
+        </section>
+    </template>
+</template>

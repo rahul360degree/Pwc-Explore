@@ -1,0 +1,30 @@
+<aura:component implements="lightning:HomeTemplate" description="Custom Two Region Footer Layout">
+    
+    <aura:attribute name="left_col" type="Aura.Component[]"/>
+    <aura:attribute name="right_col" type="Aura.Component[]"/>
+    <aura:attribute name="footer" type="Aura.Component[]"/>
+    
+    <div>
+        
+    <lightning:layout>
+        
+        <lightning:layoutItem size="{! $Browser.isDesktop ? '8' : '12'}" padding="horizontal-small">
+            {!v.left_col}
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem size="{! $Browser.isDesktop ? '4' : '12'}" class="">
+            {!v.right_col}
+        </lightning:layoutItem>
+        
+    </lightning:layout>
+        
+    <lightning:layout>
+        
+        <lightning:layoutItem size="12" class="slds-m-vertical_small">
+            {!v.footer}
+        </lightning:layoutItem>
+        
+    </lightning:layout>
+</div>
+	
+</aura:component>

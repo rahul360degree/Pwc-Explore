@@ -1,0 +1,74 @@
+<template>
+   <lightning-card title={cardName} icon-name="custom:custom63">
+      <div class="slds-m-around_medium">
+
+         <div if:true={loading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="medium"></lightning-spinner>
+         </div>
+         <div if:false={loading}>
+            <div class="slds-grid slds-wrap">
+               <div
+                  class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--9-of-12 slds-p-around--small">
+                  <lightning-input value={searchInput} label="Search Articles" variant='label-hidden'
+                     onchange={searchChangeHandler}>
+                  </lightning-input>
+               </div>
+               <div
+                  class="slds-col slds-size--1-of-2 slds-medium-size--1-of-6 slds-large-size--1-of-12 slds-p-around--small">
+                  <lightning-button variant="brand" onclick={searchButton} label="Search" title="Search">
+                  </lightning-button>
+               </div>
+
+               <div
+                  class="slds-col slds-size--1-of-2 slds-medium-size--2-of-6 slds-large-size--2-of-12 slds-p-around--small">
+                  <lightning-button variant="brand" onclick={resetSearchHandler} label="Reset Search"
+                     title="Reset Search">
+                  </lightning-button>
+               </div>
+            </div>
+         </div>
+
+         <div if:true={articles.length}>
+            <div if:true={recordId}>
+               <div class="slds-grid slds-wrap">
+                  <div
+                     class="slds-col slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-p-around--small">
+                     <center>
+                        <lightning-button label="Attach Articles" variant="brand" onclick={handleClick}>
+                        </lightning-button>
+                     </center>
+                  </div>
+               </div>
+            </div>
+
+            <template for:each={articles} for:item="article">
+               <div key={article.Id}>
+                  <lightning-layout>
+                     <lightning-layout-item size="1">
+                        <div if:true={recordId}>
+                           <center>
+                              <lightning-input data-id={article.Id} key={article.id} data-idtype="box" type="checkbox"
+                                 onchange={checkboxChangeHandler}></lightning-input>
+                           </center>
+                        </div>
+                     </lightning-layout-item>
+                     <lightning-layout-item size="11">
+                        <a key={article.Id} href="#" data-value={article.Id} onclick={navigateToKAMPage}>
+                           <p key={article.Id}>{article.Title}</p>
+                        </a>
+                        <p key={article.ArticleNumber}>{article.ArticleNumber}</p>
+                        <p key={article.Summary}>{article.Summary}</p>
+                     </lightning-layout-item>
+                     <hr>
+                  </lightning-layout>
+               </div>
+            </template>
+         </div>
+         <div if:false={articles.length}>
+            <center>
+               No articles Found.
+            </center>
+         </div>
+      </div>
+   </lightning-card>
+</template>

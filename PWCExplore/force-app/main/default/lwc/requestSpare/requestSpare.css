@@ -1,0 +1,11 @@
+/* formFields.css */
+.custom-file-upload {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.custom-file-upload lightning-input {
+    margin-bottom: 10px;
+}

@@ -1,0 +1,6 @@
+<aura:component implements = "flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                controller = "AttachPaymentReceiptController"
+                access = "global">
+	<aura:handler name="init" action="{!c.generateAndAttachPDF}" value="{!this}"/>
+    We're generating the payment receipt for you. Please hold..
+</aura:component>

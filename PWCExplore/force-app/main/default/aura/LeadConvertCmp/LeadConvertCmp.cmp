@@ -1,0 +1,43 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                controller = "LeadConversionController"
+                access="global" >
+    <!--attributes-->
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="existingAccount" type="Object" />
+    <aura:attribute name="createNewAccount" type="Boolean"/>
+    <aura:attribute name="message" type="String" default = "Choose an existing account, if available" />
+
+
+    <aura:attribute name="spinner" type="Boolean" default="false" />
+    <aura:attribute name="checkProfile" type="Boolean"/>
+	
+    <!--Do Init Method-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   
+    <!--Convert Lead Screen-->
+    <lightning:card title="Convert Lead">
+    <aura:if isTrue="{!v.spinner}">
+    	<lightning:spinner alternativeText="Loading" size="small" />
+    </aura:if>
+
+        
+        <div class="slds-p-around_medium">
+            
+            <div class="slds-box slds-box_small">
+              <p>{!v.message}</p>
+            </div>
+            <!--Input for Existing Account or Create New Account-->
+            <lightning:recordEditForm objectApiName="Contact" >
+                          <lightning:inputField fieldName="AccountId" value="{!v.existingAccount}"/>
+             <!--Added by Namrata on 12-01-2023 for conditionally hiding the checkbox for create new Account-->
+                			<aura:if isTrue="{!v.checkProfile}">                           
+                			<lightning:input type="checkbox" label="Create New Account" name="createNew" value ="{!v.createNewAccount}" checked= "{!v.createNewAccount}"/>
+                            </aura:if>
+            </lightning:recordEditForm>
+        </div>
+        <aura:set attribute="actions">
+            <lightning:button label="Convert" onclick="{!c.convertLeadQualifier}" variant="brand"/>
+        </aura:set>
+    </lightning:card>
+
+</aura:component>

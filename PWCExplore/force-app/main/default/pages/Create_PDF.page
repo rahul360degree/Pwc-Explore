@@ -1,0 +1,21 @@
+<apex:page standardController="Quote" showHeader="false" sidebar="false">
+    <apex:includeLightning />
+    <body>
+    <div id="lightningContainer" style="height:250px">
+    </div>
+  
+    <script>
+        var quoteId = "{!Quote.Id}";
+        var userContext = "{!$User.UITheme}";
+  
+        $Lightning.use("c:CreatePDFApp", function() {
+        $Lightning.createComponent(
+            "c:EmailQuotePDFCMP",
+            { "recordId" : quoteId,
+              "userContext" : userContext },
+            "lightningContainer",
+            function(component) {});
+        });
+     </script>
+     </body>
+</apex:page>

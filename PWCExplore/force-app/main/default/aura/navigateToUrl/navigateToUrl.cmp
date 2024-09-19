@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickAction,lightning:availableForFlowActions">
+   <aura:handler name="change" value="{!v.redirectURL}" action="{!c.invoke}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.invoke}"/>
+    <aura:attribute name="redirectURL" type="String" />
+</aura:component>

@@ -1,0 +1,76 @@
+<template>
+    <div class={componentClass}>
+        <span class="title"><h1><b>Knowledge Search Component</b><span class="size"></span></h1></span>
+        <div id="container">
+            <lightning-layout>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div>
+                        <lightning-input label="Search" onchange={changeHandler}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="record-types">Record Types</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select class="slds-select" id="record-types" onchange={handleCible}>
+                                    <option value="All" selected>All</option>
+                                    <template for:each={rtList} for:item="r" for:index='index'>
+                                        <option key={r} value={r}>{r}</option>    
+                                    </template>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <template if:true={articleList}>
+                <lightning-layout>
+                    <lightning-layout-item padding="around-small" class="adjust-padding">
+                        {articleList.length} article(s) found
+                    </lightning-layout-item>
+                </lightning-layout>
+
+                <template if:true={articleList.length}>
+                    <div class="custom-table-container">
+                        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Select</th>
+                                    <th scope="col">Title</th>
+                                    <!-- Add other column headers as needed -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={articleList} for:item="a">
+                                    <tr key={a.data.Id}>
+                                        <td data-label="Select">
+                                            <lightning-input type="checkbox" value={a.data.Id} name="selectedArticles" onchange={handleCheckboxChange}></lightning-input>
+                                        </td>
+                                        <td data-label="Title">
+                                            <a href={a.url} data-id={a.data.Id} onclick={handleArticleClick}>{a.data.Title}</a>
+                                        </td>
+                                        <!-- Add other columns as needed -->
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="send-button-container">
+                        <lightning-button label="Send" onclick={handleSendClick}></lightning-button>
+                    </div>
+                </template>
+
+                <template if:false={articleList.length}>
+                    <lightning-layout>
+                        <lightning-layout-item class="adjust-padding">
+                            <i>No articles found.</i>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+            </template>
+        </div>
+    </div>
+</template>

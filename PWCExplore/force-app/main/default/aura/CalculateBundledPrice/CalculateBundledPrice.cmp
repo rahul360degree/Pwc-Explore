@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" controller="CalculateBundledPriceController">
+    <aura:attribute name="message" type="String" default="{!$Label.c.Calculating_Price}"/>
+    <aura:handler name="init" action="{!c.calculatePrices}" value="{!this}"/>
+    {!v.message}
+</aura:component>

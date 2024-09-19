@@ -1,0 +1,335 @@
+<apex:page controller="SalesAcknowledgementController" 
+           renderAs="advanced_pdf"
+           applyBodyTag="false" 
+           showHeader="true" 
+           sidebar="true" 
+           standardStylesheets="true" 
+           applyHtmlTag="true">  
+    
+    <head> 
+        <style type="text/css" media="print">
+            @page {
+            /*size: 8.27in 11.69in;*/
+            size:landscape; 
+            margin: .5in .2in .5in .2in; 
+            zoom: 95%;
+            
+            @bottom-left {
+            content: element(footer);
+            color:#000;
+            }
+            }
+            
+            div.header {
+            padding: 5px;
+            background:#e6e4dc;
+            color:#000;
+            font-weight:bold;
+            page-break-inside: avoid;
+            }
+            
+            div.subheader {
+            padding: 5px;
+            background:#d6c1d3;
+            color:#000;
+            font-weight:bold;
+            page-break-inside: avoid;
+            }
+            
+            div.footer {
+            
+            padding: 5px;
+            height:100px;
+            position: running(footer);
+            }
+            
+            .pagenumber:before {
+            content: counter(page);
+            }
+            
+            body {font-family: "Arial" "Sans-Serif"; font-size:10px; }    
+            
+            .table {
+            width:100%;
+            margin-top:5px;
+            border-left:1px solid rgb(184, 187, 191);
+            border-top:1px solid rgb(184, 187, 191);
+            page-break-inside: avoid;
+            font-size:11px;
+            }
+            
+            .table td,th {
+            width:auto;
+            padding:0px;
+            border-right:1px solid rgb(184, 187, 191);
+            border-bottom:1px solid rgb(184, 187, 191);
+            border-collapse: collapse;
+            }
+            
+            .table th{
+            background-color:#ebdce8;
+            }
+            
+            .table .label {
+            font-weight:bold;
+            text-align:left;
+            }
+            
+            .headertable{
+            width:30%;
+            margin-top:5px;
+            page-break-inside: avoid;
+            word-wrap: break-word;
+            margin-bottom:15px;
+            font-size:10px;
+            }
+            
+            .headertable td{
+            padding:1px;
+            text-align:left;    
+            }
+            
+            .headertable .label{
+            font-weight:bold;
+            text-align:left; 
+            }
+            
+            .terms{
+            font-size: 14px;
+            }
+            
+            .liststyle{
+            margin-bottom: 8px;
+            } 
+            
+            .thankyou{
+            width: 50%;
+            border-style: groove;
+            border-color: rgb(128, 103, 103);
+            margin-top: px;
+            }
+            
+            .thankyou ul{
+            list-style-type: none;
+            font-size: 14px;
+            padding-right: 10px;
+            }
+            
+            .thankyou td{
+            padding-right: 17px;
+            padding-left: 17px;
+            }
+            
+            .center-div{
+            margin: 0 auto;
+            width: 50%; 
+            }
+        </style>
+    </head>
+    <div class="main">
+        <div class="footer" style="font-size:12px;color:rgb(128,128,128);text-align:left;">
+            <Strong>Page: <span class="pagenumber"></span></Strong>
+        </div>
+        <Center><div class="header" style="font-size:12px">SALES ACKNOWLEDGEMENT</div></Center><br/>
+        <div>
+            <table class="headertable"  cellspacing="0">
+                <tr>
+                    <td><apex:outputText value="{!orderRec.Sold_to_Business_Partner__r.Name}"/></td>
+                </tr>
+                <tr>
+                    <td><apex:outputText value="{!COCOStoreAddress}"/></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <table class="headertable"  cellspacing="0" style="width:50%;">
+                <tr>
+                    <td><b>GST Number:</b> <apex:outputText value="{!GSTNumber}"/><br/><b>CIN Number: <apex:outputText value="{!orderRec.Sold_to_Business_Partner__r.CIN__c}"/></b></td>
+                    <td><b>GST Date:</b> <apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!GSTDate}" /> </apex:outputText></td>
+                </tr>
+            </table>
+        </div>
+        <div style="border-top:1px solid rgb(184, 187, 191);width:100%" class="headertable">
+            <table>
+                <tr>
+                    <td style="width:37%">
+                        <b>SOLD TO:</b><br/>
+                        <apex:outputText value="{!orderRec.Sold_To_Address__r.Name__c}"/><br/>
+                        <apex:outputText value="{!soldToAddress}"/><br/>
+                        <b>Contact Number </b><apex:outputText value="{!orderRec.Account.PersonMobilePhone}"/><br/>
+                        <b>Customer GST Number </b><apex:outputText value="{!soldTocustGSTNumber}"/><br/>
+                        <b>Customer GST Date </b><apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!soldTocustGSTDate}" /> </apex:outputText><br/>
+                    </td>
+                    <td style="width:37%">
+                        <b>SHIP TO:</b><br/>
+                        <apex:outputText value="{!orderRec.Ship_To_Address__r.Name__c}"/><br/>
+                        <apex:outputText value="{!shipToAddress}"/><br/>
+                    </td>
+                    <td style="width:26%">
+                        <b>Date:</b> <apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!orderRec.CreatedDate}" /></apex:outputText><br/>
+                        <b>Customer Code:</b> <apex:outputText value="{!orderRec.Sold_to_Business_Partner__r.Account_Code__c}"/><br/>
+                        <b>Order Reference Number:</b> <apex:outputText value="{!orderRec.OrderReferenceNumber}"/><br/> <!--Added by Sreekanth Jujare-->
+                        <b>Sales Order Number:</b> <apex:outputText value="{!orderRec.OrderNumber}"/><br/>
+                        <b>Sales Order Date:</b> <apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!orderRec.CreatedDate}" /></apex:outputText><br/>
+                        <b>Sales Representative Code And Name:</b> <apex:outputText value="{!orderRec.Internal_Sales_Representative__r.Salary_Code__c}"/>&nbsp;<apex:outputText value="{!internalSalesRepName}"/><br/>
+                        <b>Purchase Order Number:</b> <apex:outputText value="{!orderRec.Customer_Order__c}"/><br/>
+                        <b>Reference:</b> <apex:outputText value="{!orderRec.Reference_A__c}"/><br/><apex:outputText value="{!orderRec.Reference_B__c}"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <table class="headertable"  cellspacing="0" style="width:20%;">
+                <tr>
+                    <td>Special instructions:<apex:outputText value="{!orderRec.Header_Text__c}"/><br/>
+                        <br/>
+                        <apex:outputText value="{!orderRec.Footer_Text__c}"/><br/>
+                        We thank you for your order.<br/>
+                        Following are the details of your purchases</td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <!--  /*
+Shankar Sahu 18-01-2022
+added the below condition to not render this table for secondary orders
+for srf 75 requirement-Sales acknowledgement for dealers
+*/-->
+            <apex:outputPanel rendered="{!IF(CONTAINS(salestype,'Secondary'),false,true)}">
+                <table class="table"  cellspacing="0">
+                    
+                    <tr>
+                        <th>Warehouse No.</th>
+                        <th>Customer Item</th>
+                        <th>Item Code.<br/>Item Desc.</th>
+                        <th>Quantity.</th>
+                        <th>Unit Basic Price.<br/>Total Basic Price.</th>
+                        <th>Scheme Code.<br/>Scheme Desc.</th>
+                        <th>Discount Percent.<br/>Discount Amount.</th>
+                        <th>Unit CGST Amount.<br/>Total CGST Amount.</th>
+                        <th>Unit SGST/UTGST Amount.<br/>Total SGST/UTGST Amount.</th>
+                        <th>Unit IGST Amount.<br/>Total IGST Amount.</th>
+                        <th>Unit Total Amount.<br/>Total Amount.</th>
+                        <th>Delivery Term</th>
+                    </tr>
+                    
+                    <apex:repeat value="{!orderProducts}" var="item">
+                        <tr>
+                            <td><apex:outputText value="{!orderRec.WarehouseCode__r.Warehouse__c}"/></td>
+                            <td></td>
+                            <td><apex:outputText value="{!item.Product2.Item__c}"/><br/><apex:outputText value="{!item.Product2.Description}"/></td>
+                            <td><apex:outputText value="{!item.Quantity}"/></td>
+                            <td><apex:outputText value="{!item.UnitPrice}"/><br/><apex:outputText value="{!item.Total_Unit_Price__c}"/></td>
+                            <td><apex:outputText value="{!orderRec.Scheme_Code__r.Name}"/><br/><apex:outputText value="{!orderRec.Scheme_Code__r.Description__c}"/></td>
+                            <td><apex:outputText value="{!ROUND(IF(item.Total_Discount_Amount__c != 0, ((item.Total_Discount_Amount__c/item.UnitPrice)/item.Quantity)*100, 0),2)}"/><br/><apex:outputText value="{!ROUND(item.Total_Discount_Amount__c,2)}"/></td>				<!--Formula modified by Sreekanth Jujare-->
+                            <td><apex:outputText value="{!ROUND((item.Total_Unit_Price__c-item.Total_Discount_Amount__c)*((item.Product2.Tax_Rate__c/100)/2)/item.Quantity,2)}"/><br/><apex:outputText value="{!ROUND((item.Total_Unit_Price__c-item.Total_Discount_Amount__c)*((item.Product2.Tax_Rate__c/100)/2),2)}"/></td>			<!--Formula modified by Sreekanth Jujare-->
+                            <td><apex:outputText value="{!ROUND((item.Total_Unit_Price__c-item.Total_Discount_Amount__c)*((item.Product2.Tax_Rate__c/100)/2)/item.Quantity,2)}"/><br/><apex:outputText value="{!ROUND((item.Total_Unit_Price__c-item.Total_Discount_Amount__c)*((item.Product2.Tax_Rate__c/100)/2),2)}"/></td>			<!--Formula modified by Sreekanth Jujare-->
+                            <td><apex:outputText value="{!item.IGST_tax_Amount__c/item.Quantity}"/><br/><apex:outputText value="{!item.IGST_tax_Amount__c}"/></td>
+                            <td><apex:outputText value="{!ROUND(orderItemVsTotalUnitAmount[item.Id],2)}"/><br/><apex:outputText value="{!ROUND((item.Total_Unit_Price__c-item.Total_Discount_Amount__c)+(item.Total_Unit_Price__c-item.Total_Discount_Amount__c)*(item.Product2.Tax_Rate__c/100),2)}"/></td>
+                            <td><apex:outputText value="{!orderRec.Delivery_Terms_C__c}"/></td>
+                        </tr>
+                    </apex:repeat>
+                    <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                        <td>{!totalQuantity}</td>
+                        <td>{!totalBasicPrice}</td>
+                        <td></td>
+                        <td>{!ROUND(totalDiscountAmount,2)}</td>
+                        <td>{!ROUND(totalCGSTAmount,2)}</td>
+                        <td>{!ROUND(totalSGSTAmount,2)}</td>
+                        <td>{!ROUND(totalIGSTAmount,2)}</td>
+                        <td>{!ROUND(finalTotalAmount,2)}</td>
+                        <td></td>
+                    </tr>
+                    
+                </table>
+            </apex:outputPanel>    
+            
+            <!--/*
+Shankar Sahu 18-01-2022
+added the below table for srf 75 requirement-Sales acknowledgement for dealers
+*/ -->
+            <apex:outputPanel rendered="{!IF(CONTAINS(salestype,'Secondary'),true,false)}">
+                <table class="table"  cellspacing="0">
+                    
+                    <tr>
+                        <th>Warehouse No.</th>
+                        <th>Customer Item</th>
+                        <th>Item Code.<br/>Item Desc.</th>
+                        <th>Quantity.</th>
+                        <th>Unit Basic Price.<br/>Total Basic Price.</th>
+                        <th>Scheme Code.<br/>Scheme Desc.</th>
+                        <th>Discount Percent.<br/>Discount Amount.</th>
+                        <th>Tax Percent.<br/>Tax Amount.</th>
+                        <th>Unit Total Amount.<br/>Total Amount.</th>
+                        <th>Delivery Term</th>
+                    </tr>
+                    
+                    <apex:repeat value="{!orderProducts}" var="item">
+                        <tr>
+                            <td><apex:outputText value="{!orderRec.WarehouseCode__r.Warehouse__c}"/></td>
+                            <td></td>
+                            <td><apex:outputText value="{!item.Product2.Item__c}"/><br/><apex:outputText value="{!item.Product2.Description}"/></td>
+                            <td><apex:outputText value="{!item.Quantity}"/></td>
+                            <td><apex:outputText value="{!item.UnitPrice}"/><br/><apex:outputText value="{!item.Total_Unit_Price__c}"/></td>
+                            <td><apex:outputText value="{!orderRec.Scheme_Code__r.Name}"/><br/><apex:outputText value="{!orderRec.Scheme_Code__r.Description__c}"/></td>
+                            <td><apex:outputText value="{!ROUND((item.Discount_Amount__c*100)/item.ListPrice,2)}"/><br/><apex:outputText value="{!item.Discount_Amount__c}"/></td>
+                            <td><apex:outputText value="{!item.Product2.Tax_Rate__c}"/><br/><apex:outputText value="{!ROUND(((item.Total_Unit_Price__c-item.Discount_Amount__c)*item.Product2.Tax_Rate__c/100),2)}"/></td>
+                            <td><apex:outputText value="{!ROUND((item.Total_Unit_Price__c+(item.Total_Unit_Price__c-item.Discount_Amount__c)*(item.Product2.Tax_Rate__c/100)-item.Discount_Amount__c),2)}"/><br/>
+                                <apex:outputText value="{!ROUND((item.Total_Unit_Price__c+(item.Total_Unit_Price__c-item.Discount_Amount__c)*(item.Product2.Tax_Rate__c/100)-item.Discount_Amount__c),2)}"/></td>
+                            <td><apex:outputText value="{!orderRec.Delivery_Terms_C__c}"/></td>
+                        </tr>
+                    </apex:repeat>
+                    <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                        <td>{!totalQuantity}</td>
+                        <td>{!totalBasicPrice}</td>
+                        <td></td>
+                        <td>{!totalDiscountAmount}</td>
+                        <td>{!totalTaxAmount}</td>
+                        <td>{!finalTotalAmountForDealerAck}</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+        </div>
+        <div>
+            <table class="headertable"  cellspacing="0" style="width:100%;">
+                <tr>
+                    <td class="label">Delivery period</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="label">Payment terms</td>
+                    <td><apex:outputText value="{!paymentTerms}"/></td>
+                </tr>
+                <tr>
+                    <td class="label">Price terms</td>
+                    <td>The prices given above are the current prices.However the duties, taxes and/or any other Government levies as applicable at the time of delivery will be charged extra.</td>
+                </tr>  
+            </table>
+            <table class="headertable"  cellspacing="0" style="width:100%;">
+                <tr>
+                    <td class="label">Contact person name for accepting delivery</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <p style="word-wrap:break-word;width:30%;font-size:10px">Terms And Conditions are attached to this document All other terms and conditions as mutually agreed and finalised Pay order or Demand draft should be drawn in the name of Godrej &amp; Boyce Mfg Co Ltd
+        </p>
+        <table class="headertable" style="width:100%">
+            <tr>
+                <td>Customer Signature :</td>
+                <td style="text-align:right;"> For GODREJ &amp; BOYCE MFG.CO. LTD<br/><br/>
+                    Authorized Signatory</td>
+            </tr>
+        </table>
+        <center><p>*This is not a commercial document</p></center>
+        <div style="page-break-before:always;"/>
+        <apex:include pageName="TermsOfOrder"/>
+    </div> 
+</apex:page>

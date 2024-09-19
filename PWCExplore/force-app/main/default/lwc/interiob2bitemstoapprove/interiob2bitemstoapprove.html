@@ -1,0 +1,54 @@
+<!--
+@description       : 
+@author            : snehalw@godrej.com
+@group             : 
+@last modified on  : 05-09-2023
+@last modified by  : snehalw@godrej.com
+-->
+<template>
+<div class="slds-theme_default pagewidth">
+<b  style="margin-left: 20px;">Items To Approve Interio B2B</b>
+<template if:false={hideSpinner}>
+    <lightning-spinner alternative-text="Loading" variant="brand"></lightning-spinner>
+</template>
+<template if:true={displayQuoteSection}>
+<template if:true={records}>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" key={records} >
+        <thead>
+            <tr>
+                <th onclick={handleVisibility} data-name='Quote'>
+                    Quote
+                    <template if:true={showQuoteInputBox}>
+                    <input type="text" value={filterQuote} onchange={handleFilterQuote} />
+                    </template>
+                </th>
+            
+                <th>Pending Since</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={records} for:item="rec">
+                <tr key={rec.Id}>
+                    <td>
+                        <a tabindex="-1" onclick={helperNavigation} data-id={rec.Id} data-name="Quote">{rec.Name}</a>
+                    </td>
+                    <td>
+                        <lightning-formatted-date-time value={rec.Pending_Since_Date__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                        minute="2-digit"></lightning-formatted-date-time>
+                    </td>
+                    </tr>
+            </template>
+        </tbody>
+    </table>
+    
+</template>
+<template if:false={records}>
+    <div class="slds-align_absolute-center slds-text-heading_large">No Pending Quote found.</div>
+</template>
+</template>
+<template if:true={quoteId}>
+    <c-interiob2bquotdetail quote-id={quoteId} onclosemodal={closeModal} fromapprover = {isapprover}></c-interiob2bquotdetail>
+</template>
+</div>
+
+</template>

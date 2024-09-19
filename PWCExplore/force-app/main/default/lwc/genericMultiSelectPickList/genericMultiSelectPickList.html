@@ -1,0 +1,58 @@
+<template>
+    <div class="slds-form-element component-container">
+        <!-- This is a hack used to ensure that change in stock and search table properties in parent update this component.-->
+        <!--<div style="visibility:hidden;height:0em;" class={fieldAPIName}>
+            {options}
+        </div>-->
+
+        <template if:true={IsDisabled}>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-1">{label}</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                    <lightning-icon size="x-small" class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" icon-name="utility:down"></lightning-icon>
+                    <input type="text" id="text-input-id-1" placeholder={placeHolder} class="slds-input" disabled />
+                </div>
+            </div>
+        </template>
+
+        <template if:false={IsDisabled}>
+            <label class="slds-form-element__label" for="combobox-unique-id-3">{label}</label>
+            <div class="slds-form-element__control">
+                <div class="slds-combobox_container">
+                    <!-- Combobox Component.-->
+                    <div class={dropdown} data-id="resultBox" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                    <!--code for input and dropdown icon-->
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                            <span onclick={controlDropDown} class="slds-input slds-combobox__input slds-combobox__input-value input_element">{placeHolder}</span>    
+                            <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Down icon">
+                                <lightning-icon icon-name="utility:down" size="xx-small" class="slds-icon-text-default" ></lightning-icon>
+                                <span class="slds-assistive-text">Down icon</span>
+                            </span>            
+                        </div>
+
+                        <!-- Dropdown list. -->
+                        <div id="listbox-unique-id" role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+                                <div class="slds-scrollable option-container">
+                                    <!-- code to show list of countrys -->
+                                    <template for:each={optionsToRender} for:item="item">
+                                        <li key={item.label} role="presentation" class="slds-listbox__item">
+                                            <div data-id={item.isChecked} data-name={item.label} onclick={handleSelectOptionEvent} class={item.class} role="option">
+                                                <span class="slds-media__figure">
+                                                        <lightning-icon icon-name="utility:check" size="xx-small" class="slds-listbox__icon-selected"></lightning-icon>
+                                                </span>
+                                                <span class="slds-media__body">
+                                                        <span class="slds-truncate" style="color:black;" title={item.label}>{item.label}</span>
+                                                </span>
+                                            </div> 
+                                        </li>
+                                    </template>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,4 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+	
+    <c:consolidatedPlanBenefitsView recordId="{!v.recordId}" onclose="{!c.closeMethodInAuraController}"/>
+</aura:component>

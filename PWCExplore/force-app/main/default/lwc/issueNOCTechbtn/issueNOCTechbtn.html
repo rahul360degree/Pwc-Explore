@@ -1,0 +1,30 @@
+<template>
+    
+    <template if:true={display}>
+<lightning-card title="Issue NOC" icon-name="action:new_note">
+    <div class="slds-p-around_medium">
+       <lightning-file-upload label='NOC' 
+                                            name='NOC' 
+                                            record-id={recordId} 
+                                            data-doctype='NOC'
+                                            onuploadfinished={handleUploadFinished} 
+                                            required
+                                            >
+                    </lightning-file-upload>       
+    </div>
+    </lightning-card>
+    </template>
+<template if:false={display}>
+    <div class="slds-card slds-theme_shade">
+        <div class="slds-card__header slds-grid">
+          <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+            <span class="slds-assistive-text">Warning </span>
+              <h1> <b>Cannot Access this button. Termination Approval should be given</b> </h1>                  
+          </div>
+        </div>
+      </div>
+
+</template>
+
+
+</template>

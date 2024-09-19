@@ -1,0 +1,315 @@
+<!------------------------------------------------------------------------
+Author:        Lalitha Bhat
+Company:       Stetig
+Description:   Visualforce Page for changing any terms or adding deviations to head of terms
+Inputs:        NA
+Last Modified: 12/10/2021
+Test Class:    
+---------------------------------------------------------------------------->
+
+<apex:page controller="ModifyHOT" docType="html-5.0" standardStylesheets="false" lightningStylesheets="true" applyHtmlTag="true"
+    applyBodyTag="true">
+    <html>
+
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript">__sfdcSessionId = '{!$Api.Session_Id}';</script>
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css"
+        />
+        <script src="/soap/ajax/9.0/connection.js"></script>
+        <apex:slds />
+    </head>
+    <style>
+        .slds h1,
+        .slds h2,
+        .slds h3,
+        .slds h4,
+        .slds h5,
+        .slds h6,
+        .slds th,
+        .slds td {
+            font-family: 'Lato';
+        }
+
+        .slds-scope .slds-table th,
+        .slds-scope .slds-table td {
+            padding: .25rem .5rem;
+            white-space: revert;
+            position: relative;
+            empty-cells: show;
+        }
+
+        .slds .slds-theme--shade {
+            background-color: aliceblue;
+        }
+
+        @page {
+
+            size: A4 landscape;
+            border: 1px solid black;
+            padding-left: 1px;
+            padding-right: 1px;
+        }
+    </style>
+    <div class="slds">
+        <!-- PRIMARY CONTENT WRAPPER -->
+        <div class="myapp">
+            <!-- GENERATE HoT-->
+            <div aria-labelledby="DSform">
+                <!-- BOXED AREA -->
+                <fieldset class="slds-box slds-theme--shade slds-container--large slds-container--center slds-grid--align-spread">
+                    <legend id="dsForm" class="slds-text-heading--medium slds-p-vertical--medium">Generate Termsheet</legend>
+                    <apex:form >
+
+
+                        <apex:actionStatus id="status">
+                            <apex:facet name="start">
+                                <div class="fadeMe">
+                                    &nbsp;
+                                </div>
+                                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                    <div style="display: inline-block; padding: 2px; width: 125px;">
+                                        <img src="{!$Resource.spinner}" style="float: left; margin: 0px;" />
+                                        <span style="display: inline-block;">Please Wait...</span>
+                                    </div>
+                                </div>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        <apex:outputPanel id="messages">
+                            <apex:PageMessages id="pageMsgs" />
+                        </apex:outputPanel>
+
+                        <apex:outputPanel id="printArea" rendered="{!NOT(error)}">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                <tr>
+                                    <td width="70%">
+                                        <table style="border: 1px solid rgb(2, 2, 22);" class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <tbody>
+                                                <tr class="slds-line-height_reset">
+                                                    <td style="font-weight:bold">Proposed Licensor</td>
+                                                    <td> Godrej &amp; Boyce Mfg. Co. Ltd. (G&amp;B)</td>
+                                                </tr>
+                                                <tr class="slds-line-height_reset">
+                                                    <td style="font-weight:bold">Proposed Licensee</td>
+                                                    <td>{!optyName}</td>
+                                                </tr>
+                                                <tr class="slds-line-height_reset">
+                                                    <td style="font-weight:bold">
+                                                        Office Space
+                                                    </td>
+                                                    <td>
+                                                        <table>
+                                                            <apex:repeat value="{!premiseOfficeSpaceMap}" var="optKey">
+                                                                <apex:repeat value="{!premiseOfficeSpaceMap[optKey]}" var="premDesc">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <b>Premise {!optKey}:</b> {!premDesc}
+                                                                        </td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </apex:repeat>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr class="slds-line-height_reset">
+                                                    <td>
+                                                        <b>Offered Floor and Area</b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <apex:repeat value="{!premiseGroupMap}" var="optKey">
+                                                            <br/>
+                                                            <br/>
+                                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-label="Premise Option - {!optKey}">
+                                                                <thead>
+                                                                    <tr class="slds-line-height_reset">
+                                                                        <th class="" scope="col" style="background-color: rgb(105 25 95 / 26%)" colspan="3">
+                                                                            <div class="slds-truncate" title="Premise Option - {!optKey}">Premise Option - {!optKey}</div>
+                                                                        </th>
+                                                                    </tr>
+                                                                    <tr class="slds-line-height_reset">
+
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Building Name">Building Name</div>
+                                                                        </th>
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Premise">Premise</div>
+                                                                        </th>
+
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Net usable area in Sq.Ft">Net usable area</div>
+                                                                        </th>
+
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:repeat value="{!premiseGroupMap[optKey]}" var="wrap">
+                                                                        <tr class="slds-line-height_reset">
+
+                                                                            <td class="" scope="col">
+                                                                                <apex:Outputtext value="{!wrap.Floor__r.Building__r.Display_Name__c}" />
+                                                                            </td>
+                                                                            <td class="" scope="col">
+                                                                                <apex:Outputtext value="{!wrap.Floor__r.Block__C}, {!wrap.Floor__r.Floor_Number__c} floor " />
+                                                                            </td>
+
+                                                                            <td class="" scope="col">
+                                                                                <apex:outputText value="{!wrap.Carpet_Area_in_Sq_Ft__c}" />
+                                                                            </td>
+
+                                                                        </tr>
+                                                                    </apex:repeat>
+                                                                </tbody>
+                                                            </table>
+
+                                                            <apex:outputPanel rendered="{!carparktable}">
+                                                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                                    <thead>
+                                                                        <tr class="slds-line-height_reset">
+                                                                            <th class="" scope="col" style="background-color: rgb(105 25 95 / 26%)" colspan="3">
+                                                                                <div class="slds-truncate" title="carpark details - {!optKey}">carpark details - {!optKey}</div>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr class="slds-line-height_reset">
+
+                                                                            <th class="" scope="col">
+                                                                                <div class="slds-truncate" title="Included in the rent">Car Parking Included in Compensation</div>
+                                                                            </th>
+
+                                                                            <th class="" scope="col">
+                                                                                <div class="slds-truncate" title="Chargeable carparks">Chargeable Car Parking</div>
+                                                                            </th>
+                                                                            <th class="" scope="col">
+                                                                                <div class="slds-truncate" title="Total carparks">Total</div>
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr class="slds-line-height_reset">
+                                                                            <td class="" scope="col">
+                                                                                <apex:Outputtext value="{!premiseGroupHTMap[optKey].Number_of_carparks_included_in_the__c}" />
+                                                                            </td>
+                                                                            <td class="" scope="col">
+                                                                                <apex:outputText value="{!premiseGroupHTMap[optKey].Number_of_chargeable_carparks__c}" />
+                                                                            </td>
+                                                                            <td class="" scope="col">
+                                                                                <apex:Outputtext value="{!premiseGroupHTMap[optKey].Total_Number_of_carparks_1__c}" />
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+
+                                                                </table>
+                                                            </apex:outputPanel>
+
+                                                            <apex:outputPanel rendered="{!generated}">
+                                                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                                    <tr>
+                                                                        <th style="font-weight:bold;">
+                                                                            Header
+                                                                        </th>
+                                                                        <th style="font-weight:bold;">
+                                                                            Term Text
+                                                                        </th>
+                                                                        <th style="font-weight:bold;">
+                                                                            Include Term
+                                                                        </th>
+                                                                        <th style="font-weight:bold;">
+                                                                            Deviation
+                                                                        </th>
+                                                                        <th style="font-weight:bold;">
+                                                                            Reason for deviation
+                                                                        </th>
+                                                                        <th style="font-weight:bold;">
+                                                                            Merge field 1
+                                                                        </th>
+                                                                        <th style="font-weight:bold;">
+                                                                            Merge field 2
+                                                                        </th>
+                                                                        <th style="font-weight:bold;">
+                                                                            Merge field 3
+                                                                        </th>
+                                                                    </tr>
+                                                                    <apex:repeat value="{!premiseGroupTermMap[optKey]}" var="term">
+                                                                        <tr class="slds-line-height_reset">
+                                                                            <td class="" scope="col" width="10%">
+                                                                                <b>{!term.Header__c}</b>
+                                                                            </td>
+                                                                            <td class="" scope="col" width="40%">
+                                                                                <div style="word-wrap:break-word;white-space:pre-wrap">
+                                                                                    <apex:outputText value="{!term.Merged_Term_Value__c}" escape="false"></apex:outputText>
+                                                                                    <apex:inputField value="{!term.customised_term__c}" rendered="{!(term.term_text_editable__c)}"></apex:inputField>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:inputField value="{!term.Include_Term__c}" />
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:inputField value="{!term.deviation__c}" />
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:inputField value="{!term.reason_for_deviation__c}" />
+                                                                            </td>
+                                                                            <apex:repeat value="{!mergeFieldsMap[term.key__c]}" var="t">
+                                                                                <td class="" scope="col" width="10%" colspan="{!colspanMap[term.key__c]}">
+
+                                                                                    <apex:outputText >
+                                                                                        <b>{!fieldLabelMap[t]}</b>
+                                                                                    </apex:outputText>
+                                                                                    <apex:inputField value="{!HoTFieldMap[term.key__c][t]}"></apex:inputField>
+                                                                                </td>
+                                                                            </apex:repeat>
+                                                                        </tr>
+                                                                    </apex:repeat>
+
+                                                                </table>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td coslpan="2" style="text-align:center">
+                                                                            <apex:commandButton value="Update Terms" action="{!updateData}" styleClass="slds-button slds-button--brand slds-button--small"
+                                                                                status="status" style="margin-top:1%;position:relative;"
+                                                                                disabled="{!error}" />
+                                                                        </td>
+                                                                        <td colspan="2" style="text-align:center">
+                                                                            <apex:commandButton value="Modify Termsheet" action="{!modifyHOT}" styleClass="slds-button slds-button--brand slds-button--small"
+                                                                                status="status" style="margin-top:1%;position:relative;"
+                                                                                disabled="{!error}" />
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </apex:outputPanel>
+                                                        </apex:repeat>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </apex:outputPanel>
+
+
+                    </apex:form>
+                </fieldset>
+                <!-- / BOXED AREA -->
+            </div>
+            <!-- / GENERATE QUOTE -->
+        </div>
+        <!-- / PRIMARY CONTENT WRAPPER -->
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        var j$ = jQuery.noConflict();
+
+        j$(document).ready(function () {
+        });
+
+
+    </script>
+    <!-- / JAVASCRIPT -->
+
+    </html>
+</apex:page>

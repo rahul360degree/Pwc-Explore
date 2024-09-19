@@ -1,0 +1,85 @@
+<template>
+
+    <div class="component-container table-component-container">
+    <template if:false={isMobile}>
+        <div class="datatable-container">
+            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread table-search">
+                <div class="slds-col search-container">
+                    <lightning-input
+                        label=""
+                        placeholder="Type search term"
+                        type="search"
+                        onchange={handleSearch}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col table-pagination-container">
+                    <div class="slds-col slds-p-bottom_xx-small">
+                        <!-- Previous Page-->
+                        <span style={controlPrevious}>
+                            <lightning-button-icon icon-name="utility:left" variant="bare" size="medium" alternative-text="Previous Page" 
+                                onclick={previousPage}></lightning-button-icon>
+                        </span>
+
+                        <!-- Page Navigator-->
+                        <label class="slds-text-color_weak slds-p-horizontal_x-small" for="pageNum">Page:</label> 
+                        <input type="number" id="pageNum" value={pageNumber} maxlength="4" onkeypress={handlePageNumberChange} 
+                            class="customInput page-number-input" title="Go to a Page"></input>
+                        <span>&nbsp;of&nbsp;<b id="totalPages">{totalPages}</b></span>
+                        
+                        <!-- Next Page-->
+                        <span style={controlNext}>
+                            <lightning-button-icon icon-name="utility:right" variant="bare" size="medium" alternative-text="Next Page" 
+                                onclick={nextPage} class="slds-p-horizontal_x-small"></lightning-button-icon>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        
+                <!-- Table where checkbox column is displayed. -->
+                <template if:true={hideRowSelectionToogle}>
+                
+                    <lightning-datatable
+                        class="dataTable-component"
+                        key-field="Id"
+                        hide-checkbox-column="true"
+                        data={dataBeingShown}
+                        columns={columns}
+                        width="100%"
+                    >
+                    </lightning-datatable>
+               
+                </template> 
+            
+            </div>
+    </template>
+ 
+          <template if:true={isMobile}>
+
+            <div>
+                <div class="slds-align_absolute-center search-container">
+                    <lightning-input
+                        label="Filter Records"
+                        placeholder="Enter search text"
+                        type="search"
+                        onchange={handleSearch}>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <div class="scrollable-child-container">
+                <template for:each={dataBeingShown} for:item="dataValues">
+                    <lightning-card key={dataValues.Id} class="padding_1rem">
+                        <div class="padding_1rem">
+                            <template for:each={dataValues.childDataArray} for:item="data">
+                                    <!-- Non editable values. -->
+                                    <pre key={data.fieldName}>
+                                        <p><strong>{data.label}:</strong>  {data.fieldValue}</p>
+                                    </pre>                                                                                                                  
+                            </template>
+                        </div>
+                    </lightning-card>
+                </template>
+            </div>
+          </template>  
+        </div>
+</template>

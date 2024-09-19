@@ -1,0 +1,45 @@
+<apex:page standardController="Category_Line_Item__c">
+    
+    <button onclick="printPage()">Print</button>
+    
+    
+    <script>
+        function printPage() {
+            window.print();
+        }
+    </script>
+    <style>
+        @media print {
+            button {
+                display: none !important;
+            }
+        }
+    </style>
+    <div align = "center" style = "font-size:40px; padding : 5px;">
+        Category ID : {!Category_Line_Item__c.Name}
+    </div>
+    <div style = "border-style : solid; margin:10px; align : left; padding : 5px; width : 60%; font-size:45px">
+        {!Category_Line_Item__c.Status__c}<br/>
+        {!Category_Line_Item__c.Current_Warehouse_Code__c}
+    </div><br/>
+    
+    <div style="font-size : 18px">
+        <p>
+            Dated : <apex:outputText value="{0,date, d MMMM, yyyy}">
+                            <apex:param value="{!Category_Line_Item__c.Date_of_Arrival_in_Inspection_WH__c}" />
+                        </apex:outputText>
+        </p>
+        <p>
+            Original Order : {!Category_Line_Item__c.Order_Type__c}/{!ROUND(Category_Line_Item__c.Order_Number__c, 0)}/{!ROUND(Category_Line_Item__c.Position_No__c,0)}/{!ROUND(Category_Line_Item__c.Sequence_No__c, 0)}
+        </p>
+        <p>
+            Remarks : {!Category_Line_Item__c.Remarks__c}
+        </p>
+        <p>
+            Item Code : {!Category_Line_Item__c.Item_code__c}
+        </p>
+        <p>
+            Item Description : {!Category_Line_Item__c.Item_Description__c}
+        </p>
+    </div>
+</apex:page>

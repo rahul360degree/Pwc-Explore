@@ -1,0 +1,135 @@
+<apex:page controller="ViewEditProjection" docType="html-5.0" standardStylesheets="false" lightningStylesheets="true" applyHtmlTag="true" applyBodyTag="true">
+    <html>
+
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript">__sfdcSessionId = '{!$Api.Session_Id}';</script>
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css"
+        />
+        <script src="/soap/ajax/9.0/connection.js"></script>
+        <apex:slds />
+    </head>
+    <style>
+        .slds h1,
+        .slds h2,
+        .slds h3,
+        .slds h4,
+        .slds h5,
+        .slds h6,
+        .slds th,
+        .slds td {
+            font-family: 'Lato';
+        }
+
+        .slds-scope .slds-table th,
+        .slds-scope .slds-table td {
+            padding: .25rem .5rem;
+            white-space: revert;
+            position: relative;
+            empty-cells: show;
+        }
+
+        .slds .slds-theme--shade {
+            background-color: aliceblue;
+        }
+        instyle {
+            width: 100px; 
+            height: 50px;
+        }
+        @page {
+
+            size: A4 landscape;
+            border: 1px solid black;
+            padding-left: 1px;
+            padding-right: 1px;
+        }
+  </style>
+  <apex:form id="formid">                      
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div class="fadeMe">
+                &nbsp;
+            </div>
+            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                    <img src="{!$Resource.spinner}" style="float: left; margin: 0px;" />
+                    <span style="display: inline-block;">Please Wait...</span>
+                </div>
+            </div>
+        </apex:facet>
+    </apex:actionStatus>
+    <apex:outputPanel id="messages">
+        <apex:PageMessages id="pageMsgs" />
+    </apex:outputPanel>     
+       <apex:selectList id="abc" value="{!selectedFinancialYear}" size="1"> 
+          <apex:selectOptions value="{!getFinancialYear}" /> 
+             <apex:actionSupport event="onchange">
+                <apex:param name="selectedFinancialYear" value="{!getFinancialYear}" assignTo="{!selectedFinancialYear}"/> 
+             </apex:actionSupport>
+       </apex:selectList>
+                
+       <apex:selectList id="def" value="{!selectedChargeType}" size="1"> 
+          <apex:selectOptions value="{!getchargetype}" /> 
+             <apex:actionSupport event="onchange">
+                <apex:param name="selectedChargeType" value="{!getchargetype}" assignTo="{!selectedChargeType}"/> 
+             </apex:actionSupport>
+       </apex:selectList>
+                <apex:commandButton value="Submit" status="status" reRender="printArea,messages" action="{!submit}" /> 
+                <apex:commandButton value="Save"  status="status"  reRender="printArea,messages"  action="{!save}"/> 
+                <!--<apex:commandButton value="Save As" status="status"  reRender="printArea,messages" /> -->
+                               
+                    <!--Rendered -->
+                    <apex:outputPanel id="printArea" rendered="{!NOT(error)}">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                           <th colspan="48" style="background-color:#D3D3D3">
+                               Revenue Planning - {!rpList[0].Type__c} for  {!selectedFinancialYear} {!selectedChargeType}
+                           </th>
+
+                           <apex:repeat value="{!typeList}" var="n">
+                              <tr>
+                              <td> Asset Name </td>
+                              <td> Building </td>
+                              <td> Leasing Status </td>
+                              <td> Tenant </td>
+                              <td> Licence Start</td>
+                              <td> Licence End</td>
+                              <td> NUA (SQ.ft)</td>
+                              <td> Assumption </td>
+                               <apex:repeat value="{!allyearMonthStringMap[n]}" var="m">
+                                 <td> <apex:outputText value="{!m}"/></td>
+                               </apex:repeat>
+                              </tr>
+                           </apex:repeat>
+                      
+                           <apex:repeat value="{!pWrapper}" var="p">
+                               <tr>
+                                 <td> <apex:outputText value="{!p.asset}" /></td>
+                                 <td> <apex:outputText value="{!p.building}" /></td>
+                                 <td style="background-color:{!p.lcolor}"> <apex:outputText value="{!p.Status}" /></td>
+                                 
+                                 <td> <apex:outputText value="{!p.tenant}" /></td>
+                                 <td> <apex:outputText value="{!p.licenceStart}" /></td>
+                                 <td> <apex:outputText value="{!p.licenceEnd}" /></td>
+                                 <td> <apex:outputText value="{!p.NUA }" /></td>
+                                 <td><apex:inputField value="{!p.pl[p.extId].Assumption__c}"/></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_1_color__c}"><apex:inputField styleClass="instyle" value="{!p.pl[p.extId].Month_1_Amount__c}"/></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_2_color__c}" ><apex:inputField value="{!p.pl[p.extId].Month_2_Amount__c}"/></td>
+                                  <td  style="background-color:{!p.pl[p.extId].Month_3_color__c}" ><apex:inputField value="{!p.pl[p.extId].Month_3_Amount__c}"/></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_4_color__c}"  ><apex:inputField value="{!p.pl[p.extId].Month_4_Amount__c}" /></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_5_color__c}"  ><apex:inputField value="{!p.pl[p.extId].Month_5_Amount__c}" /></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_6_color__c}" ><apex:inputField value="{!p.pl[p.extId].Month_6_Amount__c}" /></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_7_color__c}" ><apex:inputField value="{!p.pl[p.extId].Month_7_Amount__c}" /></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_8_color__c}" ><apex:inputField value="{!p.pl[p.extId].Month_8_Amount__c}" /></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_9_color__c}" ><apex:inputField value="{!p.pl[p.extId].Month_9_Amount__c}" /></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_10_color__c}" ><apex:inputField value="{!p.pl[p.extId].Month_10_Amount__c}" /></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_11_color__c}" ><apex:inputField value="{!p.pl[p.extId].Month_11_Amount__c}" /></td>
+                                  <td style="background-color:{!p.pl[p.extId].Month_12_color__c}" ><apex:inputField value="{!p.pl[p.extId].Month_12_Amount__c}" /></td>
+                                  
+                                </tr>
+                           </apex:repeat>
+                           
+                        </table>
+                    </apex:outputPanel>                
+ </apex:form>
+ </html>
+</apex:page>

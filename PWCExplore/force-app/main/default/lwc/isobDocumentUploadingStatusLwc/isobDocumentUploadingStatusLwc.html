@@ -1,0 +1,40 @@
+<template>
+        <lightning-card title="Uploaded Attachment Status" icon-name="utility:upload">   
+            <lightning-record-edit-form
+            object-api-name="Order_Specification__c"
+            record-id={OrderSpecificationrecordId}
+            
+        >
+        <div class=" slds-box slds-m-around_medium">						 
+            <b>Pending Attachments : {pendingCount} </b>
+        </div>
+        <div class="input-container slds-box slds-m-around_medium">            
+            <lightning-input-field class= "lightning-input" field-name="LOI_Customer_confirmation__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Additional_documents__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Advance_receipt__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Discount_sanction__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Drawing_approval_mail__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="GST_address__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Physical_material_confirmation__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Pre_order_timeline__c" onchange={handleChange}></lightning-input-field>           
+            <lightning-input-field class= "lightning-input" field-name="Site_checklist__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Site_measurements__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Preorder_BOM_for_POE__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Design_mail_for_POE_routing__c" onchange={handleChange}></lightning-input-field>           
+            <lightning-input-field class= "lightning-input" field-name="Drawing_layout__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Customer_PO__c" onchange={handleChange}></lightning-input-field>
+            <lightning-input-field class= "lightning-input" field-name="Dealer_PO__c" onchange={handleChange}></lightning-input-field>
+            <div class="slds-m-top_medium slds-align_absolute-center">
+                <lightning-button
+                    variant="brand"
+                    type="submit"
+                    name="save"
+                    label="Update Status"
+										onclick={handleclick}
+                ></lightning-button>
+            </div>
+        </div>
+        
+    </lightning-record-edit-form>
+    </lightning-card>
+</template>

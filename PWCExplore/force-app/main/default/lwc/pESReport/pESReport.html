@@ -1,0 +1,193 @@
+<template>
+    <lightning-card title = "PES Report" >
+         
+		  <div>
+    <lightning-input style="margin:10px;" type="date" label="From Date"   onchange={handleFromDateChange}></lightning-input>
+    <lightning-input style="margin:10px;" type="date" label="To Date"  onchange={handleToDateChange}></lightning-input>
+    <lightning-button style="margin:10px;" label="Search" onclick={handleSearch}></lightning-button>
+  </div>
+  
+  <template if:true={isShowTable}>
+        <div class="slds-p-around_medium" style="overflow-x: scroll; overflow-y: scroll;" if:true={isVisible}>
+
+          <table border="1">
+	<tbody>
+		<tr>
+			<td class="td"><strong>Sr No.</strong></td>
+			<td class="td"><strong>Status</strong></td>
+			<td class="td" colspan="2"><strong>Total</strong></td>
+			<td class="td" colspan="2"><strong>Defence</strong></td>
+			<td class="td" colspan="2"><strong>Nuclear</strong></td>
+			<td class="td" colspan="2"><strong>Exports</strong></td>
+			<td class="td" colspan="2"><strong>General Engineering</strong></td>
+			<td class="td" colspan="2"><strong>Others</strong></td>
+
+		</tr>
+		<tr>
+			<td class="td">&nbsp;</td>
+			<td class="td">&nbsp;</td>
+			<td class="th">Nos</td>
+			<td class="th">Value in Lakhs</td>
+			<td class="th">Nos</td>
+			<td class="th">Value in Lakhs</td>
+			<td class="th">Nos</td>
+			<td class="th">Value in Lakhs</td>
+			<td class="th">Nos</td>
+			<td class="th">Value in Lakhs</td>
+			<td class="th">Nos</td>
+			<td class="th">Value in Lakhs</td>
+			<td class="th">Nos</td>
+			<td class="th">Value in Lakhs</td>
+		</tr>
+		<tr>
+			<td class="td">1</td>
+			<td class="alignL">No of Enquiries in Result Awaited till date in system</td>
+			<td class="td">{mapOpp.TOTAL_OPP_NO_ROW_1} </td>
+			<td class="alignR">{mapOpp.TOTAL_VALUE_IN_CR_ROW_1}</td>
+			<td class="td">{mapOpp.DEFENCE_OPP_NO_ROW_1} </td>
+			<td class="alignR">{mapOpp.DEFENCE_VALUE_IN_CR_ROW_1}</td>
+			<td class="td">{mapOpp.NUCLEAR_OPP_NO_ROW_1} </td>
+			<td class="alignR" >{mapOpp.NUCLEAR_VALUE_IN_CR_ROW_1} </td>
+			<td class="td">{mapOpp.EXPORT_OPP_NO_ROW_1} </td>
+			<td class="alignR">{mapOpp.EXPORT_VALUE_IN_CR_ROW_1} </td>
+			<td class="td">{mapOpp.GE_OPP_NO_ROW_1}</td>
+			<td class="alignR">{mapOpp.GE_VALUE_IN_CR_ROW_1} </td>
+			<td class="td">{mapOpp.OTHERS_OPP_NO_ROW_1}</td>
+			<td class="alignR">{mapOpp.OTHERS_VALUE_IN_CR_ROW_1} </td>
+		</tr>
+		<tr>
+			<!-- Changed values from 0.0 to 0.00 by Shreela on 10th August 2023 for PES Jira-->
+			<td class="td">2</td>
+			<td class="alignL">No of Enquiries in Process till date in system</td>
+			<td class="td">{mapOpp.TOTAL_OPP_NO_ROW_2} </td>
+			<td class="alignR">0.00</td>
+			<td class="td">{mapOpp.DEFENCE_OPP_NO_ROW_2} </td>
+			<td class="alignR">0.00</td>
+			<td class="td">{mapOpp.NUCLEAR_OPP_NO_ROW_2} </td>
+			<td class="alignR">0.00</td>
+			<td class="td">{mapOpp.EXPORT_OPP_NO_ROW_2} </td>
+			<td class="alignR">0.00</td>
+			<td class="td">{mapOpp.GE_OPP_NO_ROW_2} </td>
+			<td class="alignR">0.00</td>
+			<td class="td">{mapOpp.OTHERS_OPP_NO_ROW_2}</td>
+			<td class="alignR">0.00</td>
+		</tr>
+		<tr>
+            <td class="td"></td>
+            <td class="td"></td>
+            <td class="td"></td>
+            <td class="td"></td>
+            <td class="td"></td>
+            <td class="td"></td>
+            <td class="td"></td>
+            <td class="td"> </td>
+            <td class="td"></td>
+            <td class="td"> </td>
+            <td class="td"></td>
+            <td class="td"> </td>
+            <td class="td"></td>
+            <td class="td"></td>
+        </tr>
+		<tr>
+			<td class="td">3</td>
+			<td class="alignL">No of Enquiries created </td>
+			<td class="td">{mapOpp.TOTAL_OPP_NO_ROW_3}  </td>
+			<td class="alignR">{mapOpp.TOTAL_VALUE_IN_CR_ROW_3} </td>
+			<td class="td">{mapOpp.DEFENCE_OPP_NO_ROW_3} </td>
+			<td class="alignR">{mapOpp.DEFENCE_VALUE_IN_CR_ROW_3} </td>
+			<td class="td">{mapOpp.NUCLEAR_OPP_NO_ROW_3} </td>
+			<td class="alignR">{mapOpp.NUCLEAR_VALUE_IN_CR_ROW_3} </td>
+			<td class="td">{mapOpp.EXPORT_OPP_NO_ROW_3} </td>
+			<td class="alignR">{mapOpp.EXPORT_VALUE_IN_CR_ROW_3} </td>
+			<td class="td">{mapOpp.GE_OPP_NO_ROW_3} </td>
+			<td class="alignR">{mapOpp.GE_VALUE_IN_CR_ROW_3} </td>
+			<td class="td">{mapOpp.OTHERS_OPP_NO_ROW_3}</td>
+			<td class="alignR">{mapOpp.OTHERS_VALUE_IN_CR_ROW_3} </td>
+		</tr>
+		<tr>
+			<td class="td">4</td>
+			<td class="alignL">Enquiries Quoted </td>
+			<td class="td">{mapOpp.TOTAL_OPP_NO_ROW_4} </td>
+			<td class="alignR">{mapOpp.TOTAL_VALUE_IN_CR_ROW_4}</td>
+			<td class="td">{mapOpp.DEFENCE_OPP_NO_ROW_4}</td>
+			<td class="alignR">{mapOpp.DEFENCE_VALUE_IN_CR_ROW_4}</td>
+			<td class="td">{mapOpp.NUCLEAR_OPP_NO_ROW_4}</td>
+			<td class="alignR">{mapOpp.NUCLEAR_VALUE_IN_CR_ROW_4}</td>
+			<td class="td">{mapOpp.EXPORT_OPP_NO_ROW_4}</td>
+			<td class="alignR">{mapOpp.EXPORT_VALUE_IN_CR_ROW_4}</td>
+			<td class="td">{mapOpp.GE_OPP_NO_ROW_4}</td>
+			<td class="alignR">{mapOpp.GE_VALUE_IN_CR_ROW_4}</td>
+			<td class="td">{mapOpp.OTHERS_OPP_NO_ROW_4}</td>
+			<td class="alignR">{mapOpp.OTHERS_VALUE_IN_CR_ROW_4} </td>
+		</tr>
+		<tr>
+			<td class="td">5</td>
+			<td class="alignL">Results Declared </td>
+			<td class="td">{mapOpp.TOTAL_OPP_NO_ROW_5}</td>
+			<td class="alignR">{mapOpp.TOTAL_VALUE_IN_CR_ROW_5}</td>
+			<td class="td">{mapOpp.DEFENCE_OPP_NO_ROW_5}</td>
+			<td class="alignR">{mapOpp.DEFENCE_VALUE_IN_CR_ROW_5}</td>
+			<td class="td">{mapOpp.NUCLEAR_OPP_NO_ROW_5}</td>
+			<td class="alignR">{mapOpp.NUCLEAR_VALUE_IN_CR_ROW_5}</td>
+			<td class="td">{mapOpp.EXPORT_OPP_NO_ROW_5}</td>
+			<td class="alignR">{mapOpp.EXPORT_VALUE_IN_CR_ROW_5}</td>
+			<td class="td">{mapOpp.GE_OPP_NO_ROW_5}</td>
+			<td class="alignR">{mapOpp.GE_VALUE_IN_CR_ROW_5}</td>
+			<td class="td">{mapOpp.OTHERS_OPP_NO_ROW_5}</td>
+			<td class="alignR">{mapOpp.OTHERS_VALUE_IN_CR_ROW_5} </td>
+		</tr>
+		<tr>
+			<td class="td">5A</td>
+			<td class="alignL">Regret + Shelved </td>
+			<td class="td">{mapOpp.TOTAL_OPP_NO_ROW_6}</td>
+			<td class="alignR">{mapOpp.TOTAL_VALUE_IN_CR_ROW_6}</td>
+			<td class="td">{mapOpp.DEFENCE_OPP_NO_ROW_6}</td>
+			<td class="alignR">{mapOpp.DEFENCE_VALUE_IN_CR_ROW_6}</td>
+			<td class="td">{mapOpp.NUCLEAR_OPP_NO_ROW_6}</td>
+			<td class="alignR">{mapOpp.NUCLEAR_VALUE_IN_CR_ROW_6}</td>
+			<td class="td">{mapOpp.EXPORT_OPP_NO_ROW_6}</td>
+			<td class="alignR">{mapOpp.EXPORT_VALUE_IN_CR_ROW_6}</td>
+			<td class="td">{mapOpp.GE_OPP_NO_ROW_6}</td>
+			<td class="alignR">{mapOpp.GE_VALUE_IN_CR_ROW_6}</td>
+			<td class="td">{mapOpp.OTHERS_OPP_NO_ROW_6}</td>
+			<td class="alignR">{mapOpp.OTHERS_VALUE_IN_CR_ROW_6} </td>
+		</tr>
+		<tr>
+			<td class="td">5B</td>
+			<td class="alignL">Won </td>
+			<td class="td">{mapOpp.TOTAL_OPP_NO_ROW_7}</td>
+			<td class="alignR">{mapOpp.TOTAL_VALUE_IN_CR_ROW_7}</td>
+			<td class="td">{mapOpp.DEFENCE_OPP_NO_ROW_7}</td>
+			<td class="alignR">{mapOpp.DEFENCE_VALUE_IN_CR_ROW_7}</td>
+			<td class="td">{mapOpp.NUCLEAR_OPP_NO_ROW_7}</td>
+			<td class="alignR">{mapOpp.NUCLEAR_VALUE_IN_CR_ROW_7}</td>
+			<td class="td">{mapOpp.EXPORT_OPP_NO_ROW_7}</td>
+			<td class="alignR">{mapOpp.EXPORT_VALUE_IN_CR_ROW_7}</td>
+			<td class="td">{mapOpp.GE_OPP_NO_ROW_7}</td>
+			<td class="alignR">{mapOpp.GE_VALUE_IN_CR_ROW_7}</td>
+			<td class="td">{mapOpp.OTHERS_OPP_NO_ROW_7}</td>
+			<td class="alignR">{mapOpp.OTHERS_VALUE_IN_CR_ROW_7} </td>
+		</tr>
+		<tr>
+			<td class="td">5C</td>
+			<td class="alignL">Lost</td>
+			<td class="td">{mapOpp.TOTAL_OPP_NO_ROW_8}</td>
+			<td class="alignR">{mapOpp.TOTAL_VALUE_IN_CR_ROW_8}</td>
+			<td class="td">{mapOpp.DEFENCE_OPP_NO_ROW_8}</td>
+			<td class="alignR">{mapOpp.DEFENCE_VALUE_IN_CR_ROW_8}</td>
+			<td class="td">{mapOpp.NUCLEAR_OPP_NO_ROW_8}</td>
+			<td class="alignR">{mapOpp.NUCLEAR_VALUE_IN_CR_ROW_8}</td>
+			<td class="td">{mapOpp.EXPORT_OPP_NO_ROW_8}</td>
+			<td class="alignR">{mapOpp.EXPORT_VALUE_IN_CR_ROW_8}</td>
+			<td class="td">{mapOpp.GE_OPP_NO_ROW_8}</td>
+			<td class="alignR">{mapOpp.GE_VALUE_IN_CR_ROW_8}</td>
+			<td class="td">{mapOpp.OTHERS_OPP_NO_ROW_8}</td>
+			<td class="alignR">{mapOpp.OTHERS_VALUE_IN_CR_ROW_8} </td>
+		</tr>
+	</tbody>
+</table>
+
+        </div> 
+  </template>
+        </lightning-card>
+</template>

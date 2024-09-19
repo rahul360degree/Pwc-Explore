@@ -1,0 +1,35 @@
+<template>
+    <template if:false={isError}>
+        <template if:true={showToggleButton}>  
+            <lightning-input type="toggle" label="Show map" onchange={handleToggleChange}></lightning-input>
+        </template>
+        <template if:true={showReasonTextBox}>
+            <div></br></br>
+                <div class="slds-grid">
+                    <div class="slds-col slds-large-size_6-of-12 slds-small-size_6-of-12">
+                        <lightning-input 
+                        type="text" 
+                        label="Your current location doesn't match the location logged at the start of the day.
+                        Please enter the reason for mismatch"
+                        onchange={handleReasonInput}
+                        placeholder="Enter reason">
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template if:true={showHideMap}>
+            <lightning-card>
+                <lightning-map map-markers={mapMarkers} zoom-level={zoomLevel}></lightning-map>
+            </lightning-card>
+        </template>
+        <template if:false={showHideMap}>
+            <template if:true={wasLocationCaptured}><br/>
+                <div class="succesMessage">{successMsg}</div>
+            </template>
+        </template>
+    </template>
+    <template if:true={isError}>
+        <div class="errorMsg">{errorString}</div>
+    </template>
+</template>

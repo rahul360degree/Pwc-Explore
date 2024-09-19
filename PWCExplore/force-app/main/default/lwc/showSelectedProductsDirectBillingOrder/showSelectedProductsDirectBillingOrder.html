@@ -1,0 +1,105 @@
+<!--
+  @description       : 
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 10-20-2022
+  @last modified by  : vrajpoot@godrej.com
+-->
+<template> 
+
+    <lightning-card title="Selected Products">
+            <div style="position: relative; display: flex;">
+                <lightning-layout multiple-rows="true" horizontal-align="center">
+                    <lightning-layout-Item padding="around-small" size="12">
+                        <table class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols"
+                            role="grid">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th aria-label="Product Name" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+                                        scope="col">
+                                        <div class="slds-truncate" title="Item Code">Item Code</div>
+                                    </th>
+                                    <th aria-label="Product Name" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+                                        scope="col">
+
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Item Name">Product Name</span>
+                                            </div>
+
+                                    </th>
+                                    <th aria-label="Product Name" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+                                        scope="col">
+
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Warehouse">Warehouse</span>
+                                            </div>
+
+                                    </th>		
+                                    <th aria-label="Available Quantity" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+                                        scope="col">
+
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Available Quantity">Available Quantity</span>
+                                            </div>
+
+                                    </th>																		
+                                    <th aria-label="Ordered Quantity" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+                                        scope="col">
+
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Ordered Quantity">Ordered Quantity</span>
+                                            </div>
+
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+																
+                                <template for:each={record} for:item="sfile">
+                                    <tr class="slds-hint-parent" key={sfile.Item_Code__c}>
+																			<td role="gridcell">
+                                            <div class="slds-truncate" title={sfile.Item_Code__c}>{sfile.Item_Code__c}</div>
+                                        </td>
+
+																			<td role="gridcell">
+                                            <div class="slds-truncate" title={sfile.Description}>{sfile.Description}</div>
+                                        </td>
+																			<td role="gridcell">
+                                            <div class="slds-truncate" title={sfile.Warehouse__c}>{sfile.Warehouse__c}</div>
+                                        </td>		
+																			<td role="gridcell">
+                                            <div class="slds-truncate" title={sfile.Warehouse__c}>{sfile.AvailableQuantity}</div>
+                                        </td>
+																				
+																																							<td role="gridcell">
+																																									<span data-warehouse={sfile.Warehouse__c}>
+																																									<span data-availablequantity={sfile.AvailableQuantity}>
+																																									<span data-stockfileid={sfile.Stock_File__c}>
+																																										<lightning-input type="number" name={sfile.Stock_File__c} class="fltrItemcode" label="" onblur={handleQuantityChange}></lightning-input>
+                                                <!--<lightning-button variant="brand" label="Check Inventory" title="Check Inventory" onclick={handleCheckInventory} class="slds-m-left_x-small" name={sfile.Item_Code__c} data-id={sfile.Warehouse__c}></lightning-button>-->
+																																									</span>
+																																									</span>
+																																									</span>
+
+                                        </td>
+
+
+                                    </tr>
+                                </template>
+																
+                            </tbody>
+                        </table>
+                    </lightning-layout-Item>
+
+                </lightning-layout>
+			</div>		
+        </lightning-card> 
+		
+		<!-- <template if:true={itemCode}>
+
+     <c-check-inventory-direct-billing item-code={itemCode} whcodes= {arrwhcodes} logisticscompany={logisticscompany} availablequantity={availablequantity} stockfileid={stockfileid} lst-order-products={lstOrderProducts} onpass={fetchValue} onclosemodal={closeModal}></c-check-inventory-direct-billing>
+</template>		 -->
+
+</template>

@@ -1,0 +1,81 @@
+<!--
+	@description       : Created for https://gnbdigitalprojects.atlassian.net/browse/SMEPB-24
+	@author            : vrajpoot@godrej.com
+	@group             : 
+	@last modified on  : 05-24-2022
+	@last modified by  : vrajpoot@godrej.com
+-->
+<template>
+  <!--Display/Hide lwc component-->
+  <template if:false={spinner}>
+    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+  </template>
+  <template if:true={recordsToDisplay}>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+      <thead>
+        <tr class="slds-line-height_reset">
+          <th scope="col">Quote No</th>
+          <th scope="col">Opportunity Name</th>
+          <th scope="col">Enquiry Category</th>
+          <th scope="col">Area Code</th>
+          <th scope="col">Quote Created Date</th>
+          <th scope="col">Approved Price</th>
+          <th scope="col" class="slds-cell-wrap">Approval Pending With</th>
+          <th scope="col">Elapsed Time In Days</th>
+          <th scope="col">Line Items Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template for:each={recordsToDisplay} for:item="row">
+          <tr key={row.Id}>
+            <th data-label="QUOTE NO." scope="row" onclick={handleNavigate} class="linkCSS" data-id={row.QuoteId} data-name="Quote">
+              {row.QuoteNo}</th>
+            <td data-label="OPPORTUNITY NAME" class="slds-cell-wrap linkCSS" onclick={handleNavigate}  data-id={row.OpportunityId} data-name="Opportunity">{row.OpportunityName}</td>
+            <td data-label="ENQUIRY CATEGORY">{row.EnquiryCategory}</td>
+            <td data-label="AREA CODE">{row.AreaCode}</td>
+            <td data-label="Quote CREATED DATE">
+              
+
+              <lightning-formatted-date-time value={row.CreatedDate} year="2-digit" month="short" day="2-digit" hour="numeric"
+                                       weekday="long" era="short"></lightning-formatted-date-time>
+            </td>
+            <td data-label="APPROVED PRICE">
+              <lightning-formatted-number value={row.ApprovedPrice} format-style="currency" maximum-fraction-digits="2">
+              </lightning-formatted-number>
+            </td>
+            <td data-label="APPROVAL PENDING WITH" class="slds-cell-wrap">{row.ActorName}</td>
+            <td data-label="APPROVAL PENDING FROM DATE">
+              <lightning-formatted-number value={row.ElapsedTimeInDays} format-style="decimal" maximum-fraction-digits="2"></lightning-formatted-number>
+            </td>
+            <td data-label="Line Items">
+              <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                <thead>
+                  <tr class="slds-line-height_reset">
+                    <th>PRODUCT</th>
+                    <th>REQUESTED DISCOUNT</th>
+                    <th>APPROVED DISCOUNT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template for:each={row.qliRecord} for:item="qli">
+                    <tr key={qli.Id}>
+                      <td data-label="PRODUCT" class="slds-cell-wrap linkCSS" onclick={handleNavigate}  data-id={qli.Product2Id} data-name="Product2">{qli.Product}</td>
+                      <td data-label="REQUESTED DISCOUNT">
+                        <lightning-formatted-number value={qli.RequestedDiscount} format-style="percent" maximum-fraction-digits="2">
+                        </lightning-formatted-number>
+                      </td>
+                      <td data-label="APPROVED DISCOUNT">
+                        <lightning-formatted-number value={qli.ApprovedDiscount} format-style="percent" maximum-fraction-digits="2">
+                        </lightning-formatted-number>
+                      </td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </template>
+</template>

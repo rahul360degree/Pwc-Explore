@@ -1,0 +1,8 @@
+.showIt {
+    visibility: visible;
+}
+
+.hideIt {
+    visibility: hidden;
+    height: 0em;
+}

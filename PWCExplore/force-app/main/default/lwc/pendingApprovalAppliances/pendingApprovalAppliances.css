@@ -1,0 +1,44 @@
+.linkCSS{
+    color: rgb(1, 118, 211);
+    cursor: pointer;
+}
+:host {
+    display: block;
+}
+.slds-table {
+    border: 1px solid #d3d4d5;
+    max-width: 100%; 
+}
+.table-container {
+    max-height: 100%;
+    max-width: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.slds-table td,
+.slds-table th {
+    border: 1px solid #d3d4d5;
+    padding: 0.25rem;
+}
+.custom-card {
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+    border: 1px solid #d3d4d5;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.slds-m-top_small {
+	position: sticky;
+    bottom: 0;
+    background-color: white;
+    padding: 10px;
+    border-top: 1px solid #d3d3d3;
+    z-index: 1;
+}
+.lightning-card {
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+}

@@ -1,0 +1,349 @@
+<apex:page standardController="Quote" extensions="LocksB2CISTDQuotationController"   renderAs="pdf" standardStylesheets="false" applyBodyTag="false" applyHTMLTag="false" sidebar="false" showHeader="false">
+    <head>
+         <!-- CSS For QLI List Table -->
+        <style type="text/css">table.table714 {border:solid black 1px;border-collapse:collapse; border-spacing:0px;font-family:Arial Unicode MS,sans-serif; font-size:10pt; width:100% }
+            .table714header {border:solid black 1px;text-align:center;font-weight:bold;color:#FFFFFF;background-color:#3d85c6;}
+            .table714footer {text-align:right;font-weight:bold;border:solid black 1px; height: 30px}
+            .table714RowEven{border:solid black 1px;}
+            .table714RowOdd{background-color:#cfe2f3;border:solid black 1px;}
+            .table714col0{border:solid black 1px;text-align:left;font-weight:normal;font-size:12pt;font-family:Arial Unicode MS,sans-serif;}
+            
+            .odd {
+            background-color: #cfe2f3;
+            }
+            .even {
+            }
+        </style>
+         <!-- CSS For Quote Header Fields Table -->
+        <style type="text/css">table.table565 {border:solid black 1px; border-collapse:collapse; border-spacing:0px;font-family:Arial Unicode MS,sans-serif; font-size:10pt; width:100% }
+            .table565header {text-align:center;font-weight:bold;border:solid black 1px;color:#FFFFFF;background-color:#000000;}
+            .table565footer {text-align:right;font-weight:bold;border:solid black 1px; height: 30px}
+            .table565RowEven{border:solid black 1px;}
+            .table565RowOdd{background-color:#cdcdcd;background-color:#a8a8a8;border:solid black 1px;}
+            .table565col0{border:solid black 1px;text-align:left;font-weight:normal;font-size:12pt;font-family:Arial Unicode MS,sans-serif;}
+        </style>
+    </head>
+    <div>
+    	<apex:pageMessages id="pageMessages" />
+    </div>
+    <div style="text-align: right;"><span style="color:#808080;"><strong><span style="font-family:tahoma,sans-serif;">Godrej &amp; Boyce Mfg. Co. Ltd</span></strong></span><br />
+        <span style="color:#A9A9A9;"><span style="font-family:tahoma,sans-serif;">Regd. Office : Pirojshanagar,</span><br />
+            <span style="font-family:tahoma,sans-serif;">Vikhroli, Mumbai 400 079, India</span><br />
+            <span style="font-family:tahoma,sans-serif;">Tel : +91-22-6796 1700 / 1800</span><br />
+            <span style="font-family:tahoma,sans-serif;"><span style="font-size:10.0pt;">www.godrej.com</span></span></span></div>
+    <div><br />
+        <br />
+        <br />
+        Ref : {!quoteData.Opportunity.Enquiry_Number__c}<br/> 
+        Quote No : {!quoteData.QuoteNumber}
+        <div style="text-align: right;">Date:&nbsp;{!Today}</div>
+        To,<br />
+        {!quoteData.Account_Name__r.Name}&nbsp;/&nbsp;{!quoteData.Account_Name__r.Account_Code__c}<br/><br />
+        <apex:outputPanel rendered="{!IF(quoteData.Opportunity.Retailer__c != null,true, false)}">
+             Retailer Name:&nbsp; {!quoteData.Opportunity.Retailer__r.Name}<br />
+        </apex:outputPanel>
+       <br />
+        Kind Attn:&nbsp;{!quoteData.Opportunity.First_Name__c} {!quoteData.Opportunity.Last_Name__c}<br />
+        <br />
+        Dear Sir,<br />
+        With reference to our discussion, we are herewith sending the quotation as required by you:
+        <div style="text-align: left;"> </div>
+    </div>
+    <!-- Display QLI Records in table format If Retailer Is Present -->
+    <apex:outputPanel rendered="{!IF(quoteData.Opportunity.Retailer__c != null,true, false)}">
+         <table class="table714">
+        <apex:variable var="rowcount" value="{!1}" />
+        <tr>
+            <th class="table714header" style="width: 4%;word-wrap: break-word;">Sr No</th>
+            <th class="table714header" style="width: 6%;word-wrap: break-word;">Product Code</th>
+            <th class="table714header" style="width: 24%;">Description</th>
+            <th class="table714header" style="width: 6%;">Qty</th>
+            <th class="table714header" style="width: 6%;">MRP</th>
+            <th class="table714header" style="width: 6%;">Disc%</th>
+            <th class="table714header" style="width: 8%;word-wrap: break-word;">Customer Basic</th>
+            <th class="table714header" style="width: 8%;">GST%</th>
+            <th class="table714header" style="width: 8%;word-wrap: break-word;">Customer Landing</th>
+            <th class="table714header" style="width: 8%;word-wrap: break-word;">Retailer Retension %</th>
+            <th class="table714header" style="width: 8%;word-wrap: break-word;">Distributor Retension %</th>
+            <th class="table714header" style="width: 8%;word-wrap: break-word;">Effective Basic</th>
+        </tr>
+        
+        <apex:repeat value="{!listQuoteLineItems}" var="qlis">
+            <tr class = "{!IF(MOD(rowcount,2)==1, 'event','odd')}">
+                <td class="table714col0" style="width: 4%;">{!rowcount}</td>
+                <td class="table714col0" style="width: 6%;"><apex:outputText value="{!qlis.Product2.Search_Key_II__c}" /></td>                        
+                <td class="table714col0" style="width: 24%;"><apex:outputText value="{!qlis.Product2.Description}" /></td>
+                <td class="table714col0" style="width: 6%;"><apex:outputText value="{!qlis.Quantity}" /></td>
+                <td class="table714col0" style="width: 6%;"><apex:outputText value="{!qlis.MRP__c}" /></td>
+                <td class="table714col0" style="width: 6%;"><apex:outputText value="{!qlis.Discount__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.Customer_Sales_Price__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.Tax_Rate_Percentage__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.Customer_Sales_Price_Tax__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.Retailer_Retention__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.Distributor_Retention__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.UnitPrice}" /></td>
+            </tr>
+            <apex:variable var="rowcount" value="{!rowcount+1}" />
+        </apex:repeat>
+    </table>
+    </apex:outputPanel>
+    <!-- Display QLI Records in table If Retailer Is Not Present -->
+    <apex:outputPanel rendered="{!IF(quoteData.Opportunity.Retailer__c == null,true, false)}">
+         <table class="table714">
+        <apex:variable var="rowcount" value="{!1}" /> 
+        <tr>
+            <th class="table714header" style="width: 4%;word-wrap: break-word;">Sr No</th>
+            <th class="table714header" style="width: 6%;word-wrap: break-word;">Product Code</th>
+            <th class="table714header" style="width: 32%;">Description</th>
+            <th class="table714header" style="width: 6%;">Qty</th>
+            <th class="table714header" style="width: 6%;">MRP</th>
+            <th class="table714header" style="width: 6%;">Disc%</th>
+            <th class="table714header" style="width: 8%;word-wrap: break-word;">Customer Basic</th>
+            <th class="table714header" style="width: 8%;">GST%</th>
+            <th class="table714header" style="width: 8%;word-wrap: break-word;">Customer Landing</th>
+            <th class="table714header" style="width: 8%;word-wrap: break-word;">Dist/Dlr Retension %</th>
+            <th class="table714header" style="width: 8%;word-wrap: break-word;">Effective Basic</th>
+        </tr>
+        
+        <apex:repeat value="{!listQuoteLineItems}" var="qlis">
+            <tr class = "{!IF(MOD(rowcount,2)==1, 'event','odd')}">
+                <td class="table714col0" style="width: 4%;">{!rowcount}</td>
+                <td class="table714col0" style="width: 6%;"><apex:outputText value="{!qlis.Product2.Search_Key_II__c}" /></td>                        
+                <td class="table714col0" style="width: 32%;"><apex:outputText value="{!qlis.Product2.Description}" /></td>
+                <td class="table714col0" style="width: 6%;"><apex:outputText value="{!qlis.Quantity}" /></td>
+                <td class="table714col0" style="width: 6%;"><apex:outputText value="{!qlis.MRP__c}" /></td>
+                <td class="table714col0" style="width: 6%;"><apex:outputText value="{!qlis.Discount__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.Customer_Sales_Price__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.Tax_Rate_Percentage__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.Customer_Sales_Price_Tax__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.Distributor_Retention__c}" /></td>
+                <td class="table714col0" style="width: 8%;"><apex:outputText value="{!qlis.UnitPrice}" /></td>
+            </tr>
+            <apex:variable var="rowcount" value="{!rowcount+1}" />
+        </apex:repeat>
+    </table>
+    </apex:outputPanel>
+    <br />
+    <br />
+    <!-- ******************** END RELATED LIST SECTION UNIQUEID:882********************-->
+    <table align="right" border="1" cellpadding="1" cellspacing="1" style="width: 300px;">
+        <tbody>
+            <tr>
+                <td align="right"><strong>Total Basic:</strong></td>
+                <td align="right">{!quoteData.Total_Sales_Price__c}</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Total Tax:</strong></td>
+                <td align="right">{!quoteData.Total_Tax_Amount__c}</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Grand Total:</strong></td>
+                <td align="right">{!quoteData.Total_Amount__c}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div style="page-break-after: always"><span style="display: none;">&nbsp;</span></div>
+    <br />
+    <strong><u>Terms And Conditions</u></strong>:
+    
+    <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Any and all sales by Godrej &amp; Boyce Mfg. Co. Ltd. through its Locks and Architectural Fittings &amp; Systems Division (“GODREJ” or “Supplier” ) of materials, products and equipment (“Product”) as well as services (“Services”) to the buyer of such Products and Services (“Purchaser” or “customer”) shall be subject to the terms and conditions set forth in these Terms and Conditions unless expressly agreed otherwise.</span></span></div>
+    
+    <div><span style="font-family:arial unicode ms,sans-serif;"><strong><span style="font-size:11pt;"><br />
+        Price</span>:</strong></span></div>
+    
+    <ol>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Quoted Price is valid upto {!QuoteExpiryDate} (dd/mm/yyyy).</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">GST extra as applicable. However, any increase in taxes or other statutory levies, will be payable extra at the time of billing.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Sales Tax as applicable, is chargeable at rates prevailing on date of dispatch. Any concessions in Sales Tax claimed by customer will be applicable only if supported by appropriate forms/ certificates.</span></span></div>
+        </li>
+    </ol>
+    
+    
+    <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>Payment terms:</strong></span></span><br />
+        <span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"></span></span></div>
+    
+    <ol>
+        <li><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">
+            <apex:outputPanel rendered="{!IF(quoteData.Payment_Terms__c == 'ADV',true, false)}">
+                100% Advance along with Purchase Order
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!IF(quoteData.Payment_Terms__c == '0',true, false)}">
+                Immediate Payment against delivery
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!IF(quoteData.Payment_Terms__c != '0' && quoteData.Payment_Terms__c !='ADV', true, false)}">
+                {!quoteData.Payment_Terms__c} days credit from the date of invoice.
+            </apex:outputPanel> </span></span></li>
+    
+        <li><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Any amount remaining outstanding for payment after the due date shall attract interest at the rate of 15% p.a. effective from the due date till the date of payment.</span></span></li>
+        <li><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Any instances of Cheque bounce will attract a penalty of 1.5% of the Invoice amount on account of processing charges debited by Bankers. Additional interest penalty @ 15% per annum from the due date till the date of fresh payment shall be recovered.</span></span></li>
+    </ol>
+    <br />
+    <span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>Warranty:</strong></span></span>
+    
+    <ol>
+        <li><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The Product offered is covered by GODREJ’s standard warranty for the period of 1 year.</span></span></li>
+        <li><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The GODREJ warranty covers the products or accessories purchased from GODREJ against mechanical defects, during the warranty period. Only the authorized service personnel of GODREJ are authorized to certify any such defects, based on their experience and sole judgment. GODREJ shall at its sole discretion repair, replace or reject such products /accessories within reasonable time during the normal working days and time of GODREJ.</span></span></li>
+        <li><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">GODREJ warranty does not cover malfunctions &amp; defects arising out of (a) service/maintenance of products by persons other than GODREJ authorized persons, (b) non-conformance to GODREJ’s specifications, site and environmental requirements, (c) willful act or default by the customer, (d) accidents, misuse or negligence, (e) Use of inappropriate chemicals, detergents, abrasives or other inappropriate cleaning agents that can damage the surface or Hardware or (f) use of any supplies not conforming to GODREJ’s specifications. All defective parts removed during the warranty period shall be the property of GODREJ. Surface finish and/or shade of the product is not covered under warranty.</span></span></li>
+        <li><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The warranty shall be void if the customer tampers or misuses the products without the presence of approved GODREJ representative or without written approval from the Godrej Service department.</span></span></li>
+        <li><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">All warranty terms mentioned in the product warranty slips also applicable other than above mentioned terms.</span></span></li>
+    </ol>
+    
+    <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"></span></span>
+        
+        <div style="page-break-after: always"><span style="display: none;">&nbsp;</span></div>
+        <span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><br />
+            <strong>Liquidated Damages:</strong></span></span></div>
+    
+    <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">We have given our delivery schedule in good faith &amp; will execute the order, if placed on us, in accordance with the schedule that would be committed. However the company shall not responsible or liable for any delay in the delivery of goods due to reasons circumstances beyond its control.</span></span></div>
+    &nbsp;
+    
+    <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>Material Handling and Storage at Site:</strong></span></span></div>
+    
+    <ol>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The client will provide adequate space for unloading and storage of material at the site with requisite security arrangement.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The material should be stored in area free of moisture &amp; water.</span></span></div>
+        </li>
+    </ol>
+    
+    <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>Site readiness:</strong></span></span></div>
+    
+    <ol>
+        <li>
+            <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"></span></span><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Project Site will be inspected for readiness by a Godrej official in case of bulk supply without advance payment.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>I</strong>n case project site is not ready as confirmed by Godrej official, then without 100% advance payment no supply will be allowed to customer</span></span><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;"></span></span></div>
+        </li>
+    </ol>
+    
+    <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>Statutory Forms and Declarations:</strong></span></span><br />
+        <span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"></span></span></div>
+    
+    <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The client shall submit all forms such as Excise exemption certificate, SEZ document, Road permit and any other related document in advance before booking an order.</span></span></div>
+    
+    <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><br />
+        <strong>Delivery &amp; Installation:</strong></span></span></div>
+    
+    <ol>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Delivery period will be {!quoteData.Delivery_Period__c}.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The delivery period shall start from the date GODREJ receives and accepts the Purchase order.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">GODREJ will make every attempt to deliver the goods mentioned in the order, subject to extension for causes beyond the control of GODREJ. GODREJ shall also bear the risk of loss or damage to the product until delivery to the customer. Any delay for any reason whatsoever in delivering the goods shall not render GODREJ liable in any manner, whatsoever, for any loss or damage of any kind whatsoever.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Installation by our trained technicians.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The goods shall be deemed to have been delivered on its receipt by the customer.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The customer shall ensure that the installation site at the Customer premises is in accordance with the site and environmental requirements specified by GODREJ and any defaults in this regard will be at Customers risk and responsibility.</span></span></div>
+        </li>
+    </ol>
+    
+    <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>General:</strong></span></span></div>
+    
+    <ol>
+        <li>
+            <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"></span></span><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The order becomes binding only after GODREJ has accepted the same it in writing.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">An order once placed cannot be cancelled without prior consent in writing from GODREJ.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">GODREJ reserves the right to charge 25% of order value as Cancellation charges plus any additional charges incurred towards freight, handling and forwarding at actual.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Godrej &amp; Boyce Mfg Co Ltd will not be responsible for any GST claims arising due to non-availability of TIN No. / GST details on the Tax Invoice in absence of relevant information in the P.O.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The Supplier may terminate this quotation or any subsequent order(s) without cause upon fifteen (15) days prior written notice.</span></span></div>
+        </li>
+    </ol>
+    
+    <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>Limitation of Liability:</strong></span></span></div>
+    
+    <ol>
+        <li>
+            <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"></span></span><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">GODREJ’s liability to customer for any claim whatsoever shall be limited to the purchase price paid by the customer for the product or the services that is the subject of the customer’s claim. In no event will GODREJ be liable for incidental, consequential, indirect, and special or punitive damages of any kind or for loss of revenue, loss of business, loss of data or other financial loss arising out of or in connection with sale, installation, use, performance, failure or interruption of the products or services.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The Purchaser shall defend, indemnify, keep indemnified and hold harmless the Supplier, its affiliates, successors or assigns and its respective directors, officers, shareholders, and employees etc. against any and all loss, injury, death, damage, liability, claim, action, subrogation, judgment, interest, penalty, fines, cost or expense, including reasonable attorney and professional fees and costs, and the cost of enforcing any right to indemnification hereunder, arising out of or occurring in connection with the breach of the terms of this quotation, or any third party claims, or in the event that any design if provided by the Purchaser infringes or misappropriates a patent, copyright, trade secret or other intellectual property right of any third party.</span></span></div>
+        </li>
+    </ol>
+    
+    <div> </div>
+    
+    <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>Repossession:</strong></span></span></div>
+    
+    <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">GODREJ shall have lien on the product for the unpaid amount, the timely payment being the essence of this transaction; GODREJ has the right to repossess the goods. In the event of the customer not paying the full amount by the due date mentioned on the face of the Performa Invoice, the customer authorizes that GODREJ’s authorized representative shall be entitled to enter the customer’s premises and to do such things as may be necessary to repossess the goods, without waiving its right to claim interest and other charges including the repossession charges that may become applicable.</span></span><br />
+        <br />
+        <strong><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;">Variance in Terms:</span></span></strong><br />
+        <span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Any variance in terms hereof unless accepted in writing by a person duly authorized by GODREJ, shall not be binding on GODREJ.</span></span>
+        
+        <div style="page-break-after: always"><span style="display: none;">&nbsp;</span></div>
+        <br />
+        <span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>Force Majeure:</strong></span></span></div>
+    
+    <ol>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">“Force Majeure” means the occurrence of an event or circumstance that prevents or impedes a party from performing one or more of its contractual obligations under this quotation or subsequent order(s), if and to the extent that that party proves that such impediment is beyond its reasonable control; and [b] that it could not reasonably have been foreseen at the time of the conclusion of the order(s); and [c] that the effects of the impediment could not reasonably have been avoided or overcome by the affected party.&nbsp;</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">In the absence of proof to the contrary, the following events affecting a party shall be presumed to fulfil conditions (a) and (b) under paragraph 1 of this Clause: (i) war (whether declared or not), hostilities, invasion, act of foreign enemies, extensive military mobilisation; (ii) civil war, riot, rebellion and revolution, military or usurped power, insurrection, act of terrorism, sabotage or piracy; (iii) currency and trade restriction, embargo, sanction; (iv) act of authority whether lawful or unlawful, compliance with any law or governmental order, expropriation, seizure of works, requisition, nationalisation; (v) plague, epidemic, natural disaster or extreme natural event; (vi) explosion, fire, destruction of equipment, prolonged break-down of transport, telecommunication, information system or energy; (vii) general labour disturbance such as boycott, strike and lock-out, go-slow, occupation of factories and premises.&nbsp;</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">A party successfully invoking this Clause is relieved from its duty to perform its obligations under the order(s) and from any liability in damages or from any other contractual remedy for breach of order(s), from the time at which the impediment causes inability to perform, provided that the notice thereof is given without delay. If notice thereof is not given without delay, the relief is effective from the time at which notice thereof reaches the other party. Where the effect of the impediment or event invoked is temporary, the above consequences shall apply only as long as the impediment invoked impedes performance by the affected party. If Force Majeure continues for a period of more than 3 months, Parties shall jointly decide future course of action.&nbsp;</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">It is hereby clarified that Force Majeure cannot be considered as an excuse for non-payment of goods already delivered or services already performed. Provided always no Party shall be entitled to rely on or claim as an event or condition of Force Majeure lack of funds due to any commercial, economic or financial reason such as, but not limited to, such Party’s inability to make a profit or achieve a satisfactory rate of return due to the provisions of these terms and conditions or changes in market conditions.</span></span></div>
+        </li>
+    </ol>
+    
+    <div><strong><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><br />
+        INTELLECTUAL PROPERTY AND CONFIDENTIALITY:</span></span></strong></div>
+    
+    <ol>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Each Party will maintain all right, title and interest in any intellectual property conceived or developed prior to performance of this quotation or outside of this quotation.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Supplier Marks: Godrej &amp; Boyce Manufacturing Company Limited., is the exclusive proprietors of the registered, reputed trademark ‘GODREJ’, its trading style, brand name and corporate name are all extensively identified, associated and exclusively belong to the Company. ‘Godrej’ is a distinctive and a well-known trademark in so far as India is concerned and for which the Company has sought statutory protection for the same, the other party undertakes and agree that they shall have no right to use the GODREJ marks in advertising, publicity or promotional materials, websites, letterhead , business cards or other business supplies or materials , whether in writing ,orally or otherwise, without the prior written consent of Godrej &amp; Boyce Manufacturing Company Limited.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Intellectual Property Rights: The Purchaser acknowledges and agrees that, the Supplier owns all right, title, and interest in and to the Products and Services and all intellectual property rights embodied by or covering the design, manufacture, operation or service of the Products along with the non-exclusive, perpetual, word wide royalty free right to manufacture any derivative works developed by the Purchaser relating to the Product. &nbsp;The use of Products by the Purchaser under these rights is authorized only for the purposes expressly set forth herein, subject to these terms and conditions, and upon expiration or termination of this quotation for any reason such authorization shall cease, unless otherwise agreed upon. &nbsp;The Purchaser shall not (i) modify any Product or documentation the Supplier provides to it without the prior written approval of the Supplier, or (ii) reverse engineer or disassemble any Product or encourage or assist any third party in doing so.</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">Confidential Information: “Confidential Information” means all confidential and proprietary information of a party (“Disclosing Party”) disclosed to the other party (“Receiving Party”), whether orally or in writing, that is designated as confidential or that reasonably should be understood to be confidential given the nature of the information and the circumstances of disclosure, including these terms and conditions (including pricing and other terms reflected herein), customer data, business and marketing plans, technology and technical information, product designs, other intellectual property, and business processes.&nbsp;</span></span></div>
+        </li>
+        <li>
+            <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">The Receiving Party shall exercise the same degree of care to protect such Confidential Information as it employs for the protection of its own Confidential Information and in no case less than a reasonable degree of care. Upon Disclosing Party’s request, the Receiving Party shall promptly return all such Confidential Information including all documents and other materials in any form received from the Disclosing Party. Disclosing Party shall be entitled to injunctive relief, in addition to its other remedies, for any violation of this clause. This clause shall not apply to information that is: (a) in the public domain; (b) rightfully and legally known to the Receiving Party at the time of disclosure; or (c) rightfully and legally obtained by the Receiving Party on a non-confidential basis from a third party.</span></span></div>
+        </li>
+    </ol>
+    
+    <div> </div>
+    
+    <div><span style="font-size:11pt;"><span style="font-family:arial unicode ms,sans-serif;"><strong>Arbitration:</strong></span></span></div>
+    
+    <div><span style="font-size:10pt;"><span style="font-family:arial unicode ms,sans-serif;">All transaction, right and duties or construction, enforcement of any terms/conditions under this quotation shall be governed by and construed in accordance with the Indian laws. &nbsp;All disputes or differences arising between the parties in respect of the terms and conditions pertaining to or arising under this contract, the same shall be referred to the arbitration of a sole arbitrator appointed by Godrej. The customer shall not be entitled to call in question appointment of such arbitrator on the grounds that he is an interested party. All proceedings of such arbitration shall be governed by the Arbitration and Conciliation Act, 1996 as amended or re-enacted from time to time. The venue of arbitration shall be Mumbai. The courts at Mumbai have exclusive jurisdiction over this agreement.</span></span></div>
+    
+<br /><br /><br /><br /><br />
+Thanks &amp; Regards,<br />
+{!userData.Name}<br />
+{!userData.MobilePhone}
+    
+    
+</apex:page>

@@ -1,0 +1,304 @@
+<apex:page controller="PaymentReceiptController" renderAs="pdf" applyBodyTag="false" applyHtmlTag="false" showHeader="false">
+    <html>
+        <head>
+            <style>
+                @page {size: A4 landscape;}
+                .mainContainer {margin: auto; width: 100%;}
+                .margin_ten {margin: 20px;}
+                .system_billing_details-dataTable {text-align: center; width: 95%; font-size: 100%;}
+                .payment_details {width: 75%; font-size: 100%; margin-left: 100px; page-break-before: always;}
+                .borderSolid {border: 0.5px solid; border-color: rgb(184, 187, 191);}
+                .footerClass {font-weight: bold;}
+                .paddedColumn {padding-top: 10px; padding-botton: 10px;}
+                .label {padding: 5px; border: 0.5px solid; border-color: rgb(184, 187, 191);}
+                .value {padding: 5px; border: 0.5px solid; border-color: rgb(184, 187, 191);}
+            </style>
+        </head>
+        <!--<apex:stylesheet value="{!$Resource.PaymentReceiptCSS}"/> -->
+        <body style="font-family: sans-serif;font-size:12pt;">
+            <apex:form >
+                <div class="mainContainer borderSolid">
+                    <!-- Header -->
+                    <table width="95%" >
+                        <tr width="100%">
+                          <!-- commented by shankar sahu 26-4-21 <td width="70%" style="color: rgb(255, 255, 255); font-size: 18pt; text-align: center; background-color: rgb(184, 17, 120);">{!orderDetails.paymentModeActual} Payment Receipt</td> -->
+                           <td width="70%" style="color: rgb(255, 255, 255); font-size: 18pt; text-align: center; background-color: rgb(184, 17, 120);">Advance Payment Receipt</td>  <td width="30%"><img src="{!imageResource}"  alt="Godrej" class="title_image" align="right"  /></td>
+                        </tr>
+                    </table>
+                    
+                    <!-- Receipt Detail section. -->
+                    <div class="receipt_details">
+                        <table width="95%" cellspacing="0" cellpadding="5">
+                            <tr width="100%">
+                                <td width="100%" align="left">
+                                    <p >Receipt No: {!orderDetails.receiptNumber}</p>
+                                    <apex:outputText value="Date: {!TODAY()}"  />
+                                   <apex:outputPanel layout="block" rendered="{!IF(CONTAINS(orderDetails.recordtype,'Appliance'),false,true)}">
+                                     <p >Store Address: {!orderDetails.storeAddress}</p>
+                                   </apex:outputPanel>   
+                                </td>
+                            </tr>
+                            <tr width="100%">
+                                <td width="100%">
+                                    <apex:outputText value="Received with thanks a sum of (" />
+                                    <apex:outputText style="text-decoration: underline ;text-underline-position: under;font-weight: bold;" value=" {!orderDetails.totalAmountInWords} )" />
+                                    <apex:outputText rendered="{!orderDetails.paymentMode == 'Cheque'}" value=" By {!orderDetails.paymentModeActual} No. "></apex:outputText>
+                                    <apex:outputText rendered="{!OrderDetails.paymentMode == 'Cheque'}" value="{!orderDetails.refNumber}" style="text-decoration: underline ; font-weight: bold;"/>
+                                    <apex:outputText rendered="{!OrderDetails.paymentMode == 'Credit Card'}" value=" By {!orderDetails.paymentModeActual} No. "/>
+                                    <apex:outputText rendered="{!OrderDetails.paymentMode == 'Credit Card'}" value="{!orderDetails.creditCardNo}" style="text-decoration: underline ; font-weight: bold;" />
+                                    <apex:outputText value=" Date. " />
+              
+                                    <apex:outputText style="text-decoration: underline ; font-weight: bold;" value=" {!orderDetails.earliestPaymentDate}" />
+                                    <apex:outputText style="" rendered="{!OrderDetails.paymentMode != 'Cash'}" value=" Drawn On. " />
+                                    <apex:outputText style="text-decoration: underline ; font-weight: bold;" rendered="{!OrderDetails.paymentMode != 'Cash'}" value="{!orderDetails.bank} " />
+                                    <apex:outputText rendered="{!OrderDetails.paymentMode != 'Cash'}" value=" Bank/Provider" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div/>
+                    <!-- Order and Customer detail section -->
+                    <div class="order_details">
+                        <table style="border-spacing: 0px;" class=" borderSolid margin_ten" width="95%">
+                            <tr width="100%">
+                                <th width="40%" style="text-align:center" class="paddedColumn borderSolid">Customer Name</th>
+                                <th width="40%" style="text-align:center" class="paddedColumn borderSolid">Order Confirmation Form Number</th>
+                                <th width="20%" style="text-align:center" class="paddedColumn borderSolid">Amount Received</th>
+                            </tr>
+                            <tr width="100%">
+                                <td width="40%" style="text-align:center" class="paddedColumn borderSolid">{!orderDetails.customerName}</td>
+                                <td width="40%" style="text-align:center" class="paddedColumn borderSolid">{!orderDetails.orderName}</td>
+                                <td width="20%" style="text-align:center" class="paddedColumn borderSolid">{!orderDetails.totalAmount}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    
+                    <!-- System and Amount detail section -->
+                    <div class="system_billing_details">
+                        <apex:dataTable value="{!paymentDetails}" var="pd" id="system_billing_details-dataTable"
+                                        styleClass="system_billing_details-dataTable borderSolid margin_ten" headerClass="paddedColumn borderSolid"
+                                        columnClasses="paddedColumn borderSolid" footerClass="footerClass paddedColumn borderSolid" 
+                                        columnsWidth="50px, 100px, 150px, 100px, 150px">
+                            <apex:column styleClass="">
+                                <apex:facet name="header">Co.</apex:facet>
+                                <apex:outputText value="{!pd.columnNo}"/>
+                                <apex:facet name="footer"></apex:facet>
+                            </apex:column>
+                            <apex:column styleClass="">
+                                <apex:facet name="header">System Order No.</apex:facet>
+                                <apex:outputText value="{!orderDetails.orderName}"/>
+                                <apex:facet name="footer"></apex:facet>
+                            </apex:column>
+                            <!--<apex:column styleClass="">
+                                <apex:facet name="header">Bill No</apex:facet>
+                                <apex:outputText value="{!pd.billNo}"/>
+                                <apex:facet name="footer">Total Amount</apex:facet>
+                            </apex:column>-->
+                            <apex:column styleClass="">
+                                <apex:facet name="header">Amount Paid</apex:facet>
+                                <apex:outputText value="{!pd.amount}"/>
+                                <apex:facet name="footer">{!orderDetails.totalAmount}</apex:facet>
+                            </apex:column>
+                            <!--Shankar Sahu 3-11-2020 for rally defect DE1163 -->
+                           <!-- <apex:column styleClass="">
+                                <apex:facet name="header">Total Due</apex:facet>
+                                <apex:outputText value="{!pd.TotalDueAmount}"/>
+                                <apex:facet name="footer"></apex:facet>
+                            </apex:column>-->
+                            <apex:column styleClass="">
+                                <apex:outputText value="{!orderDetails.refNumber}"/>
+                                <apex:facet name="header">Document No.</apex:facet>
+                                <apex:facet name="footer"></apex:facet>
+                            </apex:column>
+                        </apex:dataTable>
+                    </div>
+                    <br/>
+    
+                  <!--To Get order line item details Shankar Sahu 3-11-2020 for rally defect DE1163 -->
+                  <div> 
+                  <apex:pageblock >
+                   <apex:pageblocktable value="{!orderItems}" var="a" id="pbTable"
+                   styleClass="system_billing_details-dataTable borderSolid margin_ten" headerClass="paddedColumn borderSolid"
+                                        columnClasses="paddedColumn borderSolid" footerClass="footerClass paddedColumn borderSolid" 
+                                        columnsWidth="50px, 100px, 150px, 100px, 150px">
+                       <apex:column value="{!a.Quantity}"/>
+                       <apex:column value="{!a.Product2.Name}"/>
+                       </apex:pageblocktable>
+                        </apex:pageblock> 
+                    </div>
+                    <br/>
+                    
+                    <apex:repeat value="{!paymentDetails}" var="advancepay">
+                        <apex:outputPanel rendered="{!if((advancepay.paymentRec.Payment_Mode__c=='EMI'),true,false)}">
+                              <div class="oneColumnTable">
+                                 <table class="payment_details borderSolid" cellspacing="0">
+                                    <tr>
+                                        <td colspan="2"><div style="color: rgb(255, 255, 255); font-size: 14pt; text-align: center; background-color: rgb(184, 17, 120); padding: 5px;">Advance Payment Details</div></td>
+                                    </tr>
+                                  <!--  <tr>
+                                        <td class="label">Payment Mode</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.Payment_Mode__c}"/></td>
+                                    </tr> -->
+                                    <tr>
+                                        <td class="label">Mode Of Advance Payment</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.Mode_of_Advance_Payment__c}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label" style="word-wrap: break-word;">EMI Vendor</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.EMI_Vendor__c}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label">Scheme Name</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.EMI_Scheme__c}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label">Processing Fees</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.Processing_Fees__c}"/></td>
+                                    </tr>
+                                    <tr>
+                                     <!--Shankar Sahu 26-3-2021 td class="label">Product Price</td> -->
+                                        <td class="label">Loan Amount</td> 
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.Loan_Amount__c}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label">Total Down Payment Amount</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.Down_Payment__c}"/></td>
+                                    </tr>
+                                  <!--  <tr>
+                                        <td class="label">EMI Amount</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.EMI_Amount__c}"/></td>
+                                    </tr> 
+                                    <tr>
+                                        <td class="label">Count of EMI</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.EMI_Count__c}"/></td>
+                                    </tr> -->
+                                    <tr>
+                                        <td class="label">Advance Payment Amount</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.Amount__c}"/></td>
+                                    </tr>
+                                    <tr>
+                                     <!--   <apex:outputText rendered="{!if((advancepay.paymentRec.Order__r.Is_Exchange_order__c=='Yes'),true,false)}"> -->
+                                            <td class="label">Exchange Amount</td>
+                                            <td class="value"><apex:outputText value="{!advancepay.paymentRec.Exchange_Amount__c}"/></td>
+                                     <!--   </apex:outputText> -->
+                                    </tr>
+                                    <tr>
+                                        <td class="label">Subsidy Amount</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.Subsidy_Amount__c}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label">Balance Payment Amount</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.Balance_Payment__c}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label">Delivery Order Number</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.Delivery_Order_Number__c}"/></td>
+                                    </tr>
+                                 </table>
+                            </div>
+                   </apex:outputPanel>
+                   <apex:outputPanel rendered="{!if((advancepay.paymentRec.Payment_Mode__c=='Others'),true,false)}">
+                        <div class="oneColumnTable">
+                            <table class="payment_details borderSolid" cellspacing="0">
+                                <tr>
+                                    <td colspan="2"><div style="color: rgb(255, 255, 255); font-size: 14pt; text-align: center; background-color: rgb(184, 17, 120); padding: 5px;">Advance Payment Details</div></td>
+                                </tr>
+                               <!-- <tr>
+                                    <td class="label">Payment Mode</td>
+                                    <td class="value"><apex:outputText value="{!advancepay.paymentRec.Payment_Mode__c}"/></td>
+                                </tr> -->
+                                <tr>
+                                    <td class="label">Mode Of Advance Payment</td>
+                                    <td class="value"><apex:outputText value="{!advancepay.paymentRec.Mode_of_Advance_Payment__c}"/></td>
+                                </tr>
+                                <tr> 
+                                    <td class="label">Product Price</td> 
+                                    <td class="value"><apex:outputText value="{!advancepay.paymentRec.Order__r.Order_Amount__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Advance Payment Amount</td>
+                                    <td class="value"><apex:outputText value="{!advancepay.paymentRec.Amount__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <!--<apex:outputText rendered="{!if((advancepay.paymentRec.Order__r.Is_Exchange_order__c=='Yes'),true,false)}">-->
+                                        <td class="label">Exchange Amount</td>
+                                        <td class="value"><apex:outputText value="{!advancepay.paymentRec.Exchange_Amount__c}"/></td>
+                                   <!-- </apex:outputText> -->
+                                </tr>
+                                <tr>
+                                    <td class="label">Subsidy Amount</td>
+                                    <td class="value"><apex:outputText value="{!advancepay.paymentRec.Subsidy_Amount__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Balance Payment Amount</td>
+                                    <td class="value"><apex:outputText value="{!advancepay.paymentRec.Balance_Payment__c}"/></td>
+                                </tr>
+                            </table>
+                         </div>
+                     </apex:outputPanel>
+                   </apex:repeat>
+                   
+                   <!--Shankar Sahu 19-04-2021 for Appliances srf : 15/G&B/17747/SRF_REQST_V2 -->
+                 
+                   <div class="receipt_details">
+                        <table width="95%" cellspacing="0" cellpadding="5">
+                            <tr width="100%">
+                                <td width="100%" align="left">
+                                   <p style='margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <u>Terms And Conditions</u></strong></p>
+<ol style="list-style-type: decimal;">
+    <li>Cash Payment towards advance/booking amount not more than Rs. 1000 to be made on this application form. Godrej &amp; Boyce Mfg. Co. Ltd. will not be responsible for any cash transaction more than Rs. 1000 made on this Application form.</li>
+    <li>Full amount cheque payment can be made towards any Appliance sale at the time of booking the order. Delivery in such cases will be subject to cheque clearance</li>
+    <li>All cheques shall be drawn in the name of &ldquo;Godrej &amp; Boyce Mfg. Co. Ltd.&rdquo;</li>
+    <li>All refunds would be made only in cheque except for payment through Debit/Credit card in which case the refund would be made through the respective card. The refund would take minimum 15 days from the date of receiving the instructions from the customer.</li>
+    <li>Any request for refund of advance amount (if applicable) should be made within 3 months from the date of issuing of advance amount, else the advance amount shall stand forfeited.</li>
+    <li>In case of refund/cancellation (if applicable) for the sale under exchange offer, customers old appliance would be given back if the same is available with us at the time of processing the refund/cancellation. In case the customers old appliance is not available, any equivalent old appliance would be returned. The decision of Godrej &amp; Boyce Mfg. Co. Ltd. shall be final and binding in selecting such equivalent old appliance. Customer shall not be entitled for any refund of additional money towards the old appliance&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</li>
+    <li>Delivery of Appliance shall be taken by the Customer within 5 days from the date of booking of the appliance. Any delivery later than 5 days shall attract company price prevailing at that time.</li>
+    <li>Delivery shall be made subject to Availability of Stocks and Transport Route.</li>
+    <li>Godrej &amp; Boyce Mfg. Co. Ltd. shall intimate the customer regarding non &ndash; availability of stock within 15 days of booking the order. Under such circumstances, the company shall refund the advance money within 30 days of such intimation</li>
+    <li>Any Re-Delivery of Appliance shall attract an additional Rs. 300/- per appliance per trip as transportation cost. Also, if customer cancels the order after confirming the delivery, Rs. 300/- per appliance shall be deducted from the advance paid by the customer.</li>
+    <li>No model change will be entertained once the model is booked by the customer.</li>
+    <li>Any delivery made to the customer will not be taken back by the Company on account of size, colour or features of the Appliance.</li>
+    <li>All disputes, differences arising out of the present transaction shall be referred to a Sole arbitrator nominated by Godrej &amp; Boyce Mfg. Co. Ltd. The place of Arbitration shall be Mumbai.&nbsp;</li>
+    <li>For any enquiry or escalation contact details given below .</li>
+</ol>
+<p style='margin-top:0in;margin-right:0in;margin-bottom:.0001pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Regd. Off. : Godrej &amp; Boyce Mfg. Co. Ltd&nbsp;</p>
+<p style='margin-top:0in;margin-right:0in;margin-bottom:.0001pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Pirojshahnagar , Vikhroli, Mumbai -400079</p>
+<p style='margin-top:0in;margin-right:0in;margin-bottom:.0001pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Maharashtra.</p>
+<p style='margin-top:0in;margin-right:0in;margin-bottom:.0001pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Website: &nbsp; www.godrej.com/appliance</p>
+<p style='margin-top:0in;margin-right:0in;margin-bottom:.0001pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Email Id : &nbsp;<a href="mailto:godrejdirect@godrej.com">godrejdirect@godrej.com</a></p>
+<p style='margin-top:0in;margin-right:0in;margin-bottom:.0001pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Whats-app No : 9321665511</p>
+<p style='margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Tollfree number : 1800 209 5511</p>
+                                   
+   <apex:outputText rendered="{!IF((orderDetails.externalRep != null),true,false)}">
+         <p style='margin-top:0in;margin-right:0in;margin-bottom:.0001pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Sales Person's Name : {!orderDetails.externalRep}</p>
+ </apex:outputText> 
+ 
+<p style='margin-top:0in;margin-right:0in;margin-bottom:.0001pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Direct Sales Manager Name : {!orderDetails.internalRep}</p> 
+<p style='margin-top:0in;margin-right:0in;margin-bottom:.0001pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Direct Sales Manager Mob No :  {!userDetails.Mobile} </p>
+<p style='margin-top:0in;margin-right:0in;margin-bottom:.0001pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Direct Sales Manager email id  :  {!userDetails.EmailId} </p>   
+
+                                </td>
+                            </tr> 
+                          </table>  
+                   </div>
+                    <!-- Footer -->
+                    <div class="footer" style="padding-top:30px">
+                        <div style="margin: 0px 10px; clear: both;">
+                            <div style="float: left;">Customer's Copy</div>
+                            <div style=""></div>
+                            <div style="float: right;">For GODREJ and BOYCE MFG.CO.LTD</div>
+                        </div>
+                        <div style="margin: 40px 20px; font-size: 12px; clear: both;">
+                            <!--span style="float: left;">H.O. : Godrej Interio Division, Pirojshanagar, Vikhroli, Mumbai 400 079</span-->
+                            
+                            <span style="float:right;margin-top:20px">Authorised Signatory</span>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

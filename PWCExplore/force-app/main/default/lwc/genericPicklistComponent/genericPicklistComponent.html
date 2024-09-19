@@ -1,0 +1,31 @@
+<template>
+    <div class="component-container">
+        <div class="combobox-container">
+            <template if:true={IsDisabled}>
+                <lightning-combobox
+                    name={name}
+                    label={label}
+                    placeholder={placeHolder}
+                    options={options}
+                    onchange={handleChange} disabled> 
+                </lightning-combobox>
+            </template>
+            <template if:false={IsDisabled}>
+                <lightning-combobox
+                    name={name}
+                    label={label}
+                    placeholder={placeHolder}
+                    options={options}
+                    onchange={handleChange}>
+                </lightning-combobox>
+            </template>
+        </div>
+        <template if:false={isSingleSelect}>
+            <div class="lightning_pill-container">
+                <template if:true={anyOptionsSelected}>
+                    <lightning-pill-container items={selectedOptions} onitemremove={handleItemRemoval}></lightning-pill-container>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>

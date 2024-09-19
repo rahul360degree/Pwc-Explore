@@ -1,0 +1,34 @@
+<template>
+    <lightning-card title="Create Lead">
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-record-picker
+                        label="Product"
+                        placeholder="Select Product"
+                        onchange={handleProductSelect}
+                        object-api-name="Product2">
+                    </lightning-record-picker>
+                    <lightning-input label="Quantity" type="number" onchange={handleQuantityChange}></lightning-input>
+                    <lightning-input label="Final Sale Price" type="number" value={finalSalePrice} onchange={handleFinalSalePriceChange}></lightning-input>
+                    <lightning-combobox label="Preferred Time to Call" options={preferredTimeOptions} onchange={handlePreferredTimeSelect}></lightning-combobox>
+                    <lightning-combobox label="Bill to Location" options={billToLocationOptions} onchange={handleBillToLocationSelect}></lightning-combobox>
+                    <lightning-combobox label="Ship to Location" options={shipToLocationOptions} onchange={handleShipToLocationSelect}></lightning-combobox>
+                    <lightning-input type="checkbox" label="External Material Purchase" onchange={handleExternalMaterialChange}></lightning-input>
+                    <lightning-input label="Invoice Number" onchange={handleInvoiceNumberChange}></lightning-input>
+                    <lightning-input label="Invoice Date" type="date" onchange={handleInvoiceDateChange}></lightning-input>
+                    <template if:true={isLocks}>
+
+                    <lightning-combobox label="Existing Security Strength" options={existingSecurityStrengthOptions} onchange={handleExistingSecurityStrengthSelect}></lightning-combobox>
+                    <lightning-combobox label="Proposed Security Strength" options={proposedSecurityStrengthOptions} onchange={handleProposedSecurityStrengthSelect}></lightning-combobox>
+                    <lightning-combobox label="Entry Point" options={entryPointOptions} onchange={handleEntryPointSelect}></lightning-combobox>
+                    <lightning-combobox label="Competition Replaced" options={competitionReplacedOptions} onchange={handleCompetitionReplacedSelect}></lightning-combobox>
+                    </template>
+                    <div class="slds-m-top_medium">
+                        <lightning-button label="Create Lead" onclick={createLead} variant="brand"></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

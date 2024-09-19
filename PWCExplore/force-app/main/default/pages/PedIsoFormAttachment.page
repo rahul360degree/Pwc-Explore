@@ -1,0 +1,2 @@
+<apex:page standardController="Quote" extensions="PedIsoFormController"  action="{!createPDF}"  standardStylesheets="false" applyBodyTag="false" applyHTMLTag="false" sidebar="false" showHeader="false">  
+</apex:page>

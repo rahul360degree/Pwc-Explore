@@ -1,0 +1,6 @@
+<aura:component implements = "flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                controller = "SendProductDetails"
+                access = "global"> 
+    <aura:handler name="init" action="{!c.sendPDFAttachmentDetails}" value="{!this}"/>
+    We're sending Product PDF through Email and SMS. Wait for sometime....
+</aura:component>

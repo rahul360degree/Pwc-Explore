@@ -1,0 +1,249 @@
+<apex:page controller="TalkingSheetController" action="{!getDetails}" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <head>
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                @bottom-center {          
+                content: "Page " counter(page) " of " counter(pages);                
+                }
+                }
+                body{
+                margin:0;
+                padding:0;            
+                font-family:"Google Sans", Roboto, arial, sans-serif !important;
+                font-family: 'cambria';
+                }                
+                
+                @page {
+                margin-bottom: 64px;
+                margin-top: 64px;
+                
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                }            
+                .header{
+                position: running(header);
+                }
+                .footer {
+                display:block;
+                position: running(footer);
+                z-index:-999;
+                }            
+                
+            </style>  
+        </head>
+        <apex:form >
+            <body>
+                <!-------------------------------------------Main Page 1 -------------------------------------->
+                <center>
+                    <apex:pageMessages />
+                </center>
+                <br/>
+                <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!NOT(isRunError)}"> <!--{!NOT(isRunError)}--> 
+                    <table class="table2" style="width:100%;border-collapse:collapse;">
+                        <tr>
+                            <th style="font-size:12px;padding:3px 5px;text-align:right;">
+                                Date :
+                                <apex:outputText value="{0,date, MMMM d',' yyyy}">
+                                    <apex:param value="{!TODAY()}" />
+                                </apex:outputText>                                
+                            </th>
+                        </tr>
+                        <tr><th>&nbsp;</th></tr>
+                        <tr>
+                            <th style="font-size:15px;padding:6px 5px;text-align:center;" >Comparison Sheet ( {!headOfTermsList[0].Proposed_Licensee__c} - {!headOfTermsList[0].Opportunity__r.Auto_Number__c} )</th>
+                        </tr>
+                    </table>
+                    <table class="table1" style="width:100%;border-collapse:collapse;">
+                        <tr>
+                            <th width="05%" style="font-size:12px;border:1px solid #000;padding:3px 2px;">Sr No.</th>
+                            <th width="15%" style="font-size:12px;border:1px solid #000;padding:3px 2px;">Particulars</th>
+                            <th width="51%" style="font-size:12px;border:1px solid #000;padding:3px 2px;">Proposed Clauses in Term Sheet</th>
+                            <th width="10%" style="font-size:12px;border:1px solid #000;padding:3px 2px;">Deviation</th>
+                            <th width="09%" style="font-size:12px;border:1px solid #000;padding:3px 2px;">Reason</th>
+                            <th width="10%" style="font-size:12px;border:1px solid #000;padding:3px 2px;">Negotiation</th>
+                        </tr> 
+                    </table>
+                    <apex:repeat value="{!termWrapperList}" var="t">
+                        <apex:repeat value="{!t.termItemObject}" var="t1">
+                            <apex:outputPanel rendered="{!NOT(t.termItemBool)}">
+                                <table class="table1" style="width:100%;border-collapse:collapse;">
+                                    <tr>
+                                        <td width="5%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                            <apex:outputText value="{!t.termSequence}" escape="false" />
+                                        </td>
+                                        <td width="15%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                            <apex:outputText value="{!JSENCODE(HTMLENCODE(t1.Header__c))}" escape="false" />
+                                        </td>
+                                        <td width="51%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                            <apex:outputPanel rendered="{!t.printOfficeSpaceDetails}">
+                                                <apex:repeat value="{!premiseGroupMap}" var="optKey">
+                                                    <h4>Premise Option - {!optKey}</h4>
+                                                    <table class="table1" width="100%" style="width:100%;border-collapse:collapse;">
+                                                        <tr>
+                                                            <th width="33%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                Building Name
+                                                            </th>
+                                                            <th width="33%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                Premise
+                                                            </th>
+                                                            <th width="33%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                Net usable area
+                                                            </th>
+                                                        </tr>
+                                                        <apex:repeat value="{!premiseGroupMap[optKey]}" var="wrap">
+                                                            <tr>
+                                                                <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                    <apex:outputText value="{!wrap.Floor__r.Building__r.Display_Name__c}" escape="false" />
+                                                                </td>
+                                                                <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                    <apex:outputText value="{!wrap.Floor__r.Block__C}, {!wrap.Floor__r.Floor_Number__c} floor " escape="false" />
+                                                                </td>
+                                                                <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                    <apex:outputText value="{!wrap.Carpet_Area_in_Sq_Ft__c}" escape="false" />
+                                                                </td>
+                                                            </tr>
+                                                        </apex:repeat>
+                                                    </table>
+                                                </apex:repeat>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!t.printMonCompDetails}">
+                                                <apex:repeat value="{!billingWrapperList}" var="bill1">
+                                                    <apex:repeat value="{!bill1.billingItemObject}" var="billFields">
+                                                        
+                                                        <apex:outputPanel rendered="{!bill1.printDate}">
+                                                            <table class="table1" style="border-collapse:collapse;width:100%;">
+                                                                <tr>
+                                                                    <th colspan="2" width="50%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        License Term
+                                                                    </th>
+                                                                    
+                                                                    <th colspan="2" width="50%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        Monthly <br/>Compensation (Rs.)
+                                                                    </th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{0,date, dd'/'MM'/'yy}" escape="false">
+                                                                            <apex:param value="{!billFields.Start_Date__c}" />
+                                                                        </apex:outputText>
+                                                                    </td>
+                                                                    <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{0,date, dd'/'MM'/'yy}" escape="false">
+                                                                            <apex:param value="{!billFields.End_Date__c}" />
+                                                                        </apex:outputText>
+                                                                    </td>
+                                                                    <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{!bill1.moneyFormatCompensation}" escape="false" />
+                                                                    </td>
+                                                                    <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        (<apex:outputText value="{!bill1.wordFormatCompensation}" escape="false" />)
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!NOT(bill1.printDate)}">
+                                                            <table class="table1" style="width:100%;border-collapse:collapse;">
+                                                                <tr>
+                                                                    <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{!JSENCODE(HTMLENCODE(Text(billFields.From_Month__c)))}" escape="false" />
+                                                                    </td>
+                                                                    <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{!JSENCODE(HTMLENCODE(Text(billFields.To_Month__c)))}" escape="false" />
+                                                                    </td>
+                                                                    <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{!bill1.moneyFormatCompensation}" escape="false" />
+                                                                    </td>
+                                                                    <td width="25%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        (<apex:outputText value="{!bill1.wordFormatCompensation}" escape="false" />)
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </apex:outputPanel>
+                                                    </apex:repeat>
+                                                </apex:repeat>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!t.printSecurityDeopsitDetails}">
+                                                
+                                                <apex:repeat value="{!billingWrapperList}" var="bill2">
+                                                    <apex:repeat value="{!bill2.billingItemObject}" var="billFields">
+                                                        
+                                                        <apex:outputPanel rendered="{!bill2.printDate}">
+                                                            <table class="table1" width="100%" style="width:100%;border-collapse:collapse;">
+                                                                <tr>
+                                                                    <th width="20%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        Premises
+                                                                    </th>
+                                                                    <th width="20%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        License Term
+                                                                    </th>
+                                                                    
+                                                                    <th width="60%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        Security Deposit (Rs.)
+                                                                    </th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="20%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{0,date, dd'/'MM'/'yy}" escape="false">
+                                                                            <apex:param value="{!billFields.Start_Date__c}" />
+                                                                        </apex:outputText>
+                                                                    </td>
+                                                                    <td width="20%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{0,date, dd'/'MM'/'yy}" escape="false">
+                                                                            <apex:param value="{!billFields.End_Date__c}" />
+                                                                        </apex:outputText>
+                                                                    </td>
+                                                                    <td width="60%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{!bill2.moneyFormatSecurityDep}" escape="false"></apex:outputText><br/>
+                                                                        (<apex:outputText value="{!bill2.wordFormatSecurityDep}" escape="false"></apex:outputText>)
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!NOT(bill2.printDate)}">
+                                                            <table class="table1" width="100%" style="width:100%;border-collapse:collapse;">
+                                                                <tr>
+                                                                    <td width="20%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{!billFields.From_Month__c}" escape="false" />
+                                                                    </td>
+                                                                    <td width="20%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{!billFields.To_Month__c}" escape="false" />
+                                                                    </td>
+                                                                    <td width="60%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                                                        <apex:outputText value="{!bill2.moneyFormatSecurityDep}" escape="false"></apex:outputText>
+                                                                        (<apex:outputText value="{!bill2.wordFormatSecurityDep}" escape="false"></apex:outputText>)
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </apex:outputPanel>
+                                                    </apex:repeat>
+                                                </apex:repeat>
+                                            </apex:outputPanel>
+                                            <apex:outputText value="{!JSENCODE(HTMLENCODE(t1.Merged_Term_Value__c))}" escape="false"></apex:outputText>
+                                        </td>
+                                        
+                                        <td width="10%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                            <apex:outputText value="{!JSENCODE(HTMLENCODE(t1.Deviation__c))}" escape="false"></apex:outputText>
+                                        </td>
+                                        <td width="9%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                            <apex:outputText value="{!JSENCODE(HTMLENCODE(t1.Reason_for_deviation__c))}" escape="false"></apex:outputText>
+                                        </td>
+                                        <td width="10%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">
+                                            <apex:outputText value="{!JSENCODE(HTMLENCODE(t1.Negotiation_Log__c))}" escape="false"></apex:outputText>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                    </apex:repeat>
+                    
+                </apex:outputPanel>
+            </body> 
+        </apex:form>
+    </html>
+</apex:page>

@@ -1,0 +1,167 @@
+<!--
+@description       : This component will display company information based on GSTN
+@author            : vrajpoot@godrej.com
+@group             : 
+@last modified on  : 03-17-2022
+@last modified by  : vrajpoot@godrej.com
+-->
+<template>
+    <!--Display/Hide lwc component-->
+    <template if:false={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    
+    <!--Display the error-->
+    <template if:true={error}>
+        <div class="slds-card__header-title slds-truncate"> Error</div>
+        <div class=borderCSS>
+            <lightning-card>
+                <div class="slds-form__item" role="listitem">
+                    <div
+                        class="slds-form-element slds-form-element_edit  slds-form-element_horizontal slds-hint-parent">
+                        {error}
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+    </template>
+
+    <template if:true={company}>
+        <!-- Basic Detail of the company-->
+        <div class="slds-card__header-title slds-truncate"> Basic Detail </div>
+        <div class=borderCSS>
+            <lightning-card>
+                <header slot="title" class="lightningCardHeader">
+                    {company.name}
+                </header>
+                <lightning-layout multiple-rows>
+                    <c-companydetailvalueparser fieldvalue={company.name} label="Name:">
+                    </c-companydetailvalueparser>
+                    <c-companydetailvalueparser fieldvalue={company.tradename} label="Trade Name:">
+                    </c-companydetailvalueparser>
+                    <c-companydetailvalueparser fieldvalue={company.registrationDate} label="Registration Date:">
+                    </c-companydetailvalueparser>
+                    <c-companydetailvalueparser fieldvalue={company.constitution} label="Constitution:">
+                    </c-companydetailvalueparser>
+                    <c-companydetailvalueparser fieldvalue={company.type} label="Type:">
+                    </c-companydetailvalueparser>
+                    <c-companydetailvalueparser fieldvalue={company.status} label="Status:">
+                    </c-companydetailvalueparser>
+                    <c-companydetailvalueparser fieldvalue={company.center} label="Center:">
+                    </c-companydetailvalueparser>
+                    <c-companydetailvalueparser fieldvalue={company.state} label="State:">
+                    </c-companydetailvalueparser>
+                </lightning-layout>
+            </lightning-card>
+        </div>
+
+
+        <!-- Nature of the company-->
+        <template if:true={company.nature}>
+            <div class="slds-m-top_x-large">
+                <div class="slds-card__header-title slds-truncate">
+                    Nature
+                </div>
+                <div class=borderCSS>
+                    <lightning-card>
+                        <div class="slds-form__item" role="listitem">
+                            <div
+                                class="slds-form-element slds-form-element_edit  slds-form-element_horizontal slds-hint-parent">
+                                <!--<span class="slds-form-element__label">Company Nature:</span>-->
+                                <template for:each={company.nature} for:item="row">
+                                    {row},
+                                </template>
+                            </div>
+                        </div>
+                    </lightning-card>
+                </div>
+            </div>
+        </template>
+
+        <!-- Primary Address of the company-->
+        <div class="slds-m-top_x-large">
+            <div class="slds-card__header-title slds-truncate">
+                Primary Address
+            </div>
+            <div class=borderCSS>
+                <lightning-card>
+                    <header slot="title" class="lightningCardHeader">
+                        {company.pradr.bnm}
+                    </header>
+                    <lightning-layout multiple-rows>
+                        <c-companydetailvalueparser fieldvalue={company.pradr.st} label="Street:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={company.pradr.loc} label="Location:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={company.pradr.bno} label="Building No.:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={company.pradr.stcd} label="State Code:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={company.pradr.flno} label="Floor No:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={company.pradr.lt} label="lt:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={company.pradr.lg} label="lg:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={company.pradr.pncd} label="Pincode:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={company.pradr.ntr} label="Nature:">
+                        </c-companydetailvalueparser>
+                    </lightning-layout>
+                </lightning-card>
+            </div>
+        </div>
+
+        <!-- Selected Primary Address for the company-->
+        <div class="slds-m-top_x-large">
+            <div class="slds-card__header-title slds-truncate">
+                Selected Primary Address
+            </div>
+
+            <div class=borderCSS>
+                <lightning-card>
+                    <div>
+                        <div class="alignleft">
+                            <header slot="title" class="slds-card__header-title lightningCardHeader">
+                                {primary_bnm}
+                            </header>
+                        </div>
+                        <div class="alignright">
+                            <lightning-button variant="brand-outline" label="Reset primary add"
+                                title="Reset primary address" onclick={primaryAddressHelper} data-name={index}
+                                class="slds-m-left_x-small slds-m-right_x-large">
+                            </lightning-button>
+                        </div>
+                    </div>
+                    <div class="clearBoth"></div>
+                    <lightning-layout multiple-rows>
+                        <c-companydetailvalueparser fieldvalue={primary_st} label="Street:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={primary_loc} label="Location:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={primary_bno} label="Building No.:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={primary_flno} label="Floor No:">
+                        </c-companydetailvalueparser>
+                        <c-companydetailvalueparser fieldvalue={primary_pncd} label="Pincode:">
+                        </c-companydetailvalueparser>
+                    </lightning-layout>
+                </lightning-card>
+            </div>
+        </div>
+
+        <!-- Addtional Address of the company-->
+        <template if:true={company.adadr}>
+            <div class="slds-m-top_x-large">
+                <div class="slds-card__header-title slds-truncate">
+                    Select Address
+                </div>
+								
+                <c-companyaddresses businessunit={Business_Unit} records={company.adadr} onprimaryaddrchange={primaryaddrchange}
+                                                                onaddrchange={additionaladdrchange}>
+                </c-companyaddresses>
+                
+            </div>
+        </template>
+    </template>
+</template>

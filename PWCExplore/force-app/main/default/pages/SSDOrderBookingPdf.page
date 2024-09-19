@@ -1,0 +1,179 @@
+<apex:page standardController="Quote"
+           extensions="SsdQuotationController"
+           renderAs="pdf"
+           standardStylesheets="false"
+           applyBodyTag="false"
+           applyHTMLTag="false"
+           sidebar="false"
+           showHeader="false">
+    <head> 
+        <style type="text/css" style="font-size: 12px;">
+            @page {
+            margin-top: 80px;
+            padding: 0px;
+            margin-bottom: 200px;
+            
+            @top-left {
+            content: element(header);
+            }                           
+            @bottom-left {   
+            content: element(footer);
+            } 
+            }        
+            div.header {
+            margin-top: 10px;
+            position: running(header);
+            width: 100%;
+            margin-right: 10px;
+            }
+            div.footer {       
+            position: running(footer);
+            width: 100%;
+            margin-left: 170px;
+            }
+            .footer {
+            display: flex;
+            justify-content: right;
+            align-items: right;
+            }
+            .headertable {
+            font-size: 14px;
+            }
+            h2 {
+            width: 100%; 
+            text-align: left; 
+            border-bottom: 1px solid #000; 
+            line-height: 1em;
+            margin: 10px 0 10px; 
+            } 
+            h2 span { 
+            padding: 0 10px; 
+            font-size: 14px;
+            }
+            table, td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            }
+        </style>
+        <title>AccountReport.pdf</title>
+    </head> 
+    <div  class="header" >
+        <left> <apex:outputText style="font-size: 13px" value="Date: {!NOW()}"/></left>
+        <center><b><apex:outputText style="font-size: 20px" value="{!$Label.Discount_Saction}"/></b></center>
+    </div>
+    <table style="font-size: 13px" id="center" align="center">
+        <tr>
+            <td>Document ID</td>
+            <td>{!quoteData.QuoteNumber}</td>
+        </tr><tr>
+        <td>Biz Code</td>
+        <td>Godrej Security Solutions</td>
+        </tr><tr>
+        <td>Logistic Company</td>
+        <td>{!quoteData.Sales_Branch_Name__c}</td>
+        </tr><tr>
+        <td>Sales Person Name</td>
+        <td>{!quoteData.Owner.Name}</td>
+        </tr><tr>
+        <td>Dealer Code</td>
+        <td>{!quoteData.Dealer_Code__c}</td>
+        </tr><tr>
+        <td>Dealer Name</td>
+        <td>{!quoteData.Associated_Dealer__r.Name}</td>
+        </tr><tr>
+        <td>Approval Type</td>
+        <td>{!quoteData.Transaction_Type__c}</td>
+        </tr><tr>
+        <td>Booking Option</td>
+        <td>{!quoteData.Booking_Option__c}</td>
+        </tr><tr>
+        <td>Customer Name</td>
+        <td>{!quoteData.Account.Name}</td>
+        </tr><tr>
+        <td>Customer Type</td>
+        <td>{!quoteData.End_Customer_Segment_SSD__c}</td>
+        </tr><tr>
+        <td>Other Customer Type</td>
+        <td>{!quoteData.Opportunity.End_customer_segment_SSD_If_Others__c}</td>
+        </tr><tr>
+        <td>Sold To Address</td>
+        <td>{!quoteData.Sold_to_Address__r.Address_Code_Formula__c}</td>
+        </tr><tr>
+        <td>Ship To Address</td>
+        <td>{!quoteData.Ship_to_Address__r.Address_Code_Formula__c}</td>
+        </tr><tr>
+        <td>Expected Delivery Date/Expiry Date</td>
+        <td><apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!quoteData.ExpirationDate}"/></apex:outputText></td>
+        </tr>
+    </table>
+    <br/>
+    <apex:outputPanel >
+        <apex:variable var="rowcount" value="{!1}" />
+        <div  style="font-size:10px;text-align: center;">  
+            <table class="table" cellspacing="0" style="width:100%;">
+                <tr>
+                    <th>Sr No. </th>
+                    <th>Item Code </th>
+                    <th>Item Desc</th>
+                    <th>Basic Amount (Rs.)</th>
+                    <th>Quantity</th>
+                    <th>Customer Discount %</th>
+                    <th>Sales Expenses %</th>
+                    <th>Regular Delivery and Installation %</th>
+                    <th>Min Retention %</th>
+                    <th>Extra Delivery and Installation %</th>
+                    <th>Extra WD Retention %</th>
+                    <th>Approved Outflow %</th>
+                    <th>Realised Price (Rs.)</th>
+                </tr>
+                <apex:repeat value="{!qlisData}" var="qli">  
+                    <tr>
+                        <td style="width:5%;"> {!rowcount} <apex:variable var="rowcount" value="{!rowcount+1}" /></td>
+                        <td ><apex:outputText value="{!qli.Product2.Item__c}"/></td>
+                        <td style="width:15%;text-align: left;"><apex:outputText value="{!qli.Product2.Name}"/></td>
+                        <td style="width:10%;"><apex:outputText value="{!qli.ListPrice}"/></td>
+                        <td style="width:8%;"><apex:outputText value="{!ROUND(qli.Quantity,0)}"/></td>
+                        <td style="width:8%;"><apex:outputText value="{!ROUND(qli.Requested_Customer_Discount__c,2)}"/></td>
+                        <td style="width:8%;"><apex:outputText value="{!qli.Sales_Expenses_SSD__c}"/></td>
+                        <td style="width:10%;"><apex:outputText value="{!qli.Regular_Delivery_and_Installation_SSD__c}"/></td>
+                        <td style="width:8%;"><apex:outputText value="{!qli.Min_Retention_SSD__c}"/></td>
+                        <td style="width:5%;"><apex:outputText value="{!qli.Extra_Delivery_and_Installation_SSD__c}"/></td>
+                        <td style="width:6%;"><apex:outputText value="{!qli.Extra_WD_Retention_SSD__c}"/></td>
+                        <td style="width:8%;"><apex:outputText value="{!qli.Approved_Max_Outflow_SSD__c}"/></td>
+                        <td style="width:10%;"><apex:outputText value="{!IF(CONTAINS(quoteData.Transaction_Type__c,'R series Billing'),(qli.Sales_Price_AppOutflow_SSD__c),(qli.UnitPrice))}"/></td>
+                    </tr>
+                </apex:repeat>
+            </table>
+        </div>  
+    </apex:outputPanel> 
+    <br/><br/>
+    <apex:outputPanel rendered="{!IF(OR(
+                                CONTAINS(quoteData.Approval_Status__c, 'Submitted for Approval'),
+                                CONTAINS(quoteData.Approval_Status__c, 'Approved'),
+                                CONTAINS(quoteData.Approval_Status__c, 'Rejected')
+                                ), true, false)}">
+        <apex:variable var="rowcount" value="{!1}" />
+        <div  style="font-size:12px;text-align: center;">  
+            <table class="table" cellspacing="0" style="width:100%;">
+                <tr>
+                    <th>Sr No. </th>
+                    <th>Role</th>
+                    <th>Actual Approver</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                </tr>
+                <apex:repeat value="{!wrapperList}" var="wrapperRecord"> 
+                    <tr>
+                        <td style= "width:5%;"> {!rowcount} <apex:variable var="rowcount" value="{!rowcount+1}" /></td>
+                        <td style= "width:20%;"><apex:outputText value="{!wrapperRecord.Role}"/></td>
+                        <td style= "width:20%;"><apex:outputtext value="{!wrapperRecord.EntryBy}"/></td>
+                        <td style= "width:20%;"><apex:outputtext value="{!wrapperRecord.EntryOn}"/></td>
+                        <td style= "width:20%;"><apex:outputText value="{!wrapperRecord.Status}"/></td>
+                        <td style= "width:35%;"><apex:outputText value="{!wrapperRecord.Comments}"/></td>
+                    </tr>
+                </apex:repeat>
+            </table>
+        </div>  
+    </apex:outputPanel>     
+</apex:page>

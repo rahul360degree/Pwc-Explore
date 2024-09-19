@@ -1,0 +1,629 @@
+<apex:page standardController="Quote" extensions="PedQuotePdfController"  renderAs="pdf" standardStylesheets="false" applyBodyTag="false" applyHTMLTag="false" sidebar="false" showHeader="false">
+    <head>
+        <style type="text/css" style="font-size: 12px;">
+            @page {
+            margin-top: 120px;
+            padding:0px;
+            margin-bottom: 80px; 
+            
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+            }
+            
+            @top-left {
+            content: element(header);
+            }                           
+            @bottom-left {   
+            content: element(footer);
+            } 
+            }  
+            @page:first {
+              margin-top: 50px; /* Top margin for the first page */
+              margin-bottom: 50px; 
+              @bottom-right {
+                content: normal;
+              }
+            }
+            div.header {
+            margin-top:60px;
+            margin-bottom: 50px;
+            position: running(header);
+            width: 100%;
+            font-family: Times New Roman;
+            }
+            div.footer {       
+            position: running(footer);
+            width: 100%;
+            font-family: Times New Roman;
+            }
+            .footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Times New Roman;
+            }
+            .headertable{
+            font-size:14px;
+            }
+            div.pagebreak {
+            page-break-after: always;
+            }
+            table.gridtable {
+            font-family: imes New Roman, sans-serif;
+            font-size:12pt;
+            border-width: 1px;
+            border-color: #666666;
+            }
+            table.gridtable th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            font-weight:bold;
+            font-family: Times New Roman;
+            
+            }
+            table.gridtable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            }
+            table.qlitable {border:solid black 1px;border-collapse:collapse; border-spacing:0px;font-family:Times New Roman; font-size:10pt; width:100% }
+            .qlitableheader {border:solid black 1px;text-align:center;font-weight:bold;}
+            .qlitableRowEven{border:solid black 1px;}
+            .qlitableRowOdd{border:solid black 1px;}
+            .qlitablecol{border:solid black 1px;text-align:center;font-weight:normal;font-size:12pt;font-family:Times New Roman;}
+            
+            
+        </style> </head>  
+    <div class="pagebreak" style="font-family:Times New Roman;">
+        <apex:image url="{!$Resource.PEDCoverPageImage}" width="750" height="513"/> <br/>
+        <div style="font-size: 16pt;margin-left: 60px;margin-right: 10px;">
+            <b><center><apex:outputText value="{!quoteData.PED_Quote_PDF_Type__c}" style="text-transform: uppercase;"/> PROPOSAL FOR<br/>
+                {!quoteData.Account.Name}</center></b>
+        </div><br/><br/>
+        <div style="font-size: 14pt;margin-left: 60px;margin-right: 20px;">
+            <table>
+                <tr>
+                    <td width="33%">
+                        <b>RFQ No.</b>
+                    </td>
+                    <td width="5%" style="text-align:center;vertical-align: text-top;">
+                        <b>:</b>
+                    </td>
+                    <td width="57%">
+                        {!quoteData.RFQ_No__c}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>For the supply of</b>
+                    </td>
+                    <td style="text-align:center;vertical-align: text-top;">
+                        <b>:</b>
+                    </td>
+                    <td>
+                        {!quoteData.Opportunity.Equipment_Name__c}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: text-top;">
+                        <b>Project Name</b>
+                    </td>
+                    <td style="text-align:center;vertical-align: text-top;">
+                        <b>:</b>
+                    </td>
+                    <td>{!quoteData.Opportunity.Project_Name__c}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Proposal Reference No.</b>
+                    </td>
+                    <td style="text-align:center;vertical-align: text-top;">
+                        <b>:</b>
+                    </td>
+                    <td>
+                        {!quoteData.Offer_Number__c}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Date</b>
+                    </td>
+                    <td style="text-align:center;vertical-align: text-top;">
+                        <b>:</b>
+                    </td>
+                    <td>
+                        <apex:outputText value="{0, date, dd/MM/yyyy}">
+                        <apex:param value="{!quoteData.Offer_Date__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+            </table>
+        </div><br/>
+        <div  style="float:right;margin-right: 40px;">
+            <apex:image url="{!$Resource.PEDCoverPageFooterImage}" width="170" height="42"/>
+        </div>        
+    </div>
+    <div class="header" style="font-family: Times New Roman">
+        <div  style="float:left;margin-left: 10px;">
+            <div style="font-size: 11pt;">
+                 {!quoteData.Offer_Number__c}
+            </div>
+        </div>
+    </div>
+    <div class="footer" style="text-align: center;margin-left:140px;">
+         <apex:image url="{!$Resource.godrej_logo}" width="80" height="40"/>
+    </div>
+    <div style="font-family:Times New Roman">
+    <table width="100%" style="font-size: 11pt;">
+        <tr>
+            <td  width="70%">&nbsp;
+            </td>
+            <td width="30%">
+                <b><apex:outputText value="Godrej & Boyce Mfg. Co. Ltd."/></b><br/>
+                <apex:outputText value="Regd. Office: Pirojshanagar,"/><br/>
+                <apex:outputText value="Vikhroli, Mumbai 400 079, India,"/><br/>
+                <apex:outputText value="Tel: +91-22-6796 1700 / 1800 "/><br/>
+                <apex:outputLink > www.godrej.com</apex:outputLink><br/>
+                <apex:outputLink > info@godrej.com</apex:outputLink><br/>
+                <apex:outputText value="CIN U28993MH1932PLC001828"/>
+            </td>
+        </tr>
+        <tr>
+            <td  width="70%" >
+                &nbsp;
+            </td>
+            <td width="30%">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td  width="70%">
+                <b>{!quoteData.Offer_Number__c}</b>
+            </td>
+            <td width="30%">
+                <b>Dated:</b> <apex:outputText value="{0, date, dd/MM/yyyy}">
+                <apex:param value="{!quoteData.Offer_Date__c}" />
+                </apex:outputText>
+            </td>
+        </tr>
+    </table><br/>
+    <div class="pagebreak" style="font-size: 12pt;">
+        <table width="100%">
+            <tr>
+                <td width="22%" style="vertical-align: top;text-align: left;">
+                        <b>Customer Name</b>
+                    </td>
+                    <td width="78%">
+                        <b>:</b>&nbsp;{!quoteData.Account.Name}
+                    </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;text-align: left;">
+                        <b>Customer Address</b>
+                    </td>
+                    <td>
+                        <b>:</b>&nbsp;{!quoteData.Invoice_to_Address_txt__c}
+                    </td>
+            </tr>
+            <tr>
+                <td>
+                        &nbsp;
+                    </td>
+                    <td>
+                       &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;text-align: left;">
+                        <b>Kind Attention</b>
+                    </td>
+                    <td>
+                        <b>:</b>&nbsp;{!quoteData.Buyer_Name__c}<br/>         
+                                 &nbsp;&nbsp;{!quoteData.Buyer_Designation__c}
+                    </td>
+            </tr>
+        </table><br/>
+        <table width="100%">
+            <tr>
+                <td width="12%;" style="vertical-align: top;text-align: left;">
+                        <b>Subject &nbsp;:&nbsp;</b>
+                    </td>
+                    <td width="88%">
+                        {!quoteData.PED_Quote_PDF_Type__c} proposal for RFQ No. {!quoteData.RFQ_No__c} for the supply of {!quoteData.Opportunity.Equipment_Name__c} for {!quoteData.Opportunity.Project_Name__c}.
+                    </td>
+            </tr>
+        </table><br/>
+        
+        Dear Sir, <br/> <br/> 
+        
+        We thank you for your valued inquiry dated {!EnquiryRecpeiptDate} for the Supply of {!quoteData.Opportunity.Equipment_Name__c} for {!quoteData.Opportunity.Project_Name__c}.
+        We are pleased to submit herewith our {!quoteData.PED_Quote_PDF_Type__c} proposal for the same. <br/><br/> 
+        
+        Our Proposal comprises of the following:<br/><br/>
+        
+        
+        <table width="100%">
+            <tr>
+                <td  width="20%">   
+                    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c == 'Priced Techno - Commercial'}">
+                        Section I<br/>
+                        Section II<br/>
+                        Section III<br/>
+                        Section IV
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c == 'Un-Priced Techno - Commercial'}">
+                        Section I<br/>
+                        Section II<br/>
+                        Section III<br/>
+                        Section IV
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c == 'Technical'}">
+                        Section I<br/>
+                        Section II
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c == 'Priced Commercial'}">
+                        Section I<br/>
+                        Section II
+                    </apex:outputPanel>
+                </td>
+                <td  width="80%">
+                    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c == 'Priced Techno - Commercial'}">
+                        Technical offer<br/>
+                        Price Schedule<br/>
+                        <apex:outputText value="Commercial Terms & Conditions"/><br/>
+                        Enclosures
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c == 'Un-Priced Techno - Commercial'}">
+                        Technical offer<br/>
+                        Price Schedule<br/>
+                        <apex:outputText value="Commercial Terms & Conditions"/><br/>
+                        Enclosures
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c=='Technical'}">
+                        Technical offer<br/>
+                        Enclosures
+                    </apex:outputPanel>
+                     <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c=='Priced Commercial'}">
+                        Price Schedule<br/>
+                        <apex:outputText value="Commercial Terms & Conditions"/><br/>
+                    </apex:outputPanel>
+                </td>
+            </tr>
+        </table><br/><br/> 
+        
+        We hope you will find our proposal in line with your requirement. <br/><br/> 
+        In case you desire any further information, we shall be glad to provide you with same.<br/><br/>
+        Thanking you and assuring you of our best attention always<br/><br/>
+        
+        <apex:outputText value=" for Godrej & Boyce Mfg. Co. ltd.,"/><br/><br/>
+         
+        <apex:outputPanel rendered="{!quoteData.Level_1_Approver__c != null}">
+            <b>Mr. {!quoteData.Level_1_Approver__r.Name}</b> <br/>   
+            {!quoteData.Level_1_Approver__r.Title} <br/>
+            Godrej Process Equipment <br/>
+            Mob: +91-{!quoteData.Level_1_Approver__r.MobilePhone}<br/>
+            Email : {!quoteData.Level_1_Approver__r.Email} 
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!quoteData.Level_2_Approver__c != null}">
+            <br/><br/>For future communications we request you to please also mark all emails to following mentioned concerned personnel:<br/><br/> 
+            <b>Mr. {!quoteData.Level_2_Approver__r.Name}</b> <br/>   
+            {!quoteData.Level_2_Approver__r.Title} <br/>
+            Mob: +91-{!quoteData.Level_2_Approver__r.MobilePhone}<br/>
+            Email : {!quoteData.Level_2_Approver__r.Email} 
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!quoteData.Level_3_Approver__c != null}">
+            <br/> <br/> <b>Mr. {!quoteData.Level_3_Approver__r.Name}</b> <br/>   
+            {!quoteData.Level_3_Approver__r.Title} <br/>
+            Mob: +91-{!quoteData.Level_3_Approver__r.MobilePhone}<br/>
+            Email : {!quoteData.Level_3_Approver__r.Email} 
+        </apex:outputPanel>
+    </div>
+    <div class="pagebreak">
+        <b><center><apex:outputText value="TABLE OF CONTENTS" style="font-size: 14pt;"/></center></b><br/>
+        <div style="padding-left:100px;">
+            <apex:outputField value="{!quoteData.Table_Of_Contents__c}"/> 
+        </div>
+    </div>
+    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c != 'Priced Commercial'}">
+    <div class="pagebreak">
+        <center><apex:outputText value="SECTION – I" style="font-size: 12pt;"/></center><br/>
+        <table border="1px" width="100%">
+            <tr>
+                <td style="padding:5px;Bakground-Color:">
+                    <b><center><apex:outputText value="TECHNICAL OFFER" style="font-size: 14pt;"/></center></b>
+                </td>
+            </tr>
+        </table>
+        
+        <p style="text-align: justify;">
+            <strong style="font-size: 12pt;">1.</strong>
+            <strong style="font-size: 12pt;"><u>STATEMENT OF COMPLIANCE</u></strong>
+        </p>
+        <p><span style="font-size: 12pt;">
+            Our offer is based on document titled "{!quoteData.RFQ_No__c}" only. Any other documents referred in drawings/specifications which are not listed in the above-mentioned documents are not considered. </span>
+        </p>
+        
+        <p style="text-align: justify;">
+            <strong style="font-size: 12pt;">2.</strong>
+            <strong style="font-size: 12pt;"><u>SCOPE OF SUPPLY</u> </strong>
+        </p>
+        <p><span style="font-size: 12pt;">
+            Our Scope of supply shall be as per Technical Requirements of MR document "{!quoteData.RFQ_No__c}" and except as mentioned in the Technical Clarifications below and Exclusions. </span>
+        </p>
+        
+        
+        <p style="text-align: justify;">
+            <strong style="font-size: 12pt;">3.</strong>
+            <strong style="font-size: 12pt;"><u>MANUFACTURING LOCATION:</u> </strong>
+        </p>            
+        <p>
+            <span style="font-size:12pt;">The equipment shall be manufactured at our works at {!quoteData.Opportunity.MFG_Location__c}. </span>
+        </p>
+        
+        
+         <p style="text-align: justify;">
+            <strong style="font-size: 12pt;">4.</strong>
+            <strong style="font-size: 12pt;"><u>DESIGN CODE</u> </strong>
+        </p>
+        <ul>
+            <apex:repeat value="{!techinicalOfferDesignCodes}" var="str">
+                <li style="text-align: justify;"><span>{!str}</span></li>
+            </apex:repeat>
+        </ul>
+        
+        <apex:outputField value="{!quoteData.Technical_offer__c}" />
+        
+        <p style="text-align: justify;">
+            <strong style="font-size: 12pt;">6.</strong>
+            <strong style="font-size: 12pt;"><u>EXCLUSIONS</u> </strong>
+        </p>
+        <ul>
+            <apex:repeat value="{!techinicalOfferExclusions}" var="str">
+                <li style="text-align: justify;"><span>{!str}</span></li>
+            </apex:repeat>
+        </ul>
+        
+        <apex:outputField value="{!quoteData.Technical_Offer_II__c}" />
+        <br/><br/>
+    </div>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c == 'Priced Techno - Commercial'}">
+        <div class="pagebreak">
+            <center><apex:outputText value="SECTION – II" style="font-size: 12pt;"/></center>
+            <br/>
+            <table border="1px" width="100%">
+                <tr>
+                    <td style="padding:5px;Bakground-Color:">
+                        <b><center><apex:outputText value="PRICE SCHEDULE" style="font-size: 14pt;"/></center></b>
+                    </td>
+                </tr>
+            </table><br/>
+            <b>1. &nbsp; <u>PRICE</u> </b><br/><br/>
+            <apex:outputPanel rendered="{!quoteData.Opportunity.EQUIPMENT_TYPE__c != 'OTHERS'}">
+                Our (INCOTERMS 2020) {!quoteData.Incoterm__c},&nbsp;<b>{!quoteData.Opportunity.MFG_Location__c}</b> prices for supply of {!quoteData.Opportunity.EQUIPMENT_TYPE__c} shall be as under: 
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!quoteData.Opportunity.EQUIPMENT_TYPE__c == 'OTHERS'}">
+                Our (INCOTERMS 2020) {!quoteData.Incoterm__c},&nbsp;<b>{!quoteData.Opportunity.MFG_Location__c}</b> prices for supply of {!quoteData.Opportunity.Equipment_Name__c} shall be as under: 
+            </apex:outputPanel><br/><br/>
+            <table class="qlitable" border="1px;">
+                <apex:variable var="rowcount" value="{!1}" />
+                <tr>
+                    <th class="qlitableheader" width="5%;">Sr.<br/>No.</th>
+                    <th class="qlitableheader" width="30%;">Description</th>
+                    <th class="qlitableheader" width="10%;">Tag No.</th>
+                    <th class="qlitableheader" width="5%;">Qty.No</th>
+                    <th class="qlitableheader" width="25%;">Unit Price <br/>({!quoteData.Currency__c})</th>
+                    <th class="qlitableheader" width="25%;">Total Price<br/>({!quoteData.Currency__c})</th>
+                </tr>
+                <apex:repeat value="{!QliWrapperList}" var="qlis">
+                    <tr class = "{!IF(MOD(rowcount,2)==1, 'even','odd')}">
+                        <td class="qlitablecol" width="5%;">{!rowcount}</td>
+                        <td class="qlitablecol" width="30%;"><apex:outputText value="{!qlis.qliRecord.Equipment_Name__c}" /></td>                        
+                        <td class="qlitablecol" width="10%;"><apex:outputText value="{!qlis.qliRecord.Tag_Number__c}" /></td>
+                        <td class="qlitablecol" width="5%;"><apex:outputText value="{!qlis.formattedQliQuantity}"/></td>
+                        <td class="qlitablecol" width="25%;">
+                            <apex:outputText value="{!qlis.formattedQliSalesPrice}" rendered="{!quoteData.Currency__c == 'INR'}"/>
+                            <apex:outputText value="{0, number}" rendered="{!quoteData.Currency__c != 'INR'}">
+                                <apex:param value="{!qlis.qliRecord.Sales_Price__c}" />
+                            </apex:outputText>
+                        </td>
+                        <td class="qlitablecol" width="25%;">
+                            <apex:outputText value="{!qlis.formattedQliTotalSalesPrice}" rendered="{!quoteData.Currency__c == 'INR'}"/>
+                            <apex:outputText value="{0, number}" rendered="{!quoteData.Currency__c != 'INR'}">
+                                <apex:param value="{!qlis.qliRecord.Total_Price_PED__c}" />
+                            </apex:outputText>
+                        </td>                    
+                    </tr>
+                    
+                    <apex:variable var="rowcount" value="{!rowcount+1}" />
+                </apex:repeat>
+                <tr>
+                    <td class="qlitablecol" colspan="5" style="text-align:right;"><b>TOTAL &nbsp; </b></td>
+                    <td class="qlitablecol" colspan="1">
+                        <apex:outputText value="{!formattedTotalSalesPrice}" rendered="{!quoteData.Currency__c == 'INR'}"/>
+                        <apex:outputText value="{0, number}" rendered="{!quoteData.Currency__c != 'INR'}">
+                            <apex:param value="{!quoteData.Total_Price__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="qlitablecol" colspan="2" style="text-align:right;"><b>Amount in Words ({!quoteData.Currency__c}) :&nbsp; </b></td>
+                    <td class="qlitablecol" colspan="4" style="text-align:left;">&nbsp; <apex:outputText value="{!totalAmountInWords}" /></td>
+                </tr>
+            </table>
+            
+            <apex:outputField value="{!quoteData.Section_II_Additional_Details__c}" />            
+            <br/><br/>
+        </div>
+            <center><apex:outputText value="SECTION – III" style="font-size: 12pt;"/></center>
+            <br/>
+            <table border="1px" width="100%">
+                <tr>
+                    <td style="padding:5px;Bakground-Color:">
+                        <b><center><apex:outputText value="COMMERCIAL TERMS & CONDITIONS" style="font-size: 14pt;"/></center></b>
+                    </td>
+                </tr>
+            </table>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c == 'Un-Priced Techno - Commercial'}">
+            <div class="pagebreak">
+            <center><apex:outputText value="SECTION – II" style="font-size: 12pt;"/></center>
+            <br/>
+            <table border="1px" width="100%">
+                <tr>
+                    <td style="padding:5px;Bakground-Color:">
+                        <b><center><apex:outputText value="PRICE SCHEDULE" style="font-size: 14pt;"/></center></b>
+                    </td>
+                </tr>
+            </table><br/>
+            <b>1. &nbsp; <u>PRICE</u> </b><br/><br/>
+            <apex:outputPanel rendered="{!quoteData.Opportunity.EQUIPMENT_TYPE__c != 'OTHERS'}">
+                Our (INCOTERMS 2020) {!quoteData.Incoterm__c},&nbsp;<b>{!quoteData.Opportunity.MFG_Location__c}</b> prices for supply of {!quoteData.Opportunity.EQUIPMENT_TYPE__c} shall be as under: 
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!quoteData.Opportunity.EQUIPMENT_TYPE__c == 'OTHERS'}">
+                Our (INCOTERMS 2020) {!quoteData.Incoterm__c},&nbsp;<b>{!quoteData.Opportunity.MFG_Location__c}</b> prices for supply of {!quoteData.Opportunity.Equipment_Name__c} shall be as under: 
+            </apex:outputPanel><br/><br/>
+            <table class="qlitable" border="1px;">
+                <apex:variable var="rowcount" value="{!1}" />
+                <tr>
+                    <th class="qlitableheader" width="5%;">Sr.<br/>No.</th>
+                    <th class="qlitableheader" width="30%;">Description</th>
+                    <th class="qlitableheader" width="10%;">Tag No.</th>
+                    <th class="qlitableheader" width="5%;">Qty.No</th>
+                    <th class="qlitableheader" width="25%;">Unit Price <br/>({!quoteData.Currency__c})</th>
+                    <th class="qlitableheader" width="25%;">Total Price<br/>({!quoteData.Currency__c})</th>
+                </tr>
+                <apex:repeat value="{!QliWrapperList}" var="qlis">
+                    <tr class = "{!IF(MOD(rowcount,2)==1, 'even','odd')}">
+                        <td class="qlitablecol" width="5%;">{!rowcount}</td>
+                        <td class="qlitablecol" width="30%;"><apex:outputText value="{!qlis.qliRecord.Equipment_Name__c}" /></td>                        
+                        <td class="qlitablecol" width="10%;"><apex:outputText value="{!qlis.qliRecord.Tag_Number__c}" /></td>
+                        <td class="qlitablecol" width="5%;"><apex:outputText value="{!qlis.formattedQliQuantity}"/></td>
+                        <td class="qlitablecol" width="25%;"><apex:outputText value="Quoted"/></td>
+                        <td class="qlitablecol" width="25%;"><apex:outputText value="Quoted"/></td>
+                    </tr>
+                    
+                    <apex:variable var="rowcount" value="{!rowcount+1}" />
+                </apex:repeat>
+                <tr>
+                    <td class="qlitablecol" colspan="5" style="text-align:right;"><b>TOTAL &nbsp; </b></td>
+                    <td class="qlitablecol" colspan="1"><apex:outputText value="Quoted"/></td>
+                </tr>
+                <tr>
+                    <td class="qlitablecol" colspan="2" style="text-align:right;"><b>Amount in Words ({!quoteData.Currency__c}) :&nbsp; </b></td>
+                    <td class="qlitablecol" colspan="4" style="text-align:left;">&nbsp; <apex:outputText value="Quoted" /></td>
+                </tr>
+            </table>
+            
+            <apex:outputField value="{!quoteData.Section_II_Additional_Details__c}" />            
+            <br/><br/>
+        </div>
+            <center><apex:outputText value="SECTION – III" style="font-size: 12pt;"/></center>
+            <br/>
+            <table border="1px" width="100%">
+                <tr>
+                    <td style="padding:5px;Bakground-Color:">
+                        <b><center><apex:outputText value="COMMERCIAL TERMS & CONDITIONS" style="font-size: 14pt;"/></center></b>
+                    </td>
+                </tr>
+            </table>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c == 'Priced Commercial'}">
+        <div class="pagebreak">
+            <center><apex:outputText value="SECTION – I" style="font-size: 12pt;"/></center><br/>
+            <table border="1px" width="100%">
+                <tr>
+                    <td style="padding:5px;Bakground-Color:">
+                        <b><center><apex:outputText value="PRICE SCHEDULE" style="font-size: 14pt;"/></center></b>
+                    </td>
+                </tr>
+            </table><br/>
+            <b>1. &nbsp; <u>PRICE</u> </b><br/><br/>
+            <apex:outputPanel rendered="{!quoteData.Opportunity.EQUIPMENT_TYPE__c != 'OTHERS'}">
+                Our (INCOTERMS 2020) {!quoteData.Incoterm__c},&nbsp;<b>{!quoteData.Opportunity.MFG_Location__c}</b> prices for supply of {!quoteData.Opportunity.EQUIPMENT_TYPE__c} shall be as under: 
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!quoteData.Opportunity.EQUIPMENT_TYPE__c == 'OTHERS'}">
+                Our (INCOTERMS 2020) {!quoteData.Incoterm__c},&nbsp;<b>{!quoteData.Opportunity.MFG_Location__c}</b> prices for supply of {!quoteData.Opportunity.Equipment_Name__c} shall be as under: 
+            </apex:outputPanel><br/><br/>
+             <table class="qlitable" border="1px;">
+                <apex:variable var="rowcount" value="{!1}" />
+                <tr>
+                    <th class="qlitableheader" width="5%;">Sr.<br/>No.</th>
+                    <th class="qlitableheader" width="30%;">Description</th>
+                    <th class="qlitableheader" width="10%;">Tag No.</th>
+                    <th class="qlitableheader" width="5%;">Qty.No</th>
+                    <th class="qlitableheader" width="25%;">Unit Price <br/>({!quoteData.Currency__c})</th>
+                    <th class="qlitableheader" width="25%;">Total Price<br/>({!quoteData.Currency__c})</th>
+                </tr>
+                <apex:repeat value="{!QliWrapperList}" var="qlis">
+                    <tr class = "{!IF(MOD(rowcount,2)==1, 'even','odd')}">
+                        <td class="qlitablecol" width="5%;">{!rowcount}</td>
+                        <td class="qlitablecol" width="30%;"><apex:outputText value="{!qlis.qliRecord.Equipment_Name__c}" /></td>                        
+                        <td class="qlitablecol" width="10%;"><apex:outputText value="{!qlis.qliRecord.Tag_Number__c}" /></td>
+                        <td class="qlitablecol" width="5%;"><apex:outputText value="{!qlis.formattedQliQuantity}"/></td>
+                        <td class="qlitablecol" width="25%;">
+                            <apex:outputText value="{!qlis.formattedQliSalesPrice}" rendered="{!quoteData.Currency__c == 'INR'}"/>
+                            <apex:outputText value="{0, number}" rendered="{!quoteData.Currency__c != 'INR'}">
+                                <apex:param value="{!qlis.qliRecord.Sales_Price__c}" />
+                            </apex:outputText>
+                        </td>
+                        <td class="qlitablecol" width="25%;">
+                            <apex:outputText value="{!qlis.formattedQliTotalSalesPrice}" rendered="{!quoteData.Currency__c == 'INR'}"/>
+                            <apex:outputText value="{0, number}" rendered="{!quoteData.Currency__c != 'INR'}">
+                                <apex:param value="{!qlis.qliRecord.Total_Price_PED__c}" />
+                            </apex:outputText>
+                        </td>                    
+                    </tr>
+                    
+                    <apex:variable var="rowcount" value="{!rowcount+1}" />
+                </apex:repeat>
+                <tr>
+                    <td class="qlitablecol" colspan="5" style="text-align:right;"><b>TOTAL &nbsp; </b></td>
+                    <td class="qlitablecol" colspan="1">
+                        <apex:outputText value="{!formattedTotalSalesPrice}" rendered="{!quoteData.Currency__c == 'INR'}"/>
+                        <apex:outputText value="{0, number}" rendered="{!quoteData.Currency__c != 'INR'}">
+                            <apex:param value="{!quoteData.Total_Price__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="qlitablecol" colspan="2" style="text-align:right;"><b>Amount in Words ({!quoteData.Currency__c}) :&nbsp; </b></td>
+                    <td class="qlitablecol" colspan="4" style="text-align:left;">&nbsp; <apex:outputText value="{!totalAmountInWords}" /></td>
+                </tr>
+            </table>
+            
+            <apex:outputField value="{!quoteData.Section_II_Additional_Details__c}" />
+            <br/><br/>
+        </div>
+            <center><apex:outputText value="SECTION – II" style="font-size: 12pt;"/></center><br/>
+            <table border="1px" width="100%">
+                <tr>
+                    <td style="padding:5px;Bakground-Color:">
+                        <b><center><apex:outputText value="COMMERCIAL TERMS & CONDITIONS" style="font-size: 14pt;"/></center></b>
+                    </td>
+                </tr>
+            </table>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!quoteData.PED_Quote_PDF_Type__c!='Technical'}">
+         <!--    <div class="pagebreak">-->
+             <apex:outputField value="{!quoteData.Commercial_Terms_Condition__c}" /><br/>
+     <!--        <br/>
+        </div>-->
+    </apex:outputPanel>
+    We trust you will find the offer competitive and we look forward to receiving your valued order at the earliest.<br/><br/>
+    Thanking you once again and assuring you of our best attention always,<br/><br/> 
+    
+    Yours faithfully,<br/><br/> 
+    <apex:outputText value="for GODREJ & BOYCE MFG. CO. LTD.,"/><br/><br/> 
+    <apex:outputPanel rendered="{!quoteData.Level_1_Approver__c != null}">
+    <b>Mr. {!quoteData.Level_1_Approver__r.Name}</b> <br/>   
+    {!quoteData.Level_1_Approver__r.Title} <br/>
+    Godrej Process Equipment <br/>
+    Mob: +91-{!quoteData.Level_1_Approver__r.MobilePhone}<br/>
+    Email : {!quoteData.Level_1_Approver__r.Email} 
+    </apex:outputPanel>
+    </div>
+</apex:page>

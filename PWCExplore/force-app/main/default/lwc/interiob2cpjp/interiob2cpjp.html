@@ -1,0 +1,72 @@
+<!--
+  @description       :  Display Questionnaire to fill
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 06-20-2023
+  @last modified by  : vrajpoot@godrej.com
+-->
+<template>
+    <template lwc:if={record}>
+        <!-- Display Questions-->
+        <lightning-record-edit-form object-api-name="Interio_Questionnaire__c">
+            <template lwc:if={record.Question_1__c}>
+                <c-interiob2cpjphelper record={record} counter="1"
+                    onanswerupdate={handleAnswerChange}></c-interiob2cpjphelper>
+            </template>
+
+            <template lwc:if={record.Question_2__c}>
+                <c-interiob2cpjphelper record={record} counter="2"
+                    onanswerupdate={handleAnswerChange}></c-interiob2cpjphelper>
+            </template>
+
+            <template lwc:if={record.Question_3__c}>
+                <c-interiob2cpjphelper record={record} counter="3"
+                    onanswerupdate={handleAnswerChange}></c-interiob2cpjphelper>
+            </template>
+
+            <template lwc:if={record.Question_4__c}>
+                <c-interiob2cpjphelper record={record} counter="4"
+                    onanswerupdate={handleAnswerChange}></c-interiob2cpjphelper>
+            </template>
+
+            <template lwc:if={record.Question_5__c}>
+                <c-interiob2cpjphelper record={record} counter="5"
+                    onanswerupdate={handleAnswerChange}></c-interiob2cpjphelper>
+            </template>
+
+            <template lwc:if={record.Question_6__c}>
+                <c-interiob2cpjphelper record={record} counter="6"
+                    onanswerupdate={handleAnswerChange}></c-interiob2cpjphelper>
+            </template>
+
+            <template lwc:if={record.Question_7__c}>
+                <c-interiob2cpjphelper record={record} counter="7"
+                    onanswerupdate={handleAnswerChange}></c-interiob2cpjphelper>
+            </template>
+
+            <template lwc:if={record.Question_8__c}>
+                <c-interiob2cpjphelper record={record} counter="8"
+                    onanswerupdate={handleAnswerChange}></c-interiob2cpjphelper>
+            </template>
+
+            <template lwc:if={record.Question_9__c}>
+                <c-interiob2cpjphelper record={record} counter="9"
+                    onanswerupdate={handleAnswerChange}></c-interiob2cpjphelper>
+            </template>
+
+            <template lwc:if={record.Question_10__c}>
+                <c-interiob2cpjphelper record={record} counter="10"
+                    onanswerupdate={handleAnswerChange}></c-interiob2cpjphelper>
+            </template>
+
+        </lightning-record-edit-form>
+
+
+        <footer class="slds-float_right slds-p-top_large">
+            <lightning-button variant="brand" type="submit" name="Next" label="Next" onclick={nullCheckHelper}>
+            </lightning-button>
+        </footer>
+
+
+    </template>
+</template>

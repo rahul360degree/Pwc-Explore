@@ -1,0 +1,154 @@
+<apex:page controller="CalculationSheetController" action="{!getDetails}" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <head>
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                @bottom-center {          
+                content: "Page " counter(page) " of " counter(pages);
+                
+                }
+                }
+                body{
+                margin:0;
+                padding:0;            
+                font-family:"Google Sans", Roboto, arial, sans-serif !important;
+                font-family: 'cambria';
+                }                
+                .table1{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table1 tr th{
+                border:1px solid #000;
+                text-align:center;
+                font-size:12px;
+                padding:3px 5px;
+                }
+                .table1 tr td{
+                text-align:center;
+                font-size:12px;
+                border:1px solid #000;
+                padding:3px 5px;
+                }
+                .table2{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table2 tr th{
+                font-size:12px;
+                padding:3px 5px;
+                }
+                .table2 tr td{
+                font-size:12px;
+                padding:3px 5px;
+                }
+                @page {
+                margin-bottom: 64px;
+                margin-top: 64px;
+                
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                }            
+                .header{
+                position: running(header);
+                }
+                .footer {
+                display:block;
+                position: running(footer);
+                z-index:-999;
+                }            
+                
+            </style>  
+        </head>
+        <apex:form >
+            <body>
+                <!-------------------------------------------Main Page 1 -------------------------------------->
+                <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!isRunError}">
+                    <div>
+                        <center><h3 style="font-size:17px;">Please enter the details for Billing Schedule or check the details entered in the Billing Schedule, there is an mis-match error for license term.</h3></center>
+                    </div>
+                </apex:outputPanel>
+                <br/>
+                <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!NOT(isRunError)}"> <!--{!NOT(isRunError)}--> 
+                    <table class="table2" style="width:100%;border-collapse:collapse;">
+                        <tr>
+                            <th style="font-size:12px;padding:3px 5px;text-align:right;">
+                                Date :
+                                <apex:outputText value="{0,date, MMMM d',' yyyy}">
+                                    <apex:param value="{!TODAY()}" />
+                                </apex:outputText>
+                                
+                            </th>
+                        </tr>
+                        <tr><th>&nbsp;</th></tr>
+                        <tr>
+                            <th style="font-size:15px;padding:6px 5px;text-align:center;">Calculation Sheet ( {!headOfTermsList[0].Proposed_Licensee__c} - {!headOfTermsList[0].Opportunity__r.Auto_Number__c} )</th>
+                        </tr>
+                    </table>
+                    <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!NOT(isRunError)}">
+                        <table class="table1" style="width:100%;border-collapse:collapse;">
+                            <tr>
+                                <th width="05%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">Sr No.</th>
+                                <th width="11%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">Start Date/<br/>From Month</th>
+                                <th width="11%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">End Date/<br/>To Month</th>
+                                <th width="08%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">Months</th>
+                                <th width="12%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">Area <br/>(sq.ft.)</th>
+                                <th width="19%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">Rate <br/>(Rs. psft pm)</th>
+                                <th width="19%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">Monthly <br/>Compensation (Rs.)</th>
+                                <th width="15%" style="font-size:12px;border:1px solid #000;padding:3px 5px;">Security <br/>Deposit</th>
+                            </tr>
+                            <apex:repeat value="{!billingWrapperList}" var="bill">
+                                <apex:repeat value="{!bill.billingItemObject}" var="billFields">
+                                    <apex:outputPanel rendered="{!bill.printDate}">
+                                        <table class="table1" style="width:100%;border-collapse:collapse;text-align:center;">
+                                            <tr>
+                                                <td width="5%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!bill.billingSequence}." /></td>
+                                                <td width="11%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{0,date, dd'/'MM'/'yy}" escape="false">
+                                                    <apex:param value="{!billFields.Start_Date__c}" /> 
+                                                    </apex:outputText></td>
+                                                <td width="11%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{0,date, dd'/'MM'/'yy}" escape="false">
+                                                    <apex:param value="{!billFields.End_Date__c}" />
+                                                    </apex:outputText> </td>
+                                                <td width="8%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!JSENCODE(HTMLENCODE(Text(billFields.Number_of_Months__c)))}" escape="false"/></td>
+                                                <td width="12%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!JSENCODE(HTMLENCODE(Text(billFields.Net_usable_area_Area_Sq_ft__c)))}" escape="false"></apex:outputText></td>
+                                                <td width="19%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!bill.moneyFormatRate}" escape="false"></apex:outputText>
+                                                    (<apex:outputText value="{!bill.wordFormatRate}" escape="false"></apex:outputText>)</td>
+                                                <td width="19%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!bill.moneyFormatCompensation}" escape="false"></apex:outputText>
+                                                    (<apex:outputText value="{!bill.wordFormatCompensation}" escape="false"></apex:outputText>)</td>
+                                                <td width="15%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!bill.moneyFormatSecurityDep}" escape="false"></apex:outputText>
+                                                    (<apex:outputText value="{!bill.wordFormatSecurityDep}" escape="false"></apex:outputText>)</td>
+                                            </tr>
+                                        </table>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!NOT(bill.printDate)}">
+                                        <table class="table1" style="width:100%;border-collapse:collapse;text-align:center;">
+                                            <tr>
+                                                <td width="5%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!bill.billingSequence}." /></td>
+                                                <td width="11%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!JSENCODE(HTMLENCODE(Text(billFields.From_Month__c)))}" escape="false" /></td>
+                                                <td width="11%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!billFields.To_Month__c}" escape="false" /></td>
+                                                <td width="8%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!billFields.Number_of_Months__c}" escape="false"/></td>
+                                                <td width="12%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!billFields.Net_usable_area_Area_Sq_ft__c}" escape="false"></apex:outputText></td>
+                                                <td width="19%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!bill.moneyFormatRate}" escape="false"></apex:outputText>
+                                                    (<apex:outputText value="{!bill.wordFormatRate}" escape="false"></apex:outputText>)</td>
+                                                <td width="19%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!bill.moneyFormatCompensation}" escape="false"></apex:outputText>
+                                                    (<apex:outputText value="{!bill.wordFormatCompensation}" escape="false"></apex:outputText>)</td>
+                                                <td width="15%" style="font-size:12px;border:1px solid #000;padding:3px 5px;"><apex:outputText value="{!bill.moneyFormatSecurityDep}" escape="false"></apex:outputText>
+                                                    (<apex:outputText value="{!bill.wordFormatSecurityDep}" escape="false"></apex:outputText>)</td>
+                                            </tr>
+                                        </table>
+                                    </apex:outputPanel>
+                                </apex:repeat>
+                            </apex:repeat>
+                        </table>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <!--<apex:actionFunction name="CallApexMethod" action="{!savePDF}" />-->
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

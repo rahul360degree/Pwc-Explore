@@ -1,0 +1,35 @@
+<!--
+@description       : 
+@author            : vrajpoot@godrej.com
+@group             : 
+@last modified on  : 03-09-2022
+@last modified by  : vrajpoot@godrej.com
+-->
+<template>
+<lightning-card title="AAC-Landed Rates" class="green-icon" icon-name="utility:adjust_value">
+    
+    <template if:true={savedLandedRatedata}>
+        <lightning-datatable key-field="id" data={savedLandedRatedata} columns={savedLandedRateColumn}
+            hide-checkbox-column="true">
+        </lightning-datatable>
+    </template>
+    <div class="slds-m-top_x-small"> 
+    <template if:true={isData}>
+        <lightning-datatable key-field="Id" data={prodList} columns={columns} onsave={saveHandleAction}
+            draft-values={draftValues} hide-checkbox-column="true">
+        </lightning-datatable>
+        <div class="slds-align_absolute-center" style="height: 60px;">
+        <lightning-button variant="brand-outline" label="Cancel" title="Cancel"
+                onclick={handleCancel} class="slds-m-left_medium" style="text-align: center;"></lightning-button>
+        </div>
+    </template>
+</div>
+    <template if:false={isData}>
+        <div class="slds-align_absolute-center" style="height: 60px;">
+            <lightning-button variant="brand-outline" label="Add/Modify Landed Rate" title="Add/Modify Landed Rate"
+                onclick={handleClick} class="slds-m-left_x-small" style="text-align: center;"></lightning-button>
+        </div>
+    </template>
+
+</lightning-card>
+</template>

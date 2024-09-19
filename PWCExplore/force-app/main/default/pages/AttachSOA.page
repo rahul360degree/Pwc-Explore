@@ -1,0 +1,50 @@
+<apex:page standardController="Order"   extensions="AttachSOAController">
+    
+    <apex:slds />
+    <script type="text/javascript">
+    function renderMessage(isError, toastMessage,showTermsOfOrder) {
+        console.log('isError: ' + isError);
+        console.log('toastMessage: ' + toastMessage);
+        if(isError.toLowerCase() === 'true') {
+            showErrorToast(toastMessage);
+        } else {
+            showSuccessToast(toastMessage);
+            reloadPage();
+        }
+    }
+    
+    function showSuccessToast(toastMessage) {
+        sforce.one.showToast({
+            "title": "Success",
+            "message": toastMessage,
+            "type": "success"
+        });
+    }
+    
+    function showErrorToast(toastMessage) {
+        sforce.one.showToast({
+            "title": "Error",
+            "message": toastMessage,
+            "type": "error"
+        });
+    }
+    </script>
+    <apex:form id="form">
+        <apex:outputPanel rendered="{!toastMessage == ''}">
+            <div class="lightning-spinner" style="height:6rem">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </apex:outputPanel>
+        <apex:actionFunction name="generateSOAPDF" action="{!createAttachmentWithoutSync}"
+                             oncomplete="renderMessage('{!isError}', '{!toastMessage}','{!showTermsOfOrder}')" reRender="form" />
+        <apex:actionFunction name="reloadPage" action="{!redirectToDetailPage}" />
+        <apex:actionFunction name="getTermsOfOrder" action="{!showTermsOfOrderPDF}" />
+    </apex:form>
+    <script>
+    generateSOAPDF();
+    </script>
+</apex:page>

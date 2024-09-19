@@ -1,0 +1,41 @@
+<template>
+    <lightning-card title="Product Group">
+        <template for:each={productData} for:item="product">
+            <div key={product.Id}>
+                <b><h1>{product.ProductName}</h1></b>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Specification</th>
+                            <th>IsRequired</th>
+                            <th>Color</th>
+                            <th>APO Color</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={product.specification} for:item="spec">
+                            <tr key={spec.Id}>
+                                <td>{spec.Id}</td>
+                                <td>{spec.spc}</td>
+                                <td><lightning-input id={spec.Id} type="checkbox" variant="standard" value="checked" onchange={handleChekboxChange} disabled={isDisabled}></lightning-input></td>
+                                <td>{spec.color}</td>
+                                <td><lightning-input data-product_id={product.Id} name={spec.Id} type="text" value={spec.apoColor} variant="standard" onchange={handleApoColorChange} disabled={isDisabled}></lightning-input></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+				<div class=".button-container">
+						<center>
+								<template if:true={showButton}>
+								<lightning-button variant="success" label="Edit product Group" onclick={handleEdit}></lightning-button>
+								</template>
+								<template if:true={showButton}>
+										<lightning-button variant="brand" label="Save Product Group" onclick={handleSave}></lightning-button>
+								</template>
+						</center>
+				</div>
+    </lightning-card>
+</template>

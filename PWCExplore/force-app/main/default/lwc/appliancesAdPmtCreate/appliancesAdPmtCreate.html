@@ -1,0 +1,40 @@
+<!--
+  @Description       : Component to create Advanced Payment Record
+  @Author            : Varun Rajpoot
+  @last modified on  : 01-30-2024
+  @last modified by  : Varun Rajpoot
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   11-25-2023   Varun Rajpoot   Initial Version
+-->
+<template>
+  <lightning-record-edit-form object-api-name="Advance_Payment_Details__c" onsubmit={assignDefaultValues}
+    onsuccess={handleRecordCreationSuccess} onerror={handleRecordCreationError}> <!--record-id=""-->
+    <lightning-messages> </lightning-messages>
+    <lightning-input-field field-name="Amount__c" value={pendingAmount}> </lightning-input-field>
+    <lightning-input-field field-name="Phone__c" value={phoneNumber} required="true"> </lightning-input-field>
+
+    <lightning-input-field field-name="Balance_Payment_Mode__c"> </lightning-input-field>
+    <lightning-input-field field-name="Payment_Mode__c" onchange={handlePaymentModeChange}> </lightning-input-field>
+
+    <lightning-input-field field-name="Type_of_Transaction__c"> </lightning-input-field>
+    <template if:true={isEMI}>
+      <lightning-input-field field-name="EMI_Vendor__c"> </lightning-input-field>
+      <lightning-input-field field-name="EMI_Scheme__c"> </lightning-input-field>
+      <lightning-input-field field-name="Processing_Fees__c"> </lightning-input-field>
+      <lightning-input-field field-name="Delivery_Order_Number__c"> </lightning-input-field>
+    </template>
+
+    <lightning-radio-group
+    label="Radio Button Group"
+    options={paymentOptions}
+    value={selectedPayment}
+    onchange={handlePaymentChange}
+    required
+>
+</lightning-radio-group>
+
+    <lightning-button class="slds-m-top_small" type="submit" label="Create new">
+    </lightning-button>
+  </lightning-record-edit-form>
+</template>

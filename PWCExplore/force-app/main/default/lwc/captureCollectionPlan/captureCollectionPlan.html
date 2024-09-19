@@ -1,0 +1,57 @@
+<template>
+    <p style="color: red;" class="slds-p-left_x-small slds-p-top_xx-small spinnerAndTextSection">{errorMessage}</p>
+    <template if:false={hasError}>
+        <lightning-card title="Capture Collection Plan">
+            <p class="slds-p-horizontal_small"><b>{label.amountDueForCollection}</b>{collectionPlanRecord.Balance_Amount__c}</p><br/>
+            <lightning-record-edit-form record-id={collectionPlanRecord.Id} object-api-name="Collection_Plan__c" onsuccess={updateAllDates}>
+                <lightning-messages></lightning-messages>
+                <lightning-layout>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Sales_Order__c" value={collectionPlanRecord.Sales_Order__c}></lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Planned_Collection_Date_1__c"></lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Planned_Collection_Amount_1__c"></lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Planned_Collection_Date_2__c"></lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Planned_Collection_Amount_2__c"></lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Planned_Collection_Date_3__c"></lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Planned_Collection_Amount_3__c"></lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Planned_Collection_Date_4__c"></lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Planned_Collection_Amount_4__c"></lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Planned_Collection_Date_5__c"></lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input-field field-name="Planned_Collection_Amount_5__c"></lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-button class="slds-m-top_small" type="submit" label="Save"></lightning-button>
+            </lightning-record-edit-form>
+        </lightning-card>
+    </template>
+</template>

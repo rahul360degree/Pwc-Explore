@@ -1,0 +1,3 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName">
+    <c:captureCollectionPlan recordId="{!v.recordId}" onclose="{!c.closeQuickAction}" sObjectName="{!v.sObjectName}"/>
+</aura:component>

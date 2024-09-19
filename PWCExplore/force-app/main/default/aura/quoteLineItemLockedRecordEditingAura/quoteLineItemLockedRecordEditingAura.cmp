@@ -1,0 +1,4 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+                controller="QLILockedRecordsPopulator">
+	 <c:editQliLockedRecordsFromLWC recordId="{!v.recordId}" onclose="{!c.closeQuickAction}" />
+</aura:component>

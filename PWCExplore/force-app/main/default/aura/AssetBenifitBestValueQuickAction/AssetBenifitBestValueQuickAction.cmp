@@ -1,0 +1,15 @@
+<aura:component implements="force:hasRecordId,force:lightningQuickActionWithoutHeader"
+    controller="AssetBestValueQuickActionController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:html tag="style">
+        .slds-modal__container{
+        opacity: 0.6;
+        }
+
+    </aura:html>
+
+    <div>
+        <lightning:spinner alternativeText="Loading" size="large" variant="brand" />
+    </div>
+</aura:component>

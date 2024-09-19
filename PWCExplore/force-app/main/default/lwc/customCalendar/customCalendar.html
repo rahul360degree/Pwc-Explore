@@ -1,0 +1,222 @@
+<template>
+    <lightning-card>
+        <div class="calendar-card">
+            <div class="slds-theme_shade slds-box">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="slds-media slds-no-space slds-grow">
+                            <div class="slds-media__figure">
+                                <lightning-icon icon-name="standard:event" size="medium"></lightning-icon>
+                                
+                            </div>
+                            
+                            <div class="slds-media__body">
+                                <p class="slds-line-height_reset" data-aura-rendered-by="168:1393;a">Calendar</p>
+                                
+                                <h1 class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate" data-aura-rendered-by="170:1393;a">{calendarTitle}</h1>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_2-of-3 slds-clearfix">
+                            
+                           
+                            <div class="slds-float_right slds-p-top_xx-small">
+                            <template if:true={enableNxtPrv}>
+                                <lightning-button-icon 
+                                variant="container" 
+                                icon-name="utility:chevronleft" 
+                                value="previous"
+                                onclick={calendarActionsHandler}>
+                                </lightning-button-icon>
+                                <lightning-button-icon 
+                                variant="container" 
+                                icon-name="utility:chevronright" 
+                                value="next" 
+                                onclick={calendarActionsHandler}>
+                            </lightning-button-icon>
+                            
+                            <lightning-button 
+                            label="Today" 
+                            class="slds-m-horizontal_small button-color" 
+                            value="today" 
+                            onclick={calendarActionsHandler}>
+                        </lightning-button>
+                            </template>
+                            <template if:true={showPickList}>
+                                <div class="slds-float_bottom slds-p-top_xx-small">
+                                <lightning-combobox
+                                        value={value}
+                                        placeholder="Select ASM"
+                                        options={optionsASM}
+                                        onchange={handleChangeCB}>
+                                </lightning-combobox>
+                                </div>
+                            </template>
+                           
+                            <!-- <lightning-button-icon 
+                                variant="border-filled" 
+                                icon-name="utility:refresh" 
+                                class="slds-m-left_medium" 
+                                value="refresh" 
+                                onclick={calendarActionsHandler}>
+                            </lightning-button-icon> -->
+
+                            <!-- <lightning-button-menu alternative-text="Show menu" variant="border-filled" 
+                                icon-name="utility:event" class="slds-m-horizontal_small" 
+                                menu-alignment="auto" onselect={changeViewHandler}>
+                                <template for:each={viewOptions} for:item="menuItem">
+                                    <lightning-menu-item
+                                    key={menuItem.viewName}
+                                    value={menuItem.viewName}
+                                    label={menuItem.label}
+                                    checked={menuItem.checked}>
+                                </lightning-menu-item>
+                                </template>
+                            </lightning-button-menu> -->
+                            <template if:true={displaynewbutton}>
+                            <lightning-button 
+                                label="New"
+                                class="slds-m-horizontal_small" 
+                                value="new" 
+                                onclick={calendarActionsHandler}>
+                            </lightning-button>
+                            </template>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="fullcalendar"></div>
+
+        <!-- modal start -->      
+   <template if:true={isShowModal}>
+
+<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+<div class="slds-modal__container">
+<!-- modal header start -->
+  <header class="slds-modal__header">
+     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+        <lightning-icon icon-name="utility:close"
+           alternative-text="close"
+           variant="inverse"
+           size="small" ></lightning-icon>
+        <span class="slds-assistive-text">Close</span>
+     </button>
+     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Visit Details</h2>
+  </header>
+
+  <!-- modal body start -->
+  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+    <div class="slds-m-around_medium">
+
+        <lightning-record-view-form record-id={vId}
+            object-api-name='Visit__c'
+            density="auto"
+            columns="2">
+            <lightning-output-field field-name="RecordTypeId"></lightning-output-field>
+            <lightning-output-field field-name="Account_Category__c"></lightning-output-field>
+            <lightning-output-field field-name="Name"></lightning-output-field>
+            <lightning-output-field field-name="Visit_Planned_Date__c"></lightning-output-field>
+            <lightning-output-field field-name="Id"></lightning-output-field>
+            <lightning-output-field field-name="Account__c"></lightning-output-field>
+            <lightning-output-field field-name="Visit_Category__c"></lightning-output-field>
+            <lightning-output-field field-name="PJP__c"></lightning-output-field>
+            
+            
+        
+       
+        </lightning-record-view-form>
+        
+        <!-- <lightning-card >
+            <p>Name:{vDt.name}</p>
+            <p>Planned Date:{vDt.plannedDate}</p>
+            <p>Country:{vDt.country}</p>
+            
+        </lightning-card> -->
+
+        <!-- <template if:true={vDt}>
+           <lightning-layout class="slds-var-m-vertical_x-small" multiple-rows>
+            <lightning-layout-item >
+                Name:{vDt.name} ** layoutitem size=6 padding
+                Planned Date:{vDt.plannedDate}
+            </lightning-layout-item>
+           </lightning-layout>
+        </template> -->
+        <!-- <template for:each={vDt} for:item="vt">
+            <p key={vt.id}>
+                 {vt.Name}
+            </p>
+       </template> -->
+        
+    </div>
+   
+    
+        
+  </div>
+
+  <!-- modal footer start-->
+  <footer class="slds-modal__footer">
+     <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+  </footer>
+
+</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+<!-- modal end -->
+
+
+ <!-- Record Type Selection modal start -->      
+ <template if:true={isShowModalRT}>
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+    <!-- modal header start -->
+      <header class="slds-modal__header">
+         <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCloseClick}>
+            <lightning-icon icon-name="utility:close"
+               alternative-text="close"
+               variant="inverse"
+               size="small" ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+         </button>
+         <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Record Type Selection</h2>
+      </header>
+    
+      <!-- modal body start -->
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+        <div class="slds-m-around_medium">
+            <lightning-radio-group name="radioGroup"
+                          label="Record ID Type"
+                          options={optionRecordID}
+                          value={valueR}
+                          type="radio"
+                          onchange={handleRadioChange}></lightning-radio-group>
+                          <!-- <lightning-record-form
+    object-api-name="Visit__c"
+    record-type-id='012C4000000ZMAXIA4'
+    layout-type="Full"
+>
+</lightning-record-form> -->
+        </div>     
+      </div>
+    
+      <!-- modal footer start-->
+      <footer class="slds-modal__footer">
+         <button class="slds-button slds-button_neutral" onclick={handleCloseClick}>Cancel</button>
+         <button class="slds-button slds-button_neutral" onclick={handleSaveClick}>Next</button>
+      </footer>
+    
+    </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- Record Type Selection modal end -->
+
+    </lightning-card>
+</template>

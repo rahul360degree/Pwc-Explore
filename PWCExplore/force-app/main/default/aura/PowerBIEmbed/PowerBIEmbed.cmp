@@ -1,0 +1,24 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId,flexipage:availableForRecordHome">
+	
+    <aura:attribute name="accountRecord" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="reportLink" type="String" 
+                    default="https://app.powerbi.com/reportEmbed?reportId=0b3a33da-64b3-400e-9b69-e024399e82b6&amp;appId=90b238de-1031-4b5d-a139-5f39d280426a&amp;autoAuth=true&amp;ctid=d44ff723-4fa7-405e-afc0-43c21e573043&amp;config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWluZGlhLWNlbnRyYWwtYS1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9&amp;filter=Customer/BP_x0020_Code eq " />
+    
+    <force:recordData aura:id="recordLoader"
+    recordId="{!v.recordId}"
+    fields="Name,Account_Code__c"
+    targetFields="{!v.accountRecord}"
+    targetError="{!v.recordLoadError}"
+    />
+    
+    {!v.accountRecord.Account_Code__c}
+    
+    <iframe src="{!'https://app.powerbi.com/reportEmbed?reportId=0b3a33da-64b3-400e-9b69-e024399e82b6&amp;appId=90b238de-1031-4b5d-a139-5f39d280426a&amp;autoAuth=true&amp;ctid=d44ff723-4fa7-405e-afc0-43c21e573043&amp;config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWluZGlhLWNlbnRyYWwtYS1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9&amp;filter=Customer/BP_x0020_Code eq ' + '\'' + v.accountRecord.Account_Code__c + '\'' }"
+            width="100%"
+            height="500px"
+            sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+            scrolling="auto"></iframe>
+
+    
+</aura:component>

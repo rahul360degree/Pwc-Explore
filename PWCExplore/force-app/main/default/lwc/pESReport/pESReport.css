@@ -1,0 +1,16 @@
+.td{
+	text-align: center;
+	padding: 5px;
+}
+.th {
+	font-weight: bold;
+	text-align: center;
+}
+.alignR{
+	text-align: right;
+	padding: 5px;
+}
+.alignL{
+	text-align: left;
+	padding: 5px;
+}

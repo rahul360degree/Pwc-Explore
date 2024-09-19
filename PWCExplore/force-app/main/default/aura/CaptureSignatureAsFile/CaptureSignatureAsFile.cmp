@@ -1,0 +1,4 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader"
+access = "global">
+    <c:signaturePad recordId="{!v.recordId}" onclose="{!c.closeQA}"></c:signaturePad>
+</aura:component>

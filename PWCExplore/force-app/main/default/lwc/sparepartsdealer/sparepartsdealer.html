@@ -1,0 +1,743 @@
+<!--
+  @description       : 
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 12-06-2022
+  @last modified by  : vrajpoot@godrej.com
+-->
+
+<template>
+  <!--<lightning-input type="text" placeholder="0" data-id="approvalComments" is-loading>
+  </lightning-input>
+
+  <lightning-input type="text" value={record.NLC_Ref_Compressor_Godrej__c} data-id={record.Id} data-name="NLC_Ref_Compressor_Godrej__c"
+   placeholder="0" onvaluechange={handleDataChange}>
+  </lightning-input>-->
+
+  <template if:true={noItemSelected}>
+    noItemSelected
+  </template>
+  <template if:true={sectionToDisplay}>
+
+    <div class="slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-4 slds-large-size_3-of-4">
+      <lightning-input type="number" data-id="Increamental Value" placeholder={increamentalValue}
+        onchange={handleIncreamentChange} variant="label-inline" label="Default Increment"></lightning-input>
+    </div>
+
+    <lightning-accordion onsectiontoggle={handleToggleSection} active-section-name="A">
+      <!-- Refrigerator Compressor-->
+      <template if:true={sectionToDisplay.Refrigerator_Compressor}>
+        <lightning-accordion-section name="A" label="Ref Compressor">
+
+
+          <!--<lightning-input type="text" value={record.Refrigerator_Compressor_Comment__c} apiname="Refrigerator_Compressor_Comment__c"
+          placeholder="Enter your comments" onchange={handleDataChange}>
+        </lightning-input>-->
+
+          <!--<lightning-input type="number" onchange={handleNumberChange} label="Enter a number"></lightning-input>
+        
+        <lightning-input apiname="Just_Test__c" value={record.Just_Test__c} type="number" placeholder="Enter ur comment" onchange={handleNumberChange} ></lightning-input>-->
+          <div class="slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-4 slds-large-size_3-of-4 slds-p-bottom_small">
+            <lightning-input type="text" data-id="Refrigerator_Compressor_Comment__c" variant="label-hidden" placeholder="Enter the comments" onchange={handleComments}></lightning-input>
+          </div>
+
+
+
+          <table class="slds-table tableCSS">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Quantity</th>
+                <th>NLC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Godrej</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_Ref_Compressor_Godrej__c" value={record.NLC_Ref_Compressor_Godrej__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_Ref_Compressor_Godrej__c" value={record.QTY_Ref_Compressor_Godrej__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>LG</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Ref_Compressor_LG__c"
+                    value={record.NLC_Ref_Compressor_LG__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Ref_Compressor_LG__c"
+                    value={record.QTY_Ref_Compressor_LG__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Whirlpool</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_Ref_Compressor_Whirlpool__c" value={record.NLC_Ref_Compressor_Whirlpool__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_Ref_Compressor_Whirlpool__c" value={record.QTY_Ref_Compressor_Whirlpool__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>THK</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Ref_Compressor_THK__c"
+                    value={record.NLC_Ref_Compressor_THK__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Ref_Compressor_THK__c"
+                    value={record.QTY_Ref_Compressor_THK__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Other</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_Ref_Compressor_Others__c" value={record.NLC_Ref_Compressor_Others__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_Ref_Compressor_Others__c" value={record.QTY_Ref_Compressor_Others__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </lightning-accordion-section>
+      </template>
+
+      <!-- Air Conditioner Compressor-->
+      <template if:true={sectionToDisplay.Air_Conditioner_Compressor}>
+        <lightning-accordion-section name="B" label="AC Compressor">
+
+          <div class="slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-4 slds-large-size_3-of-4 slds-p-bottom_small">
+          <lightning-input type="text" data-id="AC_Compressor_Comment__c" variant="label-hidden" placeholder="Enter the comments"
+            onchange={handleComments}></lightning-input>
+          </div>
+
+          <table class="slds-table tableCSS">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Quantity</th>
+                <th>NLC</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr>
+                <td>Godrej</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_AC_Compressor_Godrej__c" value={record.NLC_AC_Compressor_Godrej__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_AC_Compressor_Godrej__c" value={record.QTY_AC_Compressor_Godrej__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Hitachi</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_AC_Compressor_Hitachi__c" value={record.NLC_AC_Compressor_Hitachi__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_AC_Compressor_Hitachi__c" value={record.QTY_AC_Compressor_Hitachi__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Midea</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_AC_Compressor_Midea__c"
+                    value={record.NLC_AC_Compressor_Midea__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_AC_Compressor_Midea__c"
+                    value={record.QTY_AC_Compressor_Midea__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Whirlpool</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_AC_Compressor_Whirlpool__c" value={record.NLC_AC_Compressor_Whirlpool__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_AC_Compressor_Whirlpool__c" value={QTY_AC_Compressor_Whirlpool__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Others</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_AC_Compressor_Others__c" value={record.NLC_AC_Compressor_Others__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_AC_Compressor_Others__c" value={record.QTY_AC_Compressor_Others__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </lightning-accordion-section>
+      </template>
+
+      <!--Copper-->
+      <template if:true={sectionToDisplay.Copper}>
+        <lightning-accordion-section name="C" label="Copper">
+        
+          <div class="slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-4 slds-large-size_3-of-4 slds-p-bottom_small">
+          <lightning-input type="text" data-id="Copper_Comment__c" variant="label-hidden" placeholder="Enter the comments"
+            onchange={handleComments}></lightning-input>
+          </div>
+
+          <table class="slds-table tableCSS">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Quantity</th>
+                <th>NLC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Godrej</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Copper_Godrej__c"
+                    value={record.NLC_Copper_Godrej__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Copper_Godrej__c"
+                    value={record.QTY_Copper_Godrej__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Totalline</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Copper_Totalline__c"
+                    value={record.NLC_Copper_Totalline__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Copper_Totalline__c"
+                    value={record.QTY_Copper_Totalline__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Midea</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Copper_Midea__c"
+                    value={record.NLC_Copper_Midea__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Copper_Midea__c"
+                    value={record.QTY_Copper_Midea__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Hitachi</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Copper_Hitachi__c"
+                    value={record.NLC_Copper_Hitachi__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Copper_Hitachi__c"
+                    value={record.QTY_Copper_Hitachi__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Others</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Copper_Others__c"
+                    value={record.NLC_Copper_Others__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Copper_Others__c"
+                    value={record.QTY_Copper_Others__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </lightning-accordion-section>
+      </template>
+
+      <!--IDU (AC)-->
+      <template if:true={sectionToDisplay.IDU_Air_Conditioner}>
+        <lightning-accordion-section name="D" label="AC IDU's">
+
+          <div class="slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-4 slds-large-size_3-of-4 slds-p-bottom_small">
+          <lightning-input type="text" data-id="AC_IDU_Comment__c" variant="label-hidden" placeholder="Enter the comments"
+            onchange={handleComments}></lightning-input>
+            </div>
+
+          <table class="slds-table tableCSS">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Quantity</th>
+                <th>NLC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Godrej</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_AC_IDUs_Godrej__c"
+                    value={record.NLC_AC_IDUs_Godrej__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_AC_IDUs_Godrej__c"
+                    value={record.QTY_AC_IDUs_Godrej__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Totalline</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_AC_IDUs_Totalline__c"
+                    value={record.NLC_AC_IDUs_Totalline__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_AC_IDUs_Totalline__c"
+                    value={record.QTY_AC_IDUs_Totalline__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Midea</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_AC_IDUs_Midea__c"
+                    value={record.NLC_AC_IDUs_Midea__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_AC_IDUs_Midea__c"
+                    value={record.QTY_AC_IDUs_Midea__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Whirlpool</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_AC_IDUs_Whirlpool__c"
+                    value={record.NLC_AC_IDUs_Whirlpool__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_AC_IDUs_Whirlpool__c"
+                    value={record.QTY_AC_IDUs_Whirlpool__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Others</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_AC_IDUs_Others__c"
+                    value={record.NLC_AC_IDUs_Others__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_AC_IDUs_Others__c"
+                    value={record.QTY_AC_IDUs_Others__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </lightning-accordion-section>
+      </template>
+
+      <!--Stabilizers-->
+      <template if:true={sectionToDisplay.Stabilizer}>
+        <lightning-accordion-section name="D" label="Stabilizers">
+
+          <div class="slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-4 slds-large-size_3-of-4 slds-p-bottom_small">
+          <lightning-input type="text" data-id="Stabilizers_Comment__c" variant="label-hidden" placeholder="Enter the comments"
+            onchange={handleComments}></lightning-input>
+            </div>
+
+          <table class="slds-table tableCSS">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Quantity</th>
+                <th>NLC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Godrej</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Stabilisers_Godrej__c"
+                    value={record.NLC_Stabilisers_Godrej__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Stabilisers_Godrej__c"
+                    value={record.QTY_Stabilisers_Godrej__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Microtek</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_Stabilisers_Microtek__c" value={record.NLC_Stabilisers_Microtek__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_Stabilisers_Microtek__c" value={record.QTY_Stabilisers_Microtek__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Everest</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Stabilisers_Everest__c"
+                    value={record.NLC_Stabilisers_Everest__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Stabilisers_Everest__c"
+                    value={record.QTY_Stabilisers_Everest__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>VGuard</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Stabilisers_VGuard__c"
+                    value={record.NLC_Stabilisers_VGuard__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Stabilisers_VGuard__c"
+                    value={record.QTY_Stabilisers_VGuard__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Others</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Stabilisers_Others__c"
+                    value={record.NLC_Stabilisers_Others__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Stabilisers_Others__c"
+                    value={record.QTY_Stabilisers_Others__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </lightning-accordion-section>
+      </template>
+
+      <!-- R22-->
+      <template if:true={sectionToDisplay.R22}>
+        <lightning-accordion-section name="D" label="R22">
+
+          <div class="slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-4 slds-large-size_3-of-4 slds-p-bottom_small">
+          <lightning-input type="text" data-id="R22_Comment__c" variant="label-hidden" placeholder="Enter the comments"
+            onchange={handleComments}></lightning-input>
+          </div>
+
+          <table class="slds-table tableCSS">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Quantity</th>
+                <th>NLC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Godrej</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_R22_Godrej__c"
+                    value={record.NLC_R22_Godrej__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_R22_Godrej__c"
+                    value={record.QTY_R22_Godrej__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>GFL</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_R22_GFL__c"
+                    value={record.NLC_R22_GFL__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_R22_GFL__c"
+                    value={record.QTY_R22_GFL__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>NFIL</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_R22_NFIL__c"
+                    value={record.NLC_R22_NFIL__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_R22_NFIL__c"
+                    value={record.QTY_R22_NFIL__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Whirlpool</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_R22_Whirlpool__c"
+                    value={record.NLC_R22_Whirlpool__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_R22_Whirlpool__c"
+                    value={record.QTY_R22_Whirlpool__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>SRF</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_R22_SRF__c"
+                    value={record.NLC_R22_SRF__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_R22_SRF__c"
+                    value={record.QTY_R22_SRF__c} onvaluechange={handleDataChange} padding-class="rightpadding"
+                    float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </lightning-accordion-section>
+      </template>
+
+      <!--R134A Cans-->
+      <template if:true={sectionToDisplay.R134A_Cans}>
+        <lightning-accordion-section name="D" label="R134A Cans">
+
+          <div class="slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_4-of-4 slds-large-size_3-of-4 slds-p-bottom_small">
+          <lightning-input type="text" data-id="R134A_Cans_Comment__c" variant="label-hidden" placeholder="Enter the comments"
+            onchange={handleComments}></lightning-input>
+            </div>
+
+          <table class="slds-table tableCSS">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Quantity</th>
+                <th>NLC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Godrej</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_Gas_134a_Cans_Godrej__c" value={record.NLC_Gas_134a_Cans_Godrej__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_Gas_134a_Cans_Godrej__c" value={record.QTY_Gas_134a_Cans_Godrej__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Flouro</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_Gas_134a_Cans_Flouro__c" value={record.NLC_Gas_134a_Cans_Flouro__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_Gas_134a_Cans_Flouro__c" value={record.QTY_Gas_134a_Cans_Flouro__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>SRF</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="NLC_Gas_134a_Cans_SRF__c"
+                    value={record.NLC_Gas_134a_Cans_SRF__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue} apiname="QTY_Gas_134a_Cans_SRF__c"
+                    value={record.QTY_Gas_134a_Cans_SRF__c} onvaluechange={handleDataChange}
+                    padding-class="rightpadding" float-class="slds-float_left"> </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Whirlpool</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_Gas_134a_Cans_Whirlpool__c" value={record.NLC_Gas_134a_Cans_Whirlpool__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_Gas_134a_Cans_Whirlpool__c" value={record.QTY_Gas_134a_Cans_Whirlpool__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Others</td>
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="NLC_Gas_134a_Cans_Others__c" value={record.NLC_Gas_134a_Cans_Others__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+
+                <td>
+                  <c-createdealervisit-input increamental-value={increamentalValue}
+                    apiname="QTY_Gas_134a_Cans_Others__c" value={record.QTY_Gas_134a_Cans_Others__c}
+                    onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                  </c-createdealervisit-input>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </lightning-accordion-section>
+      </template>
+    </lightning-accordion>
+
+  </template>
+</template>

@@ -1,0 +1,119 @@
+<template>
+    <div style="background : white;max-height: 500px;overflow:auto" class="slds-p-horizontal_small">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </template>
+
+        <lightning-record-edit-form object-api-name="Order" record-type-id={recordTypeId} onsubmit={onSubmitHandler}>
+            <header class="slds-modal__header">
+                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Dealer consumption order</h2>
+            </header>   
+            <lightning-messages></lightning-messages>
+            <template if:false={isLoaded}> 
+                <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+            </template>             
+                <div class="slds-grid slds-wrap">
+                    <template if:true={isLoaded}>
+                        <div class="slds-col slds-size_1-of-2">
+                          <lightning-input-field field-name="Class__c" name="class__c" value={classValue}
+                                onchange={handleClassChange} class="orderClass" required="true"></lightning-input-field> 
+                        </div>                  
+                        <div class="slds-col slds-size_1-of-2 slds-p-top_xx-small slds-p-left_x-small">
+                           <!-- <label for="fieldid" class="slds-text-body_small">Account Name</label> 
+                            <lightning-input-field field-name="End_Customer__c" required="true" variant="label-hidden"
+                                id="fieldid" class="supplyTo">
+                            </lightning-input-field> -->
+                            <lightning-input-field field-name="End_Customer__c" label="Account name" required="false" value={srAccountId}></lightning-input-field>
+                        </div> 
+                       
+                    <div class="slds-col slds-size_1-of-2">
+                       <lightning-input-field field-name="RecordTypeId" value={RecordType}
+                            class="RecordTypeClass" 
+                            ></lightning-input-field> 
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Logistics_Company_Branch__c" value={branch}
+                             class="branchClass" disabled={isBranchDisabled}
+                             required="true"></lightning-input-field> 
+                     </div>
+               <!---     <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Sold_To_Address__c" value={soldToAddress}
+                             class="soldToAddressClass" 
+                             required="true"></lightning-input-field> 
+                     </div>
+                     <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Ship_To_Address__c" value={shipToAddress}
+                             class="shipToAddressClass" 
+                             required="true"></lightning-input-field>  
+                     </div> -->
+                   <!---- testtext123 -- {category} - testtext
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Record_Types__c" value={category}
+                            class="categoryClass" 
+                            required="true"></lightning-input-field>
+                    </div> -->                  
+                    <!--<div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox name="category" label="Category" value={category}
+                            placeholder="Select Category" options={categoryOptions}
+                            onchange={handleCategoryOptions} required></lightning-combobox>
+                    </div> -->
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox name="orderSeries" label="Sales Order Series" value={salesOrderSeries}
+                            placeholder="Select Sales Order Series" options={salesOrderSeriesOptions}
+                            onchange={handleSeriesOptions} required></lightning-combobox> 
+                        <!----    <lightning-input-field field-name="Sales_Order_Series__c" value={salesOrderSeries}
+                            class="categoryClass" 
+                            required="true"></lightning-input-field> -->
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                       <!-- <lightning-combobox name="lineOfBusiness" label="Line of business" value={lineOfBusiness}
+                            placeholder="Select Line of business" options={lineOfBusinessOptions}
+                            onchange={handleLineOfBusinessOptions} required></lightning-combobox> -->
+                            <lightning-input-field field-name="Line_of_Business__c" value={lineOfBusiness}
+                            class="lineOfBusinessClass"></lightning-input-field> 
+                    </div>
+                    <div class="slds-col slds-size_1-of-2"> 
+                       <!--- <lightning-combobox name="salesType" label="Sales Type" value={salesType}
+                            placeholder="Select Sales Type" options={salesTypeOptions}
+                            onchange={handleSalesTypeOptions} required></lightning-combobox> -->
+                           <lightning-input-field field-name="Sales_Type__c" value={salesType}
+                            class="salesTypeClass" 
+                            required="true"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                      <!---  <lightning-combobox name="businessUnit" label="Business Unit" value={businessUnit}
+                            placeholder="Select Business Unit" options={businessUnitOptions}
+                            onchange={handleBusinessUnitOptions} required></lightning-combobox> -->
+
+                            <lightning-input-field field-name="Business_Unit__c" value={businessUnit}
+                            class="businessUnitClass" 
+                            required="true"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                       <!--- <lightning-combobox name="enquiryCategory" label="Enquiry Category" value={enquiryCategory}
+                            placeholder="Select Enquiry Category" options={enquiryCategoryOptions}
+                            onchange={handleEnquiryCategoryOptions} required></lightning-combobox> -->
+                            <lightning-input-field field-name="MHE_Division__c" value={enquiryCategory}
+                            class="enquiryCategoryClass" 
+                            required="false"></lightning-input-field>
+                        </div> 
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox name="subDivision" label="Sub Division" value={subDivision} 
+                            placeholder="Select Sub Division" options={subDivisionOptions}
+                            onchange={handleSubDivisionOptions} required></lightning-combobox>
+                    </div> 
+                     </template>
+                </div>
+            
+            <footer class="slds-modal__footer">
+                <lightning-button class="slds-m-around_small" label="Cancel" onclick={handleCancel}></lightning-button>
+                <template if:false={isOrderCreated}>
+                    <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+                </template>
+                <template if:true={isOrderCreated}>
+                    <lightning-button class="slds-m-around_small" type="submit" label="Save" onclick={navigateToOrder}></lightning-button>
+                </template> 
+            </footer>
+        </lightning-record-edit-form>
+    </div>
+</template>

@@ -1,0 +1,63 @@
+<template>
+    <template for:each={rows} for:item="row"> 
+        <td key={row} class="">
+            <div class="slds-truncate">{row}</div>
+        </td>
+    </template>
+
+    <!-- Lookup Component -->
+    <td>
+        <template if:true={lineItemWrapper.selectedAssetId}>
+            <c-lwc-lookup filter-field="AccountId" filter-value={lineItem.Quote.Sold_To_Business_Partner__c} selected-record-id={lineItemWrapper.selectedAssetId} selected-value={lineItemWrapper.selectedAssetName} object-api-name="Asset" icon-name="standard:asset" onrecordselection={handleAssetChanged}></c-lwc-lookup>
+        </template>
+        <template if:false={lineItemWrapper.selectedAssetId}>
+            <c-lwc-lookup filter-field="AccountId" filter-value={lineItem.Quote.Sold_To_Business_Partner__c} object-api-name="Asset" icon-name="standard:asset" onrecordselection={handleAssetChanged}></c-lwc-lookup>
+        </template>
+    </td>
+
+    <!-- Plan Selector Component -->
+    <td>
+        <c-line-item-plan-selector benefit-fields={lineItemWrapper.assetBenefitFields} quote-id={lineItemWrapper.lineItem.Id} oncheckasset ={checkIfAssetIsSelected} selected-asset-id={lineItemWrapper.selectedAssetId}></c-line-item-plan-selector>
+    </td>
+
+    <!-- Error Message -->
+    <td>
+        <template if:true={lineItemWrapper.lineItem.isRecordError}>
+            <div>
+                <lightning-helptext icon-name="utility:error" icon-variant="error" class="helpText"
+                    content={lineItemWrapper.lineItem.errorMessage}>
+                </lightning-helptext>
+                <lightning-button-icon icon-name="utility:edit" class="editButton"
+                    variant="brand" alternative-text="Edit Record" title="Edit Record" onclick={openRecordEditForm}>
+                </lightning-button-icon>
+             </div>
+        </template>
+
+        <template if:false={lineItemWrapper.lineItem.isRecordError}>
+            <div>
+                <lightning-helptext icon-name="utility:error" icon-variant="inverse" class="helpText"
+                    content="There is no error.">
+                </lightning-helptext>
+                <lightning-button-icon disabled icon-name="utility:edit" class="editButton"
+                    variant="border" alternative-text="Edit Record" title="Edit Record">
+                </lightning-button-icon>
+             </div>
+        </template>
+    </td>
+
+    <!-- Record Edit Form -->
+    <template if:true={showRecordEditForm}>
+        <div class="slds">
+            <div class="slds-modal slds-fade-in-open" role="dialog">
+                <div class="slds-modal__container" style="align-items: center;">
+                    <div class="recordFormContainer slds-p-horizontal_small">
+                        <lightning-record-form record-id={recordId} object-api-name="QuoteLineItem" layout-type="Full"
+                            mode="edit" columns="2" oncancel={closeRecordModal} onerror={handleError} onsuccess={handleSuccess}>
+                        </lightning-record-form>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+</template>

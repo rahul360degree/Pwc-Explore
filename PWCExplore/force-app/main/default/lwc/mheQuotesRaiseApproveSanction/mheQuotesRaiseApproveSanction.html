@@ -1,0 +1,77 @@
+<!--
+  @description       : 
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 03-07-2023
+  @last modified by  : vrajpoot@godrej.com
+-->
+<template>
+    <!--Display Drop down values-->
+    
+        <lightning-layout pull-to-boundary="medium">
+            <template if:true={options}>
+                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                    <lightning-combobox name="CGStatus" label="Corporate Gaurantee Sanction" value={recordToDisplay.CG_Status__c}
+                        placeholder="Select sanctions" options={options} onchange={handlePicklistChange}
+                        data-id="CG_Status__c">
+                    </lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                        <lightning-combobox name="BGStatus" label="Bank Gaurantee Sanction" value={recordToDisplay.BG_Status__c}
+                            placeholder="Select sanctions" options={options} onchange={handlePicklistChange}
+                            data-id="BG_Status__c">
+                        </lightning-combobox>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+    
+    <!--Display input fields values-->
+    
+        <lightning-layout pull-to-boundary="medium">
+            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                <template lwc:if={displayForSales_AND_Head}>
+                    <lightning-textarea label="Liquidity Damage Request Comments" data-id="LD_Request_Comments__c"
+                        value={recordToDisplay.LD_Request_Comments__c} onchange={handleChange}
+                         disabled={isHead}>
+                        <!--when value=head then it will disabled-->
+                    </lightning-textarea>
+
+                    <lightning-textarea label="Credit Terms Requested Comments" data-id="CT_Requested_Comments__c"
+                        value={recordToDisplay.CT_Requested_Comments__c} onchange={handleChange}
+                         disabled={isHead}>
+                        <!--when value=head then it will disabled-->
+                    </lightning-textarea>
+                </template>
+                <template if:false={isHead}>
+                    <!--Only For Sales and CPT Persona-->
+                    <lightning-textarea label="Special Delivery Requested Comments" data-id="Special_Remarks_Requested__c"
+                        value={recordToDisplay.Special_Remarks_Requested__c} onchange={handleChange}
+                         disabled={isCPT}>
+                        <!--when value=head then it will disabled-->
+                    </lightning-textarea>
+                </template>
+            </lightning-layout-item>
+
+            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                <template lwc:if={displayForSales_AND_Head}>
+                    <lightning-textarea label="Liquidity Damage Approver Comments" data-id="LD_Approver_Comments__c"
+                        value={recordToDisplay.LD_Approver_Comments__c} onchange={handleChange}
+                         disabled={isSales}>
+                    </lightning-textarea>
+
+                    <lightning-textarea label="Credit Terms Approver Comments" data-id="CT_Approver_Comments__c"
+                        value={recordToDisplay.CT_Approver_Comments__c} onchange={handleChange}
+                         disabled={isSales}>
+                    </lightning-textarea>
+                </template>
+                <template if:false={isHead}>
+                    <lightning-textarea label="Special Delivery Approver Comments" data-id="Special_Remarks_Approver__c"
+                        value={recordToDisplay.Special_Remarks_Approver__c} onchange={handleChange}
+                         disabled={disableSPApproval}>
+                    </lightning-textarea>
+
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
+    
+</template>

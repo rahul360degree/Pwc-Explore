@@ -1,0 +1,35 @@
+.lgc-bg {
+    background-color: rgb(242, 242, 242);
+} 
+
+h2.header_center {
+    text-align: center;
+  }
+
+.content {
+    
+    padding: 0 18px;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
+
+p.extrapadding {
+    padding-bottom: 15px;
+}
+
+div.projected{
+    background-color: aquamarine;
+}
+
+div.base{
+    background-color: beige;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}

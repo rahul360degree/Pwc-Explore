@@ -1,0 +1,229 @@
+<template >
+    <div class="slds-m-top_small slds-m-bottom_xx-large mainContainer">  
+
+      
+        <!-- Show spinner if data is loading -->
+        <template if:false={isReset}>  
+            <template if:true={isLoading}>
+                <div class="demo-only" style="height:6rem">
+                    <div class="slds-spinner_container">
+                        <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                        <span class="slds-assistive-text">Loading</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                </div>
+            </template> 
+
+            <template if:false={isLoading}>   
+                <template if:false={isMobile}>
+
+                    <!--Input Fields in Check DSA-->
+                    <lightning-card style="padding: 2em;">
+                        <lightning-layout class="x-large">                
+                                                       
+                                   
+                                        <template if:false={isLookup}>
+                                            <div class="slds-p-around_medium slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 component-padding">
+                                                <lightning-input type="text" readonly=true name="inputBPCode" label="Enter the BP Code" value={populatedCode} required="true">
+												</lightning-input> 
+                                            </div>
+                                        </template>
+
+                                        <template if:true={isLookup}>
+                                            <div class="slds-p-around_medium slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 component-padding">
+                                                <c-lwc-lookup lookup-label="Account Name"  value={InternalName} required="true" object-api-name="account" icon-name="standard:account"  
+												onrecordselection={onAccountSelection}></c-lwc-lookup> 
+                                            </div>
+                                        </template>                                                                            
+                                
+                                
+                                <div class="slds-p-around_medium slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 component-padding">                                    
+                                        <lightning-input type="date" class="inputFromDate" value={InternalFromDate} name="inputFromDate" label="Enter the from date" required="true" 
+										onchange={handleTransactionFromChange} style="bottom: 1%"></lightning-input>                                                                     
+                                </div>
+                                
+                                
+                                <div class="slds-p-around_medium slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 component-padding">                                    
+                                        <lightning-input type="date" class="inputToDate" value={InternalToDate} name="inputToDate" label="Enter the To Date" required="true"  
+										onchange={handleTransactionToChange} style="bottom: 1%"></lightning-input>                                                                    
+                                </div>
+                                
+                            
+                        </lightning-layout>
+                       <!--</lightning-card> -->
+
+                        <!-- Action Buttons. -->
+                            <div class="slds-grid slds-grid_vertical-align-center slds-align_absolute-center action-buttons-container">
+                               <div class="">
+                                 <lightning-button variant="brand" label="Get Statement" title="Primary action" onclick={handleClick} class="slds-m-left_x-small">
+								 </lightning-button>                                                 
+                                </div>
+
+                                <!--<div class="">
+                                    <template if:true={pageTracking.isCheckStatementPDFButton}>
+                                        <lightning-button variant="brand" label="Get Statement in PDF" title="Get Statement in PDF" 
+										onclick={checkStatementinPDF} disabled class="slds-m-left_x-small">
+                                        </lightning-button>    
+                                    </template>
+        
+                                    <template if:false={pageTracking.isCheckStatementPDFButton}>
+                                        <lightning-button variant="brand" label="Get Statement in PDF" title="Get Statement in PDF"  
+										onclick={checkStatementinPDF} class="slds-m-left_x-small">
+                                        </lightning-button>
+                                    </template>
+                                </div> -->
+
+                                <div class="">
+                                    <template if:true={pageTracking.isCheckStatementExcelButton}>
+                                        <lightning-button variant="brand" label="Get Statement in Excel" title="Get Statement in Excel" 
+										onclick={checkStatementinExcel} disabled class="slds-m-left_x-small">
+                                        </lightning-button>    
+                                    </template>
+        
+                                    <template if:false={pageTracking.isCheckStatementExcelButton}>
+                                        <lightning-button variant="brand" label="Get Statement in Excel" title="Get Statement in Excel"  
+										onclick={checkStatementinExcel} class="slds-m-left_x-small">
+                                        </lightning-button>
+                                    </template>
+                                </div>
+        
+                                 
+                             </div>   
+                    </lightning-card> 
+                    
+
+                   <!-- Loading indicator when the table is supposed to be loaded in Non-mobile devices-->
+                   <template if:true={isTableLoading}>
+                      <div class="demo-only" style="height:6rem">
+                        <div class="slds-spinner_container">
+                            <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                            <span class="slds-assistive-text">Loading</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                       </div>
+                    </template> 
+                
+                    <template if:false={isTableLoading}>
+                        <template if:true={showDsaStatementTable}>      
+
+                            <lightning-card>
+                                     <!--Opening Balance and Closing Balance-->
+                                     <div class="slds-m-bottom_medium slds-grid slds-grid_vertical-align-center header_container component-container">
+                                                <div class="slds-p-around_medium slds-text-heading_medium slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 component-padding">                                      
+                                                    <template if:true={debitAmountOpen}>
+                                                        <strong>Opening Balance: </strong>{setBalanceData}(Debit) 
+                                                    </template>
+                                                    <template if:true={creditAmountOpen}>
+                                                        <strong>Opening Balance: </strong>{setBalanceData}(Credit) 
+                                                    </template>
+                                                    <template if:true={zeroAmountOpen}>
+                                                        <strong>Opening Balance: </strong>{setBalanceData}
+                                                    </template>
+                                                                                                                                                               
+                                                </div>
+                                                
+                                                <div class="slds-p-around_medium slds-text-heading_medium  slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 component-padding">                                    
+                                                    <template if:true={debitAmountClose}>  
+                                                        <strong>Closing  Balance: </strong>{finalBalance}(Debit)
+                                                    </template> 
+                                                    <template if:true={creditAmountClose}>  
+                                                        <strong>Closing  Balance: </strong>{finalBalance}(Credit) 
+                                                    </template> 
+                                                    <template if:true={zeroAmountClose}>  
+                                                        <strong>Closing  Balance: </strong>{finalBalance}
+                                                    </template> 
+                                                                                                                 
+                                                </div>                                                                                       
+                                    </div>
+
+                                 <!--Table grid for Non -Mobile Device-->
+                                <div class="slds-m-bottom_medium slds-grid slds-grid_vertical-align-center header_container">                                    
+                                    <div class="checkout-table-container-with_scroll">                                                  
+                                        <c-display-table-for-dsa component-details={dsaTableJSON} table-columns={dsaTableColumns} 
+                                        hide-row-selection table-data={dsaTableData} >
+                                        </c-display-table-for-dsa> 
+                                    </div>
+                                </div>
+                            </lightning-card>
+
+                        </template> 
+                    </template> 
+                </template>
+                
+                    <template if:true={isMobile}>
+
+                                                                                                                  
+                            <template if:false={isLookup}>
+                                <lightning-input type="text" readonly=true name="inputBPCode" label="Enter the BP Code" value={populatedCode} required="true"  
+								onchange={handleAccountChange}></lightning-input> 
+                            </template>
+
+                            <template if:true={isLookup}>
+                                <c-lwc-lookup lookup-label="Account Name" class="inputBPCode" value={InternalName} 
+								required="true" object-api-name="account" icon-name="standard:account"  
+                                onrecordselection={onAccountSelection} >
+                                </c-lwc-lookup> 
+                            </template>  
+
+                            <lightning-input type="date" class="inputFromDate" value={InternalFromDate} name="inputFromDate" label="Enter the from date" required="true" 
+							onchange={handleTransactionFromChange}></lightning-input> 
+                            <lightning-input type="date" class="inputToDate" value={InternalToDate} name="inputToDate" label="Enter the To Date" required="true"  
+							onchange={handleTransactionToChange}></lightning-input>
+                            
+                            <!-- Action Buttons. -->
+                            <div class="slds-grid slds-grid_vertical-align-center slds-align_absolute-center action-buttons-container">
+                                <div class="">
+                                  <lightning-button variant="brand" label="Get Statement" title="Primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+                                </div>
+
+                               <!-- <div class="">
+                                    <template if:true={pageTracking.isCheckStatementExcelButton}>
+                                        <lightning-button variant="brand" label="Get Statement in Excel" title="Get Statement in Excel" 
+										onclick={checkStatementinExcel} disabled class="slds-m-left_x-small">
+                                        </lightning-button>    
+                                    </template>
+        
+                                    <template if:false={pageTracking.isCheckStatementExcelButton}>
+                                        <lightning-button variant="brand" label="Get Statement in Excel" title="Get Statement in Excel"  
+										onclick={checkStatementinExcel} class="slds-m-left_x-small">
+                                        </lightning-button>
+                                    </template>
+                                </div> --> 
+                            </div>  
+
+            
+                         <!-- Loading indicator when the table is supposed to be loaded.-->
+                        <template if:true={isTableLoading}>
+                            <div class="demo-only" style="height:6rem">
+                                <div class="slds-spinner_container">
+                                    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                                    <span class="slds-assistive-text">Loading</span>
+                                    <div class="slds-spinner__dot-a"></div>
+                                    <div class="slds-spinner__dot-b"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+        
+                        <!-- Table Section for  mobile devices.-->
+                            <template if:false={isTableLoading}>                                                                                                   
+                                <template if:true={showDsaStatementTable}>       
+                                        
+                                            <div class="checkout-table-container-with_scroll">                                                  
+                                                 <c-display-table-for-dsa component-details={dsaTableJSON} table-columns={dsaTableColumns} 
+                                                 hide-row-selection table-data={dsaTableData} >
+                                                 </c-display-table-for-dsa> 
+                                            </div>                                       
+            
+                                </template> 
+                            </template> 
+                       
+                    </template>
+            </template>  
+        </template>
+     </div>
+</template>

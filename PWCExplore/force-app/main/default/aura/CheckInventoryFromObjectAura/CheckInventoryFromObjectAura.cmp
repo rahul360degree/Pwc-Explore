@@ -1,0 +1,9 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName" access="global">
+    <aura:html tag="style">
+        .slds-modal__container{
+        max-width: 80rem !important;
+        width:80% !important;
+        }
+    </aura:html>
+    <c:checkInventoryFromObjectLWC recordId="{!v.recordId}" sobjectname="{!v.sObjectName}" onclose="{!c.closeQuickAction}" />
+</aura:component>

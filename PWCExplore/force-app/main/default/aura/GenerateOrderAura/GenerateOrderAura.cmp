@@ -1,0 +1,3 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName">
+    <c:generateOrderLWC recordId="{!v.recordId}" onclose="{!c.closeQuickAction}" />
+</aura:component>

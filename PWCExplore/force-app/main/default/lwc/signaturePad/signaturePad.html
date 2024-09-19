@@ -1,0 +1,42 @@
+<template>
+    <lightning-card class="slds-align_absolute-center" 
+                    title="Sign Here" 
+                    icon-name="action:update_status">
+
+                    <div class="c-container"> 
+                            <p class="slds-m-bottom_small"> 
+                                <canvas name="canvasItem" 
+                                        class="signature-pad" 
+                                        style="border:1px solid rgb(126, 123, 123); background: white;"
+                                        width={canvasWidth} 
+                                        height={canvasHeight} 
+                                        lwc:dom="manual"></canvas>
+                            </p>
+                            <p class="slds-m-bottom_small"> 
+                            <lightning-button variant="brand" label="Save" title="Save" 
+                                onclick={handleSaveClick} class="slds-m-left_x-small"></lightning-button>
+                            
+                            <lightning-button variant="brand" label="Clear" title="Clear" 
+                                onclick={handleClearClick} class="slds-m-left_x-small"></lightning-button>
+
+                            <lightning-button variant="brand" label="Close" title="Close" 
+                                onclick={closeQuickAction} class="slds-m-left_x-small"></lightning-button>
+
+                            </p>
+                    </div>
+                
+
+
+
+        <!--<div class="slds-m-around_medium">
+            <canvas name="canvasItem" class="signature-pad" width={canvasWidth} height={canvasHeight} lwc:dom="manual"></canvas>
+        </div>
+        <p class="slds-m-bottom_small"> 
+            <lightning-button variant="brand" label="Save" title="Save" 
+                onclick={handleSaveClick} class="slds-m-left_x-small"></lightning-button>
+            
+            <lightning-button variant="brand" label="Clear" title="Clear" 
+                onclick={handleClearClick} class="slds-m-left_x-small"></lightning-button>
+        </p>-->
+    </lightning-card>
+</template>

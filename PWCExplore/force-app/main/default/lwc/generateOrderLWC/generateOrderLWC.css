@@ -1,0 +1,21 @@
+.mobile_order_quantity_input {
+    display:flex;
+    margin-right:1rem;
+}
+
+.padding_1rem {
+   padding: 1rem;
+}
+
+.header_container {
+}
+
+.mobile_data_container {
+    overflow: scroll;
+    height: 90vh;
+}
+
+.table_mobilecard_container {
+    /*height: 50vh;
+    overflow: scroll;*/
+}

@@ -1,0 +1,53 @@
+.sidenav {
+  width: 0;
+  z-index: 1;
+  right: 3px;
+  overflow-x: hidden;
+  transition: 0.3s;
+  box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2);
+  background-color: #ffffff !important;
+}
+
+.badgeCart {
+  z-index: 0;
+  top: 0;
+  right: 0;
+  background-color: #da2323 !important;
+  color: #ffffff;
+  border-radius: 0.25rem;
+  padding: 0.25em 0.4em;
+  font-size: 85%;
+  font-weight: 700;
+  white-space: nowrap;
+  vertical-align: baseline;
+  -webkit-transform: translateY(-50%) translateX(50%);
+  -ms-transform: translateY(-50%) translateX(50%);
+  transform: translateY(-50%) translateX(50%);
+}
+
+.sldbtn{
+  margin-right: 6.3px;
+}
+
+.mobile-content_container {
+  position: relative;
+  min-height: 50vh;
+  height: auto;
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+.padding_1rem {
+  padding: 1rem;
+}
+
+.cartButtonMobile {
+  float: right;
+}
+
+.mobile_filter {
+  height: 50%;
+  flex: auto;
+  position: absolute;
+  z-index: 1;
+}

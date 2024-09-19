@@ -1,0 +1,246 @@
+<!--
+* @Author            : Ashwin Thale
+* @class name  : pendingApprovalsAppliances.html
+* @description  : 
+* @created date  : 14-11-2023
+* @last modified on  : 14-11-2023
+* @last modified by  : Ashwin Thale
+* Modifications Log	 :
+* Ver   Date         Author          Modification
+* 1.0   14-11-2023   Ashwin Thale   Initial Version
+-->
+<template>
+
+	<div class="custom-card">
+		<lightning-card class="lightning-card">
+			<div class="slds-align_absolute-center slds-m-top_small">
+				<center><b>Appliances - Order Pending Approvals</b></center>
+				<!--<div class="slds-p-around_large">
+				<lightning-button variant="brand" label="Approve" data-name="Approved" title="Bulk Approve"
+					onclick={submitforBulkApproval}
+					class="slds-m-left_x-small slds-m-right_x-large slds-align_absolute-center">
+				</lightning-button>
+			</div>-->
+
+				<!--<div class="slds-p-around_large">
+				<lightning-button variant="destructive" label="Reject" data-name="Rejected" title="Bulk Reject"
+					onclick={submitforBulkApproval}
+					class="slds-m-left_x-small slds-m-right_x-large slds-align_absolute-center">
+				</lightning-button>
+			</div>-->
+			</div>
+			<template if:false={spinner}>
+				<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+			</template>
+			<template if:true={recordsToDisplay}>
+				<div class="table-container">
+					<table
+						class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered scrollable-table">
+						<thead>
+							<tr class="slds-line-height_reset">
+								<th scope="col">
+									<center>
+										<lightning-input type="checkbox" checked={isAllChecked}
+											onchange={handleSelectAll}>
+										</lightning-input>
+									</center>
+								</th>
+								<th scope="col">
+									<center>Order No</center>
+								</th>
+								<th scope="col">
+									<center>Sold-To</center>
+									<center>BP</center>
+								</th>
+								<th scope="col">
+									<center>Branch</center>
+								</th>
+								<th scope="col">
+									<center>Planned Delivery</center>
+									<center>Date</center>
+								</th>
+								<th scope="col">
+									<center>Order Items Detail</center>
+								</th>
+								<th scope="col">
+									<center>Approval History Detail</center>
+								</th>
+								<th scope="col">
+									<center>Approver Comment</center>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<template for:each={recordsToDisplay} for:item="row">
+								<tr key={row.Id}>
+									<td>
+										<center>
+											<lightning-input type="checkbox" checked={isChecked} data-id={row.Id}
+												onchange={handleChange}>
+											</lightning-input>
+										</center>
+									</td>
+									<td data-label="ORDER NO" scope="row" onclick={handleNavigate} class="linkCSS"
+										data-id={row.OrderId} data-name="Order">
+										<center>{row.OrderNo}</center>
+									</td>
+									<td data-label="SOLD-TO BP" class="slds-cell-wrap linkCSS" onclick={handleNavigate}
+										data-id={row.SoldToBussPatId} data-name="Account">
+										{row.SoldToBussPatName}</td>
+									<td data-label="BRANCH" class="slds-cell-wrap" data-id={row.OrderId}
+										data-name="Order">
+										<center>{row.LogisticCompanyBranch}</center>
+									</td>
+									<td data-label="PLANNED DELIVERY DATE" class="slds-cell-wrap">
+										<lightning-input type="datetime-local" data-id={row.Id}
+											value={row.PlannedDeliveryDate} onchange={handleDateTimeChange}>
+										</lightning-input>
+										<!--<lightning-input type="date-local" label="Date" value={row.selectedDate} 
+								onchange={handleDateChange}></lightning-input>
+								<lightning-input type="time-local" label="Time" value={row.selectedTime} 
+								onchange={handleTimeChange}></lightning-input>-->
+									</td>
+									<td data-label="Line Items">
+										<table
+											class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+											if:true={row.showCell}>
+											<thead>
+												<tr class="slds-line-height_reset">
+													<th scope="col">
+														<center>Product Name</center>
+													</th>
+													<th scope="col">
+														<center>Item Code</center>
+													</th>
+													<th scope="col">
+														<center>NPP</center>
+													</th>
+													<th scope="col">
+														<center>Disc Amount</center>
+														<center>Per Unit</center>
+													</th>
+													<th scope="col">
+														<center>Discount</center>
+														<center>Percentage</center>
+													</th>
+													<th scope="col">
+														<center>Per Unit Price</center>
+														<center>(NLC)</center>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												<template for:each={row.ordItmRec} for:item="qli">
+													<tr key={qli.Id}>
+														<td data-label="PRODUCT" class="slds-cell-wrap linkCSS"
+															onclick={handleNavigate} data-id={qli.Product2Id}
+															data-name="Product2">
+															{qli.ProductName}</td>
+														<td data-label="ITEM CODE" class="slds-cell-wrap"
+															data-id={qli.OrderLineItemId} data-name="OrderItem">
+															<center>{qli.ItemCode}</center>
+														</td>
+														<td data-label="NPP" class="slds-cell-wrap"
+															data-id={qli.OrderLineItemId} data-name="OrderItem">
+															<center>{qli.prdNpp}</center>
+														</td>
+														<td data-label="Disc Amount Per Unit" class="slds-cell-wrap"
+															data-id={qli.OrderLineItemId} data-name="OrderItem">
+															<center>{qli.DiscAmtUnit}</center>
+														</td>
+														<td data-label="DISCOUNT PERCENTAGE" class="slds-cell-wrap"
+															data-id={row.OrderId} data-name="Order">
+															<center>{row.DiscPerc}</center>
+														</td>
+														<td data-label="Per Unit Price(NLC)" class="slds-cell-wrap"
+															data-id={qli.c} data-name="OrderItem">
+															<center>{qli.PerUnitPrice}</center>
+														</td>
+													</tr>
+												</template>
+											</tbody>
+										</table>
+									</td>
+
+									<td data-label="Approval History Detail">
+										<table
+											class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+											<thead>
+												<tr class="slds-line-height_reset">
+													<th scope="col">
+														<center>Approver</center>
+														<center>Level</center>
+													</th>
+													<th scope="col">
+														<center>Action</center>
+														<center>By</center>
+													</th>
+													<th scope="col">
+														<center>Completed</center>
+														<center>Date</center>
+													</th>
+													<th scope="col">
+														<center>Status</center>
+													</th>
+													<th scope="col">
+														<center>Comments</center>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												<template for:each={row.prcRecord} for:item="prc">
+													<tr key={prc.Id}>
+														<td data-label="SUBMITTED BY" class="slds-cell-wrap"
+															data-id={prc.processInstId} data-name="ProcessInstance">
+															{prc.ApproverLevel}</td>
+														<td data-label="ACTION BY" class="slds-cell-wrap linkCSS"
+															onclick={handleNavigate} data-id={prc.processInstId}
+															data-name="ProcessInstance">
+															{prc.ActionBy}</td>
+														<td data-label="COMPLETE DATE">
+															<lightning-formatted-date-time value={prc.CompletedDate}
+																year="2-digit" month="short" day="2-digit"
+																hour="numeric" weekday="long">
+															</lightning-formatted-date-time>
+														</td>
+														<td data-label="STATUS" class="slds-cell-wrap"
+															data-id={prc.processInstId} data-name="ProcessInstance">
+															<center>{prc.Status}</center>
+														</td>
+														<td data-label="COMMENTS" class="slds-cell-wrap"
+															data-id={prc.processInstId} data-name="ProcessInstance">
+															{prc.Comments}</td>
+													</tr>
+												</template>
+											</tbody>
+										</table>
+									</td>
+									<td data-label="COMMENT" class="slds-cell-wrap">
+										<lightning-textarea data-id={row.Id} data-identifier={row.id} 
+										value={row.value} onchange={handleCommentChange}>
+										</lightning-textarea>
+									</td>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+				</div>
+			</template>
+			<div class="buttons-card slds-align_absolute-center slds-m-top_small">
+				<div class="slds-p-around_large">
+					<lightning-button variant="brand" label="Approve" data-name="Approved" title="Bulk Approve"
+						onclick={submitforBulkApproval}
+						class="slds-m-left_x-small slds-m-right_x-large slds-align_absolute-center">
+					</lightning-button>
+				</div>
+
+				<div class="slds-p-around_large">
+					<lightning-button variant="destructive" label="Reject" data-name="Rejected" title="Bulk Reject"
+						onclick={submitforBulkApproval}
+						class="slds-m-left_x-small slds-m-right_x-large slds-align_absolute-center">
+					</lightning-button>
+				</div>
+			</div>
+		</lightning-card>
+	</div>
+</template>

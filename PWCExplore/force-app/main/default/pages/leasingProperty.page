@@ -1,0 +1,296 @@
+<!------------------------------------------------------------------------
+Author:        Jayasurya Gunasekharan
+Company:       Stetig
+Description:   Visualforce Page for displaying a units for leasing
+Inputs:        NA
+Last Modified: 12/10/2021
+Test Class:    
+---------------------------------------------------------------------------->
+
+<apex:page controller="SearchTagPremise" lightningStylesheets="false">
+    
+    <apex:form >
+        <html>
+            
+            <head>
+                <title>Leasing Property</title>
+                <!--fonts-->
+                <link href='http://fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css' />
+                <link href='http://fonts.googleapis.com/css?family=Cabin:400,500,600,700' rel='stylesheet' type='text/css' />
+                <link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css' />
+                
+                <!--select checkbox-->
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+                <!--<script src="{!$Resource.jquerysumoselect}"></script>-->
+<!--<script src="{!$Resource.jquerysumoselectmin}"></script>-->
+                <!--select checkbox-->
+                <!--//fonts-->
+                <link href="{!$Resource.bootstrap}" rel="stylesheet" type="text/css" media="all" />
+                <link href="{!$Resource.style}" rel="stylesheet" type="text/css" media="all" />
+                
+                <!-- for-mobile-apps -->
+                <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta name="keywords" content="soccer Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+                                           Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design"
+                  />
+            <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+            <!-- //for-mobile-apps  -->
+                <!-- js -->
+                <script src="{!$Resource.JQuery1}"></script>
+            
+            <style type="text/css">
+                .SlectBox {
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                color: #444;
+                font-size: 13px;
+                }
+                
+                .SlectBox p,
+                div,
+                ul,
+                li {
+                padding: 0px;
+                margin: 0px;
+                }
+            </style>
+            <style>
+                .resultstable,
+                table {
+                width: 100%;
+                cellpadding: 0px;
+                background: white;
+                border: 3px solid white;
+                border-spacing: 0px;
+                border-collapse: separate;
+                font-size: 1em;
+                margin-left: auto;
+                margin-right: auto;
+                
+                }
+                
+                .resultstable td {
+                padding: 6px;
+                border: 2px solid white;
+                cursor: pointer;
+                }
+                
+                .abc input {
+                background: white;
+                }
+                
+                .xyz {
+                display: none;
+                }
+                
+                .abc,
+                span {
+                
+                margin-right: 1%;
+                }
+                
+                .divbutton {
+                height: 100px;
+                }
+            </style>
+            <style>
+                .towerdisplay table,
+                td,
+                tr,
+                th {
+                align: center; //background-color:white; 
+                color: black; //padding : 20px;
+                //border: 1px solid black;
+                }
+                
+                .towerdisplay table {
+                width: 50%;
+                margin: auto auto;
+                }
+            </style>
+            
+            <script type="text/javascript">
+            function selectAllCheckboxes(obj, receivedInputID) {
+                var inputCheckBox = document.getElementsByTagName("input");
+                for (var i = 0; i < inputCheckBox.length; i++) {
+                    if (inputCheckBox[i].id.indexOf(receivedInputID) != -1) {
+                        inputCheckBox[i].checked = obj.checked;
+                    }
+                }
+            }
+            </script>
+            <script type="text/javascript">
+            function selectAllCheckboxes2(obj2, receivedInputID2) {
+                var inputCheckBox2 = document.getElementsByTagName("input2");
+                for (var i = 0; i < inputCheckBox2.length; i++) {
+                    if (inputCheckBox2[i].id.indexOf(receivedInputID2) != -1) {
+                        inputCheckBox2[i].checked = obj2.checked;
+                    }
+                }
+            }
+            </script>
+            
+        </head>
+        
+        <body>
+            
+            <div class="container" style="width:100%;height:75px;">
+                <center>
+                    <h1 style="color: #a7e8f8; font-family: 'Julius Sans One', sans-serif; font-size: 37px; font-weight: bold; line-height: 32px; margin: 0 0 24px; text-shadow: 2px 2px 2px #082b34; ">Premise Tagging</h1>
+                </center>
+            </div>
+            <br></br>
+        <br></br>
+    <br></br>
+<br></br>
+<center>
+    <apex:pageMessages />
+</center>
+
+
+
+<div align="center" style="font-size:1em;width:100%;padding-top:15px;" styleclass="formid">
+    
+    <div align="left" style="text-align: center;font-size:1em;width:30%;padding-center:15px;" styleclass="formid">
+    <label>Asset type &nbsp;&nbsp;</label>
+    <apex:inputField value="{!objectPro.Use_of_premises__c}">
+        <apex:actionSupport event="onchange">
+            <apex:param name="selectedAsset" value="" assignTo="{!objectPro.Use_of_premises__c}" />
+        </apex:actionSupport>
+    </apex:inputField> 
+    &nbsp;&nbsp;
+</div>
+    
+    <label>Location &nbsp;</label>
+    <apex:inputField value="{!objectPro.Location__c}" >
+        <apex:actionSupport event="onchange">
+            <apex:param name="selectedLocation" value="" assignTo="{!objectPro.Location__c}" />
+        </apex:actionSupport>
+    </apex:inputField>
+    
+    <label>Project Name &nbsp;</label>
+    
+    <apex:selectList id="loc" value="{!selectedProject}" size="1" onchange="projectChange(this.value);">
+        <apex:selectOptions value="{!getProjects}" />
+        <apex:actionFunction name="projectChange" rerender="def">
+            <apex:param name="selectedProject" value="" assignTo="{!selectedProject}" />
+        </apex:actionFunction>
+    </apex:selectList>
+    
+    &nbsp;&nbsp;
+    <label>Building &nbsp;</label>
+    <apex:selectList id="def" value="{!selectedBuilding}" size="1">
+        <apex:selectOptions value="{!getBuildings}" />
+        <apex:actionSupport event="onchange">
+            <apex:param name="selectedBuilding" value="{!getBuildings}" assignTo="{!selectedBuilding}" />
+        </apex:actionSupport>
+    </apex:selectList>
+    
+    
+    <div style="padding-top:15px;">
+        <label>Area Range : &nbsp;</label>
+        <apex:inputText id="FromRange" label="FromRange" value="{!FromRange}" />
+        <label> To : &nbsp;</label>
+        <apex:inputText id="ToRange" label="ToRange" value="{!ToRange}" />
+    </div>
+    
+    <div style="padding-top:15px;">
+        Fully Vacant : &nbsp;
+        <apex:inputCheckbox value="{!fullyVacant}" id="fullyVacant" /> &nbsp; Partly Vacant :
+        <apex:inputCheckbox value="{!partlyVacant}" id="partlyVacant" /> &nbsp; Churn Expected :
+        <apex:inputCheckbox value="{!churnExpected}" id="churnExpected" /> &nbsp; Leased Out :
+        <apex:inputCheckbox value="{!leasedOut}" id="leasedOut" /> &nbsp;
+        
+    </div>
+</div>
+<br></br>
+<center>
+    <apex:commandButton value="Search" action="{!Search}" style="width:150px;height:35px;" />
+</center>
+<!--<apex:outputText value="{!queryString}" />-->
+<br></br>
+<apex:pageBlock >
+    <apex:pageBlockSection title="Floor Details" columns="1" collapsible="false">
+        <apex:pageBlockTable value="{!wrapList}" var="wrap">
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:inputCheckbox onclick="selectAllCheckboxes(this,'inputId')" />
+                </apex:facet>
+                <apex:inputCheckbox value="{!wrap.isSelected}" id="inputId" />
+            </apex:column>
+            <apex:column headerValue="Floor Name">
+                <apex:Outputtext value="{!wrap.f.Name}" />
+            </apex:column>
+            <apex:column headerValue="Building Name">
+                <apex:Outputtext value="{!wrap.f.Building__r.Name}" />
+            </apex:column>
+            <apex:column headerValue="Project">
+                <apex:Outputtext value="{!wrap.f.Building__r.Project__c}" />
+            </apex:column>
+            <apex:column headerValue="Asset Type">
+                <apex:Outputtext value="{!wrap.f.Building__r.Use_of_premises__c}" />
+            </apex:column>
+            <apex:column headerValue="Total Carpet Area">
+                <apex:Outputtext value="{!wrap.f.Total_Carpet_Area_Sq_ft__c}" />
+            </apex:column>
+            <apex:column headerValue="Leased Area">
+                <apex:Outputtext value="{!wrap.f.Leased_Chargeable_Area__c}" />
+            </apex:column>
+            <apex:column headerValue="Blocked Area">
+                <apex:Outputtext value="{!wrap.f.Blocked_Chargeable_Area__c}" />
+            </apex:column>
+            <apex:column headerValue="Vacant Area">
+                <apex:Outputtext value="{!wrap.f.Vacant_Area_Sq_ft__c}" />
+            </apex:column>
+            <apex:column headerValue="Full Floor">
+                
+                <apex:inputCheckbox value="{!wrap.fullFloor}" id="inputId2" />
+            </apex:column>
+            <apex:column headerValue="Needed Area Sq ft ">
+                <apex:inputtext value="{!wrap.neededArea}" />
+            </apex:column>
+            
+        </apex:pageBlockTable>
+    </apex:pageblockSection>
+</apex:pageBlock>
+<center>
+    <apex:commandButton value="Add Spaces" action="{!Selected}" style="width:150px;height:35px;" /> &nbsp;
+    <apex:inputField value="{!dummyUnit.Premise_Group__c}" />
+    <apex:commandButton value="Reset" action="{!DeSelected}" style="width:150px;height:35px;" />
+</center>
+<br></br>
+<apex:pageBlock >
+    <apex:repeat value="{!premiseOptions}" var="optKey">
+        <apex:pageBlockSection title="Premise Option- {!optKey}" columns="1">
+            <apex:pageBlockTable value="{!premiseOptions[optKey]}" var="wrap" rendered="{!premiseOptionsList.size>0}">
+                
+                <apex:column headerValue="Premise">
+                    <apex:Outputtext value="{!wrap.f.Name}" />
+                </apex:column>
+                <apex:column headerValue="Building Name">
+                    <apex:Outputtext value="{!wrap.f.Building__r.Name}" />
+                </apex:column>
+                <apex:column headerValue="Project">
+                    <apex:Outputtext value="{!wrap.f.Building__r.Project__c}" />
+                </apex:column>
+                <apex:column headerValue="Asset Type">
+                    <apex:Outputtext value="{!wrap.f.Building__r.Use_of_premises__c}" />
+                </apex:column>
+                
+                <apex:column headerValue="Needed Area Sq ft ">
+                    <apex:outputText value="{!wrap.neededArea}" />
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageblockSection>
+    </apex:repeat>
+</apex:pageBlock>
+<center>
+    <apex:commandButton value="Submit" action="{!Submit}" style="width:150px;height:35px;" />
+</center>
+<br></br>
+</body>
+
+</html>
+</apex:form>
+</apex:page>

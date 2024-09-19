@@ -1,0 +1,66 @@
+<template>
+    <br />
+    <lightning-card variant="Narrow" padding="around-large">
+        <br />
+        <h1 class="header_center" slot="title">
+            Change Account Name
+        </h1>
+        <lightning-layout multiple-rows horizontal-align="center">
+            <lightning-layout-item flexibility="auto" padding="around-small">
+                <div class="slds-p-around_medium slds-text-align_center slds-align_center">
+                    <div class="slds-grid slds-grid_vertical slds-p-around_medium slds-text-align_left">
+                        <div class="slds-col">
+                            <lightning-input type="text" value={accountName} onchange={handleKeyChange}
+                                onkeydown={handleClick} onclick={handleClick} onblur={handleClick} label='Account'
+                                aria-autocomplete="list" autocomplete="off" aria-controls="listbox-id-12" role="textbox"
+                                placeholder="Search Account........" required>
+                            </lightning-input>
+
+                            <div if:true={messageResult}>
+                                <p style=" font-weight: bold;color: red;">No Result Found!</p>
+                            </div>
+
+                            <template if:true={showSearchedValues}>
+                                <div class="slds-box" style="height: 130px; overflow-y: scroll;">
+                                    <ul class="" role="">
+                                        <template for:each={accountList} for:item="actObj">
+                                            <li class="slds-p-around_x-small slds-listbox__item"
+                                                style="cursor: pointer;" role="presentation" key={actObj.Id}
+                                                onclick={handleParentSelection} data-value={actObj.Id}
+                                                data-label={actObj.Name}>
+                                                {actObj.Name} ( {actObj.Account_Series__c} )
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="slds-col">
+                            <lightning-combobox label="Contact" dropdown-alignment="auto" value={contactId}
+                                options={contactOptions} onclick={handleClick1} onchange={handleKeyChange1}>
+                            </lightning-combobox>
+
+                            <div if:true={messageResult1}>
+                                <p style=" font-weight: bold;color: red;">No Result Found!</p>
+                            </div>
+                        </div>
+
+                        <div class="slds-col">
+                            <lightning-input type="text" label="Enter reason for change"
+                                placeholder="Type reason for change here......." onchange={reasonHandler} required>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-clearfix">
+                            <br />
+                            <lightning-button variant="brand-outline" label="Change" onclick={changeAccountNameHandler}
+                                class="slds-m-left_x-small slds-align_absolute-center">
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+        <p class="extrapadding" slot="footer"></p>
+    </lightning-card>
+</template>

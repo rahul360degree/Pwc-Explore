@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" controller="ShareServiceFormsWithCaseTeam">
+    <aura:attribute name="message" type="String" default="{!$Label.c.ServiceFormSyncInProgress}"/>
+    <aura:handler name="init" action="{!c.shareForms}" value="{!this}"/>
+    {!v.message}
+</aura:component>

@@ -1,0 +1,69 @@
+<template>
+    <div class="accordion-container slds-card">
+        <lightning-accordion allow-multiple-sections-open>
+            <template for:each={sections} for:item="section">
+                <lightning-accordion-section key={section.id} name={section.id} label={section.name}>
+                    <div class="component-container">
+                        <div class = "ring-and-status-container">
+                            <div class="percentile-ring-parent-container">
+                                <div class = 'percentile-ring-content-container'>
+                                    <div class = "percentile-ring-text-container">
+                                        <div class="field-header slds-text-heading_small">
+                                            Percentile Achieved
+                                        </div>
+                                        <div class="field-text slds-text-body_small">
+                                            {section.percentile_achieved}%
+                                        </div>
+                                    </div>
+                                    <div class = "percentile-ring">
+                                        <lightning-progress-ring value={section.percentile_achieved} variant={section.variant} size="large"></lightning-progress-ring>
+                                    </div>
+                                </div>           
+                            </div>
+                            
+                            <div class="status-container">
+                                <div class = "status-text-container">
+                                    <div class="field-header slds-text-heading_small">
+                                        Status
+                                    </div>
+                                    <div class="slds-text-body_small field-text">
+                                        {section.status}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <lightning-datatable
+                        key-field="Id"
+                        data={section.data}
+                        columns={section.columns}
+                        onsave={handleSave}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+    </div>
+</template>
+
+
+
+<!--template>
+    <div class="accordion-container slds-card">
+        <lightning-accordion allow-multiple-sections-open>
+            <template for:each={sections} for:item="section">
+                <lightning-accordion-section key={section.id} name={section.id} label={section.name}>
+                    <lightning-datatable
+                        key-field="id"
+                        data={section.data}
+                        columns={section.columns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+    </div>
+</template-->

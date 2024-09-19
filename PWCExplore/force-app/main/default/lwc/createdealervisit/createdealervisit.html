@@ -1,0 +1,945 @@
+<!--
+  @description       : 
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 08-30-2022
+  @last modified by  : vrajpoot@godrej.com
+-->
+<template>
+    <!--
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-button-menu alternative-text="Show menu" onselect={handleType}>
+            <lightning-menu-item value="Refrigerators" label="Refrigerators"></lightning-menu-item>
+            <lightning-menu-item value="WashingMachine" label="Washing Machine"></lightning-menu-item>
+            <lightning-menu-item value="Forklift" label="Forklift"></lightning-menu-item>
+        </lightning-button-menu>
+    </div>-->
+
+    <template if:true={noItemSelected}>
+        No item selected
+    </template>
+    <template if:true={sectionToDisplay}>
+        <lightning-accordion onsectiontoggle={handleToggleSection} active-section-name="A" class="accordianCSS">
+            <!--Refrigerator-->
+            <template if:true={sectionToDisplay.Refrigerators}>
+                <lightning-accordion-section name="A" label="Refrigerator">
+
+                    <table class="slds-table tableCSS">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th class="slds-text-align_center">Direct Cool</th>
+                                <th class="slds-text-align_center">Frost Free</th>
+                            </tr>
+                        </thead>
+
+                        <tr class="">
+                            <td class="">
+                                <div class="slds-truncate">Godrej</div>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="DCREF_Godrej__c" value={record.DCREF_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FFREF_Godrej__c" value={record.FFREF_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td class="">
+                                <div class="slds-truncate">LG</div>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="DCREF_LG__c" value={record.DCREF_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FFREF_LG__c" value={record.FFREF_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td class="">
+                                <div class="slds-truncate">Haier</div>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="DCREF_HAIER__c" value={record.DCREF_HAIER__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FFREF_HAIER__c" value={record.FFREF_HAIER__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td class="">
+                                <div class="slds-truncate">Voltas</div>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="DCREF_Voltas__c" value={record.DCREF_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FFREF_Voltas__c" value={record.FFREF_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td class="">
+                                <div class="slds-truncate">Whirlpool</div>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="DCREF_Whirlpool__c"
+                                    value={record.DCREF_Whirlpool__c} onvaluechange={handleDataChange}
+                                    padding-class="rightpadding" float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FFREF_Whirlpool__c"
+                                    value={record.FFREF_Whirlpool__c} onvaluechange={handleDataChange}
+                                    padding-class="leftpadding" float-class="slds-float_right">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td class="">
+                                <div class="slds-truncate">Samsung</div>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="DCREF_Samsung__c" value={record.DCREF_Samsung__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FFREF_Samsung__c" value={record.FFREF_Samsung__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td class="">
+                                <div class="slds-truncate">Panasonic</div>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="DCREF_Panasonic__c"
+                                    value={record.DCREF_Panasonic__c} onvaluechange={handleDataChange}
+                                    padding-class="rightpadding" float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FFREF_Panasonic__c"
+                                    value={record.FFREF_Panasonic__c} onvaluechange={handleDataChange}
+                                    padding-class="leftpadding" float-class="slds-float_right">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+
+                        <tr class="">
+                            <td class="">
+                                <div class="slds-truncate">Others</div>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="DCREF_Others__c" value={record.DCREF_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FFREF_Others__c" value={record.FFREF_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                    </table>
+                </lightning-accordion-section>
+            </template>
+            <!--Washing Machine - Semi Auto, Fully Auto-->
+            <template if:true={sectionToDisplay.WashingMachine}>
+                <lightning-accordion-section name="B" label="Washing Machine - Semi Auto, Fully Auto">
+                    <table class="slds-table tableCSS">
+                        <thead>
+                            <tr class="">
+                                <th class="">Company</th>
+                                <th class="">Semi Auto</th>
+                                <th class="">Full Auto</th>
+                            </tr>
+                        </thead>
+                        <tr class="">
+                            <td>Godrej</td>
+                            <td>
+                                <c-createdealervisit-input apiname="SAWM_Godrej__c" value={record.SAWM_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td>
+                                <c-createdealervisit-input apiname="FAWM_Godrej__c" value={record.FAWM_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>LG</td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="SAWM_LG__c" value={record.SAWM_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FAWM_LG__c" value={record.FAWM_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Haier</td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="SAWM_HAIER__c" value={record.SAWM_HAIER__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FAWM_HAIER__c" value={record.FAWM_HAIER__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Voltas</td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="SAWM_Voltas__c" value={record.SAWM_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FAWM_Voltas__c" value={record.FAWM_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Whirlpool</td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="SAWM_Whirlpool__c" value={record.SAWM_Whirlpool__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FAWM_Whirlpool__c" value={record.FAWM_Whirlpool__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Samsung</td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="SAWM_Samsung__c" value={record.SAWM_Samsung__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FAWM_Samsung__c" value={record.FAWM_Samsung__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Panasonic</td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="SAWM_Panasonic__c" value={record.SAWM_Panasonic__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FAWM_Panasonic__c" value={record.FAWM_Panasonic__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+
+                        <tr class="">
+                            <td>Others</td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="SAWM_Others__c" value={record.SAWM_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+
+                            </td>
+                            <td class="">
+                                <c-createdealervisit-input apiname="FAWM_Others__c" value={record.FAWM_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                    </table>
+                </lightning-accordion-section>
+            </template>
+            <!--Washing Machine - Front Load-->
+            <template if:true={sectionToDisplay.FrontLoad}>
+                <lightning-accordion-section name="C" label="Washing Machine - Front Load">
+                    <table class="slds-table tableCSS">
+                        <thead>
+                            <tr class="">
+                                <th class="">Company</th>
+                                <th class="">Front Load</th>
+                            </tr>
+                        </thead>
+                        <tr class="">
+                            <td>Godrej</td>
+                            <td>
+                                <c-createdealervisit-input apiname="FLT_Godrej__c" value={record.FLT_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>LG</td>
+                            <td>
+                                <c-createdealervisit-input apiname="FLT_LG__c" value={record.FLT_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Haier</td>
+                            <td>
+
+                                <c-createdealervisit-input apiname="FLT_HAIER__c" value={record.FLT_HAIER__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Voltas</td>
+                            <td>
+
+                                <c-createdealervisit-input apiname="FLT_Voltas__c" value={record.FLT_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Whirlpool</td>
+                            <td>
+
+                                <c-createdealervisit-input apiname="FLT_Whirlpool__c" value={record.FLT_Whirlpool__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Samsung</td>
+                            <td>
+
+                                <c-createdealervisit-input apiname="FLT_Samsung__c" value={record.FLT_Samsung__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Panasonic</td>
+                            <td>
+
+                                <c-createdealervisit-input apiname="FLT_Panasonic__c" value={record.FLT_Panasonic__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Others</td>
+                            <td>
+
+                                <c-createdealervisit-input apiname="FLT_Others__c" value={record.FLT_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                    </table>
+                </lightning-accordion-section>
+            </template>
+            <!--Air conditioner-->
+            <template if:true={sectionToDisplay.AirConditioner}>
+                <lightning-accordion-section name="D" label="Air Conditioner">
+                    <table class="slds-table tableCSS">
+                        <thead>
+                            <tr class="">
+                                <th class="">Company</th>
+                                <th class="">Window AC</th>
+                                <th class="">Split AC</th>
+                            </tr>
+                        </thead>
+                        <tr class="">
+                            <td>Godrej</td>
+                            <td>
+                                <c-createdealervisit-input apiname="WAC_Godrej__c" value={record.WAC_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td>
+                                <c-createdealervisit-input apiname="SAC_Godrej__c" value={record.SAC_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>LG</td>
+                            <td>
+                                <c-createdealervisit-input apiname="WAC_LG__c" value={record.WAC_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td>
+                                <c-createdealervisit-input apiname="SAC_LG__c" value={record.SAC_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Haier</td>
+                            <td>
+
+                                <c-createdealervisit-input apiname="WAC_HAIER__c" value={record.WAC_HAIER__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td>
+                                <c-createdealervisit-input apiname="SAC_Haier__c" value={record.SAC_Haier__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Voltas</td>
+                            <td>
+                                <c-createdealervisit-input apiname="WAC_Voltas__c" value={record.WAC_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td>
+                                <c-createdealervisit-input apiname="SAC_Voltas__c" value={record.SAC_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Whirlpool</td>
+                            <td>
+                                <c-createdealervisit-input apiname="WAC_Whirlpool__c" value={record.WAC_Whirlpool__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td>
+                                <c-createdealervisit-input apiname="SAC_Whirlpool__c" value={record.SAC_Whirlpool__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Samsung</td>
+                            <td>
+                                <c-createdealervisit-input apiname="WAC_Samsung__c" value={record.WAC_Samsung__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+
+                            </td>
+                            <td>
+                                <c-createdealervisit-input apiname="SAC_Samsung__c" value={record.SAC_Samsung__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Panasonic</td>
+                            <td>
+                                <c-createdealervisit-input apiname="WAC_Panasonic__c" value={record.WAC_Panasonic__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left"> </c-createdealervisit-input>
+                            </td>
+                            <td>
+                                <c-createdealervisit-input apiname="SAC_Panasonic__c" value={record.SAC_Panasonic__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Others</td>
+                            <td>
+
+                                <c-createdealervisit-input apiname="WAC_Others__c" value={record.WAC_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                            <td>
+                                <c-createdealervisit-input apiname="SAC_Others__c" value={record.SAC_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="leftpadding"
+                                    float-class="slds-float_right">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                    </table>
+                </lightning-accordion-section>
+            </template>
+            <!--Microwave Oven-->
+            <template if:true={sectionToDisplay.MWO}>
+                <lightning-accordion-section name="F" label="Microwave Oven">
+                    <table class="slds-table tableCSS">
+                        <thead>
+                            <tr class="">
+                                <th class="">Company</th>
+                                <th class="">Microwave Oven</th>
+                            </tr>
+                        </thead>
+                        <tr class="">
+                            <td>Godrej</td>
+                            <td>
+                                <c-createdealervisit-input apiname="MWO_Godrej__c" value={record.MWO_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>LG</td>
+                            <td>
+                                <c-createdealervisit-input apiname="MWO_LG__c" value={record.MWO_LG__c}
+                                onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Haier</td>
+                            <td>
+                                <c-createdealervisit-input apiname="MWO_Haier__c" value={record.MWO_Haier__c}
+                                onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Voltas</td>
+                            <td>
+                                <c-createdealervisit-input apiname="MWO_Voltas__c" value={record.MWO_Voltas__c}
+                                onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Whirlpool</td>
+                            <td>
+                                <c-createdealervisit-input apiname="MWO_Whirlpool__c" value={record.MWO_Whirlpool__c}
+                                onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Samsung</td>
+                            <td>
+                                <c-createdealervisit-input apiname="MWO_Samsung__c" value={record.MWO_Samsung__c}
+                                onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Panasonic</td>
+                            <td>
+                                <c-createdealervisit-input apiname="MWO_Panasonic__c" value={record.MWO_Panasonic__c}
+                                onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Others</td>
+                            <td>
+                                <c-createdealervisit-input apiname="MWO_Others__c" value={record.MWO_Others__c}
+                                onvaluechange={handleDataChange} padding-class="rightpadding" float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                    </table>
+                </lightning-accordion-section>
+            </template>
+            <!--Chest Freezer-->
+            <template if:true={sectionToDisplay.CF}>
+                <lightning-accordion-section name="G" label="Chest Freezer">
+                    <table class="slds-table tableCSS">
+                        <thead>
+                            <tr class="">
+                                <th class="">Company</th>
+                                <th class="">Chest Freezer</th>
+                            </tr>
+                        </thead>
+                        <tr class="">
+                            <td>Godrej</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CF_Godrej__c" value={record.CF_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>LG</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CF_LG__c" value={record.CF_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Haier</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CF_Haier__c" value={record.CF_Haier__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Voltas</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CF_Voltas__c" value={record.CF_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Whirlpool</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CF_Whirlpool__c" value={record.CF_Whirlpool__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Samsung</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CF_Samsung__c" value={record.CF_Samsung__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Panasonic</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CF_Panasonic__c" value={record.CF_Panasonic__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Others</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CF_Others__c" value={record.CF_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                    </table>
+                </lightning-accordion-section>
+            </template>
+            <!--Air Cooler-->
+            <template if:true={sectionToDisplay.CLR}>
+                <lightning-accordion-section name="J" label="Air Cooler">
+                    <table class="slds-table tableCSS">
+                        <thead>
+                            <tr class="">
+                                <th class="">Company</th>
+                                <th class="">Air Cooler</th>
+                            </tr>
+                        </thead>
+                        <tr class="">
+                            <td>Godrej</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CLR_Godrej__c" value={record.CLR_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>LG</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CLR_LG__c" value={record.CLR_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Haier</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CLR_Haier__c" value={record.CLR_Haier__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Voltas</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CLR_Voltas__c" value={record.CLR_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Whirlpool</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CLR_Whirlpool__c" value={record.CLR_Whirlpool__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Panasonic</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CLR_Panasonic__c" value={record.CLR_Panasonic__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Symphony</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CLR_Symphony__c" value={record.CLR_Symphony__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+
+                        <tr class="">
+                            <td>Others</td>
+                            <td>
+                                <c-createdealervisit-input apiname="CLR_Others__c" value={record.CLR_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                    </table>
+                </lightning-accordion-section>
+            </template>
+            <!--Qube-->
+            <template if:true={sectionToDisplay.Qube}>
+                <lightning-accordion-section name="H" label="Qube">
+                    <table class="slds-table tableCSS">
+                        <thead>
+                            <tr class="">
+                                <th class="">Company</th>
+                                <th class="">Qube </th>
+                            </tr>
+                        </thead>
+                        <tr class="">
+                            <td>Godrej</td>
+                            <td>
+                                <c-createdealervisit-input apiname="Qube_Godrej__c" value={record.Qube_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>LG</td>
+                            <td>
+                                <c-createdealervisit-input apiname="Qube_LG__c" value={record.Qube_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Haier</td>
+                            <td>
+                                <c-createdealervisit-input apiname="Qube_Haier__c" value={record.Qube_Haier__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Voltas</td>
+                            <td>
+                                <c-createdealervisit-input apiname="Qube_Voltas__c" value={record.Qube_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Whirlpool</td>
+                            <td>
+                                <c-createdealervisit-input apiname="Qube_Whirlpool__c" value={record.Qube_Whirlpool__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Samsung</td>
+                            <td>
+                                <c-createdealervisit-input apiname="Qube_Samsung__c" value={record.Qube_Samsung__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Panasonic</td>
+                            <td>
+                                <c-createdealervisit-input apiname="Qube_Panasonic__c" value={record.Qube_Panasonic__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Others</td>
+                            <td>
+                                <c-createdealervisit-input apiname="Qube_Others__c" value={record.Qube_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                    </table>
+                </lightning-accordion-section>
+            </template>
+            <!--UV-->
+            <template if:true={sectionToDisplay.UV_Case}>
+                <lightning-accordion-section name="I" label="UV Case">
+                    <table class="slds-table tableCSS">
+                        <thead>
+                            <tr class="">
+                                <th class="">Company</th>
+                                <th class="">UV Case</th>
+                            </tr>
+                        </thead>
+                        <tr class="">
+                            <td>Godrej</td>
+                            <td>
+                                <c-createdealervisit-input apiname="UV_Godrej__c" value={record.UV_Godrej__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>LG</td>
+                            <td>
+                                <c-createdealervisit-input apiname="UV_LG__c" value={record.UV_LG__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Haier</td>
+                            <td>
+                                <c-createdealervisit-input apiname="UV_Haier__c" value={record.UV_Haier__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Voltas</td>
+                            <td>
+                                <c-createdealervisit-input apiname="UV_Voltas__c" value={record.UV_Voltas__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Whirlpool</td>
+                            <td>
+                                <c-createdealervisit-input apiname="UV_Whirlpool__c" value={record.UV_Whirlpool__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td>Samsung</td>
+                            <td>
+                                <c-createdealervisit-input apiname="UV_Samsung__c" value={record.UV_Samsung__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Panasonic</td>
+                            <td>
+                                <c-createdealervisit-input apiname="UV_Panasonic__c" value={record.UV_Panasonic__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+
+                        <tr class="">
+                            <td>Others</td>
+                            <td>
+                                <c-createdealervisit-input apiname="UV_Others__c" value={record.UV_Others__c}
+                                    onvaluechange={handleDataChange} padding-class="rightpadding"
+                                    float-class="slds-float_left">
+                                </c-createdealervisit-input>
+                            </td>
+                        </tr>
+                    </table>
+                </lightning-accordion-section>
+            </template>
+            
+        </lightning-accordion>
+        <!-- <lightning-button label="Go Next" title="Finish todos, go next" onclick={handleGoNext}></lightning-button> -->
+
+    </template>
+</template>

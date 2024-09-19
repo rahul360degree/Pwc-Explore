@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title="Enter Asset Serial Numbers" icon-name="custom:custom14">
+        <ul class="slds-m-around_medium">
+            <template for:each={assetSerialNumbers} for:item="serialNumber" for:index="index">
+                <li key={serialNumber}>
+                    <lightning-input type="text" label="Serial Number: " value={serialNumber} onchange={handleSerialNumberChange}></lightning-input>
+                </li>
+            </template>
+        </ul>
+    </lightning-card>
+</template>

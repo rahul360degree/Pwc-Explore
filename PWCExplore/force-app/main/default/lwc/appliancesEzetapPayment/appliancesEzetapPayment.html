@@ -1,0 +1,56 @@
+<!--
+  @Description       : It is containerr component for Applainces Eze Tap functionality
+  @Author            : Varun Rajpoot
+  @last modified on  : 12-18-2023
+  @last modified by  : Varun Rajpoot
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   11-06-2023   Varun Rajpoot   Initial Version
+-->
+<template>
+    <template if:true={hideAllForm}>
+        <div class="slds-align_absolute-center" >{displayMessage}</div>
+    </template>
+    <template if:false={hideAllForm}>
+        <!--Spinner Event-->
+        <template if:false={hideSpinner}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+
+        <!--Record Creation Component-->
+        <template if:true={displayScreen.createAdPMT}>
+            <div class="slds-var-p-around_medium">
+                <c-appliances-ad-pmt-create order-id={recordId} pending-amount={pendingAmount}
+                    onadpmtcreate={handlePMTCreateEvent}
+                    onspinnerevent={spinnerEventHandler}></c-appliances-ad-pmt-create>
+            </div>
+        </template>
+
+        <!--Display QR Component-->
+        <template if:true={displayScreen.createQR}>
+            <c-ezetappayment oncalloutresponse={handleCalloutResponse} callout-params={calloutParams}
+                expiry-time={expiryTime}></c-ezetappayment>
+            <template if:true={apiResponse}>
+                <!-- <template if:true={apiResponse.success}> -->
+                <lightning-button class="slds-m-top_small" type="submit" onclick={checkPaymentStatus}
+                    label="Check Status">
+                </lightning-button>
+
+                <lightning-button class="slds-m-top_small" type="submit" onclick={openAdvancedPayment}
+                    label="Advanced Payment">
+                </lightning-button>
+
+                <!-- </template> -->
+            </template>
+        </template>
+
+        <!-- Display Status of the Payment -->
+        <template if:true={displayScreen.checkStatus}>
+            <!-- class={hidecss} -->
+            <template if:false={displayScreen.createQR}>
+                <c-ezetappayment oncalloutresponse={handleCalloutResponse} display-data="true"
+                    callout-params={calloutParams}></c-ezetappayment>
+            </template>
+        </template>
+    </template>
+</template>

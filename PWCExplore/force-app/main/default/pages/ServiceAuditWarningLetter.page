@@ -1,0 +1,3 @@
+<apex:page standardController="Service_Audit_Report__c" extensions="ServiceAuditReportController" renderAs="pdf">
+    Warning Letter Sample
+</apex:page>

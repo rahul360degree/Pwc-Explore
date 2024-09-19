@@ -1,0 +1,29 @@
+<!--
+  @description       : 
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 11-02-2022
+  @last modified by  : vrajpoot@godrej.com
+-->
+<template>
+    <lightning-accordion class="accordianCSS">
+        <!--Refrigerator-->
+        <template if:true={folderWithReport}>
+            <template for:each={folderWithReport} for:item="folderDetail">
+                <lightning-accordion-section label={folderDetail.folderName} key={folderDetail.folderName}>
+                    <ul>
+                        <template for:each={folderDetail.reports} for:item="report">
+                            <li key={report.Id} >
+                                <a onclick={displayReport} data-id={report.Id}>
+                                    {report.Name}
+                                </a>
+                            </li>
+                        </template>
+                    </ul>
+                </lightning-accordion-section>
+            </template>
+        </template>
+
+    </lightning-accordion>
+
+</template>

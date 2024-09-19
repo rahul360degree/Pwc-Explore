@@ -1,0 +1,263 @@
+<template>
+    <template if:true={isLoadingProducts}>
+        <lightning-spinner variant="brand" size="large"></lightning-spinner>
+    </template>
+    <template if:true={showCreateOrderModal}>
+        <div class="slds">
+            <div class="slds-modal slds-fade-in-open" role="dialog">
+                <div class="slds-modal__container" style="align-items: center;">
+                    <c-create-material-request record-id={recordId} onclose={handleCloseOrderModal}></c-create-material-request>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+		 <template if:true={showDealerConsumptionModal}>
+        <div class="slds">
+            <div class="slds-modal slds-fade-in-open" role="dialog">
+                <div class="slds-modal__container" style="align-items: center;">
+                    <c-create-dealer-consumption-order record-id={recordId} onclose={handlerCloseDealerConsumptionModal}></c-create-dealer-consumption-order>										
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template> 
+    <!-- Main Card-->
+    <template if:false={isMobile}>
+        <lightning-card title="Selected Products">
+            <!-- Action buttons -->
+            <center>
+                <button class="slds-button slds-button_neutral" slot="actions" onclick={createOpportunityRecord}>Create Opportunity</button>
+                <button class="slds-button slds-button_neutral" slot="actions" onclick={createOrderRecord}>Create MR Order</button>
+                <!--Added by sumith sharma on 10 -march-2021 -Dealer Consumption Order button -->
+                <button class="slds-button slds-button_neutral" slot="actions" onclick={createDealerConsumptionOrderRecord}>Dealer Consumption Order</button>
+                <button class="slds-button slds-button_neutral" slot="actions" onclick={handleSave}>Save</button>
+            </center>
+    
+            <!-- Search Bar container -->
+            <lightning-layout horizontal-align="left">
+                <lightning-layout-item flexibility="auto" class="slds-m-around_x-small">
+                    <lightning-input name="enter-search" label="Search" type="search" variant="label-hidden"
+                        onchange={handleSearch}></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+    
+            <!-- Data container -->
+            <div style="position: relative; display: flex;">
+                <lightning-layout multiple-rows="true" horizontal-align="center">
+                    <lightning-layout-Item padding="around-small" size="12">
+                        <table class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols"
+                            role="grid">
+                            <!-- Table header -->
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th aria-label="Product Name" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                                        <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);"
+                                            role="button" tabindex="-1">
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Name">Product Name</span>
+                                            </div>
+                                        </a>
+                                    </th>
+                                    <th aria-label="Item Code" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                                        <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);"
+                                            role="button" tabindex="-1">
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Name">Item Code</span>
+                                            </div>
+                                        </a>
+                                    </th>
+                                    <th aria-label="Quantity" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                                        <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);"
+                                            role="button" tabindex="-1">
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Name">Quantity</span>
+                                            </div>
+                                        </a>
+                                    </th>
+                                    <th aria-label="Is Included" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                                        <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);"
+                                            role="button" tabindex="-1">
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Name">Is Included</span>
+                                            </div>
+                                        </a>
+                                    </th>
+                                    <th aria-label="Product Type" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                                        <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);"
+                                            role="button" tabindex="-1">
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Name">Product Type</span>
+                                            </div>
+                                        </a>
+                                    </th>
+								<!--		<th aria-label="Dealer consumption Vs Replenishment" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                                        <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);"
+                                            role="button" tabindex="-1">
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                            
+                                            </div>
+                                        </a>
+                                    </th> -->
+                                </tr>
+                            </thead>
+    
+                            <!-- Table Body -->
+                            <tbody>
+                                <template for:each={data} for:item="optn">
+                                    <tr class="slds-hint-parent" key={optn.product2Id}>
+                                        <th scope="row" tabindex="0">
+                                            <div class="slds-truncate" title={optn.productName}>{optn.productName}</div>
+                                        </th>
+                                        <td role="gridcell">
+                                            <div class="slds-truncate" title={optn.itemCode}>{optn.itemCode}</div>
+                                        </td>
+                                        <td role="gridcell">
+                                            <div class="slds-truncate" title={optn.quantity}>{optn.quantity}</div>
+                                        </td>
+                                        <td role="gridcell">
+                                            <template if:true={optn.isDefaultInclusion}>
+                                                <span class="slds-badge slds-theme_success" title="Included">I</span>
+                                            </template>
+                                            <template if:false={optn.isDefaultInclusion}>
+                                                <span class="slds-badge slds-theme_warning" title="Excluded">E</span>
+                                            </template>
+                                            
+                                        </td>
+                                        <td role="gridcell">
+                                            <lightning-input type="toggle" label=" " class="rowSelected" name={optn.product2Id} 
+                                                onchange={rowSelected} checked={optn.isInclusion}
+                                                message-toggle-active="Inclusion Product"
+                                                message-toggle-inactive="Exclusion Product">
+                                            </lightning-input>
+                                        </td>
+									<!--			<td role="gridcell">
+                                            <lightning-input type="toggle" label=" " class="rowSelected2" name={optn.product2Id} 
+                                                onchange={rowSelected2} checked={optn.isDealerConsumption}
+                                                message-toggle-active="Dealer consumption"
+                                                message-toggle-inactive="Replenishment"> 
+                                            </lightning-input>
+                                        </td> -->	
+                                        <td role="gridcell">
+                                            <div data-id={optn.product2Id} onclick={deleteRecord}>
+                                                <lightning-icon icon-name="action:delete" alternative-text="Delete" 
+                                                    size="xx-small" title="Delete Record">
+                                                </lightning-icon>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </lightning-layout-Item>
+    
+                    <!-- Pagination section -->
+                    <lightning-layout-Item padding="around-small" flexibility="auto">
+                        <lightning-button label="Prev" icon-name="utility:chevronleft" icon-position="left"
+                            onclick={previousPage} disabled={disablePrevious}>
+                        </lightning-button>
+                        <span class="slds-p-horizontal_small">Page {pageNumber}</span>
+                        <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right"
+                            disabled={isLastPage} onclick={nextPage}>
+                        </lightning-button>
+                    </lightning-layout-Item>
+                </lightning-layout>
+            </div>
+        </lightning-card>
+    </template>
+
+    <template if:true={isMobile}>
+        <!-- Action buttons -->
+        <div class="mobile_header">
+            <lightning-layout class="navigation_header" horizontal-align="left">
+                <div class="slds-size_1-of-2">
+                    <lightning-layout-item flexibility="auto" class="slds-m-around_x-small">
+                        <lightning-button variant="brand" label="Back" title="Back" onclick={navigateToPrevMobileScreen} 
+                            class="slds-m-left_x-small slds-m-around_x-small">
+                        </lightning-button>
+                    </lightning-layout-item>
+                </div>
+                <div class="slds-size_1-of-2">
+                    <lightning-layout-item class="slds-m-around_x-small saveButton">
+                        <lightning-button variant="neutral" label="Save" title="Save" onclick={handleSave} 
+                            class="slds-m-left_x-small">
+                        </lightning-button>
+                    </lightning-layout-item>
+                </div>
+            </lightning-layout>
+
+            <lightning-layout class="secondary_header" horizontal-align="left">
+                <lightning-layout-item flexibility="auto" class="slds-m-around_x-small">
+                    <lightning-button variant="neutral" label="Create Opportunity" title="Create Opportunity" 
+                        onclick={createOpportunityRecord} class="slds-m-left_x-small">
+                    </lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item class="slds-m-around_x-small">
+                    <lightning-button variant="neutral" label="Create Order" title="Create Order" 
+                        onclick={createOrderRecord} class="slds-m-left_x-small">
+                    </lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        
+
+        <!-- Search Bar container -->
+        <lightning-layout horizontal-align="left">
+            <lightning-layout-item flexibility="auto" class="slds-m-around_x-small">
+                <lightning-input name="enter-search" label="Search" type="search" variant="label-hidden"
+                    onchange={handleSearch}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!-- Content section -->
+        <div class="mobile-content_container">
+            <template for:each={data} for:item="optn">
+                <lightning-card key={optn.product2Id} class="padding_1rem">
+                    <lightning-button variant="destructive" label="" data-id={optn.product2Id} title="Delete Record" icon-name="utility:delete" 
+                        onclick={deleteRecord} slot="actions" class="slds-m-left_x-small"></lightning-button>
+                    <p><strong>Product Name:</strong> {optn.productName}</p>
+                    <p><strong>Item Code:</strong> {optn.itemCode}</p>
+                    <p><strong>Quantity:</strong> {optn.quantity}</p>
+                    <template if:true={optn.isDefaultInclusion}>
+                        <p>
+                            <strong>Is Included: </strong>
+                            <span class="slds-badge slds-theme_success" title="Included">I</span>
+                        </p>
+                    </template>
+                    <template if:false={optn.isDefaultInclusion}>
+                        <p>
+                            <strong>Is Included: </strong>
+                            <span class="slds-badge slds-theme_warning" title="Excluded">E</span>
+                        </p>
+                    </template>
+                    <div class="mobile-inclusionToggle">
+                        <p><strong>Product Type: </strong></p>
+                        <lightning-input variant="label-hidden" type="toggle" label=" " class="rowSelected" name={optn.product2Id} 
+                            onchange={rowSelectedMobile} checked={optn.isInclusion}
+                            message-toggle-active="Inclusion Product"
+                            message-toggle-inactive="Exclusion Product">
+                        </lightning-input>
+												
+				<!--		  <lightning-input variant="label-hidden" type="toggle" label=" " class="rowSelected" name={optn.product2Id} 
+                            onchange={rowSelectedMobile2} checked={optn.isDealerConsumption}
+                            message-toggle-active="Dealer Consumption"
+                            message-toggle-inactive="Replenishment">
+                        </lightning-input> -->
+												
+                    </div>
+                </lightning-card>
+            </template>
+        </div>
+
+        <!-- Footer section -->
+        <div class="mobile_footer">
+            <lightning-layout horizontal-align="center">
+                <lightning-layout-item class="slds-m-around_x-small">
+                    <lightning-button label="Load More Data" disabled={isLastPage} onclick={nextPage} variant="brand">
+                    </lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </template>
+    
+</template>

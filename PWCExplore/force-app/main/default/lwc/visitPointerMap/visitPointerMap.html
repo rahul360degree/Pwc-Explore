@@ -1,0 +1,39 @@
+<template>
+    <lightning-card title="Visit Locations" icon-name="standard:location">
+        <div class="slds-m-around_medium">
+            <lightning-map map-markers={mapMarkers} list-view="hidden"></lightning-map>
+        </div>
+    </lightning-card>
+    <!-- <table class="slds-table slds-table_cell-buffer slds-table_bordred">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th scope="col">
+                    <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Visit Planned">Visit Planned</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Visit Start Date">Visit Start Date</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={data} for:item="row">
+            <tr key={row.id} class="slds-hint-parent">
+                <td data-label ="Name" role="gridcell">
+                <div class="slds-trancate" title={row.Name}>
+                    <a href={row.id}>{row.Name}</a>
+                </div>
+            </td>
+            <td data-label="Visit Planned" role="gridcell">
+                <div class="slds-trancate">{row.Visit_Planned_Date__c}</div>
+            </td>
+            <td data-label="Visit Start Date" role="gridcell">
+                <div class="slds-trancate">{row.Visit_Start_Date__c}</div>
+            </td>
+            </tr>
+        </template>
+        </tbody>
+    </table> -->
+</template>

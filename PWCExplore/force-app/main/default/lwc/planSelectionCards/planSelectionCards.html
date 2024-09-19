@@ -1,0 +1,14 @@
+<template>
+    
+    <template if:false={isLoading}>
+        <div class=" slds-grid slds-grid_vertical slds-gutters">
+            
+            <template for:each={allPlans} for:item="plan">
+                <div class="slds-col slds-p-vertical_small" key={plan}>
+                <c-plan-selection-card benefit-fields={benefitFields} key={plan.assetBenefit.Id} asset-benefit={plan.assetBenefit} is-checked={plan.isSelected}></c-plan-selection-card>
+            </div>
+            </template>
+        
+        </div>
+    </template>
+</template>

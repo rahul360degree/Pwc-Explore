@@ -1,0 +1,31 @@
+<template>
+    <div>
+        <div>
+            <template for:each={sections} for:item="section">
+                <div key = {section.Id} style = "width: 80%; display: flex; flex-direction: row; justify-content: space-between;">
+                    <div>
+                        <lightning-radio-group 
+                            name={section.Id} 
+                            label={section.question} 
+                            value={section.value}
+                            options={section.choices}
+                            onchange={handleChange}
+                            disabled={formSubmitted}>
+                        </lightning-radio-group>
+                    </div>
+                    <div>
+                        <template if:true={section.additionalDetailsRequired}>
+                            <lightning-input type = "text" label="Additional Details" disabled={formSubmitted}>
+                            </lightning-input>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </div>
+            
+        <div style = "padding-top:20px; padding-bottom: 20px">
+            <lightning-button label="Submit" onclick={handleSubmit} variant="brand"></lightning-button>
+        </div>
+        
+    </div>
+</template>

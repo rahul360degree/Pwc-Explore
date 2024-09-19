@@ -1,0 +1,91 @@
+<apex:page controller="RevenuePlanning" docType="html-5.0" standardStylesheets="false" lightningStylesheets="true" applyHtmlTag="true"
+    applyBodyTag="true">
+    <html>
+
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript">__sfdcSessionId = '{!$Api.Session_Id}';</script>
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css"
+        />
+        <script src="/soap/ajax/9.0/connection.js"></script>
+        <apex:slds />
+    </head>
+    <style>
+        .slds h1,
+        .slds h2,
+        .slds h3,
+        .slds h4,
+        .slds h5,
+        .slds h6,
+        .slds th,
+        .slds td {
+            font-family: 'Lato';
+        }
+
+        .slds-scope .slds-table th,
+        .slds-scope .slds-table td {
+            padding: .25rem .5rem;
+            white-space: revert;
+            position: relative;
+            empty-cells: show;
+        }
+
+        .slds .slds-theme--shade {
+            background-color: aliceblue;
+        }
+        instyle {
+            width: 100px; 
+            height: 50px;
+        }
+        @page {
+
+            size: A4 landscape;
+            border: 1px solid black;
+            padding-left: 1px;
+            padding-right: 1px;
+        }
+    </style>
+    <div class="slds">
+        <!-- PRIMARY CONTENT WRAPPER -->
+        <div class="myapp">
+            <!-- GENERATE REVENUE PLAN-->
+            <div aria-labelledby="DSform">
+                <!-- BOXED AREA -->
+                <fieldset class="slds-box slds-theme--shade slds-container--large slds-container--center slds-grid--align-spread">
+                    <legend id="dsForm" class="slds-text-heading--medium slds-p-vertical--medium">Generate REVENUE PLAN</legend>
+                    <apex:form >
+
+
+                        <apex:actionStatus id="status">
+                            <apex:facet name="start">
+                                <div class="fadeMe">
+                                    &nbsp;
+                                </div>
+                                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                    <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                                        <img src="{!$Resource.spinner}" style="float: left; margin: 0px;" />
+                                        <span style="display: inline-block;">Please Wait...</span>
+                                    </div>
+                                </div>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        <apex:outputPanel id="messages">
+                            <apex:PageMessages id="pageMsgs" />
+                        </apex:outputPanel>
+                        <apex:outputPanel id="printArea" rendered="{!NOT(error)}">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                               <th colspan="48" style="background-color:#D3D3D3">
+                                   Revenue Planning - {!rpList[0].Type__c} for  {!planStart} - {!planEnd}  
+                               </th>
+                               <apex:commandButton value="Generate Projection"  action="{!generateProjection}" reRender="printArea, messages" disabled="{!licenseFeeGenerated}" status="status"/>
+                                       
+                            </table>
+                        </apex:outputPanel>
+                        </apex:form>
+                        
+                        </fieldSet>
+                        </div>
+                        </div>
+                        </div>
+                        </html>
+                        </apex:page>

@@ -1,0 +1,55 @@
+<template>
+    <div class="mainContainer">
+        <template if:false={isReset}>
+            <template if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                </lightning-spinner>
+            </template>
+            <template if:true={showGSC}>
+                <c-generate-contract-l-w-c record-id={recordId} ></c-generate-contract-l-w-c>
+            </template>
+            <template if:false={showGSC}>
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Select Asset and Plan</h2>
+                </header>
+                <template if:true={isFinalized}>
+                    <div class="slds-modal__content slds-p-around_medium" style="background:white;">
+                        <lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning" variant="warning"></lightning-icon>
+                        {label.finalizedQuoteMessage}
+                    </div>
+                </template>
+                <template if:false={isFinalized}>
+                    <template if:true={quoteLineItems}>
+                        <div class="slds-modal__content slds-p-around_medium" style="overflow: initial;display:contents">
+                            <template if:false={isMobile}>
+                                <c-quote-line-item-table quote-line-items={quoteLineItems} onrefreshparent={handleRefresh}></c-quote-line-item-table>
+                            </template>
+                            <template if:true={isMobile}>
+                                <c-quote-line-item-cards quote-line-items={quoteLineItems} onrefreshparent={handleRefresh}></c-quote-line-item-cards>
+                            </template>
+                        </div>
+                    </template>
+                </template>
+                
+                <template if:false={isMobile}>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={cancel}>Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick={save} if:false={isFinalized}>
+                            Save
+                        </button>
+                        <button class="slds-button slds-button_brand" onclick={showGC}>
+                            {label.gsc_buttonLabel}
+                        </button>
+                    </footer>
+                </template>
+                <template if:true={isMobile}>
+                    <div class="slds-grid slds-gutters">
+                        <button class="slds-col slds-button slds-button_neutral" onclick={cancel}>Cancel</button>
+                        <button class="slds-col slds-button slds-button_brand" onclick={save} if:false={isFinalized}>Save</button>
+                        <button class="slds-col slds-button slds-button_brand" onclick={showGC}>{label.gsc_buttonLabel}</button>
+                    </div>
+                </template>
+            </template>
+        </template>
+    </div>
+</template>

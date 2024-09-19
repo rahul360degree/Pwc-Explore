@@ -1,0 +1,16 @@
+<template>
+    <div class="accordion-container slds-card">
+        <lightning-accordion allow-multiple-sections-open>
+            <template for:each={sections} for:item="section">
+                <lightning-accordion-section key={section.id} name={section.id} label={section.name}>
+                    <lightning-datatable
+                        key-field="id"
+                        data={section.data}
+                        columns={section.columns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+    </div>
+</template>

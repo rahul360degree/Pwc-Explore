@@ -1,0 +1,15 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                controller = "FollowRecordHandler"
+                access="global" >
+    
+    <!--attributes-->
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="message" type="String" default = "" />
+
+
+    <aura:attribute name="spinner" type="Boolean" default="false" />
+	
+    <!--Do Init Method-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	
+</aura:component>

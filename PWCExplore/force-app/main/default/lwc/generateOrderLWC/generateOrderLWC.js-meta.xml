@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+				<target>lightning__FlowScreen</target><!--Added by pankaj on 25 oct 2023 for ISOB Module of SSG - SSEPB-40 -->
+    </targets>
+		<targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordId" type="String" label="Id of the Record"></property>           
+        </targetConfig>
+    </targetConfigs><!--End by pankaj-->
+</LightningComponentBundle>

@@ -1,0 +1,42 @@
+<template>
+    <lightning-card style="background:white">
+    <div class="slds-grid slds-p-bottom_large">
+        <div class="slds-col slds-size_1-of-12">
+            <lightning-input type="checkbox" checked={isChecked} onchange={handleCheckboxChecked}></lightning-input>
+        </div>
+        <div class="slds-col slds-grid slds-gutters slds-wrap slds-size_11-of-12">
+            
+                <div class="slds-col slds-size_1-of-2">Plan: </div>
+                <template if:true={assetBenefit.Plan__r}>
+                    <div class="slds-col slds-size_1-of-2"><b>{assetBenefit.Plan__r.Name}</b></div>
+                </template>
+                <template if:false={assetBenefit.Plan__r}>
+                    <div class="slds-col slds-size_1-of-2"><b>{assetBenefit.Name}</b></div>
+                </template>
+                
+                <div class="slds-col slds-size_1-of-2">Plan Type: </div>
+                <template if:true={assetBenefit.Plan__r}>
+                    <div class="slds-col slds-size_1-of-2"><b>{assetBenefit.Plan__r.Plan_Type__c}</b></div>
+                </template>
+                <template if:false={assetBenefit.Plan__r}>
+                    <div class="slds-col slds-size_1-of-2"><b>{assetBenefit.Plan_Type__c}</b></div>
+                </template>
+
+                <template for:each={columnValues} for:item="column">
+                    <div class="slds-col slds-size_1-of-2 slds-m-around_xx-small" key={column.fieldLabel}>{column.fieldLabel}:</div>
+                    <template if:true={column.isPicklist}>
+                        <div key={column.value} class="slds-col slds-size_1-of-2 slds-m-around_xx-small">
+                            <lightning-combobox variant="label-hidden" value={column.value} options={column.options} onchange={handleFieldValueChange} label={column.fieldApiName}></lightning-combobox>
+                        </div>
+                    </template>
+                    <template if:false={column.isPicklist}>
+                        <div key={column.value} class="slds-col slds-size_1-of-2 slds-m-around_xx-small">
+                            <lightning-input variant="label-hidden" value={column.value} type={column.fieldType} onchange={handleFieldValueChange} label={column.fieldApiName}></lightning-input>
+                        </div>
+                    </template>
+                </template>
+            
+        </div>
+    </div>
+</lightning-card>
+</template>

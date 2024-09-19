@@ -1,0 +1,152 @@
+<!--
+@description       : 
+@author            : vrajpoot@godrej.com
+@group             : 
+@last modified on  : 06-12-2023
+@last modified by  : snehalw@godrej.com
+-->
+<template>
+<div class="slds-theme_default pagewidth">
+	<template if:false={hideSpinner}>
+		<lightning-spinner alternative-text="Loading" variant="brand"></lightning-spinner>
+	</template>
+	<template if:true={displayQuoteSection}>
+		<template if:true={records}>
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" key={records}>
+				<thead>
+					<tr>
+						<th onclick={handleVisibility} data-name='QuoteNumber'>
+							Document Id
+							<template if:true={showDocumentIdInputBox}>
+								<input type="text" value={filterDocumentId} onchange={handleFilterDocumentId} />
+						</template>
+						</th>
+						<th onclick={handleVisibility} data-name='Quote'>
+							Quote
+							<template if:true={showQuoteInputBox}>
+								<input type="text" value={filterQuote} onchange={handleFilterQuote} />
+						</template>
+						</th>
+						<th onclick={handleSorting} data-name='Pending_Since_Date__c'>Pending Since
+							{sortPendingDate}</th>
+						<th onclick={handleSorting} data-name='CreatedDate'> Document Date {sortDocumentDate}</th>
+						<th onclick={handleVisibility} data-name='Zone__c'>
+							Submitting Zone
+							<template if:true={showSubmittingZoneInputBox}>
+								<input type="text" value={filterSubmittingZone} onchange={handleFilterSubmittingZone} />
+						</template>
+						</th>
+						<th onclick={handleVisibility} data-name='Sales_Branch_Name__c'>
+							Submitting Branch
+							<template if:true={showSubmittingBranchInputBox}>
+								<input type="text" value={filterSubmittingBranch} onchange={handleFilterSubmittingBranch} />
+						</template>
+						</th>
+						<th onclick={handleVisibility} data-name='Opportunity.Owner.Name'>
+							Salesperson
+							<template if:true={showSalesPersonInputBox}>
+								<input type="text" value={filterSalesPerson} onchange={handlefilterSalesPerson} />
+						</template>
+						</th>
+						<th>Business Category</th>
+						<th onclick={handleVisibility} data-name='Account'>
+							Account
+							<template if:true={showAccountInputBox}>
+								<input type="text" value={filterAccount} onchange={handleFilterAccount} />
+						</template>
+						</th>
+						<th>Segment</th>
+						<th onclick={handleVisibility} data-name='Opportunity'>
+							Opportunity
+							<template if:true={showOpportunityInputBox}>
+								<input type="text" value={filterOpportunity} onchange={handleFilterOpportunity} />
+						</template>
+						</th>
+						<th>Opportunity Type</th>
+						<th onclick={handleVisibility} data-name='Transaction_Type_c__c'>
+							Transaction Type
+							<template if:true={showTransactionTypeInputBox}>
+								<input type="text" value={filterTransactionType} onchange={handleFilterTransactionType} />
+						</template>
+						</th>
+						<th>Submitted By</th>
+                        <th>Status</th>
+						<!--
+					<th onclick={handleVisibility} data-name='End_Customer_Segment__c'>
+						Segment
+						<template if:true={showSegmentInputBox}>
+						<input type="text" value={filterSegment} onchange={handleFilterSegment} />
+						</template>
+					</th>-->
+						
+						
+						
+						<!-- <th>Requested COP Factor</th>
+					<th>Status</th> -->
+					</tr>
+				</thead>
+				<tbody>
+					<template for:each={records} for:item="rec">
+						<tr key={rec.Id}>
+							<td>
+								<a onclick={handleQuoteClick} data-id={rec.Id}>
+									{rec.QuoteNumber}
+								</a>
+							</td>
+							<td>
+								<a tabindex="-1" onclick={helperNavigation} data-id={rec.Id}
+									data-name="Quote">{rec.Name}</a>
+							</td>
+							<td>
+								<lightning-formatted-date-time value={rec.Pending_Since_Date__c}
+									year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit">
+								</lightning-formatted-date-time>
+							</td>
+							<td>
+								<lightning-formatted-date-time value={rec.CreatedDate} year="numeric"
+									month="numeric" day="numeric" hour="2-digit" minute="2-digit">
+								</lightning-formatted-date-time>
+							</td>
+							<td>{rec.Zone__c}</td>
+							<td>{rec.Sales_Branch_Name__c}</td>
+							<td>
+								<a tabindex="-1" onclick={helperNavigation} data-id={rec.Opportunity.Owner.Id}
+									data-name="User">{rec.Opportunity.Owner.Name}</a>
+							</td>
+							<td>{rec.Interio_Sub_Division__c}</td>
+							<td>
+								<a tabindex="-1" onclick={helperNavigation} data-id={rec.Account.Id}
+									data-name="Account">{rec.Account.Name}</a>
+							</td>
+							<td>{rec.End_Customer_Segment__c}</td>
+							
+							<td>
+								<a tabindex="-1" onclick={helperNavigation} data-id={rec.Opportunity.Id}
+									data-name="Opportunity">{rec.Opportunity.Name}</a>
+							</td>
+							<td>{rec.Opportunity_Type__c}</td>
+							<td>{rec.Transaction_Type_c__c}</td>
+							<td>
+								<a tabindex="-1" onclick={helperNavigation} data-id={rec.CreatedById}
+									data-name="User">{rec.CreatedBy.Name}</a>
+							</td>
+							<td>{rec.Approval_Status__c}</td>
+						
+							<!-- <td>{rec.Requested_COP_Factor__c}</td>
+						<td>{rec.Approval_Status__c}</td> -->
+						</tr>
+					</template>
+				</tbody>
+			</table>
+
+		</template>
+		<template if:false={records}>
+			<div class="slds-align_absolute-center slds-text-heading_large">No Pending Quote found.</div>
+		</template>
+	</template>
+	<template if:true={quoteId}>
+		<c-interiob2bquotdetail quote-id={quoteId} onclosemodal={closeModal}></c-interiob2bquotdetail>
+	</template>
+</div>
+
+</template>

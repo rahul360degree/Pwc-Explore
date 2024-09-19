@@ -1,0 +1,3 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId" access="global" >
+	<c:createLead onclose="{!c.closeQA}"></c:createLead> <!--onclose="{!c.closeQA}"-->
+</aura:component>

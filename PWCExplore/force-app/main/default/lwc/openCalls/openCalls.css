@@ -1,0 +1,13 @@
+.input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-field {
+    flex: 1;
+}
+
+lightning-button {
+    flex-shrink: 0;
+}

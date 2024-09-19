@@ -1,0 +1,25 @@
+<!--
+@description       : 
+@author            : vrajpoot@godrej.com
+@group             : 
+@last modified on  : 12-29-2022
+@last modified by  : vrajpoot@godrej.com
+-->
+<template>
+    <lightning-card>
+        <div class="slds-m-around_small">
+            <template if:true={qliRecordsForCalculation}>
+                <div class="slds-text-heading_small slds-p-bottom_xx-small">
+                    Click on edit to update "Offered Unit Basic" for negotiation margin.
+                </div>
+                <lightning-datatable key-field="Id" data={qliRecordsForCalculation} columns={columns}
+                    onsave={handleSave} draft-values={draftValues} hide-checkbox-column column-widths-mode="auto">
+                    <!--min-column-width="80"-->
+                </lightning-datatable>
+                <div class="slds-text-align_right">
+                    Total Price: {totalBasicAmount}
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

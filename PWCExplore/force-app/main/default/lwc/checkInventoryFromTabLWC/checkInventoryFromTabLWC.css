@@ -1,0 +1,42 @@
+.component-padding {
+    padding: 1rem;
+}
+
+.component-container {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.action-buttons-container {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.search-table-container {
+    margin-top: 1em;
+}
+
+.search-table-container-with_scroll {
+    margin-top: 1em;
+    height: 90vh;
+    overflow-y: scroll;
+}
+
+.checkout-table-container {
+    margin-top: 1em;
+}
+
+.checkout-table-container-with_scroll {
+    margin-top: 1em;
+    height: 90vh;
+    overflow-y: scroll;
+}
+
+.showIt {
+    visibility: visible;
+}
+
+.hideIt {
+    visibility: hidden;
+    height: 0em;
+}

@@ -1,0 +1,28 @@
+<!--
+  @Description       : component to call EzeTap API
+  @Author            : Varun Rajpoot
+  @last modified on  : 12-18-2023
+  @last modified by  : Varun Rajpoot
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   11-06-2023   Varun Rajpoot   Initial Version
+-->
+<template>
+
+  <div class="slds-grid slds-wrap">
+
+    <template if:true={paymentUrl}>
+      <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+        <center><c-qrcode payment-url={paymentUrl}></c-qrcode></center>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+      <center><c-countdown-timer timer={timer}></c-countdown-timer></center>
+      </div>
+    </template>
+
+    <!-- <template if:true={displayData}> -->
+    <template if:true={calloutResponse}>      
+      <c-ezetappaymentstatus callout-response={calloutResponse}></c-ezetappaymentstatus>
+    </template>
+  </div>
+</template>

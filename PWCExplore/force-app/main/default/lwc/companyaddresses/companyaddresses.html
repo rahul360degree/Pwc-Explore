@@ -1,0 +1,85 @@
+<!--
+  @description       : This component will display list of additional addresses.
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 03-17-2022
+  @last modified by  : vrajpoot@godrej.com
+-->
+<template>
+  <!-- Addtional Company address -->
+  <template for:each={recordsToDisplay} for:item="row" for:index="index">
+    <div key={row} class="slds-m-top_x-large borderCSS">
+      <lightning-card>
+        <div>
+          <div class="alignleft">
+            <header slot="title" class="slds-card__header-title lightningCardHeader">
+              {row.addr.bnm}    
+            </header>
+          </div>
+          <div class="alignright">
+            <template if:true={row.addr.isPrimary}>
+              <lightning-icon icon-name="standard:address" alternative-text="Primary Address" variant="success"
+                title="Primary Address" class=" slds-m-right_x-large"> 
+              </lightning-icon>
+            </template>
+            <template if:false={businessunit}>            
+            <template if:false={row.addr.isPrimary}>
+              <lightning-button variant="brand-outline" label="Set as primary add" title="Set as primary address"
+                onclick={handleAddressSelection} data-name={index} class=" slds-m-right_x-large">
+              </lightning-button>              
+            </template>
+          </template>
+            <template if:true={businessunit}>
+              <lightning-button variant="brand-outline" label="Add New Address" title="Add New Address"
+                onclick={handleAdditionalAddressSelection} data-name={index} class=" slds-m-right_x-large">
+              </lightning-button>              
+            </template>
+
+          </div>
+        </div>
+        <div class="clearBoth"></div>
+        <lightning-layout multiple-rows>
+          <c-companydetailvalueparser fieldvalue={row.addr.st} label="Street:"></c-companydetailvalueparser>
+          <c-companydetailvalueparser fieldvalue={row.addr.loc} label="Location:">
+          </c-companydetailvalueparser>
+          <c-companydetailvalueparser fieldvalue={row.addr.bno} label="Building No.:">
+          </c-companydetailvalueparser>
+          <c-companydetailvalueparser fieldvalue={row.addr.stcd} label="State Code:">
+          </c-companydetailvalueparser>
+          <c-companydetailvalueparser fieldvalue={row.addr.flno} label="Floor No:">
+          </c-companydetailvalueparser>
+          <c-companydetailvalueparser fieldvalue={row.addr.lt} label="lt:"></c-companydetailvalueparser>
+          <c-companydetailvalueparser fieldvalue={row.addr.lg} label="lg:"></c-companydetailvalueparser>
+          <c-companydetailvalueparser fieldvalue={row.addr.pncd} label="Pincode:">
+          </c-companydetailvalueparser>
+          <c-companydetailvalueparser fieldvalue={row.addr.ntr} label="Nature:">
+          </c-companydetailvalueparser>
+        </lightning-layout>
+
+      </lightning-card>
+    </div>
+  </template>
+
+  <!--Pagination-->
+  <div style="clear:both"> </div>
+  <div class="slds-grid slds-wrap alignright">
+
+    <div class="slds-col">
+      <lightning-combobox name="recordPerPage" label="Page Size" value={recordsPerPage} options={pageSizeOptions}
+        onchange={handlePageSizeChange}></lightning-combobox>
+    </div>
+
+    <div class="slds-col">
+      <div class="pagination">
+        <ul>
+          <template for:each={paginationArray} for:item="pagenumber">
+            <li key={pagenumber}>
+              <div data-id={pagenumber} onclick={handleCurrentPageChange}>{pagenumber}</div>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="clearBoth"></div>
+</template>

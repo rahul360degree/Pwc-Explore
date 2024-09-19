@@ -1,0 +1,85 @@
+<template>
+    <div class="mainContainer">
+        <!-- Show spinner if data is loading -->
+        <template if:true={isLoading}>
+            <div class="demo-only" style="height:6rem">
+                <div class="slds-spinner_container">
+                    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template if:false={isLoading}>
+            <!-- Action Buttons. -->
+            <div class="slds-grid  slds-m-bottom_medium slds-grid_vertical-align-center slds-align_absolute-center action-buttons-container">
+                <div class="">
+                    <lightning-button variant="brand" label={pageTracking.backButtonLabel} title={pageTracking.backButtonLabel} 
+                        onclick={handleBackButtonEvent} class="slds-m-left_x-small">
+                    </lightning-button>
+                </div>
+
+                <div class="">
+                    <template if:true={pageTracking.isCheckStockButtonDisabled}>
+                        <lightning-button variant="brand" label="Check Stocks" title="Check Stocks" 
+                            onclick={handleCheckMultipleStocksEvent} disabled class="slds-m-left_x-small">
+                        </lightning-button>    
+                    </template>
+
+                    <template if:false={pageTracking.isCheckStockButtonDisabled}>
+                        <lightning-button variant="brand" label="Check Stocks" title="Check Stocks" 
+                            onclick={handleCheckMultipleStocksEvent} class="slds-m-left_x-small">
+                        </lightning-button>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Search and Checkout table for mobile. -->
+            <template if:true={isMobile}>
+                <!-- Search table section. -->
+                <div class={pageTracking.searchTableVisibility}>
+                    <lightning-card>
+                        <div class="search-table-container">
+                            <c-generic-table-component class="search-table" component-details={searchTableJSON} 
+                                onvalueselected={handleSearchTableSelectionEvent}>
+                            </c-generic-table-component>
+                        </div>
+                    </lightning-card>
+                </div>
+
+                <!-- Checkout section. -->
+                <template if:true={pageTracking.showStockTable}>
+                    <lightning-card>
+                        <div class="checkout-table-container">
+                            <c-generic-table-component class="stock-table" component-details={stockTableJSON} hide-row-selection>
+                            </c-generic-table-component>
+                        </div>
+                    </lightning-card>
+                </template>
+            </template>
+
+            <!-- Search and Checkout table for desktops. -->
+            <template if:false={isMobile}>
+                <!-- Search table section. -->
+                <div class={pageTracking.searchTableVisibility}>
+                    <div class="search-table-container-with_scroll">
+                        <c-generic-table-component class="search-table" component-details={searchTableJSON}
+                            onvalueselected={handleSearchTableSelectionEvent}>
+                        </c-generic-table-component>
+                    </div>
+                </div>
+
+                <!-- Checkout section. -->
+                <template if:true={pageTracking.showStockTable}>
+                    <div class="checkout-table-container-with_scroll">
+                        <c-generic-table-component class="stock-table" component-details={stockTableJSON} hide-row-selection>
+                        </c-generic-table-component>
+                    </div>
+                </template>
+            </template>
+        </template>
+    </div>
+</template>

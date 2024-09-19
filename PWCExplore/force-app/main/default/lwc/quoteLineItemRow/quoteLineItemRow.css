@@ -1,0 +1,25 @@
+:host {
+    display: table-row;
+}
+td {
+    max-width: 200px;
+    white-space: normal;
+}
+
+.recordFormContainer {
+    background : white;
+    width: 100%;
+    height: 900px;
+    max-height: 950px;
+    overflow: auto;
+}
+
+.helpText {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.editButton {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}

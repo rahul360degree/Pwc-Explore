@@ -1,0 +1,59 @@
+<!--
+  @Description       : 
+  @Author            : Varun Rajpoot
+  @last modified on  : 10-26-2023
+  @last modified by  : Varun Rajpoot
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   10-25-2023   Varun Rajpoot   Initial Version
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="PowerBiEmbedManager">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="businessUnit" type="String" /> 
+    <aura:attribute name="showSpinner" type="Boolean" default="true"/> 
+    
+    <aura:if isTrue="{! v.showSpinner}">
+        <lightning:spinner aura:id="spinner" alternativeText="Loading" size="large" variant="brand" class="slds-show"/>    
+    </aura:if>    
+    
+    <lightning:tabset selectedTabId="one">              
+        <aura:if isTrue="{! v.businessUnit == 'N'}"><!--Construction User-->
+            <lightning:tab label="Construction" id="one">
+                <c:powerBiReport WorkspaceId="f07951bd-2657-40c8-ac34-a48ef7c1574c"
+                                 ReportId = "e82e1b54-1917-4382-bc59-1fa49ee47e97"
+                                 />
+            </lightning:tab>
+            
+            <aura:set attribute="else">
+                <aura:if isTrue="{! v.businessUnit == 'H'}"><!--Appliances User-->
+                    <lightning:tab label="Sales" id="one">
+                        <c:powerBiReport WorkspaceId="cbd35d54-72b4-41c2-aaba-16ce02b8121e"
+                                         ReportId = "5de5e99b-6412-494b-ac57-22f41be1f934"
+                                         />
+                    </lightning:tab>
+                    <lightning:tab label="Collections" id="two">
+                        <c:powerBiReport WorkspaceId="cbd35d54-72b4-41c2-aaba-16ce02b8121e"
+                                         ReportId = "6185b86f-f619-471a-ac0f-46013524d02c"
+                                         />
+                    </lightning:tab>
+                    <lightning:tab label="Receivables" id="three">
+                        <c:powerBiReport WorkspaceId="cbd35d54-72b4-41c2-aaba-16ce02b8121e"
+                                         ReportId = "b1fe9959-5eaf-426f-bd8f-786c43e241fb"
+                                         />
+                    </lightning:tab>
+                    <lightning:tab label="Stocks" id="four">
+                        <c:powerBiReport WorkspaceId="cbd35d54-72b4-41c2-aaba-16ce02b8121e"
+                                         ReportId = "841162f2-1371-489a-932f-bd177614571d"
+                                         />
+                    </lightning:tab>
+                    <lightning:tab label="GAD-HO" id="five">
+                        <c:powerBiReport WorkspaceId="cbd35d54-72b4-41c2-aaba-16ce02b8121e"
+                                         ReportId = "be9572de-651e-4a80-a9bc-a45247d249ba"
+                                         />
+                    </lightning:tab>              	
+                </aura:if>
+            </aura:set>
+        </aura:if>
+    </lightning:tabset>
+    
+</aura:component>

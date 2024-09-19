@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property label="Serial Numbers" name="serialNumbers" type="String" description="Holds list of Serial Numbers delimited by semicolon"/>
+            <property label="Quantity" name="quantity" type="Integer" default="1" description="Set this attribute to the number of serial numbers"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

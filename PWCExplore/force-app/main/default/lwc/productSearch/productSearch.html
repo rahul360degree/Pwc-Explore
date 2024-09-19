@@ -1,0 +1,375 @@
+<template>
+
+    <!-- HTML for large screens like desktops. -->
+    <template if:false={isMobile}>
+        <div id="mySidenav" role="dialog" class="slds-is-absolute sidenav">
+            <lightning-card>
+                <h3 slot="title">
+                    &nbsp; <lightning-icon icon-name="utility:success" size="small"></lightning-icon>
+                    &nbsp; Products Selected
+                </h3>
+                <button class="slds-button slds-button_icon slds-button_icon-brand sldbtn" slot="actions" onclick={closeNav}
+                    title="Search">
+                    <svg class="slds-button__icon" aria-hidden="true">
+                        <use xlink:href={cartURL}></use>
+                    </svg>
+                    <span class="slds-assistive-text">Search</span><span
+                        class="slds-line-height_reset slds-show_inline-block slds-text-align_center slds-is-absolute badgeCart">{recordsCount}</span>
+                </button>
+                <div class="slds-m-around_medium">
+                    <lightning-datatable data={selectedRows} key-field="id" columns={optionColumns}
+                        hide-checkbox-column=true></lightning-datatable>
+                </div>
+            </lightning-card>
+        </div>
+
+        <lightning-card title="Available Products">
+            <button class="slds-button slds-button_neutral" slot="actions" onclick={opennav}><span
+                    class="slds-line-height_reset slds-show_inline-block slds-text-align_center slds-is-absolute badgeCart">{recordsCount}</span>
+                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                    <use xlink:href={cartURL}></use>
+                </svg>Cart
+            </button>
+
+            <lightning-layout horizontal-align="left">
+                <lightning-layout-item flexibility="auto" class="slds-m-around_x-small">
+                    <lightning-input name="enter-search" label="Search" type="search" variant="label-hidden"
+                        onchange={handleChange}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item class="slds-m-around_x-small">
+                    <lightning-button-icon-stateful icon-name="utility:filterList" selected={filterState}
+                        onclick={getFilters} alternative-text="Filters"></lightning-button-icon-stateful>
+                </lightning-layout-item>
+                <lightning-layout-item class="slds-m-around_x-small">
+                    <lightning-button label="Add Selected" disabled={cartEm} onclick={addProductsAsLines} variant="brand">
+                    </lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <div style="position: relative; display: flex;">
+                <lightning-layout multiple-rows="true" horizontal-align="center">
+                    <lightning-layout-Item padding="around-small" size="12">
+                        <table class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols"
+                            role="grid">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="slds-text-align_right" scope="col" style="width:3.25rem">
+                                        <div class="slds-truncate slds-assistive-text" title="Choose a row to select">Choose
+                                            a row to select</div>
+                                        <!--<input type="checkbox" class="chkEnM" onclick={handleCheckEnM}></input>-->
+                                    </th>
+                                    <th aria-label="Product Name" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+                                        scope="col">
+                                        <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);"
+                                            role="button" tabindex="-1">
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Name">Product Name</span>
+                                            </div>
+                                        </a>
+                                    </th>
+                                    <th aria-label="Item Code" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+                                        scope="col">
+                                        <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);"
+                                            role="button" tabindex="-1">
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Name">Item Code</span>
+                                            </div>
+                                        </a>
+                                    </th>
+                                    <th aria-label="Quantity" aria-sort="none" class="slds-is-resizable slds-is-sortable"
+                                        scope="col">
+                                        <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);"
+                                            role="button" tabindex="-1">
+                                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                <span class="slds-truncate" title="Name">Quantity</span>
+                                            </div>
+                                        </a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={data} for:item="optn">
+                                    <tr class="slds-hint-parent" key={optn.product2Id}>
+                                        <td class="slds-text-align_right" role="gridcell">
+                                            <!--<input type="checkbox" id={optn.id} value={optn.isSelected} data-pr={optn.id} onclick={handleOptionSelect} checked={optn.isSelected} class="chk" aria-labelledby="check-button-label-01 column-group-header" />-->
+
+                                            <div class="slds-visual-picker">
+                                                <input type="checkbox" id={optn.product2Id} value={optn.isSelected}
+                                                    name="options" data-pr={optn.product2Id} onclick={handleBaseSelect}
+                                                    checked={optn.isSelected} class="chk" />
+                                                <label for={optn.product2Id}>
+                                                    <span
+                                                        class="slds-visual-picker__figure slds-visual-picker__icon slds-align_absolute-center">
+                                                        <span class="slds-is-selected">
+                                                            <span class="slds-icon_container">
+                                                                <svg class="slds-icon slds-icon_small slds-icon-action-check"
+                                                                    aria-hidden="true">
+                                                                    <use xlink:href={chkURL}></use>
+                                                                </svg>
+                                                            </span>
+                                                        </span>
+                                                        <span class="slds-is-not-selected">
+                                                            <span class="slds-icon_container">
+                                                                <svg class="slds-icon slds-icon-action-add slds-icon_small slds-icon-text-default"
+                                                                    aria-hidden="true">
+                                                                    <use xlink:href={addURL}></use>
+                                                                </svg>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </label>
+                                            </div>
+
+                                        </td>
+                                        <th scope="row" tabindex="0">
+                                            <div class="slds-truncate" title={optn.productName}>{optn.productName}</div>
+                                        </th>
+                                        <td role="gridcell">
+                                            <div class="slds-truncate" title={optn.productCode}>{optn.itemCode}</div>
+                                        </td>
+                                        <td role="gridcell">
+                                            <!-- <lightning-formatted-number value={optn.unitPrice} format-style="currency"
+                                                currency-code="INR"></lightning-formatted-number> -->
+                                            <lightning-input type="number"  name={optn.product2Id} label=" " value={optn.quantity} 
+                                                placeholder="Enter product quantity"
+                                                id={optn.product2Id} onchange={handleQuantityChange}>
+                                            </lightning-input>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </lightning-layout-Item>
+                    <lightning-layout-Item padding="around-small" flexibility="auto">
+                        <lightning-button label="Prev" icon-name="utility:chevronleft" icon-position="left"
+                            onclick={previousEve} disabled={disPre}>
+                        </lightning-button>
+                        <span class="slds-p-horizontal_small">
+                            Page {pageNumber}
+                            <!-- | Showing records from {afterPage} -->
+                        </span>
+                        <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right"
+                            disabled={isLastPage} onclick={nextEve}>
+                        </lightning-button>
+                    </lightning-layout-Item>
+                </lightning-layout>
+
+                <div class="slds-panel slds-size_medium slds-panel_docked slds-panel_docked-right" style="height: auto; flex: auto;"
+                    aria-hidden="false">
+                    <div class="slds-panel__header">
+                        <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Filter">Filter
+                        </h2>
+                        <button class="slds-button slds-button_icon slds-button_icon-small slds-panel__close"
+                            title="Collapse Filter">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xlink:href={iconURL}></use>
+                            </svg>
+                            <span class="slds-assistive-text">Collapse Filter</span>
+                        </button>
+                    </div>
+                    <div class="slds-panel__body">
+                        <div class="slds-filters">
+                            <ol class="slds-list_vertical slds-list_vertical-space">
+                                <li class="slds-item slds-hint-parent">
+                                    <div class="slds-filters__item slds-grid slds-grid_vertical-align-center">
+                                        <button class="slds-button_reset slds-grow slds-has-blur-focus">
+                                            <lightning-input type="text" class="fltrItemcode" label="Item Code">
+                                            </lightning-input>
+                                        </button>
+                                        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small"
+                                            title="Remove equals THIS WEEK">
+                                            <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="slds-item slds-hint-parent">
+                                    <div class="slds-filters__item slds-grid slds-grid_vertical-align-center">
+                                        <button class="slds-button_reset slds-grow slds-has-blur-focus">
+                                            <template if:true={IndustryPicklistValues.data}>
+                                                <lightning-combobox name="progress" label="Product Family" value={fltrPType}
+                                                    class="fltrptype" placeholder="-Select-"
+                                                    options={IndustryPicklistValues.data.values}>
+                                                </lightning-combobox>
+                                            </template>
+                                        </button>
+                                        <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small"
+                                            title="Remove equals THIS WEEK">
+                                            <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ol>
+                            <div class="slds-filters__footer slds-grid slds-shrink-none">
+                                <button class="slds-button_reset slds-text-link" onclick={setFilters}>Apply Filter</button>
+                                <button class="slds-button_reset slds-text-link slds-col_bump-left"
+                                    onclick={clearFilters}>Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+
+    <!-- HTML for small screens like mobile. -->
+    <template if:true={isMobile}>
+        <!-- Main screen -->
+        <template if:false={showCartScreen}>
+            <!-- Header section -->
+            <div class="mobile_header">
+                <lightning-layout class="navigation_header" horizontal-align="left">
+                    <div class="slds-size_1-of-2">
+                        <lightning-button variant="brand" label="Back" title="Back" 
+                            onclick={navigateToPrevMobileScreen} class="slds-m-left_x-small">
+                        </lightning-button>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <button class="slds-button slds-button_neutral slds-m-around_x-small cartButtonMobile" slot="actions" onclick={displayCartScreen}>
+                            <span class="slds-line-height_reset slds-show_inline-block slds-text-align_center slds-is-absolute badgeCart">{recordsCount}</span>
+                            <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                <use xlink:href={cartURL}></use>
+                            </svg>Cart
+                        </button>
+                    </div>
+                </lightning-layout>
+
+                <lightning-layout class="secondary_header" horizontal-align="left">
+                    <lightning-layout-item flexibility="auto" class="slds-m-around_x-small">
+                        <lightning-input name="enter-search" label="Search" type="search" variant="label-hidden"
+                            onchange={handleChange}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item class="slds-m-around_x-small">
+                        <lightning-button-icon-stateful icon-name="utility:filterList" selected={filterState}
+                            onclick={getFilters} alternative-text="Filters"></lightning-button-icon-stateful>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+
+            <!-- Filter section for data -->
+            <div class="slds-panel slds-size_medium slds-panel_docked slds-panel_docked-right filter_section mobile_filter"
+                aria-hidden="false">
+                <div class="slds-panel__header">
+                    <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Filter">Filter
+                    </h2>
+                    <button class="slds-button slds-button_icon slds-button_icon-small slds-panel__close"
+                        title="Collapse Filter">
+                        <svg class="slds-button__icon" aria-hidden="true">
+                            <use xlink:href={iconURL}></use>
+                        </svg>
+                        <span class="slds-assistive-text">Collapse Filter</span>
+                    </button>
+                </div>
+                <div class="slds-panel__body">
+                    <div class="slds-filters">
+                        <ol class="slds-list_vertical slds-list_vertical-space">
+                            <li class="slds-item slds-hint-parent">
+                                <div class="slds-filters__item slds-grid slds-grid_vertical-align-center">
+                                    <button class="slds-button_reset slds-grow slds-has-blur-focus">
+                                        <lightning-input type="text" class="fltrItemcode" label="Item Code">
+                                        </lightning-input>
+                                    </button>
+                                    <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small"
+                                        title="Remove equals THIS WEEK">
+                                        <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="slds-item slds-hint-parent">
+                                <div class="slds-filters__item slds-grid slds-grid_vertical-align-center">
+                                    <button class="slds-button_reset slds-grow slds-has-blur-focus">
+                                        <template if:true={IndustryPicklistValues.data}>
+                                            <lightning-combobox name="progress" label="Product Family" value={fltrPType}
+                                                class="fltrptype" placeholder="-Select-"
+                                                options={IndustryPicklistValues.data.values}>
+                                            </lightning-combobox>
+                                        </template>
+                                    </button>
+                                    <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small"
+                                        title="Remove equals THIS WEEK">
+                                        <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </li>
+                        </ol>
+                        <div class="slds-filters__footer slds-grid slds-shrink-none">
+                            <button class="slds-button_reset slds-text-link" onclick={setFilters}>Apply Filter</button>
+                            <button class="slds-button_reset slds-text-link slds-col_bump-left"
+                                onclick={clearFilters}>Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content section -->
+            <div class="mobile-content_container">
+                <!-- Data container -->
+                <template for:each={data} for:item="optn">
+                    <lightning-card key={optn.product2Id} class="padding_1rem">
+                        <p><strong>Product Name:</strong> {optn.productName}</p>
+                        <p><strong>Item Code:</strong> {optn.itemCode}</p>
+                        <lightning-input type="number"  name={optn.product2Id} label="Quantity" value={optn.quantity} 
+                            placeholder="Enter product quantity"
+                            id={optn.product2Id} onchange={handleQuantityChange}>
+                        </lightning-input>
+                        <lightning-input type="toggle" label="Add to Cart" class="rowSelected" name={optn.product2Id} 
+                            onchange={handleBaseSelect} checked={optn.isSelected} data-pr={optn.product2Id}>
+                        </lightning-input>
+                    </lightning-card>
+                </template>
+            </div>
+
+            <!-- Footer section -->
+            <div class="mobile_footer">
+                <lightning-layout horizontal-align="center">
+                    <lightning-layout-item class="slds-m-around_x-small">
+                        <lightning-button label="Load More Data" disabled={isLastPage} onclick={loadMoreData} variant="brand">
+                        </lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item class="slds-m-around_x-small">
+                        <lightning-button label="Add Selected" disabled={cartEm} onclick={addProductsAsLines} variant="brand">
+                        </lightning-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </template>
+
+        <!-- Cart screen -->
+        <template if:true={showCartScreen}>
+            <!-- Header section -->
+            <div class="mobile_header">
+                <lightning-layout class="navigation_header" horizontal-align="left">
+                    <div class="slds-size_1-of-2">
+                        <lightning-button variant="brand" label="Back" title="Back" 
+                            onclick={navigateToPrevMobileScreen} class="slds-m-left_x-small">
+                        </lightning-button>
+                    </div>
+                </lightning-layout>
+            </div>
+
+            <!-- Content section -->
+            <div class="mobile-content_container">
+                <template for:each={selectedRows} for:item="selectedRow">
+                    <lightning-card key={selectedRow.product2Id} class="padding_1rem">
+                        <p><strong>Product Name:</strong> {selectedRow.productName}</p>
+                        <p><strong>Item Code:</strong> {selectedRow.itemCode}</p>
+                        <p><strong>Quantity:</strong> {selectedRow.quantity}</p>
+                    </lightning-card>
+                </template>
+            </div>
+        </template>
+    </template>
+
+    <!-- Show spinner when loading data -->
+    <template if:true={isLoadingProducts}>
+        <lightning-spinner variant="brand" size="large"></lightning-spinner>
+    </template>
+
+</template>

@@ -1,0 +1,92 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<template>
+    <div class = "accordion-container slds-card">
+        <ul class = "slds-accordion">
+            <template for:each={sections} for:item="section">
+                <li key = {section.Id} class = "slds-accordion__list-item">
+                    <section id = {section.Id} class = "slds-accordion__summary" style = 'display:flex; flex-direction: column; padding: 25px'> 
+                        <div class = "slds-accordion__summary" style="width: 100%; ">
+                            <h2 id = {section.Id} class="slds-accordion__summary-heading">
+                                <div style = "width: 100%; display: flex; flex-direction: row; justify-content: space-between">
+
+                                    <div style = 'width: 10%'> 
+                                        <button id = {section.Id} onclick={onClickHandler} class="slds-button slds-button_reset slds-accordion__summary-action" title={section.Id}  >
+                                            <lightning-icon id = {section.Id} style = "margin-right: 5px;" icon-name="utility:chevronright" size = "x-small" alternative-text="dropdown before" title="dropdown before"></lightning-icon>
+                                          <span id = {section.Id} class="slds-accordion__summary-content">
+                                              {section.name}
+                                          </span>  
+                                        </button> 
+                                    </div>
+                                    
+                                    <div style = "display:flex; flex-direction: row; justify-content: center; align-items: center;">
+                                        <div style = "padding-left: 10px; padding-right: 10px; font-weight: 500;">
+                                            Observation Status:
+                                        </div>
+                                        <div>
+                                            {section.status}
+                                        </div>
+                                    </div>
+
+                                 
+                                    <template if:true={SAR_metadata.isASPAudit}>
+                                        <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                                            <div style = "padding-left: 10px; padding-right: 10px; font-weight: 500;">
+                                                Percentage Achieved: 
+                                            </div>
+                                            <lightning-badge label={section.percentage_achieved} class="slds-badge_inverse" style={section.style}></lightning-badge>
+                                        </div>
+                                    </template>
+
+                                </div>
+                               
+
+                                
+
+                               
+                            </h2>
+                        </div>
+                        <div id = {section.Id} hidden = "hidden" class = "slds_accordion__content" style = "align-items: center; justify-content: center;" >
+                            <div style = 'width: 100%'>
+                                <lightning-datatable
+                                key-field="Id"
+                                data={section.data}
+                                columns={section.columns}
+                                
+                                hide-checkbox-column
+                                onrowaction={handleRowAction}
+                                wrap-table-header="true"
+                                column-width-mode="fixed"
+                                onresize={handleResize}>
+                                </lightning-datatable>
+
+                                <div style="padding-top: 20px; padding-bottom: 20px;">
+                                    <lightning-record-form
+                                    record-id={section.Id}
+                                    object-api-name="Observation_Area__c"
+                                    fields={fields}
+                                    columns="3"
+                                    mode={OA_record_form_mode}>
+                                </lightning-record-form>
+                                </div>
+                            </div>
+
+                            
+                            
+                            
+                        </div>
+                        <div>
+                            <c-service-Audit-Report-Record-Edit-Form 
+                            formsubmitted={formSubmitted}
+                            sarmetadata={SAR_metadata}
+                            profiledata={profileData}
+                            recordeditdataid={recordEditDataId}
+                            onmodalsave={refreshData}
+                        ></c-service-Audit-Report-Record-Edit-Form>
+                        </div>
+                    </section>
+                </li>
+            </template>
+        </ul>
+    </div>
+</template>

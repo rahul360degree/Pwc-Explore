@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" controller="CustomQuoteSyncController">
+    <aura:attribute name="message" type="String" default="{!$Label.c.QuoteSyncInProgress}"/>
+    <aura:handler name="init" action="{!c.syncQuote}" value="{!this}"/>
+    {!v.message}
+</aura:component>

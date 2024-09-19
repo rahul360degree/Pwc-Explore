@@ -1,0 +1,53 @@
+<template>
+    <button class="slds-m-bottom_medium slds-button slds-button_neutral slds-align_absolute-center" onclick={handleRecalculate} title="Recalculate Benefits">Recalculate Benefits</button>
+    
+
+    <div class="demo-only" style="padding:0.5rem;background:#e7e9ec">
+        <div class="slds-text-color_inverse slds-text-title_bold">Contract Benefits</div>
+    </div>
+
+    <div class="slds-grid slds-wrap slds-m-top_x-small">
+        <template for:each={contractBenefitRecords} for:item="contractBenefit">
+            <div class=" slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-form-element slds-form-element_readonly" key={contractBenefit.fieldLabel}>
+                <span class="slds-form-element__label slds-m-left_small">{contractBenefit.fieldLabel}</span>
+                <div class="slds-form-element__control">
+                  <div class="slds-form-element__static slds-m-left_small">{contractBenefit.fieldValue}</div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <div style="border-bottom:1px;color :rgb(223, 209, 209)">
+    </div>
+    
+    <div class="demo-only slds-m-top_medium" style="padding:0.5rem;background:#e7e9ec">
+        <div class="slds-text-color_inverse slds-text-title_bold">Account Benefits</div>
+    </div>
+
+    <div class="slds-grid slds-wrap slds-m-top_x-small">
+        <template for:each={accountBenefitRecords} for:item="accountBenefit">
+            <div class=" slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-form-element slds-form-element_readonly" key={accountBenefit.fieldLabel}>
+                <span class="slds-form-element__label slds-m-left_small">{accountBenefit.fieldLabel}</span>
+                <div class="slds-form-element__control">
+                  <div class="slds-form-element__static slds-m-left_small">{accountBenefit.fieldValue}</div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+
+    <div class="demo-only slds-m-top_medium" style="padding:0.5rem;background:#e7e9ec">
+        <div class="slds-text-color_inverse slds-text-title_bold">Overriden Account Benefits</div>
+    </div>
+
+    <div class="slds-grid slds-wrap slds-m-top_x-small">
+        <template for:each={overridenBenefitRecords} for:item="overridenBenefit">
+            <div class=" slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-form-element slds-form-element_readonly" key={overridenBenefit.fieldLabel}>
+                <span class="slds-form-element__label slds-m-left_small">{overridenBenefit.fieldLabel}</span>
+                <div class="slds-form-element__control">
+                  <div class="slds-form-element__static slds-m-left_small">{overridenBenefit.fieldValue}</div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

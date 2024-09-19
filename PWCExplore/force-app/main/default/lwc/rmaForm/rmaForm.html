@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Create RMA Record" >
+        <div class="slds-m-around_medium" if:true={contactData}>
+                <lightning-input-field  value={contactData.contactId} disabled></lightning-input-field>
+                <lightning-input-field  value={assetData.productId} disabled></lightning-input-field>
+                <lightning-input-field  variant="textarea"></lightning-input-field>
+                <lightning-button type="submit" label="Submit"></lightning-button>
+        </div>
+        <lightning-input type="file" accept="" label="Attachment" onchange={openfileUpload}></lightning-input>
+    </lightning-card>
+    
+</template>

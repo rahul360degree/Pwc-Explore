@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property label="Latitude" name="latitude" type="Integer" description="Stores latitude of current location"/>
+            <property label="Longitude" name="longitude" type="Integer" description="Stores longitude of current location"/>
+            <property label="ErrorCode" name="errorCode" type="Integer" description="Stores error code returned from getCurrentLocation"/>
+            <property label="Show toggle" name="showToggle" type="Boolean" description="Decides if toggle input to be shown or not"/>
+            <property label="Reason" name="mismatchReason" type="String" description="Reason for SOD EOD location mismatch"/>
+            <property label="Start of Day Latitude" name="SODLatitude" type="Integer" description="Start of Day Latitude"/>
+            <property label="Start of Day Longitude" name="SODLongitude" type="Integer" description="Start of Day Longitude"/>
+            <property label="Ask For Mismatch Reason" name="askForMismatchReason" type="Boolean" description="Ask for mismatch reason-To be determined from custom metadata"/>
+            <property label="Mismatch Reason Required" name="showReasonTextBox" type="Boolean" description="Mismatch reason required"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

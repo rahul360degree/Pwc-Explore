@@ -1,0 +1,514 @@
+<!--
+@Author : Varun Rajpoot
+@description : VF page used to create PDF document of Purchase order 
+@last modified on : 01-10-2024
+@last modified by : Varun Rajpoot
+
+-->
+
+<apex:page renderAs="pdf" standardController="Purchase_Order__c" extensions="PurchaseOrderController" applyHtmlTag="false" applyBodyTag="false" showHeader="false" sidebar="false" >
+    
+    <body>
+        <apex:form > 
+            <table style="width:100%;">
+                <tr style="margin-top:0pt; margin-bottom:8pt; line-height:108%; font-size:10pt; width:100%">
+                    <td style="width:40%;"></td>
+                    <td style="width:40%;"></td>
+                    <td style="width:20%;"><img src="{!$Resource.godrej_logo}"/></td>
+                </tr>
+                <tr style="margin-top:0pt; margin-bottom:8pt; line-height:108%; font-size:10pt; width:100%">
+                    <td style="width:40%;font-family:'Times New Roman';"><b>Original</b></td>
+                    <td style="width:40%;font-family:'Times New Roman';"><b>Purchase Order</b></td>
+                    <td style="width:20%;font-family:'Times New Roman';"><b>Date: {!purchaseOrd.createdDate}</b></td>
+                </tr>
+                
+                <tr style="margin-top:0pt; margin-bottom:8pt; line-height:108%; font-size:10pt; width:100%">
+                    <td style="width:40%;"></td>
+                    <td style="width:40%;"></td>
+                    <td style="width:20%;"><b>Page : 1</b></td>
+                </tr>
+                
+            </table>
+            
+            <hr/>
+            
+            <body style="width:100%;">
+                
+                
+                <tr style="margin-top:0pt; margin-bottom:0pt; line-height:100%; font-size:10pt; width:100%">
+                    <td style="width:50%;"><b>To,</b></td>
+                    <td style="width:10%;"></td>
+                    <td style="width:30%;"><b>Godrej and Boyce Mfg. Co Ltd</b></td>
+                </tr>
+                
+                <tr style="margin-top:0pt; margin-bottom:0pt; line-height:100%; font-size:10pt; width:100%">
+                    <td style="width:50%;font-family:'Times New Roman';"><b>{!purchaseOrd.businessPartnerCode}</b></td>
+                    <td style="width:10%;"></td>
+                    <td style="width:30%;font-family:'Times New Roman';">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:40%;"><b>Division</b></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:60%">:    Appliance</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr style="margin-top:0pt; margin-bottom:0pt; line-height:100%; font-size:10pt; width:100%">
+                    <td style="width:50%;font-family:'Times New Roman';"><b>{!purchaseOrd.name}</b></td>
+                    <td style="width:10%;"></td>
+                    <td style="width:30%;font-family:'Times New Roman';">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:40%;"><b>Location</b></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:60%">: {!purchaseOrd.billToCity}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr style="margin-top:0pt; margin-bottom:0pt; line-height:100%; font-size:10pt; width:100%">
+                    <td style="width:50%;font-family:'Times New Roman';"><b>{!purchaseOrd.houseFloorBuildingToAddress}</b></td>
+                    <td style="width:10%;"></td>
+                    <td style="width:30%;font-family:'Times New Roman';">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:40%;"><b>P.Order No</b></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:60%">: {!purchaseOrd.poNO}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr style="margin-top:0pt; margin-bottom:0pt; line-height:100%; font-size:10pt; width:100%">
+                    <td style="width:50%;font-family:'Times New Roman';"><b>{!purchaseOrd.streetToAddress}</b></td>
+                    <td style="width:10%;"></td>
+                    <!--<td style="width:30%;font-family:'Times New Roman';"><b>Order date : {!purchaseOrd.orderCreatedDate}</b></td>-->
+                    <td style="width:30%;font-family:'Times New Roman';">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:40%;"><b>Order date</b></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:60%">: {!purchaseOrd.orderCreatedDate}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr style="margin-top:0pt; margin-bottom:0pt; line-height:100%; font-size:10pt; width:100%">
+                    <td style="width:50%;font-family:'Times New Roman';"><b>{!purchaseOrd.cityStateZipCodeToAddress}</b></td>
+                    <td style="width:10%;"></td>
+                    <td style="width:30%;font-family:'Times New Roman';">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:40%;"><b>Order Ref. No</b></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:60%">: {!purchaseOrd.orderRefNo}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr style="margin-top:0pt; margin-bottom:0pt; line-height:100%; font-size:10pt; width:100%">
+                    <td style="width:50%;font-family:'Times New Roman';"><b>Mobile number : </b>{!purchaseOrd.telephone}</td>
+                    <td style="width:10%;"></td>
+                    <td style="width:30%;"></td>
+                    
+                </tr>
+                
+                <tr style="margin-top:0pt; margin-bottom:0pt; line-height:100%; font-size:10pt; width:100%">
+                    <td style="width:50%;font-family:'Times New Roman';"><b>Our Location State : {!purchaseOrd.state}</b></td>
+                    <td style="width:10%;"></td>
+                    <td style="width:30%;"></td>
+                </tr>
+            </body>
+            
+            
+            
+            <p style="margin-top:1pt; margin-bottom:8pt; line-height:108%; font-size:10pt;"><span style="line-height:108%; font-family:'Times New Roman'; font-size:8pt;">WE ARE PLEASED TO PLACE AN ORDER ON YOU AS PER DETAILS GIVEN &amp; TERMS &amp; CONDITIONS SPECIFIED BELOW</span><span style="width:25.78pt; display:inline-block;">&nbsp;</span></p>
+            <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+                <tr>
+                    <td style="width:5%;border-style:solid; text-align:center;border-width:1px;font-family:'Times New Roman';font-size:10pt;"> No</td>
+                    <td style="width:55%;text-align:center;border-style:solid; border-width:1px;font-family:'Times New Roman';font-size:10pt;">Item Details</td>
+                    <td style="width:35%; text-align:center;border-style:solid; border-width:1px;font-family:'Times New Roman';font-size:10pt;">Schedule Details</td>
+                </tr>
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;">{!purchaseOrd.lineNo}</td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;">Item Code</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"> : </td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%">{!purchaseOrd.itemCode}</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Schedule Quantity</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: {!purchaseOrd.quantity}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;">Short Description</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"> : </td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%">{!purchaseOrd.shortDescription}</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Unit</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: ECH</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;">Long Description</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"> : </td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%">{!purchaseOrd.shortDescription}</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Delivery Date</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: {!purchaseOrd.createdDate}</td>
+                            </tr>
+                        </table>
+                    </td>   
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;">PO Line Revision</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"> : </td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%">0</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%">Date</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"> : </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;"></td>
+                            </tr>
+                        </table>
+                    </td>   
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Price Structure</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;">ECC/GSTIN No Godrej</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"> : </td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%">{!purchaseOrd.gstNo}</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%">Eff. Date</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%">:{!purchaseOrd.effDate}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-top-style:solid; border-top-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Basic Price</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: {!purchaseOrd.purchasePrice}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;">HSN Code</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"> : </td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%">{!purchaseOrd.hsnCode}</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Subcontracting Price</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: 0</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;">Supplier GST State</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"> : </td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%">{!purchaseOrd.supplierGSTState}</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%">Eff. Date</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%">:{!purchaseOrd.taxNumberEffDate}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Price Unit</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;"> : ECH</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Line Discount</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: 0.00</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">ASV Per Unit for GST</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: {!purchaseOrd.subTotal}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Sub Total 1</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: {!purchaseOrd.subTotal}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Total Cost (GST)</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: {!purchaseOrd.basicPrice}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr>
+                    <td style="border-left-style:solid; border-left-width:1pt;"></td>
+                    <td>
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px;">Total Amount</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: {!purchaseOrd.subTotal}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+                <tr style="">
+                    <td style="border-left-style:solid; border-left-width:1pt;border-bottom-style:solid; border-bottom-width:1pt;"></td>
+                    <td style="border-bottom-style:solid; border-bottom-width:1pt;">
+                        <table style="width:100%">
+                            <tr style="width:100%">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%;padding-left:2px;"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:5%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:30%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:15%"></td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:20%"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-bottom-style:solid; border-bottom-width:1pt;border-left-style:solid; border-left-width:1pt;border-right-style:solid; border-right-width:1pt;">
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;padding-left:2px; ">Currency</td>
+                                <td style="font-family:'Times New Roman';font-size:10pt;width:50%;">: INR</td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+                
+            </table>
+            <p style="margin-top:0pt; margin-bottom:8pt; line-height:115%; font-size:10pt;"><span style="line-height:115%; font-family:'Times New Roman'; font-size:9pt;">GENERAL TERMS AND CONDITIONS OF PURCHASE</span></p>
+            <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><strong><span style="font-family:'Times New Roman';">Delivery term:</span></strong></p>
+            <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><strong><span style="font-family:'Times New Roman';">Transporter:</span></strong></p>
+            <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><strong><span style="font-family:'Times New Roman';">&nbsp;</span></strong></p>
+            <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><strong><span style="font-family:'Times New Roman';">Delivery address</span></strong><strong><span style="font-family:'Times New Roman';">: </span></strong><span style="font-family:'Times New Roman';">{!purchaseOrd.deliveryAddress}</span></p>
+            <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><span style="font-family:'Times New Roman';">&nbsp;</span></p>
+            <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><strong><span style="font-family:'Times New Roman';">Bill to address</span></strong><strong><span style="font-family:'Times New Roman';">: </span></strong><span style="font-family:'Times New Roman';">{!purchaseOrd.billToAddress}</span></p>
+            <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><strong><span style="font-family:'Times New Roman';">&nbsp;</span></strong></p>
+            <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><strong><span style="font-family:'Times New Roman';">&nbsp;</span></strong></p>
+        </apex:form> 
+    </body>
+    <div style="page-break-before: always;">
+        <body>
+            <apex:form > 
+                <table style="width:100%;">
+                    <tr style="margin-top:0pt; margin-bottom:8pt; line-height:108%; font-size:10pt; width:100%">
+                        <td style="width:40%;"></td>
+                        <td style="width:40%;"></td>
+                        <td style="width:20%;"><img src="{!$Resource.godrej_logo}"/></td>
+                    </tr>
+                    <tr style="margin-top:0pt; margin-bottom:8pt; line-height:108%; font-size:10pt; width:100%">
+                        <td style="width:40%;font-family:'Times New Roman';"><b>Order Number</b></td>
+                        <td style="width:40%;font-family:'Times New Roman';"><b>Supplier: {!purchaseOrd.businessPartnerCode}</b></td>
+                        <td style="width:20%;font-family:'Times New Roman';"><b>Date: {!purchaseOrd.createdDate}</b></td>
+                    </tr>
+                    <tr style="margin-top:0pt; margin-bottom:8pt; line-height:108%; font-size:10pt; width:100%">
+                        <td style="width:40%;font-family:'Times New Roman';"><b>{!purchaseOrd.poNO}</b></td>
+                        <td style="width:40%;"></td>
+                        <td style="width:20%;font-family:'Times New Roman';"><b>Page : 2</b></td>
+                    </tr>     
+                </table>
+                <hr/>
+                <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><strong><span style="font-family:'Times New Roman';">&nbsp;</span></strong></p>
+                <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><strong><span style="font-family:'Times New Roman';"><a href="https://gnb.my.site.com/pb/">GENERAL TERMS AND CONDITIONS OF PURCHASE</a> </span> </strong></p>  <br/>
+                Please scan here to open the link<br/>
+                <img height="100px" width="100px" src="{!$Resource.Appliances_TNC}"/>
+                <table cellpadding="0" cellspacing="0" style="width:100%;;border-collapse:collapse;margin-top:10px">
+                    <tr>
+                        <td style="width:50%;border-color:inherit;text-align:center;vertical-align:middle;border-width:1px;border-style:solid;">
+                            <span style="font-weight:bold">Total Order Value :</span> INR&nbsp;&nbsp;&nbsp;{!purchaseOrd.subTotal}
+                        </td>
+                        <td style="width:50%;border-color:inherit;text-align:center;vertical-align:top;border-width:1px;border-style:solid;">
+                            <span style="font-weight:bold">FOR GODREJ &amp; BOYCE MFG CO LTD
+                            </span>
+                            <br/>
+                            <span>Division: Appliance
+                            </span>
+                            <br/><br/><br/><br/><br/>
+                            <span style="font-weight:bold">Purchaser/Purchase Head
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </apex:form>
+            
+        </body>
+    </div>
+</apex:page>

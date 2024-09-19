@@ -1,0 +1,51 @@
+<apex:page standardController="Category_Line_Item__c" recordSetVar="records" extensions="GenerateLabelListViewControlle" action="{!updateStatus}">
+    <apex:includeScript value="/soap/ajax/18.0/connection.js"/>
+    <button onclick="printPage()">Print</button>
+    
+    <script>
+        function printPage() {
+            window.print();
+        }
+    </script>
+    <script>
+        var GetIDs = '{!catIds}';
+    </script>
+    <style>
+        @media print {
+            button {
+                display: none !important;
+            }
+        }
+    </style>
+    
+    <apex:repeat value="{!records}" var="record">
+        <div align="center" style="font-size:40px; padding: 5px;">
+            Category ID : {!record.Name}
+        </div>
+        <div style="border-style: solid; margin:10px; align: left; padding: 5px; width: 60%; font-size:45px">
+            {!record.Status__c}<br/>
+            {!record.Current_Warehouse_Code__c}
+        </div><br/>
+        
+        <div style="font-size : 18px">
+            <p>
+                Dated : <apex:outputText value="{0,date, d MMMM, yyyy}">
+                            <apex:param value="{!record.Date_of_Arrival_in_Inspection_WH__c}" />
+                        </apex:outputText>
+            </p>
+            <p>
+                Original Order : {!record.Order_Type__c}/{!ROUND(record.Order_Number__c, 0)}/{!ROUND(record.Position_No__c,0)}/{!ROUND(record.Sequence_No__c, 0)}
+            </p>
+            <p>
+                Remarks : {!record.Remarks__c}
+            </p>
+            <p>
+                Item Code : {!record.Item_code__c}
+            </p>
+            <p>
+                Item Description : {!record.Item_Description__c}
+            </p>
+        </div>
+        <hr/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </apex:repeat>
+</apex:page>

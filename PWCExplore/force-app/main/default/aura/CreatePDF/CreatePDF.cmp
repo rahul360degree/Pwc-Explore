@@ -1,0 +1,32 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" access="global" controller="ChecklistDocController">
+    <ltng:require styles="{!$Resource.ModalWithCSS}"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="isMobile" type="Boolean" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="baseUrl" type="String" default=""></aura:attribute>
+    <aura:attribute name="disableSaveButton" type="Boolean" default="true"></aura:attribute>
+
+
+
+    <lightning:spinner aura:id="spinner" alternativeText="Loading" size="large" variant="brand" class="slds-show"/>
+    <aura:if isTrue="{!$Browser.isPhone == false}">
+        <!-- PDF Content -->
+        <div class="slds-col modal-body scrollable slds-p-around--medium">	
+            <iframe src="{!v.baseUrl+'/apex/CheckListDoc?Id='+v.recordId}" frameBorder="0" target="_blank" style="width:100%;height:700px;"/>
+        </div> 
+    </aura:if>    
+       
+    <!-- Footer section with save button-->
+    <div class="slds-col modal-footer slds-modal__footer">
+        <aura:if isTrue="{!v.disableSaveButton}">
+            <button class="slds-button slds-button--brand" onclick="{!c.generateDocument}">Save Draft</button>
+        </aura:if>
+       <button class="slds-button slds-button--brand" onclick="{!c.generateDocument}" disabled="{!v.disableSaveButton}">Save Document</button>
+
+        <aura:if isTrue="{!v.disableSaveButton}">
+            <div class="slds-text-color_destructive"><lightning:icon iconName="utility:warning" alternativeText="Warning!" title="Warning" variant="error" />
+                {!$Label.c.SaveDocumentMessage}
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

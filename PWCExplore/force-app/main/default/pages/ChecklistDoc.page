@@ -1,0 +1,320 @@
+<apex:page renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" standardController="Service_Form__c" extensions="ChecklistDocController">
+	
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <style>
+            @page {
+                size: A4;
+                margin-right: 5mm;
+                margin-left: 5mm;
+                margin-top: 150px;
+                margin-bottom: 100px;
+
+                /* add page's header and footer */
+                @top-center {
+                  content: element(header-section); 
+                }
+                @bottom-center { 
+                  content: element(footer-section);
+                }
+            }
+            /* add the page number to any matching elements */
+            .page-number:before { 
+              content: counter(page); 
+            }
+            /* add the page total to any matching elements */
+            .page-count:before { 
+              content: counter(pages); 
+            }
+
+            .page-break {
+                display:block;
+                page-break-after:always;
+            }
+            
+            .titleC{
+                font-size:large;
+            }
+            
+            .textR{
+                text-align : right;
+            }
+
+            
+            body {
+                font-family: Arial Unicode MS;
+                font-size: small;
+            }
+            
+            /* sets the header as the matching element */
+            .header-section { 
+              position: running(header-section); 
+              left: 0; 
+              right: 0; 
+              height: 150px;
+            /* background: #1abc9c; 
+             color: white; */
+              color : navy ;
+              font-size: large;
+            }
+            
+            /* sets the footer as the matching element */
+            .footer-section { 
+              position: running(footer-section); 
+              left: 0; 
+              right: 0; 
+            }
+            
+            /* header addresss p */
+            .smallPara { 
+               font-size: x-small;
+            }
+            
+            .footer-content{
+              height: 100px;
+            /*background: #1abc9c;
+              color: white;*/
+              color: black;
+              font-size: medium;
+            }
+            
+
+            
+        table { 
+            table-layout: fixed; 
+            border-spacing: 0;
+            width: 100%;
+        } 
+        td { 
+            background-color: white;
+            word-wrap: break-word; 
+        } 
+        .itemTable{
+              border-collapse: collapse;
+              border-spacing: 0;
+              border: 1px solid #ddd;
+              table-layout: auto;
+              width: 100%;
+        }
+        .itemCell{
+        text-align: left;
+            //padding: 5px;
+        font-size: small;
+        vertical-align:top;
+        }
+        .detail{
+            width:60%;
+        }
+        .topic{
+            width:40%;
+        }
+           
+        .avoidPageBreak{
+            page-break-inside: avoid;
+        }
+
+        </style>
+    </head>
+        
+        
+    <body>
+       
+          <!------------------------ Header Section -------------------------->
+          <div class="header-section">
+              <table>
+                  <td width ="33.33%">
+                    <div>
+                        <apex:image url="{!$Resource[primaryConfigW.Logo_Static]}" height="150px"/>
+                    </div>
+                  </td>
+                  <td width ="33.33%">
+                    <p align="center">{!primaryConfigW.Title}</p>
+                  </td>
+                  <td width ="33.33%">
+                        <div align="right">
+                            <apex:image url="/sfc/servlet.shepherd/version/download/{!RIGHT(serviceFormMap[checklistId][primaryConfigW.Logo_Field],15)}" 
+                                        height="75px" 
+                                        rendered="{!AND(NOT(ISNULL(primaryConfigW.Logo_Field)), NOT(ISNULL(serviceFormMap[checklistId][primaryConfigW.Logo_Field])))}"/>
+                            <p class="smallPara">
+                                <apex:outputText value="{!serviceFormMap[checklistId][primaryConfigW.Address_Field]}"
+                                                 rendered="{!AND(NOT(ISNULL(primaryConfigW.Address_Field )), NOT(ISNULL(serviceFormMap[checklistId][primaryConfigW.Address_Field ])))}"
+                                                 escape="false">
+                                </apex:outputText>
+                            </p>
+                      </div>
+                  </td>
+              </table>
+          </div>
+        
+          <!------------------------ Footer Section -------------------------->
+          <div class="footer-section">
+            <table>
+                <tr>
+                    <td class = "footer-content">
+                        <p>{!primaryConfigW.Footer_text}</p>
+                    </td>
+                    <td class = "footer-content">
+                        <p class = "textR">Page <span class="page-number"></span> of <span class="page-count"></span></p>
+                    </td>
+                </tr>
+              </table>
+          </div>
+        
+        
+        <!------------------------ Content -------------------------->
+        <table>
+            <tr>
+                <td>
+                        <div>
+                            <!--<p class="titleC">Test Element</p>-->
+                            
+                            <!------------------------ Sections from FieldSets -------------------------->
+                            <apex:outputPanel rendered="{!SizeOfMap>0}">
+                            <apex:variable var="recId" value="INIT"/>
+                          
+                            <div style="overflow-x:auto;">
+                                <apex:repeat value="{!sectionsList}" var="sectionName"> 
+                                    <apex:variable var="sectionRecordId" value="{!RIGHT(sectionName, 18)}"/>
+                                    
+                                    <!----Forced Pagebreak for new section---->
+                                    <apex:outputText rendered="{!AND(recId <> 'INIT', recId<>sectionRecordId)}">
+                                        <div class="page-break" style= "color:red;"></div>
+                                        <div>
+                                             <p style= "background: #CE578B; color : white; padding: 1px 0px 1px 5px; font-size: medium;">{!serviceFormMap[sectionRecordId]['RecordType.Name']}</p>
+                                        </div>
+                                    </apex:outputText>
+                                    <apex:variable var="recId" value="{!sectionRecordId}"/>
+
+                                    <div class="avoidPageBreak">
+                                        
+                                    <!------------------------ Section Header ------------------------>
+                                    <div>
+                                         <!--<p style= "background: #306EFF; color : white;padding: 1px 0px 1px 5px;font-size: medium;">{!serviceFormMap[sectionRecordId]['Name']} : {!LEFT(sectionName, LEN(sectionName)-19)}</p>-->
+                                         <p style= "background: #306EFF; color : white;padding: 1px 0px 1px 5px;font-size: medium;">{!LEFT(sectionName, LEN(sectionName)-19)}</p>
+                                    </div>
+                                    <!------------------------ Section Table ------------------------>
+                                    <table class="itemTable">
+                                      <apex:repeat value="{!sectionsWithFields[sectionName]}" var="field">
+                                          <!------------------------ Section Row ------------------------>
+                                          <apex:outputText rendered="{!NOT(ISNULL(serviceFormMap[sectionRecordId][field.apiName]))}">
+                                            <tr>
+                                                <td class="topic itemCell">{!field.label}</td>
+                                                <td class ="detail itemCell">
+                                                    <apex:outputText value="{! IF(serviceFormMap[sectionRecordId][field.apiName],'Yes','No')}" rendered="{!field.type=='BOOLEAN'}"></apex:outputText>
+                                                    <apex:outputField value="{!serviceFormMap[sectionRecordId][field.apiName]}" rendered="{!NOT(field.type=='BOOLEAN')}"></apex:outputField>
+                                                </td>
+                                            </tr>
+                                          </apex:outputText>
+                                      </apex:repeat>
+                                    </table>
+                                    </div>
+
+                                </apex:repeat>
+                            </div>
+                            </apex:outputPanel>
+                            
+                            
+                            <!------------------------ Time Entries -------------------------->
+                            <apex:outputPanel rendered="{!SizeOfTEMap>0}">
+                          
+                            <div style="overflow-x:auto;">
+                                <apex:repeat value="{!timeEntrySectionList}" var="tesectionName"> 
+                                    <apex:variable var="tesectionRecordId" value="{!RIGHT(tesectionName, 18)}"/>
+                                    <div class="avoidPageBreak">
+
+                                    <!------------------------ TE Section Header ------------------------>
+                                    <div>
+                                         <p style= "background: #306EFF; color : white;padding: 1px 0px 1px 5px;font-size: medium;">{!LEFT(tesectionName, LEN(tesectionName)-19)} : {!timeEntryMap[tesectionRecordId][primaryConfigW.Time_Entry_Name_Field]}</p>
+                                    </div>
+                                    <!------------------------ TE Section Table ------------------------>
+                                    <table class="itemTable">
+                                      <apex:repeat value="{!timeEntrySectionsWithFields[tesectionName]}" var="field">
+                                          <!------------------------ TE Section Row ------------------------>
+                                          <apex:outputText rendered="{!NOT(ISNULL(timeEntryMap[tesectionRecordId][field.apiName]))}">
+                                            <tr>
+                                                <td class="topic itemCell">{!field.label}</td>
+                                                <td class ="detail itemCell">
+                                                    <apex:outputText value="{! IF(timeEntryMap[tesectionRecordId][field.apiName],'Yes','No')}" rendered="{!field.type=='BOOLEAN'}"></apex:outputText>
+                                                    <apex:outputField value="{!timeEntryMap[tesectionRecordId][field.apiName]}" rendered="{!NOT(field.type=='BOOLEAN')}"></apex:outputField>
+                                                </td>
+                                            </tr>
+                                          </apex:outputText>
+                                      </apex:repeat>
+                                    </table>
+                                    </div>
+
+                                </apex:repeat>
+                            </div>
+                            </apex:outputPanel>
+                            
+
+                            <!------------------------ Customer's Feedback ------------------------>
+                            <div class="avoidPageBreak">
+                                <div>
+                                     <p style= "background: #306EFF; color : white; padding: 1px 0px 1px 5px;font-size: medium;">{!$Label.FeedbackLabel}</p>
+                                </div>
+                            	<apex:outputPanel rendered="{!AND (NOT(ISBLANK(primaryConfigW.Feedback_Rating_Field)), NOT(ISBLANK(primaryConfigW.Feedback_Remarks_Field)))}">
+                                    <table class="itemTable">
+                                            <tr>
+                                                <td class="topic itemCell">Customer Feedback</td>
+                                                <td class ="detail itemCell">
+                                                    <apex:outputField value="{!serviceFormMap[checklistId][primaryConfigW.Feedback_Rating_Field]}" rendered="{!NOT(ISBLANK(primaryConfigW.Feedback_Rating_Field))}"></apex:outputField>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="topic itemCell">Customer Remarks</td>
+                                                <td class ="detail itemCell">
+                                                    <apex:outputField value="{!serviceFormMap[checklistId][primaryConfigW.Feedback_Remarks_Field]}" rendered="{!NOT(ISBLANK(primaryConfigW.Feedback_Remarks_Field))}"></apex:outputField>
+                                                </td>
+                                            </tr>
+                                    </table>
+                                </apex:outputPanel>
+
+                            </div>
+
+
+                            <!------------------------ Customer's Signature ------------------------>
+                            <div class="avoidPageBreak">
+                                <div>
+                                     <p style= "background: #306EFF; color : white; padding: 1px 0px 1px 5px;font-size: medium;">{!$Label.SignatureLabel }</p>
+                                </div>
+                                <apex:outputPanel rendered="{!signatureList.size >0}">
+                                    <apex:repeat value="{!signatureList}" var="sign"> 
+                                        <apex:image url="/sfc/servlet.shepherd/version/download/{!signatureMap[sign]['ContentDocument.LatestPublishedVersionId']}" height="75px"/>
+                                        <p style= "padding: 0px 0px 0px 0px;">
+                                            <!--{!serviceFormMap[sign]['Name']} : {!signatureMap[sign]}<br></br>-->
+                                            {!serviceFormMap[sign][primaryConfigW.Customer_Name_Field]} <br></br>
+                                            {!DAY( signatureMap[sign]['ContentDocument.CreatedDate'] )}-{!MONTH(signatureMap[sign]['ContentDocument.CreatedDate'])}-{!YEAR(signatureMap[sign]['ContentDocument.CreatedDate'])} <br></br>
+                                        </p>
+                                    </apex:repeat>
+                                </apex:outputPanel>
+
+                            </div>
+
+                       </div>
+                </td>
+            </tr>
+            <!--<tr>
+                <td>
+                    <div class="page-break">Page A</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="page-break">Page B</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="page-break">Page C</div>
+                </td>
+            </tr>-->
+
+        </table>
+        
+
+    </body>
+   </html>
+
+</apex:page>

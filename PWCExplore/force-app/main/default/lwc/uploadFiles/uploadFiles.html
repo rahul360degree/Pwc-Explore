@@ -1,0 +1,30 @@
+<template>
+<template if:true={displayComp}> 
+    <lightning-card title="Upload Documents here">
+        
+        <lightning-layout multiple-rows>
+            <template for:each={consolidatedDocsList} for:item="cdl">
+                <lightning-layout-item key={consolidatedDocsList} size="6" padding="around-medium">
+                    <lightning-file-upload label={cdl.docname} 
+                                            name={cdl.docname} 
+                                            record-id={recordId} 
+                                            data-doctype={cdl.docname}
+                                            onuploadfinished={handleUploadFinished} 
+                                            required={cdl.isRequired}
+                                            multiple>
+                    </lightning-file-upload>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+
+        <lightning-datatable key-field="Id"
+                            data={filterDocumentList}
+                            columns={columns}
+                            hide-checkbox-column="true"
+                            show-row-number-column="true"
+                            column-widths-mode="auto"
+                            onrowaction={handleRowAction}>
+       </lightning-datatable>
+    </lightning-card>
+</template>
+</template>

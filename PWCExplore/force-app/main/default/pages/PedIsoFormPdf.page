@@ -1,0 +1,148 @@
+<apex:page standardController="Quote" extensions="PedIsoFormController"   renderAs="pdf" standardStylesheets="false" applyBodyTag="false" applyHTMLTag="false" sidebar="false" showHeader="false">
+    <head>  
+        <style type="text/css" style="font-size: 12px;">
+            @page {
+            margin-top: 150px;
+            padding:0px;
+            margin-bottom: 200px;
+            
+            @top-left {
+            content: element(header);
+            }                           
+            @bottom-left {   
+            content: element(footer);
+            } 
+            }        
+            div.header {
+            margin-top:10px;
+            position: running(header);
+            width: 100%;
+            margin-right: 10px;
+            }
+            div.footer {       
+            position: running(footer);
+            width: 100%;
+            margin-left: 170px;
+            }
+            .footer {
+            display: flex;
+            justify-content: right;
+            align-items: right;
+            }
+            .headertable{
+            font-size:14px;
+            }
+            div.pagebreak {
+            page-break-after: always;
+            }
+        </style> </head> 
+    
+    <div class="header">
+        <div  style="float:left;width:500px;">
+            <apex:image url="{!$Resource.godrej_logo}" width="100" height="50"/><br/>
+             <div style="font-size: 12px;">
+                 PM: MKTG: ENQUIRY DOCUMENT: Rev 0 <br/>
+            	 Dated 8th FEBRUARY 2017
+            </div>
+        </div>
+        <div  style="float:right;width:200px;">
+            <div style="font-size: 14px;">
+                <br/><br/><apex:outputText value="PED – Sales & Marketing Dept."/>  
+                <br/>Form I
+            </div>
+        </div>
+        
+    </div>
+ <!--  <div  class="footer" style="display: flex; justify-content: right; align-items: right;">
+        <div style="float: right;">
+            <apex:image url="{!$Resource.SSD_Footer}" width="940" height="200"/> </div>
+    </div>-->
+    <table width="100%" style="font-size: 14px;">
+        <tr>
+            <td  width="60%">
+                <div id="left" align="left">
+                    <u><b><apex:outputText value="ENQUIRY DOCUMENTS TRANSMITTAL" style="font-size: 16px;"/></b></u> <br/><br/>
+                    <p> FILE NO : <b>{!FileNo}</b></p>
+                    <p> CLIENT : <b>{!oppData.Account.Name}</b></p>
+                </div>
+            </td>
+            <td width="40%">
+                <div id="right" align="right">
+                    <table style="border: 1px solid black;">
+                       <tr>
+                            <td> 
+                                <center>
+                                    <apex:outputText value="PLEASE ENSURE THE PROPOSAL REACHES US ON OR BEFORE"/><br/><br/>
+                               		<b>{!EstimationDueDate}</b>
+                                </center>
+                           </td>
+                        </tr>
+                    </table>                
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="pagebreak" style="font-size: 14px;">
+        
+        
+        <p> PROJECT : <b>{!oppData.Project_Name__c}</b> </p>
+        
+        <p> ITEM : <b>{!EquipmentName}</b> </p>
+        
+        <p> ENQUIRY RECEIPT DATE : <b>{!EnquiryRecpeiptDate}</b> </p>
+        
+        <p> DUE DATE : <b>{!SalesDueDateTime}</b></p>	<!--added SalesDueDateTime-->
+
+		<p> TYPE OF ENQUIRY : <b>{!EquipmentType}</b> </p><br/>
+
+		<p> THE LIST OF FOLLOWING ENQUIRY DOCUMENTS HAS BEEN HANDED OVER TO HEAD – ESTIMATION’S AUTHORISED REPRESENTATIVE. </p><br/>
+    
+    
+        <center>DOCUMENTS<br/><br/>
+       <b> 1) Enquiry Documents </b></center><br/><br/>
+	<table width="100%" style="font-size: 14px;">
+        <tr>
+            <td  width="5%">
+                1.<br/><br/><br/>
+            </td>
+            <td  width="95%">
+                SENT TO ESTIMATION DEPT ON (DATE). <b>{!Today}</b> SIGN OF MKTG-II <b><u>{!MKTG_II}</u></b><br/><br/>
+            </td>
+        </tr>
+        <tr>
+            <td  width="5%">
+                2.<br/><br/>
+            </td>
+            <td  width="95%">
+                RECD. BY ESTIMATION DEPT ON (DATE) <b>{!Today}</b> SIGN OF ESTM DEPT <b><u>{!quoteData.Estimator_Initials__c}</u></b><br/><br/>
+            </td>
+        </tr>
+        <tr>
+            <td  width="5%">
+                3.<br/><br/>
+            </td>
+            <td  width="95%">
+                PROPOSAL RECD. FROM ESTM DEPT ON (DATE)<br/><br/>
+            </td>
+        </tr>
+        <tr>
+            <td  width="5%">
+                4.
+            </td>
+            <td  width="95%">
+                PLEASE KEEP THIS DOCUMENT IN FILE REFFERED. ABOVE
+            </td>
+        </tr>
+        </table>
+    </div><br/><br/>
+        <table width="100%" style="font-size: 14px;">
+        <tr>
+            <td  width="15%">
+                Distribution:<br/><br/>
+            </td>
+            <td  width="85%">
+                <apex:outputText value="This document is jointly maintained by the Estimation Dept as well as Sales & Marketing Dept. in the file mentioned above."></apex:outputText>
+            </td>
+        </tr>
+     </table>
+</apex:page>

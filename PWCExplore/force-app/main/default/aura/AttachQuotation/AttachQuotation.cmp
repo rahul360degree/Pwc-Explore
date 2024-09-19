@@ -1,0 +1,6 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                Controller = "AttachQuotationController"
+                access="global">
+	<aura:handler name="init" action="{!c.generateQuotePDF}" value="{!this}"></aura:handler>
+    Please wait while generating Quotation.
+</aura:component>

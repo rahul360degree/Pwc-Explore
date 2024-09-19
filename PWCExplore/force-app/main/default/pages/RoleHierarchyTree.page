@@ -1,0 +1,39 @@
+<apex:page controller="RoleTreeController">
+    <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"/>
+    <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.11/themes/default/style.min.css"/>
+    <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.11/jstree.min.js"/>
+
+    <div id="roleTree"></div>
+    <button onclick="expandAll()">Expand All</button>
+    <button onclick="collapseAll()">Collapse All</button>
+    <button onclick="downloadHtml()">Download HTML</button>
+
+    <script>
+        var roleData = {!roleTreeJson};
+
+        $(document).ready(function() {
+            $('#roleTree').jstree({
+                'core': {
+                    'data': roleData
+                }
+            });
+        });
+
+        function expandAll() {
+            $('#roleTree').jstree('open_all');
+        }
+
+        function collapseAll() {
+            $('#roleTree').jstree('close_all');
+        }
+
+        function downloadHtml() {
+            var htmlContent = $('#roleTree').html();
+            var blob = new Blob([htmlContent], {type: 'text/html'});
+            var link = document.createElement('a');
+            link.setAttribute('href', window.URL.createObjectURL(blob));
+            link.setAttribute('download', 'role_tree.html');
+            link.click();
+        }
+    </script>
+</apex:page>

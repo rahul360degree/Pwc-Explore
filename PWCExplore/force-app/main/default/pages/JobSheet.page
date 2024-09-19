@@ -1,0 +1,242 @@
+<apex:page standardController="WorkOrderLineItem"  renderAs="pdf" extensions="JobSheetController">
+    <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+            <td style="border: 1px solid black; padding: 8px; text-align: left; width: 33%;"> 
+                <apex:image url="{!URLFOR($Resource[buLogo])}"  width="100" height="50"/>
+            </td>
+            <td style="border: 1px solid black; padding: 8px; text-align: center; width: 33%; font-size: 10px;">
+                <b>AUTHORIZED SERVICE PROVIDER</b><br/> {!accountName}
+            </td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left; width: 33%; font-size: 10px;">
+                Order type: {!orderType} <br/>
+                <apex:outputPanel layout="none" rendered="{!customerType == 'VIP'}">
+                    Customer Type: <span style="font-weight:bold; background-color:red;">{!customerType}</span>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!customerType != 'VIP'}">
+                    Customer Type: {!customerType}
+                </apex:outputPanel>
+                <br/>
+                Dealer Name:
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;font-size: 10px;"> 
+                Preferred Date: <br/>
+                Preferred Time: <br/>
+                Product: <br/>
+                Instruction: <br/>
+                Requested by:
+            </td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;font-size: 10px;"> 
+                Service Order No: {!caseNumber} <br/>
+                Date: <br/>
+                Time: <br/>
+                Service Area:
+            </td>
+            <td rowspan="3" style="border: 1px solid black;border-bottom:none; padding: 8px; text-align: left;font-size: 10px;"> 
+                Installation: <br/>
+                Service Orders Booked in Past One Year: <br/>
+                ODU No: <br/>
+                Ageing of Appliance: <br/>
+                Location No:<br/>
+                Warranty <br/>
+                Sale Dt.:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exp Dt.:<br/>
+                Contract: <br/>
+                ST. Dt.:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exp Dt.:<br/>         
+                Ser Pkg: <br/>
+                Visit Category: WAR/PRS/CHA/PPL/OSC <br/>
+                UID No:
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border: 1px solid black;border-bottom:none; padding: 8px; text-align: left; font-size: 10px;"> 
+                Name: MR/Ms. {!customerName}<br/>
+                {!addressInfo}<br/>
+                Pincode: {!pincode}<br/>
+                Res Telephone:{!mobile}&nbsp;&nbsp;&nbsp;&nbsp; Mobile:{!mobile}&nbsp;&nbsp;&nbsp;&nbsp; Customer calling No:{!mobile} <br/>
+                Nature of Complaint:<br/>
+                Special Instructions:
+            </td>
+        </tr>
+        <tr>
+            <td style="border-left:1px solid black"> </td>
+        </tr>
+    </table>
+    
+    <table style="border-collapse: collapse; width: 100%;font-size: 10px;">
+        <tr>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;"> 
+                Part Code
+            </td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;"> 
+                Part Description
+            </td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;"> 
+                Def. Rec(Y/N)
+            </td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;"> 
+                Rate
+            </td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;"> 
+                Qty
+            </td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;"> 
+                Amount
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px;"></td>
+        </tr>
+        <apex:outputPanel layout="none" rendered="{!businessUnit != 'SSD'}">
+            <tr>
+                <td colspan="2" style="border: 1px solid black; padding: 8px;">
+                    {!IF(businessUnit == 'appliances' || businessUnit == 'Interio', 'Labour/Gas/Transportation Charges', IF(businessUnit == 'locks', 'Service Charge', ''))}
+                </td>                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+            </tr>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!businessUnit == 'SSD' || businessUnit == 'locks'}">
+            <tr>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+            </tr>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!businessUnit == 'SSD'}">
+            <tr>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+            </tr>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!businessUnit != 'SSD'}">
+            <tr>
+                <td colspan="2" style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;">Total</td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+                <td style="border: 1px solid black; padding: 8px;"></td>
+            </tr>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!businessUnit == 'Appliance'}">
+            <tr>
+                <td colspan="2" style="border: 1px solid black; padding: 8px;">Defective Compressor Sr. No:</td>
+                <td colspan="2" style="border: 1px solid black; padding: 8px;">Oil Charging No:</td>
+                <td colspan="2" style="border: 1px solid black; padding: 8px;">Replace Comp Sr. No:</td>  
+            </tr>
+        </apex:outputPanel>
+        
+    </table>
+    <br/>    
+    <table style="border-collapse: collapse; width: 100%;font-size: 10px;">
+        <tr>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Visit No:1</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Tech Name:</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Visit Date</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Time In:</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Time Out:</td>
+        </tr>
+        <tr style="height: 50px;">
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Job Desc</td>
+            <td colspan="3" style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left; vertical-align: top;">Engineers Remark and Sign</td>
+        </tr>
+        
+        <tr>
+            <td colspan="2" style="border: 1px solid black; padding: 8px; text-align: left;">Extra/Paid Amount RS</td>
+            <td colspan="2" style="border: 1px solid black; padding: 8px; text-align: left;">TCR No:</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Action Code</td>            
+        </tr>
+        <tr>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Visit No:2</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Tech Name:</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Visit Date</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Time In:</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Time Out:</td>
+        </tr>
+        <tr style="height: 50px;">
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Job Desc</td>
+            <td colspan="3" style="border: 1px solid black; padding: 8px;"></td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left; vertical-align: top;">Engineers Remark and Sign</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border: 1px solid black; padding: 8px; text-align: left;">Extra/Paid Amount RS</td>
+            <td colspan="2" style="border: 1px solid black; padding: 8px; text-align: left;">TCR No:</td>
+            <td style="border: 1px solid black; padding: 8px; text-align: left;">Action Code</td>            
+        </tr>
+        <tr>
+            <td colspan="5" style="border: 1px solid black; padding: 8px; text-align: left;">
+                I am satidfied with the job done/repairs carried out on my product and the same is working satfisfactorily.<br/>
+                
+                Customer Remarks:<br/>
+                Customer Name and Sign &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Please enter the CSN you received via SMS						
+            </td>            
+        </tr>
+    </table>
+    <br/>
+    <table style="border-collapse: collapse; width: 100%; font-size: 10px;">
+        <tr>
+            <td colspan="2" style="border: 1px solid black; padding: 8px; text-align: left;border-right:none;">
+                Call No:{!caseNumber}<br/>
+                Cust. Name:{!customerName}MR/MS.<br/>
+                Job Done:
+                Amt. Collected
+                Tech Sign.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date
+            </td>
+            <td style="border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; padding: 8px; text-align: left; border-left: none;">                <apex:image url="{!URLFOR($Resource[buLogo])}"  width="100" height="50"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border: 1px solid black; padding: 8px; text-align: left;">
+                Call Center No: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WhatsApp No:<br/>
+                Website:www.godrejsmartcare.com &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Emailid:smartcare@godrej.com &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Authorized Service Provider:{!accountName}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border: 1px solid black; padding: 8px; text-align: left;">
+                In order to resend CSN SMS, send 'GADCSN service order 309' to 9223070107
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border: 1px solid black; padding: 8px; text-align: left;">
+                Note:In case of any payment has been made against this Service Order, please demand a receipt from the service technicin.<br/>
+                This is a record rendered and is usage by Authorzieed Service Center Only 
+            </td>
+        </tr>
+    </table>
+    
+    
+    
+    
+    
+    
+</apex:page>

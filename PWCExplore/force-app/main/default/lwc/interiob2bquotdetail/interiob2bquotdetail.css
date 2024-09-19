@@ -1,0 +1,27 @@
+.tablediv{
+   /*  overflow-x: auto;
+    overflow-y: auto; */
+}
+.tableCSS{
+    /* width: 210%; */
+}
+
+.slds-modal__container {
+    /* max-width: 95% !important;
+    width: 95% !important; */
+}
+
+table {
+    /*table-layout: fixed;*/
+    width: 100%;   
+}
+.tableLayout{
+    table-layout: fixed;
+}
+th,td {
+   /* word-wrap: break-word;*/
+}
+
+.inputClass{
+    width:200px;
+}

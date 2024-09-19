@@ -1,0 +1,31 @@
+<!--
+  @description       : 
+  @author            : vrajpoot@godrej.com
+  @group             : 
+  @last modified on  : 04-26-2022
+  @last modified by  : vrajpoot@godrej.com
+-->
+<template>
+    <div if:true={contentVersions}>
+    <div class="slds-theme_default">
+
+
+        <lightning-card>
+            <h3 slot="title">
+                <lightning-icon icon-name="standard:file" size="small"></lightning-icon>
+                &nbsp;Notes & Attachments
+            </h3>
+            <div class="slds-p-horizontal_small">
+                <ul>
+                    <template if:true={contentVersions} for:each={contentVersions} for:item="record">
+                        <li key={record.Id} class="slds-p-around_xx-small">
+                            <c-dsa-attachment-icon record={record} used-in-community={usedInCommunity}>
+                            </c-dsa-attachment-icon>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </lightning-card>
+    </div>
+</div>
+</template>

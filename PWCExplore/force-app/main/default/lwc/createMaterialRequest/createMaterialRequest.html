@@ -1,0 +1,108 @@
+<template>
+    <div style="background : white;max-height: 500px;overflow:auto" class="slds-p-horizontal_small">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </template>
+
+        <lightning-record-edit-form object-api-name="Order" record-type-id={recordTypeId} onsubmit={onSubmitHandler}>
+            <header class="slds-modal__header">
+                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Raise Material Request</h2>
+            </header>
+            <lightning-messages></lightning-messages>
+            <template if:false={isLoaded}>
+                <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+            </template>
+            
+                <div class="slds-grid slds-wrap">
+                    <template if:true={isLoaded}>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox name="supplyTo" label="Supply To" value="" placeholder="Select Supply To"
+                            options={supplyToOptions} onchange={handleSupplyToChange} required></lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2 slds-p-top_xx-small slds-p-left_x-small">
+                        <label for="fieldid" class="slds-text-body_small">Account Name</label>
+                        <lightning-input-field field-name="End_Customer__c" required="true" variant="label-hidden"
+                            id="fieldid" class="supplyTo" disabled={isAccountDisabled}>
+                        </lightning-input-field>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Class__c" name="class__c" value={classValue}
+                            onchange={handleClassChange} class="orderClass" required="true"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Logistics_Company_Branch__c" value={branch}
+                            class="branchClass" disabled={isBranchDisabled}
+                            required="true"></lightning-input-field>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Replenishment_Type__c" required="true">
+                        </lightning-input-field>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Customer_Type__c" onchange={handleCustomerTypeChange}
+                            required="true">
+                        </lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Installation_Group__c" disabled={isInstallationGroupDisabled}
+                            class="installationGroupField">
+                        </lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox class="serviceOrderTypeCls" name="orderType" label="Service/Order Type" value={orderType} placeholder="Select Order Type"
+                            options={orderTypeOptions} onchange={handleOrderTypeChange} required></lightning-combobox>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Reason_for_FOC_Supply__c"
+                            disabled={isGenericWarrantyDisabled} class="focSupplyReason"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox class="salesOrdSrsCls" name="orderSeries" label="Sales Order Series" value={salesOrderSeries}
+                            placeholder="Select Sales Order Series" options={salesOrderSeriesOptions}
+                            onchange={handleSeriesOptions} required></lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Generic_Warranty_template__c"
+                            disabled={isGenericWarrantyDisabled} class="genericWarrantyField"
+                            required={isWarrantyTemplateMandatory}>
+                        </lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Area__c" required="true" value={area}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Sales_Office__c" required="true" value={salesServiceOfficeId}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Internal_Sales_Representative__c" required="true"
+                            value={internalSalesServiceRep}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="MR_Type__c" required="true" value={mrType} disabled="true">
+                        </lightning-input-field>
+                    </div>
+                    <div class="slds-hidden">
+                        <lightning-input-field field-name="Sales_Order_Series__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-hidden">
+                        <lightning-input-field field-name="Sold_To_Address__c"></lightning-input-field>
+                    </div>
+                </template>
+                </div>
+            
+            <footer class="slds-modal__footer">
+                <lightning-button class="slds-m-around_small" label="Cancel" onclick={handleCancel}></lightning-button>
+                <template if:false={isOrderCreated}>
+                    <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+                </template>
+                <template if:true={isOrderCreated}>
+                    <lightning-button class="slds-m-around_small" type="submit" label="Save"></lightning-button>										
+                </template>								 
+            </footer>
+        </lightning-record-edit-form>
+    </div>
+</template>

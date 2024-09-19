@@ -1,0 +1,165 @@
+<apex:page standardController="NSI__c"
+           extensions="ssdNsiAttachmentController"
+           renderAs="pdf"
+           standardStylesheets="false"
+           applyBodyTag="false"
+           applyHTMLTag="false"
+           sidebar="false"
+           showHeader="false">
+    <head> 
+        <style type="text/css" style="font-size: 10px;">
+            @page {
+            margin-top: 80px;
+            padding: 0px;
+            margin-bottom: 200px;
+            
+            @top-left {
+            content: element(header);
+            }                           
+            @bottom-left {   
+            content: element(footer);
+            } 
+            }        
+            div.header {
+            margin-top: 10px;
+            position: running(header);
+            width: 100%;
+            margin-right: 10px;
+            }
+            div.footer {       
+            position: running(footer);
+            width: 100%;
+            margin-left: 170px;
+            }
+            .footer {
+            display: flex;
+            justify-content: right;
+            align-items: right;
+            }
+            table, td, th{
+            border: 1px solid black;
+            border-collapse: collapse;
+            }
+        </style>
+    </head>
+    <div  class="header" >
+        <br/><br/>
+        <center><b><apex:outputText style="font-size: 28px" value="GODREJ & BOYCE MFG. CO. LTD"/></b></center>
+        <br/></div>
+    <table style="width:100%">
+        <tr>
+            <td style="font-size: 15px;width:50%" align="center">NON-STANDARD BUSINESS<br/>ENQUIRY FORM
+                <table>
+                    <td align="center">SECURITY SOLUTION DIVISION<br/>
+                        NSI NO: {!nsiData.NSI_Number__c}
+                    </td>
+                </table></td>
+        </tr>
+    </table>
+    <br/>
+    <table style="font-size: 14px" id = "center" align="center" width="100%">
+        <tr>
+            <td style="width:50%;">NSI Created Date:&nbsp;<apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!nsiData.CreatedDate}" /></apex:outputText></td>
+            <td style="width:50%;">Customer Segment:&nbsp;{!nsiData.Opportunity__r.End_Customer_Segment_SSD__c}</td>
+        </tr>
+        <tr>
+            <td style="width:50%;">Customer Name:&nbsp;&nbsp;&nbsp;{!nsiData.Opportunity__r.Account.Name}</td>
+            <td style="width:50%;">Product Category:&nbsp;&nbsp;&nbsp;{!nsiData.Product_Category__c}</td>
+        </tr>
+    </table>
+    <br/>
+    
+    <b>Part I(To be filled by Mktg/Sales)</b>
+    <table style="font-size: 14px" width="100%">
+        <tr align="center">
+            <td width="30%">Product Family</td>
+            <td>{!nsiData.Nearest_Standard_Product__r.Search_Key_I__c}</td>
+        </tr>
+        <tr align="center">
+            <td>Nearest Standard Product</td>
+            <td>{!nsiData.Nearest_Standard_Product__r.Name}</td>
+        </tr>
+        <tr align="center">
+            <td>Requirement Description (M)</td>
+            <td>{!nsiData.Requirement_Description__c}</td>
+        </tr>
+        <tr align="center">
+            <td>Product Qty</td>
+            <td>{!nsiData.Product_Qty__c}</td>
+        </tr>
+        <tr align="center">
+            <td>Customer Expected Period</td>
+            <td>{!nsiData.Customer_Expected_Period__c}</td>
+        </tr>
+        <tr align="center">
+            <td>Target Price (Rs.)</td>
+            <td>{!nsiData.Target_Price__c}</td>
+        </tr>
+        <table width="100%" style="font-size: 14px">
+            <tr align="center">
+                <td width="20%"><b>Dimensions: (in mm)</b></td><td><b>Height</b></td><td><b>Width</b></td><td><b>Depth</b></td>
+            </tr>
+            <tr align="center">
+                <td>Outside</td><td>{!nsiData.Height_Outside__c}</td><td>{!nsiData.Width_Outside__c}</td><td>{!nsiData.Depth_Outside__c}</td>
+            </tr>
+            <tr align="center">
+                <td>Clear Inside</td><td>{!nsiData.Height_Clear_inside__c}</td><td>{!nsiData.Width_Clear_inside__c}</td><td>{!nsiData.Depth_Clear_inside__c}</td>
+            </tr>
+        </table>     <table width="100%" style="font-size: 14px">
+        <tr align="center">
+            <td><b>Locks:</b></td><td><b>Type of Lock</b></td><td><b>Make/Model</b></td>
+        </tr>
+        <tr align="center">
+            <td width="20%"></td><td width="57%">{!nsiData.Lock_Type__c}</td><td>{!nsiData.Make_Model__c}</td>
+        </tr>
+        </table>
+        <table width="100%" style="font-size: 14px">
+            <tr align="center">
+                <td width="30%">Any Other Customized Accessories</td>
+                <td>{!nsiData.Any_Other_Customized_Accessories__c}</td>
+            </tr>
+            <tr align="center">
+                <td width="30%">Certifications</td>
+                <td>{!nsiData.Certifications__c}</td>
+            </tr>
+            <tr align="center">
+                <td width="30%">Tender Document Attached</td>
+                <td>{!nsiData.Tender_Document_Attached__c}</td>
+            </tr>
+            <tr align="center">
+                <td width="30%">Competitors Offerings</td>
+                <td>{!nsiData.Competitors_Offerings__c}</td>
+            </tr>
+        </table>
+    </table><br/>
+    <b>Final Order should have reference of Enquiry no.</b><br/>Enquiry generated and approved by (marketing personnel)<br/>
+    Cross Functional team meeting required:<br/>
+    <table  width="100%" style="font-size: 14px">
+        <tr align="center">
+            <td width="20%"><b>Department/Function</b></td><td width="25%"><b>Remarks</b></td><td width = "20%"><b>Estimated Lead Time</b></td><td><b>Price</b></td>
+        </tr>
+        <tr align="center">
+            <td width="23%"><b>Marketing (Initial)</b></td><td width="30%">{!nsiData.Initial_Remarks__c}</td><td width = "20%"></td><td>N/A</td>
+        </tr>
+        <tr align="center">
+            <td width="23%"><b>Design</b></td><td width="30%">{!nsiData.Remarks_Design__c}</td><td width = "20%">{!nsiData.Estimated_Lead_time_Design__c}</td><td>N/A</td>
+        </tr>
+        <tr align="center">
+            <td width="23%"><b>Planning</b></td><td width="30%">{!nsiData.Remarks_Planning__c}</td><td width = "20%">{!nsiData.Estimated_Lead_time_Planning__c}</td><td>N/A</td>
+        </tr>
+        <tr align="center">
+            <td width="23%"><b>Finance</b></td><td width="30%">{!nsiData.Remarks_Finance__c}</td><td width = "20%">{!nsiData.Estimated_Lead_time_Finance__c}</td><td>{!nsiData.Price__c}</td>
+        </tr>
+        <tr align="center">
+            <td width="23%"><b>Marketing (Final)</b></td><td width="30%">{!nsiData.Remarks_HO__c}</td><td width = "20%"></td><td>{!nsiData.Price_HO__c}</td>
+        </tr>
+    </table>
+    <br/><br/>
+    The above lead time and cost is valid for 15 days from date of enquiry.<br/>
+    <br/>
+    <table width="100%" style="font-size: 15px; border: none;">
+        <tr>
+            <td style = "border: none;">Signature:</td><td style = "border: none;">Date:</td>
+        </tr>
+    </table>
+</apex:page>

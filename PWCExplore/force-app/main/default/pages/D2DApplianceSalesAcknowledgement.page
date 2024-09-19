@@ -1,0 +1,296 @@
+<apex:page controller="SalesAcknowledgementController" 
+           renderAs="advanced_pdf"
+           applyBodyTag="false" 
+           showHeader="true" 
+           sidebar="true" 
+           standardStylesheets="true" 
+           applyHtmlTag="true">  
+    
+    <head>
+        <style type="text/css" media="print">
+            @page {
+                size: 8.27in 11.69in; 
+                margin: .5in .2in .5in .2in; 
+                zoom: 95%;
+
+                @bottom-left {
+                    content: element(footer);
+                    color:#000;
+                }
+            }
+            
+            div.header {
+                padding: 5px;
+                background:#ccbfca;
+                color:#000;
+                font-weight:bold;
+                page-break-inside: avoid;
+            }
+
+            div.subheader {
+                padding: 5px;
+                background:#f3e5f1;
+                color:#000;
+                font-weight:bold;
+                page-break-inside: avoid;
+            }
+
+            div.footer {
+                padding: 5px;
+                height:100px;
+                position: running(footer);
+            }
+            
+            .margin-top-5px {
+                margin-top:5px;
+            }
+
+            .pagenumber:before {
+                content: counter(page);
+            }
+
+            body {font-family: "Arial" "Sans-Serif"; font-size:10px; }    
+            
+            .table {
+                width:100%;
+                margin-top:5px;
+                border-left:1px solid rgb(184, 187, 191);
+                border-top:1px solid rgb(184, 187, 191);
+                page-break-inside: avoid;
+            }
+
+            .table td,th {
+                width:auto;
+                padding:2px;
+                border-right:1px solid rgb(184, 187, 191);
+                border-bottom:1px solid rgb(184, 187, 191);
+                border-collapse: collapse;
+            }
+            
+            .table .label {
+                font-weight:bold;
+                text-align:left;
+            }
+        </style>
+    </head>
+    <div class="main">
+        <div class="footer" style="font-size:12px;color:rgb(128,128,128);text-align:left;">
+            <Strong>Page: <span class="pagenumber"></span></Strong>
+        </div>
+        <Center><div class="header" style="font-size:12px">SALES ACKNOWLEDGEMENT</div></Center><br/>
+        <div class="subheader margin-top-5px">CUSTOMER DETAILS</div>
+        <div>
+            <table class="table"  cellspacing="0">
+                <tr>
+                    <td class="label">Application Number</td>
+                    <td><apex:outputText value="{!orderRec.Name}"/></td>
+                    <td class="label">Name</td>
+                    <td><apex:outputText value="{!orderRec.Sold_To_Business_Partner__r.Name}"/></td>
+                </tr>
+                <tr>
+                    <td class="label" style="word-wrap: break-word;">Address</td>
+                    <td><apex:outputText value="{!shipToAddress}"/></td>
+                    <td class="label">Branch</td>
+                    <td><apex:outputText value="{!orderRec.Logistics_Company_Branch__c}"/></td>
+                </tr>
+                <tr>
+                    <td class="label">City</td>
+                    <td><apex:outputText value="{!orderRec.Ship_To_Address__r.Address_Code__r.City__c}"/></td>
+                    <td class="label">State</td>
+                    <td><apex:outputText value="{!orderRec.Ship_To_Address__r.Address_Code__r.StateName__c}"/></td>
+                </tr>
+                <tr>
+                    <td class="label">PIN</td>
+                    <td><apex:outputText value="{!orderRec.Ship_To_Address__r.Address_Code__r.ZipCode__r.Name}"/></td>
+                    <td class="label">Mobile Number</td>
+                    <td><apex:outputText value="{!orderRec.Sold_To_Business_Partner__r.PersonMobilePhone}"/></td>
+                </tr>
+                <tr>
+                    <td class="label">Alternate Mobile Number</td>
+                    <td><!--<apex:outputText value="7878787676"/>--></td>
+                    <td class="label">Email Id</td>
+                    <td><apex:outputText value="{!orderRec.Sold_To_Business_Partner__r.PersonEmail}"/></td>
+                </tr>
+                <tr>
+                    <td class="label">Type Of Sale</td>
+                    <td><apex:outputText value="{!orderRec.Sales_Classification__c}"/></td>
+                </tr>
+            </table>
+        </div>
+        <div class="subheader margin-top-5px">EXECUTIVE DETAILS</div>
+        <div>
+            <table class="table"  cellspacing="0">
+                <tr>
+                    <td class="label">Salesman Code</td>
+                    <td><apex:outputText value="{!orderRec.Internal_Sales_Representative__r.Salary_Code__c}"/></td>
+                    <td class="label">Email</td>
+                    <td><apex:outputText value="{!orderRec.Internal_Sales_Representative__r.Email}"/></td>
+                </tr>
+                <tr>
+                    <td class="label">Application Number</td>
+                    <td><apex:outputText value="{!orderRec.Name}"/></td>
+                    <td class="label">Business Partner Code</td>
+                    <td><apex:outputText value="{!businessPartnerCode}"/></td>
+                </tr>
+            </table>
+        </div><br/>
+        <Center><div class="subheader margin-top-5px" style="background-color:#ccbfca">APPLIANCE SALE</div></Center><br/>
+        <apex:repeat value="{!orderProducts}" var="product">
+            <center><div class="subheader margin-top-5px" style="background-color:#f3e5f1">{!product.Product2.Name}</div></center>
+            <div>
+                <table class="table"  cellspacing="0">
+                    <tr>
+                        <th>Product Category</th>
+                        <th>Model</th>
+                        <th>Product Code</th>
+                        <th>Color</th>
+                        <th>Capacity</th>
+                        <th>Desired Delivery Date</th>
+                    </tr>
+                        <tr>
+                            <td><apex:outputText value="{!product.Product2.Product_Category__c}"/></td>
+                            <td><apex:outputText value="{!product.product2.Description}"/></td>
+                            <td><apex:outputText value="{!product.product2.Item__c}"/></td>
+                            <td><apex:outputText value="{!product.product2.Colour__c}"/></td>
+                            <td><apex:outputText value="{!product.product2.Capacity__c}"/></td>
+                            <td>
+                                <apex:outputText value="{0,date,yyyy.MM.dd}">
+                                    <apex:param value="{!orderRec.Planned_Delivery_Date__c}"/>
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+            <apex:outputPanel rendered="{!if((OrderRec.Sales_Classification__c=='Exchange'),true,false)}">
+                <div class="subheader margin-top-5px">Old Applicance Details</div>
+                <div>
+                    <table class="table"  cellspacing="0">
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Capacity</th>
+                            <th>Color</th>
+                            <th>Working Product Condition</th>
+                            <th>Age</th>
+                            <th>Cabinet Number</th>
+                        </tr>
+                            <tr>
+                                <td><apex:outputText value="{!product.Old_Appliance_Brand__c}"/></td>
+                                <td><apex:outputText value="{!product.Old_Appliance_Model__c}"/></td>
+                                <td><apex:outputText value="{!product.Old_Appliance_Capacity__c}"/></td>
+                                <td><apex:outputText value="{!product.Old_Appliance_Colour__c}"/></td>
+                                <td><apex:outputText value="{!product.Old_Appliance_Working__c}"/></td>
+                                <td><apex:outputText value="{!product.Age__c}"/></td>
+                                <td><apex:outputText value="{!product.Cabinet_Number__c}"/></td>
+                            </tr>
+                    </table>
+                </div>
+            </apex:outputPanel>
+            <div class="subheader margin-top-5px">Appliance Payment Details</div>
+            <div style="margin:5px">
+                <table class="table"  cellspacing="0">
+                    <tr>
+                        <th>Product Price(MRP)(RS)</th>
+                        <th>Offer Price of Product(Rs)</th>
+                    </tr>
+                        <tr>
+                            <td><apex:outputText value="{!product.UnitPrice}"/></td>
+                            <td><apex:outputText value="{!product.Total_Unit_Price__c}"/></td>
+                        </tr>
+                </table>
+            </div>
+        </apex:repeat><br/>
+        <center><div class="subheader margin-top-5px" style="background-color:#ccbfca">ORDER PAYMENT DETAILS</div></center><br/>
+        <div>
+            <table class="table"  cellspacing="0">
+                <tr>
+                    <th>Advanced Amount Collected</th>
+                    <th>Balance Amount</th>
+                </tr>
+                <tr>
+                    <td><apex:outputText value="{!orderRec.Total_Advance_Amount__c}"/></td>
+                    <td><apex:outputText value="{!orderRec.Total_Due_Amount__c}"/></td>
+                </tr>
+            </table>
+        </div><br/>
+        <center><div class="subheader margin-top-5px" style="background-color:#f3e5f1">ADVANCE PAYMENT DETAILS</div></center>
+        <apex:repeat value="{!advancePayments}" var="advancepay">
+            <apex:outputPanel rendered="{!if((advancepay.Payment_Mode__c=='EMI'),true,false)}">
+                <table class="table" cellspacing="0" style="margin-top: 10px;margin-bottom: 10px">
+                    <tr>
+                        <th>Payment Mode</th>
+                        <th>EMI Scheme</th>
+                        <th>Downpayment EMI Amount</th>
+                        <th>EMI Amount</th>
+                        <th>Total EMI Amount</th>
+                        <th>EMI Provider</th>
+                        <th>Processing Fee</th>
+                        <th>Branch</th>
+                        <th>Remarks</th>
+                    </tr>
+                    <tr>
+                        <td><apex:outputText value="{!advancepay.Payment_Mode__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.EMI_Scheme__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Down_Payment__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.EMI_Amount__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Total_Amount_For_EMI__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Bank_Name__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Processing_Fees__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Branch__r.Name}"/></td>
+                        <td><apex:outputText value="{!advancepay.Remarks__c}"/></td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!if((advancepay.Payment_Mode__c=='Cheque'),true,false)}">
+                <table class="table" cellspacing="0" style="margin-top: 10px;margin-bottom: 10px">
+                    <tr>
+                        <th>Payment Mode</th>
+                        <th>Bank</th>
+                        <th>Cheque Number</th>
+                        <th>Cheque Date</th>
+                        <th>Remarks</th>
+                    </tr>
+                    <tr>
+                        <td><apex:outputText value="{!advancepay.Payment_Mode__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Bank_Name__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Reference_Number__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Cheque_Date__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Remarks__c }"/></td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!if((advancepay.Payment_Mode__c=='Card'),true,false)}">
+                <table class="table" cellspacing="0" style="margin-top: 10px;margin-bottom: 10px">
+                    <tr>
+                        <th>Payment Mode</th>
+                        <th>Last 4 digits of Credit/Debit Card</th>
+                        <th>Credit/Debit Card Approval Code</th>
+                        <th>Remarks</th>
+                    </tr>
+                    <tr>
+                        <td><apex:outputText value="{!advancepay.Payment_Mode__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Credit_Card_Last_four_digits__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Credit_Debit_Card_Approval_Code__c }"/></td>
+                        <td><apex:outputText value="{!advancepay.Remarks__c}"/></td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!if((advancepay.Payment_Mode__c=='NEFT'),true,false)}">
+                <table class="table" cellspacing="0" style="margin-top: 10px;margin-bottom: 10px">
+                    <tr>
+                        <th>Payment Mode</th>
+                        <th>UTR For NEFT</th>
+                        <th>Amount</th>
+                        <th>Remarks</th>
+                    </tr>
+                    <tr>
+                        <td><apex:outputText value="{!advancepay.Payment_Mode__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Reference_Number__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Amount__c}"/></td>
+                        <td><apex:outputText value="{!advancepay.Remarks__c}"/></td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+        </apex:repeat>
+    </div>
+</apex:page>

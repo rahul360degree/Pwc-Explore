@@ -1,0 +1,461 @@
+<!------------------------------------------------------------------------
+Author:        Jayasurya Gunasekharan, Saurabh Mehta
+Company:       Stetig
+Description:   Visualforce page for displaying termsheet
+Related:       PremiseDocumentController.apxc
+Last Modified: 22/11/2021
+Test Class:    
+---------------------------------------------------------------------------->
+
+<apex:page renderAs="PDF" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" controller="PremiseDocumentController" action="{!getDetails}">
+    <html>
+        <head>
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                margin:10px 80px;
+                <apex:outputPanel layout="none" rendered="{!IF(headOfTermsList[0].Approval_Status__c != 'Approved', true, false)}">
+                    background: url("{!$Resource.Unapproved_Watermark}") no-repeat center center;
+                </apex:outputPanel>
+                @bottom-center {          
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                }
+                body{
+                margin:0;
+                padding:0;            
+                font-family:"Google Sans", Roboto, arial, sans-serif;
+                font-family: "proxima-nova",sans-serif;
+                font-size:15px;
+                }                
+                
+                @page {
+                margin-top: 100px;
+                margin-bottom: 140px;
+                
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                }            
+                .header{
+                position: running(header);
+                }
+                .footer {
+                display:block;
+                position: running(footer);
+                z-index:-999;
+                }            
+                .pagenumber:before {
+                content: counter(page);
+                }
+                .pagecount:before {
+                content: counter(pages);
+                }
+            </style>  
+        </head>
+        <apex:form >
+            <body>
+                <!---------------------------------Header And Footer For All Pages- ------------------------------------>
+                
+                <apex:pageMessages />
+                <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!NOT(isRunError)}">
+                    <div class="header">      
+                        
+                    </div>
+                    <div class="footer">
+                        <table width="100%">
+                            <tr>
+                                <td width="50%" style="font-size;9pt; text-align:left;">Proposal Prepared for: {!headOfTermsList[0].Proposed_Licensee__c} (CONFIDENTIAL)</td>
+                                
+                                <td width="50%" style="font-size;9pt; text-align:right;"><div align="right">Page <span class="pagenumber"/> of <span class="pagecount"/></div></td> 
+                            </tr>
+                            
+                        </table>
+                    </div>
+                    
+                    
+                    <!-------------------------------------------- First  Page ----------------------------------------------->
+                    <div style="page-break-after:always;">
+                        
+                        <table width="100%">
+                            <tr>
+                                <td style="text-align:left;line-height:1.5;">Ref: {!headOfTermsList[0].Reference_Number__c}</td>
+                                <td style="text-align:right;line-height:1.5;"><apex:outputText value="{0,date, MMMM d',' yyyy}">
+                                    <apex:param value="{!TODAY()}" />
+                                    </apex:outputText></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align:left;line-height:1.5;">To,</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align:left;line-height:1.5;">
+                                    <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!isIpcContact}">
+                                        Mr./ Ms. {!headOfTermsList[0].Opportunity__r.IPC_Contact__r.Name},
+                                    </apex:outputPanel>
+                                    <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!NOT(isIpcContact)}">
+                                        Mr./ Ms. {!headOfTermsList[0].Opportunity__r.Primary_contact__r.Name},
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:100%">
+                            <tr>
+                                <td style="text-align:left;padding:10px 0px;line-height:1.7;"><b>Sub:</b> <i>Proposal for Office Space at Godrej Business District on Leave &amp; License basis for your
+                                    client {!headOfTermsList[0].Proposed_Licensee__c}. </i></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:10px 0px;line-height:1.7;">
+                                    <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!isIpcContact}">
+                                        Dear {!headOfTermsList[0].Opportunity__r.IPC_Contact__r.FirstName},
+                                    </apex:outputPanel>
+                                    <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!NOT(isIpcContact)}">
+                                        Dear {!headOfTermsList[0].Opportunity__r.Primary_contact__r.FirstName},
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:10px 0px;line-height:1.7;">This is with reference to our ongoing discussions and site visit on <apex:outputText value="{0,date, MMMM d',' yyyy}">
+                                    <apex:param value="{!TODAY()}" />
+                                    </apex:outputText> regarding
+                                    Office Space requirement in <b>Mumbai</b>, situated at Godrej Business District, Vikhroli for your client
+                                    {!headOfTermsList[0].Proposed_Licensee__c}.</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:10px 0px;line-height:1.7;">As per our discussion, you have given us to understand that {!headOfTermsList[0].Opportunity__r.Company__c} will fall
+                                    under the IT Office Space segment, as per prevailing IT/ITES Policy of Government of
+                                    Maharashtra. In this regard we are sharing our proposal.</td>
+                            </tr>
+                            
+                            
+                            <tr>
+                                <td style="text-align:left;padding:10px 0px;line-height:1.7;">Kindly get in touch with us if you have any further clarifications regarding the same.</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:10px 0px;line-height:1.7;">We look forward to a long-standing partnership with you and {!headOfTermsList[0].Proposed_Licensee__c}.</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:3px 0px;line-height:1;">Thanking You,</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:3px 0px;line-height:1;">Yours sincerely,</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:3px 0px;line-height:1;">For Godrej &amp; Boyce Mfg. Co. Ltd.,</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:6px 0px;line-height:1.5;"><br/><br/><br/></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:3px 0px;line-height:1;">Anup Mathew</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:3px 0px;line-height:1;">Sr. Vice President &amp; Business Head</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:3px 0px;line-height:1;">Godrej Construction</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left;padding:3px 0px;line-height:1;"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-------------------------------------------- Second Page ----------------------------------------------->
+                    <div style="page-break-after:always;">
+                        <table style="width:100%">
+                            <tr>
+                                <th style="text-align:right;padding:10px 0px;line-height:1.7;">
+                                    <apex:outputText value="{0,date, MMMM d',' yyyy}">
+                                        <apex:param value="{!TODAY()}" />
+                                    </apex:outputText>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="text-align:center;padding:10px 0px;line-height:1.7;">Proposal - Term Sheet</th>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;padding:10px 0px;line-height:1.7;"><i><b>Prepared For:</b></i> {!headOfTermsList[0].Proposed_Licensee__c}</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;padding:10px 0px;line-height:1.7;"><b><i>Prepared By:</i></b> {!headOfTermsList[0].Licensor__c}.</td>
+                            </tr>
+                            <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!NOT(isPhotoSet)}">
+                                <tr>
+                                    <td align="center" style="padding:10px 0px;line-height:1.7;"><img src="https://gnb--gcleasedev--c.documentforce.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&versionId=0681s000000yIik&operationContext=DELIVERY&contentId=05T1s000003p13U&page=0&d=/a/1s0000000aLe/WHpQt5rhZsPFCrl2ANCYA0bw5BMmygVJprhV31iJvQQ&oid=00D1s0000000VxO&dpt=null&viewId=" width="630" alt="Banner"/></td>
+                                </tr>
+                            </apex:outputPanel>
+                            <apex:outputPanel styleClass="customPopup" layout="block" rendered="{!isPhotoSet}">
+                                <tr>
+                                    <td align="center" style="padding:10px 0px;line-height:1.7;"><apex:image height="180px" width="340" value="{!imageURL}"/></td>
+                                </tr>
+                            </apex:outputPanel>
+                            <tr>
+                                <td style="text-align:justify;padding:10px 0px;line-height:1.7;">
+                                    <b>{!headOfTermsList[0].Licensor__c}</b>, known for its Quality,
+                                    Integrity and Environmental
+                                    commitment, has built a relationship of Trust with its consumers.
+                                    <b>{!headOfTermsList[0].Building__r.Project__c}</b> at
+                                    <b>{!headOfTermsList[0].Building__r.Location__c}</b>,
+                                    <b>{!headOfTermsList[0].Building__r.City__c}</b> is strategically located and offers
+                                    office space among its lush green premises.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:justify;padding:10px 0px;line-height:1.7;">
+                                    Godrej is committed to delivering
+                                    top-of-the-line customer experiences. The clientele at
+                                    <b>{!headOfTermsList[0].Building__r.Project__c}</b> include both multinationals
+                                    and Indian companies with varied requirements from sectors like Information Technology
+                                    &amp; Consulting, Information Technology Enabled Services, Retail, Energy &amp;
+                                    Power, Travel &amp; Hospitality and others. We are pleased to share with you
+                                    our latest audio-visual testimonials from our customers. Please find here the
+                                    QR code for the same. 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:right;padding:10px 0px;line-height:1.7;"><img src="https://gnb--gcleasedev--c.documentforce.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&versionId=0681s000000yIjx&operationContext=DELIVERY&contentId=05T1s000003p172&page=0&d=/a/1s0000000aLj/xYokwVB7ED0fYOKFOS0BHPovg_1P8kpCraLorT8tFZY&oid=00D1s0000000VxO&dpt=null&viewId=" width="120px" alt="QRCode"/></td>
+                            </tr>
+                            
+                        </table>
+                    </div>
+                    <!-------------------------------------------- Third  Page ----------------------------------------------->                
+                    <div>
+                        <table style="width:100%">
+                            <tr>
+                                <th style="text-align:left;padding:10px 0px;line-height:1.7;">Terms &amp; Conditions:</th>
+                            </tr>
+                        </table>
+                        
+                        <apex:repeat value="{!termWrapperList}" var="t">
+                            <apex:repeat value="{!t.termItemObject}" var="t1">
+                                <apex:outputPanel rendered="{!NOT(t.termItemBool)}">
+                                    <table width="100%" style="border-collapse:collapse;">
+                                        <tr>
+                                            <td width="10%" style="border-collapse:collapse;text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                <apex:outputText value="{!t.termSequence}" escape="false" />
+                                            </td>
+                                            <td width="20%" style="border-collapse:collapse;text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                <apex:outputText value="{!t1.Header__c}" escape="false" />
+                                            </td>
+                                            <td width="70%" style="border-collapse:collapse;text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                <apex:outputPanel rendered="{!t.printOfficeSpaceDetails}">
+                                                    <apex:repeat value="{!premiseGroupMap}" var="optKey">
+                                                        <table width="100%" style="border-collapse:collapse;" aria-label="Premise Option - {!optKey}">
+                                                            <tr>
+                                                                <th scope="col" style="background-color: rgb(105 25 95 / 26%)" colspan="3">
+                                                                    <div title="Premise Option - {!optKey}">Premise Option - {!optKey}</div>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="col" width="30%"  style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                    <div title="Building Name">Building Name</div>
+                                                                </th>
+                                                                <th scope="col" width="30%"  style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                    <div title="Premise">Premise</div>
+                                                                </th>
+                                                                <th scope="col" width="30%"  style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                    <div title="Net usable area in Sq.Ft">Net usable area (sq. ft.)</div>
+                                                                </th>
+                                                            </tr>
+                                                            <apex:repeat value="{!premiseGroupMap[optKey]}" var="wrap">
+                                                                <tr>
+                                                                    <td style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                        <apex:outputText value="{!wrap.Floor__r.Building__r.Display_Name__c}" escape="false" />
+                                                                    </td>
+                                                                    <td style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                        <apex:outputText value="{!wrap.Floor__r.Block__c}, {!wrap.Floor__r.Floor_Number__c} floor " escape="false" />
+                                                                    </td>
+                                                                    <td style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                        <apex:outputText value="{!wrap.Carpet_Area_in_Sq_Ft__c}" escape="false" />
+                                                                    </td>
+                                                                </tr>
+                                                            </apex:repeat>
+                                                        </table>
+                                                    </apex:repeat>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel rendered="{!t.printMonCompDetails}">
+                                                    <table width="100%" style="border-collapse:collapse;">
+                                                        <tr>
+                                                            <th scope="col" colspan="2" width="50%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                <div title="License Term">License Term</div>
+                                                            </th>
+                                                            
+                                                            <th scope="col" colspan="2" width="50%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                <div title="Monthly Compensation (Rs.)">Monthly Compensation (Rs.)</div>
+                                                            </th>
+                                                        </tr>
+                                                    </table>
+                                                    <apex:repeat value="{!billingWrapperList}" var="bill1">
+                                                        
+                                                        <apex:repeat value="{!bill1.billingItemObject}" var="billFields"> 
+                                                            <apex:outputPanel rendered="{!bill1.printDate}">
+                                                                <table width="100%" style="border-collapse:collapse;">
+                                                                    <tr>
+                                                                        <td width="25%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{0,date, dd'/'MM'/'yy}" escape="false">
+                                                                                <apex:param value="{!billFields.Start_Date__c}" />
+                                                                            </apex:outputText>
+                                                                        </td>
+                                                                        <td width="25%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{0,date, dd'/'MM'/'yy}" escape="false">
+                                                                                <apex:param value="{!billFields.End_Date__c}" />
+                                                                            </apex:outputText>
+                                                                        </td>
+                                                                        <td width="25%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{!bill1.moneyFormatCompensation}" escape="false" />
+                                                                        </td>
+                                                                        <td width="25%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            (
+                                                                            <apex:outputText value="{!bill1.wordFormatCompensation}" escape="false" />)
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!NOT(bill1.printDate)}">
+                                                                <table width="100%" style="border-collapse:collapse;">
+                                                                    <tr>
+                                                                        <td width="25%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{!billFields.From_Month__c}" escape="false" />
+                                                                        </td>
+                                                                        <td width="25%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{!billFields.To_Month__c}" escape="false" />
+                                                                        </td>
+                                                                        <td width="25%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{!bill1.moneyFormatCompensation}" escape="false" />
+                                                                        </td>
+                                                                        <td width="25%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            (
+                                                                            <apex:outputText value="{!bill1.wordFormatCompensation}" escape="false" />)
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </apex:outputPanel>
+                                                        </apex:repeat>
+                                                    </apex:repeat>
+                                                </apex:outputPanel>
+                                                
+                                                <apex:outputText value="{!t1.Merged_Term_Value__c}" escape="false"></apex:outputText>
+                                                
+                                                <apex:outputPanel rendered="{!t.printSecurityDeopsitDetails}">
+                                                    <table width="100%" style="border-collapse:collapse;">
+                                                        <tr>
+                                                            <th width="30%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                License Term
+                                                            </th>
+                                                            
+                                                            <th width="70%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                Security Deposit (Rs.)
+                                                            </th>
+                                                        </tr>
+                                                    </table>
+                                                    <apex:repeat value="{!billingWrapperList}" var="bill2">
+                                                        <apex:repeat value="{!bill2.billingItemObject}" var="billFields">
+                                                            
+                                                            <apex:outputPanel rendered="{!bill2.printDate}">
+                                                                <table width="100%" style="border-collapse:collapse;">
+                                                                    <tr>
+                                                                        <td width="15%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{0,date, dd'/'MM'/'yy}" escape="false">
+                                                                                <apex:param value="{!billFields.Start_Date__c}" />
+                                                                            </apex:outputText>
+                                                                        </td>
+                                                                        <td width="15%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{0,date, dd'/'MM'/'yy}" escape="false">
+                                                                                <apex:param value="{!billFields.End_Date__c}" />
+                                                                            </apex:outputText>
+                                                                        </td>
+                                                                        <td width="70%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{!bill2.moneyFormatSecurityDep}" escape="false"></apex:outputText><br/>
+                                                                            (
+                                                                            <apex:outputText value="{!bill2.wordFormatSecurityDep}" escape="false"></apex:outputText>)
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!NOT(bill2.printDate)}">
+                                                                <table width="100%" style="border-collapse:collapse;">
+                                                                    <tr>
+                                                                        <td width="15%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{!billFields.From_Month__c}" escape="false" />
+                                                                        </td>
+                                                                        <td width="15%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{!billFields.To_Month__c}" escape="false" />
+                                                                        </td>
+                                                                        <td width="70%" style="text-align:left;padding:10px 5px;line-height:1.8;border:1px solid #ddd">
+                                                                            <apex:outputText value="{!bill2.moneyFormatSecurityDep}" escape="false"></apex:outputText>
+                                                                            (
+                                                                            <apex:outputText value="{!bill2.wordFormatSecurityDep}" escape="false"></apex:outputText>)
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </apex:outputPanel>
+                                                        </apex:repeat>
+                                                    </apex:repeat>
+                                                </apex:outputPanel>
+                                                
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </apex:outputPanel>
+                            </apex:repeat>
+                        </apex:repeat>
+                        
+                        <apex:outputPanel rendered="{!printCAMDetails}">
+                            <table width="100%" style="border-collapse:collapse;">
+                                <tr>
+                                    <td style="text-align:left;padding:10px 5px;line-height:1.7;border:1px solid #ddd">
+                                        Common Area Maintenance (CAM) charges to be borne by Licensee would be towards the following:<br/>
+                                        A) Activities that would be undertaken by the Licensor under its scope of common area maintenance -<br/>
+                                        Cleanliness within the common areas of the Building<br/>    
+                                        Housekeeping within the common areas / common toilets<br/>
+                                        Security of the common areas of the Building<br/>
+                                        Perimeter security<br/>
+                                        Exterior façade cleaning &amp; maintenance as per schedule of Service Provider.<br/>
+                                        Maintenance of Landscaped areas<br/>
+                                        Maintenance of Parking Area<br/>
+                                        Common Toilet ventilation<br/>
+                                        Lights and Light fixtures in common areas of the facility<br/>
+                                        Operations &amp; Maintenance of Elevators<br/>
+                                        Operations &amp; Maintenance of the Plumbing &amp; Sanitary System<br/>
+                                        Operations &amp; Maintenance of Fire Fighting equipment &amp; Fire Alarm system including<br/>
+                                        supporting equipment (motor pumps, water reservoir) provided by the Licensor<br/>
+                                        Co-ordination and supervision of Annual Maintenance Contracts and DG set<br/>
+                                        Maintenance<br/>
+                                        Common area pest control<br/>
+                                        Building Insurance<br/>
+                                        Facade insurance<br/>
+                                        Plant &amp; machinery insurance<br/>
+                                        Statutory inspections<br/>
+                                        Consumables for Operation and Maintenance of the Building and Services<br/>
+                                        Carpentry works<br/>
+                                        STP operation &amp; Maintenance<br/>
+                                        Reprographics<br/>
+                                        Consumables for Housekeeping &amp; Security<br/>
+                                        Water Consumption<br/>
+                                        B) Common area consumption cost of Electricity, Generator back-up, Water<br/>
+                                        C) Annual Maintenance Contracts and maintenance of the Building Service equipment
+                                        such as HVAC, DG, STP, Firefighting etc.<br/>.
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </apex:outputPanel>
+                        <p>
+                            Godrej IT Park-GBD users will have to abide by the Tenant Guidelines laid down / or as
+                            modified from time to time by Godrej &amp; Boyce Property Management Services. It is expressly
+                            understood that this Proposal is a preliminary document reflecting the present intent of the
+                            Licensor to enter the discussions between the Parties.
+                        </p>
+                        <br/><br/>
+                        <p align="center">
+                            ---End of Document---
+                        </p>
+                    </div>
+                    
+                </apex:outputPanel> 
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

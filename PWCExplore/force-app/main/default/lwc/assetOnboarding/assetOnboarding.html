@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Asset Details" style="padding: 20px;">
+        <!-- Record Details Section -->
+        <div style="margin-bottom: 20px;">
+            <lightning-record-view-form
+                record-id={assetId}
+                object-api-name="Asset">
+                <lightning-output-field field-name="Product_Name__c" style="margin-left: 15px;"></lightning-output-field>
+                <lightning-output-field field-name="ProductCode" style="margin-left: 15px;"></lightning-output-field>
+                <lightning-output-field field-name="Product_Category__c" style="margin-left: 15px;"></lightning-output-field>
+                <lightning-output-field field-name="Product_Sub_Category__c" style="margin-left: 15px;"></lightning-output-field>
+                <lightning-output-field field-name="Asset_Category__c" style="margin-left: 15px;"></lightning-output-field>
+                <!-- Add more lightning-output-field components for other fields as needed -->
+            </lightning-record-view-form>
+        </div>
+        <!-- Form Section -->
+        <div style="margin-bottom: 20px;">
+            <lightning-radio-group label="Select the BU" name="options" options={radioOptions} value={selectedOption} onchange={handleOptionChange} style="margin-left: 15px;"></lightning-radio-group>
+            <lightning-button label="Scan Code" onclick={handleScan} style="margin-left: 15px;"></lightning-button>
+            <lightning-input label="Enter Item Code" value={itemCode} onchange={handleInputChange} disabled={isItemCodeDisabled} style="margin-left: 15px;"></lightning-input>
+            <lightning-input type="file" label="Upload Invoice" onchange={handleFileUpload} style="margin-left: 15px;"></lightning-input>
+            <lightning-input label="Sales Product Code" value={salesProductCode} style="margin-left: 15px;"></lightning-input>
+            <lightning-input type="checkbox" label="Rental Product" checked={rentalProduct} onchange={handleCheckboxChange} style="margin-left: 15px;"></lightning-input>
+            <lightning-button label="Submit" onclick={handleCallout} style="margin-top: 20px; margin-left: 15px;"></lightning-button>
+            <lightning-button label="Transfer the Asset" onclick={handleTransferClick} if:true={isSerialIdLinkedResult} style="margin-top: 20px; margin-left: 15px;"></lightning-button>
+        </div>
+    </lightning-card>
+</template>

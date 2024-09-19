@@ -1,0 +1,212 @@
+<apex:page controller="QuotationController" renderAs="pdf" standardStylesheets="false" applyBodyTag="false" contentType="application/pdf#MyDoc.pdf" applyHTMLTag="false" sidebar="false" showHeader="false"  >
+        <head>  
+    <style type="text/css">
+        
+        div.annexure {
+  font-size: 14px;
+}
+        
+@page {
+            margin-top: 190px;
+            padding:0px;
+            margin-bottom: 90px;
+            
+            @top-left {
+                content: element(header);
+            }                           
+            @bottom-left {   
+                content: element(footer);
+            } 
+        }        
+        div.header {
+            margin-top:10px;
+            position: running(header);
+            width: 100%;
+            margin-right: 10px;
+        }
+        div.footer {       
+            position: running(footer);
+            width: 100%;
+            margin-left: 170px;
+        }
+        
+        
+        div.pagebreak {
+  page-break-after: always;
+}
+        
+        
+       @page {
+ @bottom-right {
+ content: "Page " counter(page) " of " counter(pages);
+ }
+ }
+    </style>
+    </head> 
+    <!-- Header -->
+        <div class="header">
+<table width="100%" ><tr>
+<td>
+    <div id="left" align="left">
+        <span style="font-weight:bold; font-size: 16pt; "><b>Construction Division</b></span><br/><b>CM Business</b><br/>Tel. : 61117111/61117222<br/>Email : rmc@godrej.com<br/>Web : www.godrejrmc.com
+    </div>
+</td>
+<td><div id="right" align="right">
+    <b>Godrej and Boyce Mfg. Co. Ltd.</b><br/>Regd. Office: Pirojshanagar<br/>Vikhroli, Mumbai 400 079, India<br/>T : 91-22-67961700/1800<br/>W : www.godrej.com</div><br/>
+</td>
+    </tr></table>    </div>
+    <div class="footer">
+        <div  style="float:left">
+            <apex:image url="{!$Resource.godrej_construction_logo}" width="320" height="80"/> </div>
+    </div>
+    
+   <br/>
+    <div class="pagebreak">
+        
+         <div>
+        Ref No: GCM-Q-{!YEAR(TODAY())}-{!Quotes.QuoteNumber}<br/>  
+             Date :<apex:outputText value="{0,date,' 'dd' 'MMMMM' 'yyyy}"><apex:param value="{!Quotes.CreatedDate}"/></apex:outputText><br/><br/>
+        To,<br/><b>{!Account.Name}</b>,<br/>
+             <apex:outputText value="{!SUBSTITUTE(Quotes.Primary_Address__c,'\\\n','<br/>')}" style="white-space:pre;" escape="false"/><br/>
+             <br/>
+             Kind Attn: {!Quotes.QuoteToName}<br/><br/>Dear Sir/Mam,</div><br/>
+        <!--<apex:outputText value="{!SUBSTITUTE(Quotes.Primary_Address__c,'\\\n','<br/>')}" style="white-space:pre;" escape="false"/><br/>  -->
+        
+        <div align="center">
+            Subject : <u><b><apex:outputText > Quote for supply Godrej walling products to {!Quotes.Site__c} site.</apex:outputText></b></u><br/><br/></div>
+        <div>
+        With reference to your enquiry we are pleased to quote for supply of Godrej walling products as follows:                
+        </div><br/>
+        <!-- Table of Products -->
+         <apex:variable var="rowcount" value="{!1}" />
+    <apex:pageBlock title="">
+      <apex:pageBlockTable value="{!QuotelineItem_RCM}" var="Products" rendered="{!QuotelineItem_RCM.size > 0}" border="2"  align="center" cellpadding="4" >
+          <apex:column style="text-align:center" headerValue="Sr No.">
+        {!rowcount} <apex:variable var="rowcount" value="{!rowcount+1}" />
+           </apex:column>
+          <apex:column headerValue="Product Name" value="{!Products.Product_Name__c}"/> <!-- Added by poonam for SCF- 102-->
+          <apex:column headerValue="Size(mm)" value="{!Products.Product_Description_N__c}"/>
+          <apex:column headerValue="Unit" value="{!Products.Inventory_Unit__c}"/>
+          <apex:column headerValue="HSNCODE" value="{!Products.Commodity_Code__c}"/>
+          <apex:column headerValue="GST(%)" value="{!Products.Tax_Rate_Percentage__c}"/>
+          <apex:column style="text-align:right" headerValue="Basic Rate(Rs per Unit)" value="{!Products.UnitPrice}"/>
+          <apex:column headerValue="GST(Rs per Unit)" value="{!Products.Line_Tax_for_Customer__c}"/>
+         <apex:column headerValue="Landed Rate(Rs per Unit)" value="{!Products.Total_Price_with_Customer_Discount__c}"/>
+      </apex:pageBlockTable>
+   </apex:pageBlock>
+        <!-- End of table -->
+    <div>
+        <apex:outputPanel rendered="{!specialRequirement  != 'Not Applicable'}"><b>Special Requirement:- {!specialRequirement}</b></apex:outputPanel><br/>
+        <apex:outputPanel rendered="{!additionalPaymentTerms  != 'Not Applicable'}"><b>Additional Payment terms : {!additionalPaymentTerms}</b></apex:outputPanel>
+        <b>Payment terms : {!Quotes.Payment_Terms__c}</b><br/>
+        <br/>
+        <b>Special Remarks:</b> {!Quotes.Additional_Payment_Terms__c}
+        </div>    <br/><br/>
+        <div>
+        <b>General Terms &amp; Conditions :-</b><br/>
+        <ul>
+            <li>All cheques to be drawn in favor of 'Godrej &amp; Boyce Mfg. Co. Ltd.’</li>
+            <li>The rates have been derived based on current price of cement, Diesel, Lime, Coals. Any Variation in material content or prices will be charged extra.</li>
+            <li>Above rates are including Transport.</li>
+            <li>GST will be extra.</li>
+            <li>Local body tax shall be extra and in the scope of the client if applicable.</li>
+            <li>Unloading of blocks &amp; local issues will be in the scope of client.</li>
+        </ul>The terms of supply shall be in accordance with ANNEXURE 'A' enclosed.  
+        </div><br/>
+         <div>    
+        Godrej &amp; Boyce Mfg. Co. Ltd.<br/>PAN: AAACG1395D<br/>GST: 27AAACG1395D1ZU<br/><br/>
+        Godrej NEFT/RTGS details:<br/>    
+        <b>Name of bank:</b> Citibank<br/><b>Branch:</b> DN road, Fort Mumbai 400001<br/>
+        <b>Current Account</b><br/>MICR code: 400037002<br/>
+        <apex:outputPanel rendered="{!OR(Quotes.Cluster__c  == 'MUM',Quotes.Cluster__c  == 'MMR')}">Account no.: 0001020412</apex:outputPanel>
+        <apex:outputPanel rendered="{!Quotes.Cluster__c  == 'PUN'}">Account no.: 0001020374</apex:outputPanel>
+        <br/>IFSC code: CITI0100000<br/><br/>
+    </div>
+        <div>
+            Assuring our best services at all times.<br/>
+            Thanking you,<br/><br/>
+        Yours Faithfully,<br/>
+        For Godrej &amp; Boyce Mfg. Co. Ltd<br/>
+        <apex:outputField value="{!SalesRep.User_signature__c}"/><br/>
+        {!SalesRep.Name}<br/>
+        {!SalesRep.Title}<br/>
+        {!SalesRep.MobilePhone}<br/>
+        {!SalesRep.Email}<br/><br/>
+        </div> 
+    </div>
+    <div align="center">
+        <span style="font-family: Helvetica; align:center font-weight:bold; font-size: 12pt;">ANNEXURE A</span><br/>
+        <span style="align:center font-weight:bold; font-size: 12pt; ">TERMS OF CONTRACT</span><br/>
+    </div>
+    <div class="annexure">
+        General Conditions
+        <ul>
+            <li>Godrej &amp; Boyce Mfg. Co. Ltd. hereinafter referred to as the Company.</li>
+            <li>This contract is a Unit Rate Contract with a predetermined unit rate to cover supply.</li>
+            <li>The Company shall not be responsible for damage to any equipment or injury to person. The Scope of the Company is limited to supply of BLOCKS &amp; PAVERS blocks as per the orders placed.</li>
+            <li>The quantity of each load of BLOCKS &amp; PAVERS is written on the Delivery Challan, any claims regarding the discrepancy of quantity by the Client if any, must be lodged on the date of delivery itself.</li>
+            <li>The Company guarantees the compliance of respective codes (IS 2185 Part I, IS 15658) provided testing has been done as specified by IS standards.</li>
+            <li>Weight of blocks normally changes as atmospheric conditions, including properties of raw material. Hence any rejection due to weight issue will not be accepted.</li>
+            <li>IS permits breakages up to 5%. Minor corner, edges chipping shall not be considered as breakages.</li>
+            <li>The company shall not be responsible for breakages due to rough handling during unloading.</li>
+            <li>The Company’s scope and liability is limited to the supplies of Products hence Company shall not be responsible for any structural issue, Failure or crack development or any other issues arising from Client’s failure to follow construction norms, laws, rules, regulations, or these terms of contract.</li>
+            <li>The goods / products supplied by the Company are in accordance with Bureau of Indian Standards (BIS). If any defect or default is found in the goods/products supplied by the Company, the Client shall notify so within seven (7) days from the date of delivery, failing which it will be deemed to be in accordance with these terms of contract.</li>
+        </ul>
+        ORDERS
+        <ul>
+            <li>The Client shall issue the monthly Schedule of BLOCKS &amp; PAVERS to the Company by the 1st week of every Month.</li>
+            <li>The Client shall furnish tentative requirements over and above the Schedule at 10 days in advance. In case of special size requirements order must place 15 days advance.</li>
+            <li>The Company reserves the right to reject any request for supply.</li>
+        </ul>
+        DELIVERY
+        <ul>
+            <li>Vehicle idle charges on hourly basis will be imposed to customer s in case of delay in unloading.</li>
+            <li>The challan shall be signed by the authorized person of the Client as proof of receipt.</li>
+            <li>Once the BLOCKS &amp; PAVERS dispatched, it becomes the property of the Client who is liable to pay the Company at the agreed rates. Under no circumstance such blocks can be taken back.</li>
+            <li>Rs.2600/- extra will be charged for 10 tonstruck.</li>
+            <li>Pattern of loading will be decided by company.</li>
+        </ul>
+        INVOICING AND PAYMENT:
+        <ul>
+            <li>Bills will be generated twice in a week. The Company shall deliver the invoice calculated on per unit basis.</li>
+            <li>As per agreed terms, Client shall pay the Company the amount mentioned in the invoice. Failing which the Client shall be liable to pay interest at the rate of 24% from the date of invoices.</li>
+            <li>All cheques shall be drawn in favour of the ‘Godrej &amp; Boyce Mfg. Co. Ltd.’</li>
+            <li>Any statutory increase in duties/levies on BLOCKS &amp; PAVERS by Central/state government would be charged as applicable.</li>
+            <li>The Client shall be responsible for payments of all supplies made by the Company.</li>
+            <li><ul>
+                If the Client fails to make due payment or fails to comply with its obligations under the sec terms and conditions the Company shall have the right at its option;
+                <li>To suspend further performances of its obligations hereunder until payment</li>
+                <li>To terminate the Contract at any time, in either case without affecting any right or remedy of clause 14</li>
+                </ul>
+            </li>
+        </ul>
+        Obligation of the Client :
+        <ul>
+            <li>The client should provide proper access for trucks/Containers and allow timely unloading of material at site.</li>
+            <li>Minimum orders quantity will be 16 Tons.</li>
+            <li>The Client shall ensure good serviceable roads inside the project for plying of vehicles.</li>
+            <li>The Client shall ensure that the sample specimen is tested in a laboratory accredited under Indian Standards.</li>
+            <li>The client shall ensure proper care during unloading of BLOCKS &amp; PAVERS blocks ie. rubber mats on containers, careful handling by labours till storage point etc.</li>
+            <li>In the event of any failure, the Client shall inform the Company of the same within 3 days along with the details of delivery and test reports.</li>
+            <li>All local issues will be in client’s scope.</li>
+        </ul>
+        Obligations of the Company
+        <ul>
+            <li>The Company is not responsible for damage to any equipment or injury or any loss to human at Site.</li>
+            <li>The scope of the Company is limited to supply of BLOCKS &amp; PAVERS and rest responsibility lies with the Client who had placed the order for the supply of BLOCKS &amp; PAVERS.</li>
+            <li>Once the trucks/Containers have been dispatched from the factory, the amount of goods would be chargeable to the Client.</li>
+            <li>We shall reserve our right for delay in supply or no supply due to reasons beyond our control such as Strikes or natural hurdles.</li>
+            <li>In case of the goods consignment being returned for no fault of the Company, the Client shall be liable to pay for the placed order.</li>
+            <li>This contract is made in good faith and is subject to provisions of force majeure.</li>
+            <li>This Contract shall be governed by the laws of India and subject to the jurisdiction of the courts in Mumbai.</li>
+            <li>Any disputes arising between the Company and the customer as to the terms and conditions of the contract will be referred to arbitration for settlement before further steps are taken.</li>
+        </ul>
+        Safety precautions need to be taken to handle BLOCKS &amp; PAVERS:
+        <ul>
+            <li>Wear impermeable gloves (in PVC, neoprene, latex….) doubled with cotton (no leather gloves).</li>
+            <li>Wear safety boots.</li>
+            <li>Wear protective glasses.</li>
+            <li>Container should be positioned on plane horizontal surface.</li>
+        </ul>
+    </div>
+</apex:page>

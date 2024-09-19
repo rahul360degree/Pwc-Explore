@@ -1,0 +1,44 @@
+<template>
+    <!--Display/Hide lwc component-->
+    <template if:false={spinner}>
+      <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    <template if:true={recordsToDisplay}>
+      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" border="1">
+        <thead>
+          <tr class="slds-line-height_reset">
+            <th scope="col">Created Date</th>
+            <th scope="col">Quote Number</th>
+            <th scope="col">Quote Name</th>
+            <th scope="col">Opportunity Name</th>
+            <th scope="col">Opportunity Owner</th>
+            <th scope="col">Account Name</th>
+            <th scope="col">Raised By</th>
+           <th scope="col">Pending With</th>          
+           <th scope="col">Pending Since (Date)</th>
+            <th scope="col">Agreed By Customer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template for:each={recordsToDisplay} for:item="row">
+            <tr key={row.Id}>
+              <td data-label="Created Date">{row.CreatedDate}</td>
+              <td data-label="QUOTE NUMBER" scope="row" onclick={handleNavigate} class="linkCSS" data-id={row.QuoteId} data-name="Quote">
+                <a>{row.QuoteNo}</a></td>
+              <td data-label="QUOTE NAME" class="slds-cell-wrap linkCSS" onclick={handleNavigate}  data-id={row.Name} data-name="Quote">{row.QuoteName}</td>  
+              <td data-label="OPPORTUNITY NAME" class="slds-cell-wrap linkCSS" onclick={handleNavigate}  data-id={row.OpportunityId} data-name="Opportunity">{row.OpportunityName}</td>
+              <td data-label="OPPORTUNITY OWNER">{row.OpportunityOwnerName}</td>
+              <td data-label="ACCOUNT NAME">{row.AccountName}</td>
+              <td data-label="RAISED BY">{row.RaisedBy}</td>
+              <td data-label="PENDING WITH">{row.PendingWith}</td>
+             <td data-label="APPROVAL PENDING FROM DATE">
+                <lightning-formatted-number value={row.PendingSince} format-style="decimal" maximum-fraction-digits="2"></lightning-formatted-number>
+                &nbsp; days{row.PendingSinceDate}
+              </td>
+              <td data-label="ACCOUNT NAME">{row.AgreedByCustomer}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </template>
+  </template>

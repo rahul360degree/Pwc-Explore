@@ -1,0 +1,16 @@
+<aura:component>
+    <!-- <aura:attribute name="PassesValueFromVF" type="string"/> -->
+
+
+
+
+    <!-- Logic for vf page  -->
+    <aura:attribute name="PassesValueFromVF" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	
+    <b>Account Name from vf</b> : {!v.PassesValueFromVF}
+    <p> 
+    
+    <button class="slds-button slds-button_brand" onclick="{!c.showMessage}">Show Message</button>          
+    </p>
+</aura:component>

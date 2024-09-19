@@ -1,0 +1,19 @@
+.component-padding {
+  padding: 1rem;
+}
+
+.component-container {
+  margin-left: 2em;
+}
+
+.inputFromDate.datepicker{
+  display : contents;
+  position: absolute;
+  z-index: 1001;  
+  }
+
+.inputToDate.datepicker{ 
+  display : contents;
+  position: absolute;
+  z-index: 1001;  
+  }

@@ -1,0 +1,16 @@
+<!--
+  @Description       : 
+  @Author            : Varun Rajpoot
+  @last modified on  : 10-11-2023
+  @last modified by  : Varun Rajpoot
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   09-26-2023   Varun Rajpoot   Initial Version
+-->
+<template>
+    <template if:true={week}>
+        <div class={tdClass} onclick={handleHoliday} data-id={week}>
+            <span class="spancss">{week}</span>
+        </div>
+    </template>
+</template>

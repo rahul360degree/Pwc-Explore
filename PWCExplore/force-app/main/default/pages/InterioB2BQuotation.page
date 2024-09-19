@@ -1,0 +1,796 @@
+<!--* @description       : Interio B2B Quotation PDF
+* @author            : snehalw@godrej.com
+* @group             : 
+* @last modified on  : 03-03-2023
+* @last modified by  : snehalw@godrej.com
+
+-->
+<apex:page standardController="Quote" extensions="InterioB2BQuotatationController" renderAs="pdf"  standardStylesheets="false" applyBodyTag="false" applyHTMLTag="false" sidebar="false" showHeader="false">
+    <head>  
+        <style type="text/css">
+            @page {
+            @bottom-right {
+            content: "Page " counter(page) " of " counter(pages);
+            }
+            @top-right {
+            
+            content: "Doc.Id-{!quoteData.QuoteNumber} ";
+            font-size: 7pt;
+            margin-top: 20px;
+            } 
+            
+            size:landscape; 
+            margin: .5in .2in .5in .2in; 
+            zoom: 95%;     .
+            }
+            
+            .header1{
+            margin-top: 3%;
+            padding-left: 40%;
+            padding-right: 35%;
+            font-weight:bold;
+            font-size: 10pt;
+            }
+            .header2{
+            margin-top: 5%;
+            padding-right: 50%;
+            
+            font-weight:bold;
+            font-size: 12pt;
+            }
+            .header3{
+            
+            padding-left: 40%;
+            padding-right: 35%;
+            font-weight:bold;
+            font-size: 12pt;
+            }
+            
+            .table {
+            width:100%;
+            
+            page-break-inside: avoid;
+            font-size:7px;
+            }
+            .table td,th {
+            width:auto;
+            
+            border-right:1px solid rgb(184, 187, 191);
+            border-bottom:1px solid rgb(184, 187, 191);
+            border-collapse: collapse;
+            
+            }
+            
+            .table th{
+            background-color:#ebdce8;
+            }
+            
+            .table .label {
+            font-weight:bold;
+            text-align:left;
+            }
+            
+            .headertable{
+            width:30%;
+            font-size:14px;
+            }
+            .label{
+            margin-top: 3%;
+            }
+            
+            .mytext{
+            padding-left:180px;
+            }
+            
+            
+        </style>
+    </head> 
+    
+    
+    <div>
+        <apex:outputText value="Date: {!NOW()}"/>
+        
+        
+    </div>
+    <!-- Discount Document Id table -->
+    <div align="center" >
+        
+        
+        <h1 class = "header3">DocumentId-{!quoteData.QuoteNumber}</h1> 
+        <h1 class = "header3">Quote Name-{!quoteData.Name}</h1> </div>
+    <div align="left">
+        Date :<apex:outputText value="{0,date,dd/MM/yy}"><apex:param value="{!quoteData.CreatedDate}"/></apex:outputText><br/><br/>
+    </div>
+    
+    
+    <table class="headertable" cellspacing="0" style="width:100%;" >
+        <tr>
+            <td style="width:22%;">Business Category</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Interio_Sub_Division__c}"/></td>
+            <td style="width:28%;">Branch</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Sales_Branch_Name__c}"/></td>
+        </tr>
+        <tr>
+            <td style="width:22%;">Opportunity Number</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Enquiry_Number__c}"/></td>
+            <td style="width:28%;">Date</td>
+            <td style="width:25%;"><apex:outputText value="{0,date,dd/MM/yy}"><apex:param value="{!quoteData.Pending_Since_Date__c}"/></apex:outputText></td>
+        </tr>
+        <tr>
+            <td style="width:22%;">Account Name</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Account.Name}"/></td>
+            <td style="width:28%;">Buyer Segment</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Buyer_Interio_Segment__c}"/></td>
+            
+            
+        </tr>
+        <tr>
+            <td style="width:28%;">Is Kam Customer</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Is_KAM__c}"/></td>
+            <td style="width:28%;">Opprtunity Name</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Name}"/></td>
+            
+        </tr> 
+        <tr>
+            <td style="width:22%;">Interio Segment</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Segment__c}"/></td>
+            <td style="width:28%;">Account Type</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Account.RecordType.Name}"/></td>
+            
+        </tr>  
+        <tr>
+             <td style="width:22%;">End Customer Name</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.End_Customer__r.Name}"/></td>
+            <td style="width:28%;">Salesperson</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.CreatedBy.Name}"/></td>
+        </tr>
+        <tr>
+            <td style="width:22%;">Transaction Type</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Transaction_Type_c__c}"/></td>
+            <td style="width:22%;">Opportunity Type</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Opportunity_Type__c}"/></td>
+        </tr>
+        <tr>
+            <td style="width:22%;">Primary contact</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Primary_contact__r.Name}"/></td>
+            <td style="width:28%;">Firm</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Influencer__r.Name}"/></td>
+        </tr>
+        <tr>
+            <td style="width:22%;">Competitors</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Competitor__c}"/></td>
+            <td style="width:28%;">Competitors(If Other)</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Competitor_If_Other__c}"/></td>
+        </tr> 
+        <tr>
+             <td style="width:22%;">Architect</td>
+            <td style="width:25%;"><apex:outputText value="{!opportunityData.Influencer__r.Primary_Contact__r.Name  }"/></td>
+            <td style="width:28%;">Type of Transaction</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Transaction_Type__c}"/></td>
+        </tr> 
+        <tr>
+            <td style="width:22%;">Strategy to Win</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Strategy_to_Win__c}"/></td>
+            <td style="width:28%;">Dealer Name/Code</td>
+            <td style="width:25%;">{!quoteData.Dealer_Name__r.Name} - {!quoteData.Dealer_Name__r.Account_Code__c}</td>
+        </tr>  
+        
+        <tr>
+            <td style="width:22%;">WD Involved</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Dealer_Involved_Y_N__c}"/></td>
+            <td style="width:28%;">Transcation Through WD/Dealer Investment</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Transaction_through_WD_Dealer_Investment__c}"/></td>
+        </tr> 
+          <tr>
+            <td style="width:22%;">Product Line</td>
+            <td style="width:25%;"><apex:outputText value="{!productLines}"/></td>
+            <td style="width:28%;">Designation</td>
+            <td style="width:25%;"><apex:outputText value="{!accountData.Primary_Contact__r.Name}"/></td>
+            
+          </tr> 
+    </table>
+    
+    
+    <!-- Remarks -->
+    
+    
+    <div>
+        <h1 class = "header2">Remarks</h1>
+    </div>  
+    <apex:outputPanel >
+        <apex:variable var="rowcount" value="{!1}" />
+        <div  style="font-size:10px;">  
+            <table class="table" cellspacing="0" style="width:100%;">
+                
+                <tr>
+                    <th>sr No. </th>
+                    <th>Comments </th>
+                    <th>User</th>
+                    <th>Opportunity Owner</th>
+                    <th>Date/Time</th>
+                    <th>Status</th>
+                </tr>
+                
+                <apex:repeat value="{!listQuoteApprovalHstry}" var="cmnt">  
+                    <tr>
+                        <td style="width:2%;"> {!rowcount} <apex:variable var="rowcount" value="{!rowcount+1}" /></td>
+                        <td ><apex:outputText value="{!cmnt.Approval_Comments__c}"/></td>
+                        <td style="width:15%;"><apex:outputText value="{!cmnt.CreatedBy.Name}"/></td>
+                        <td style="width:15%;"><apex:outputText value="{!cmnt.Quote__r.Opportunity_Owner__r.Name}"/></td>
+                        <td style="width:10%;"><apex:outputText value="{0,date,dd/MM/yy HH:mm a }"><apex:param value="{!cmnt.CreatedDate + (5.50/24)}"/></apex:outputText></td>
+                        <td style="width:10%;"><apex:outputText value="{!cmnt.Status__c}"/></td>
+                    </tr>
+                    
+                </apex:repeat>
+                
+            </table>
+        </div>  
+    </apex:outputPanel> 
+    <!-- Document Status -->
+    <div class="label"></div>
+    <table class="headertable" cellspacing="0" style="width:100%;">
+        <tr>
+            <td style="width:25%;">Approval Status </td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Approval_Status__c}"/></td>
+            <td style="width:25%;">Pending With Owner</td>
+            <td style="width:25%;"><apex:outputText value="{!pendingWithOwner}"/></td>
+        </tr>
+    </table>
+    <!-- Details of product for discount table -->
+    <div>
+        <h1 class = "header2">Details of product for discount</h1>
+    </div>     
+    <apex:outputPanel rendered="{!displayCOP}">
+        <apex:variable var="rowcount" value="{!1}" />
+        
+        
+        <apex:repeat value="{!listWrapper}" var="listItems">    
+            <br/>
+            <b>{!listItems.sumRecord.LOB}</b>
+            <table class="table" cellspacing="0">
+                <tr>
+                    <th>sr No. </th>
+                    <th>Product</th>
+                    <th>Product Code </th>
+                    <th>Quantity<br/></th>
+                    <th>Price List Date</th>
+                    <th>List Price<br/></th>
+                    <th style="background-color:  #ffffcc ;">Requested Customer Discount %</th>
+                    <th style="background-color: #ffffcc;">Requested Customer Discounted Basic Price</th>
+                    <th style="background-color:  #ffffcc;">Approved Customer Discount %</th>
+                    <th style="background-color:  #ffffcc;">Approved Customer Discounted Basic price<br/>Total Amount.</th>
+                    <th style="background-color: #ffe6e6;">Requested WD Retention % / SAC (on Requested Discounted Basic) %</th>
+                    <th style="background-color: #ffe6e6;" >Requested WD Retention %/ SAC (on Consumer Basic)</th>
+                    <th style="background-color: #ffe6e6;" >Approved WD Retention % / SAC (on Approved Discounted Basic) %</th>
+                    <th style="background-color: #ffe6e6;" >Approved WD Retention % / SAC (on Consumer Basic)</th>
+                    <th style="background-color: #ffffcc;" >Requested WD/CONT % (on Requested Discounted Basic)</th>
+                    <th style="background-color: #ffffcc;" >Requested WD/CONT % (on Consumer Basic)</th>
+                    <th style="background-color: #ffffcc;" >Approved WD/ CONT % (on Approved Discount Basic)</th>
+                    <th style="background-color: #ffffcc;">.Approved WD/ CONT % (on Consumer Basic)</th>
+                    <th style="background-color: #e6fff2;">Requested Net Realized Basic Discount (%) (on Consumer Basic)</th>
+                    <th style="background-color: #e6fff2;">Requested Net Realized Basic Amount Rate / Unit(Rs.) (on Consumer Basic)</th>
+                    <th style="background-color: #e6fff2;">Approved Net Realized Basic Discount (%) (On Consumer Basic)</th>
+                    <th style="background-color: #e6fff2;">Approved Net Realized Basic Rate / Unit (S Consumer Basic)</th>
+                    <th>COP per Unit(Rs.)</th>
+                    <th>Requested COP Factor</th>
+                    <th>Approved COP Factor</th>
+                </tr>
+                <apex:repeat value="{!listItems.qliList}" var="item">   
+                    <tr>
+                        <td style="width:2%;"> {!rowcount} <apex:variable var="rowcount" value="{!rowcount+1}" /></td>
+                        <td><apex:outputText value="{!item.Product_Name__c}"/></td> 
+                        <td><apex:outputText value="{!item.Item_Code__c}"/></td>
+                        <td><apex:outputText value="{0}"><apex:param value="{!item.Quantity}"/></apex:outputText></td>
+                        <td><apex:outputText value="{0,date,MM/dd/yy}"><apex:param value="{!item.Effective_Pricebook_Date__c}"/></apex:outputText></td>
+                        <td><apex:outputText value="{!item.ListPrice}"/></td>
+                        <td><apex:outputText value="{!ROUND(item.Requested_Customer_Discount__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!item.UnitPrice}"/></td>
+                        <td><apex:outputText value="{!ROUND(item.Approved_Customer_Discount__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Approved_Customer_Discounted_Basic_Price__c,2)}"/></td>
+                        <td><apex:outputText value="{!ROUND(item.Req_WD_Ret_SAC_OnReqDiscBasic__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Req_WD_Ret_Amt_SACConsBasic__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Approved_WD_Retention_On_ReqDiscbasic__c,2)}"/>%</td>
+                        <td><apex:outputText value="{!ROUND(item.Apr_WD_Ret_Amt_SACConsBasic__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Requested_WD_CONT_Req_Disc_Basic__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Req_WD_CONT_Amt_Consumer_Basic__c,2)}"/></td>
+                        <td><apex:outputText value="{!ROUND(item.Approved_WD_CONT__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Approved_WD_CONT_Amt_Consumer_Basic__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Req_Net_Rlizd_Bsc_Disc__c,2)}"/> %</td>
+                        <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!ROUND(item.Req_Net_Realizd_BsicAmnt_Rate_Unit__c,2)}" />
+                            </apex:outputText></td>
+                        <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!ROUND(item.Approved_Net_Realized_Basic_Discount__c,2)}" />
+                            </apex:outputText> %</td>
+                        <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!ROUND(item.Approved_Net_Realized_Basic_Rate_Unit__c,2)}" />
+                            </apex:outputText></td>
+                        <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!ROUND(item.COP__c,2)}" />
+                            </apex:outputText></td>
+                        <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!ROUND(item.Requested_COP_Factor__c,2)}"/></apex:outputText></td>
+                        
+                        <td><apex:outputText value="{0,number,#,##0.00}"> <apex:param value="{!ROUND(item.Approved_COP_Factor__c,2)}"/></apex:outputText></td>
+                    </tr>
+                </apex:repeat>
+                <tr>
+                    <td></td>
+                    <td>Total</td>
+                    <td><apex:outputText value="{!listItems.sumRecord.LOB}"/></td>
+                    <td></td>
+                    <td></td>
+                    
+                    
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summation_listPrice) }"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationUnitPrice_Percentage) }"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summation_unitPrice)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedCustomerDiscountedBasicPrice_Percentage) }"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedCustomerDiscountedBasicPrice)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqWDRetSACOnReqDiscBasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqWDRetSACOnReqDiscBasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationAppWDRetReqDiscbasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationAppWDRetReqDiscbasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqNetRealizdBsicAmntRateUnit_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqNetRealizdBsicAmntRateUnit)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedNetRealizedBasicRateUnit_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedNetRealizedBasicRateUnit)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationCOPperUnit)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationRequestedCOPFactor)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedCOPFactor)}"/></apex:outputText></td>
+                </tr>
+            </table >
+            <br/><br/>
+        </apex:repeat>
+        
+    </apex:outputPanel>   
+    <apex:outputPanel rendered="{!hideCOP}">
+        <apex:variable var="rowcount" value="{!1}" />
+        
+        
+        <apex:repeat value="{!listWrapper}" var="listItems">    
+            <br/>
+            <b>{!listItems.sumRecord.LOB}</b>
+            <table class="table" cellspacing="0">
+                <tr>
+                    <th>sr No. </th>
+                    <th>Product</th>
+                    <th>Product Code </th>
+                    <th>Quantity<br/></th>
+                    <th>Price List Date</th>
+                    <th>List Price<br/></th>
+                    <th style="background-color:  #ffffcc ;">Requested Customer Discount %</th>
+                    <th style="background-color: #ffffcc;">Requested Customer Discounted Basic Price</th>
+                    <th style="background-color:  #ffffcc;">Approved Customer Discount %</th>
+                    <th style="background-color:  #ffffcc;">Approved Customer Discounted Basic price<br/>Total Amount.</th>
+                    <th style="background-color: #ffe6e6;">Requested WD Retention % / SAC (on Requested Discounted Basic) %</th>
+                    <th style="background-color: #ffe6e6;" >Requested WD Retention %/ SAC (on Consumer Basic)</th>
+                    <th style="background-color: #ffe6e6;" >Approved WD Retention % / SAC (on Approved Discounted Basic) %</th>
+                    <th style="background-color: #ffe6e6;" >Approved WD Retention % / SAC (on Consumer Basic)</th>
+                    <th style="background-color: #ffffcc;" >Requested WD/CONT % (on Requested Discounted Basic)</th>
+                    <th style="background-color: #ffffcc;" >Requested WD/CONT % (on Consumer Basic)</th>
+                    <th style="background-color: #ffffcc;" >Approved WD/ CONT % (on Approved Discount Basic)</th>
+                    <th style="background-color: #ffffcc;">Approved WD/ CONT % (on Consumer Basic)</th>
+                    <th style="background-color: #e6fff2;">Requested Net Realized Basic Discount (%) (on Consumer Basic)</th>
+                    <th style="background-color: #e6fff2;">Requested Net Realized Basic Amount Rate / Unit(Rs.) (on Consumer Basic)</th>
+                    <th style="background-color: #e6fff2;">Approved Net Realized Basic Discount (%) (On Consumer Basic)</th>
+                    <th style="background-color: #e6fff2;">Approved Net Realized Basic Rate / Unit (S Consumer Basic)</th>
+                    
+                </tr>
+                <apex:repeat value="{!listItems.qliList}" var="item">   
+                    <tr>
+                        <td style="width:2%;"> {!rowcount} <apex:variable var="rowcount" value="{!rowcount+1}" /></td>
+                        <td><apex:outputText value="{!item.Product_Name__c}"/></td>
+                        <td><apex:outputText value="{!item.Item_Code__c}"/></td>
+                        <td><apex:outputText value="{!item.Quantity}"/></td>
+                        <td><apex:outputText value="{0,date,MM/dd/yy}"><apex:param value="{!item.Effective_Pricebook_Date__c}"/></apex:outputText></td>
+                        <td><apex:outputText value="{!item.ListPrice}"/></td>
+                        <td><apex:outputText value="{!ROUND(item.Requested_Customer_Discount__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!item.UnitPrice}"/></td>
+                        <td><apex:outputText value="{!ROUND(item.Approved_Customer_Discount__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Approved_Customer_Discounted_Basic_Price__c,2)}"/></td>
+                        <td><apex:outputText value="{!ROUND(item.Req_WD_Ret_SAC_OnReqDiscBasic__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Req_WD_Ret_Amt_SACConsBasic__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Approved_WD_Retention_On_ReqDiscbasic__c,2)}"/>%</td>
+                        <td><apex:outputText value="{!ROUND(item.Apr_WD_Ret_Amt_SACConsBasic__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Requested_WD_CONT_Req_Disc_Basic__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Req_WD_CONT_Amt_Consumer_Basic__c,2)}"/></td>
+                        <td><apex:outputText value="{!ROUND(item.Approved_WD_CONT__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Approved_WD_CONT_Amt_Consumer_Basic__c,2)}"/> %</td>
+                        <td><apex:outputText value="{!ROUND(item.Req_Net_Rlizd_Bsc_Disc__c,2)}"/> %</td>
+                        <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!ROUND(item.Req_Net_Realizd_BsicAmnt_Rate_Unit__c,2)}" />
+                            </apex:outputText></td>
+                        <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!ROUND(item.Approved_Net_Realized_Basic_Discount__c,2)}" />
+                            </apex:outputText> %</td>
+                        <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!ROUND(item.Approved_Net_Realized_Basic_Rate_Unit__c,2)}" />
+                            </apex:outputText></td>
+                        
+                    </tr>
+                </apex:repeat>
+                <tr>
+                    <td></td>
+                    <td>Total</td>
+                    <td><apex:outputText value="{!listItems.sumRecord.LOB}"/></td>
+                    <td></td>
+                    <td></td>
+                    
+                    
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summation_listPrice) }"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationUnitPrice_Percentage) }"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summation_unitPrice)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedCustomerDiscountedBasicPrice_Percentage) }"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedCustomerDiscountedBasicPrice)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqWDRetSACOnReqDiscBasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqWDRetSACOnReqDiscBasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationAppWDRetReqDiscbasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationAppWDRetReqDiscbasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqNetRealizdBsicAmntRateUnit_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationReqNetRealizdBsicAmntRateUnit)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedNetRealizedBasicRateUnit_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(listItems.sumRecord.summationApprovedNetRealizedBasicRateUnit)}"/></apex:outputText></td>
+                </tr>
+            </table >
+            <br/><br/>
+        </apex:repeat>
+        
+    </apex:outputPanel>   
+    <!-- Details of project for Discount (Including all product Lines) -->
+    <div>
+        <h1 class = "header2">Details of project for Discount (Including all product Lines) </h1>
+    </div>  
+    
+    <apex:outputPanel rendered="{!displayCOP}" >
+        
+        
+        <table class="table"  cellspacing="0">
+            <tr>
+                <th>Product</th>
+                <th>Quantity<br/></th>
+                <th>Price List Date</th>
+                <th>List Price<br/></th>
+                <th style="background-color:  #ffffcc;">Requested Customer Discount %</th>
+                <th style="background-color:  #ffffcc;">Requested Customer Discounted Basic Price</th>
+                <th style="background-color:  #ffffcc;">Approved Customer Discount %</th>
+                <th style="background-color:  #ffffcc;">Approved Customer Discounted Basic price<br/>Total Amount.</th>
+                <th style="background-color: #ffe6e6;">Requested WD Retention % / SAC (on Requested Discounted Basic) %</th>
+                <th style="background-color: #ffe6e6;">Requested WD Retention %/ SAC (on Consumer Basic)</th>
+                <th style="background-color: #ffe6e6;">Approved WD Retention % / SAC (on Approved Discounted Basic) %</th>
+                <th style="background-color: #ffe6e6;">Approved WD Retention % / SAC (on Consumer Basic)</th>
+                <th style="background-color: #ffffcc;">Requested WD/CONT % (on Requested Discounted Basic)</th>
+                <th style="background-color: #ffffcc;">Requested WD/CONT % (on Consumer Basic)</th>
+                <th style="background-color: #ffffcc;">Approved WD/ CONT % (on Approved Discount Basic)</th>
+                <th style="background-color: #ffffcc;">.Approved WD/ CONT % (on Consumer Basic)</th>
+                <th style="background-color: #e6fff2;">Requested Net Realized Basic Discount (%) (on Consumer Basic)</th>
+                <th style="background-color: #e6fff2;">Requested Net Realized Basic Amount Rate / Unit(Rs.) (on Consumer Basic)</th>
+                <th style="background-color: #e6fff2;">Approved Net Realized Basic Discount (%) (On Consumer Basic)</th>
+                <th style="background-color: #e6fff2;">Approved Net Realized Basic Rate / Unit (S Consumer Basic)</th>
+                <th>COP per Unit(Rs.)</th>
+                <th>Requested COP Factor</th>
+                <th>Approved COP Factor</th>
+            </tr>
+            
+            <apex:repeat value="{!lstSummations}" var="Summ" >
+                <tr>
+                    <td></td>
+                    
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDRetSACOnReqDiscBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDRetSACOnConsumerBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationAppWDRetReqDiscBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationAppWDRetConsumerBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDCONTOnReqDiscBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDCONTOnConsumerBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedWDCONTOnReqDiscBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedWDCONTOnConsumerBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><apex:outputText value="{!Summ.LOB}"/></td>
+                    
+                    <td></td>
+                    <td></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summation_listPrice)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationUnitPrice_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summation_unitPrice)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedCustomerDiscountedBasicPrice_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedCustomerDiscountedBasicPrice)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDRetSACOnReqDiscBasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDRetSACOnReqDiscBasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationAppWDRetReqDiscbasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationAppWDRetReqDiscbasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqNetRealizdBsicAmntRateUnit_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqNetRealizdBsicAmntRateUnit)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedNetRealizedBasicRateUnit_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedNetRealizedBasicRateUnit)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationCOPperUnit)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationRequestedCOPFactor)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedCOPFactor)}"/></apex:outputText></td>
+                </tr>
+            </apex:repeat>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{!quoteData.Req_WD_Ret_Disc_Basic__c} %</td>
+                <td>{!quoteData.Req_WD_Ret_Cons_Basic__c} %</td>
+                <td>{!quoteData.Appr_WD_Ret_Disc_Basic__c} %</td>
+                <td>{!quoteData.Appr_WD_Ret_Cons_Basic__c} %</td>
+                <td>{!quoteData.Req_WD_CONT__c} %</td>
+                <td>{!quoteData.Req_WD_CONT_Cons_Basic__c} %</td>
+                <td>{!quoteData.Appr_WD_CONT_Disc_Basic__c} %</td>
+                <td>{!quoteData.Appr_WD_CONT_Cons_Basic__c} %</td>
+                <td>{!quoteData.Req_Net_Rlizd_Disc_Cons_Basic__c} %</td>
+                <td></td>
+                <td>{!quoteData.Appr_Net_Relzd_Bsc_Disc_On_Cons_Bsc__c} %</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                
+            </tr>
+            <tr>
+                
+                <td>Grand Total</td>
+                <td></td>
+                <td></td>
+                
+                <td>{!ROUND(quoteData.Total_List_Price__c,2)}</td>
+                
+                <td>{!ROUND(quoteData.Req_Cust_Disc__c,2)} %</td>
+                <td>{!ROUND(quoteData.Total_Sales_Price__c,2)}</td>
+                <td>{!Round(quoteData.App_Cust_Disc__c,2)} %</td>
+                <td>{!Round(quoteData.Total_Approved_Customer_Discount_Price__c,2)}</td>
+                <td>{!Round(quoteData.Req_WD_Retention_SAC_Amnt_Req_Disc_Bsc__c,2)}</td>
+                <td>{!Round(quoteData.Req_WD_Retention_SAC_Amnt_Req_Cons_Bsc__c,2)}</td>
+                <td>{!Round(quoteData.Appr_WD_Ret_SAC_Amt_appr_Disc_Bsc__c,2)}</td>
+                <td>{!Round(quoteData.Appr_WD_Ret_SAC_Amt_on_cons_Bsc__c,2)}</td>
+                <td>{!Round(quoteData.Req_WD_CONT_Amt_on_Req_Disc_bsc__c,2)}</td>
+                <td>{!Round(quoteData.Req_WD_CONT_amt_on_cons_bsc__c,2)}</td>
+                <td>{!Round(quoteData.Appr_WD_CONT_Amt_On_Appr_Disc_Bsc__c,2)}</td>
+                <td>{!Round(quoteData.Appr_WD_CONT_Amt_On_Cons_Bsc__c,2)}</td>
+                
+                
+                <td></td>
+                <td>{!Round(quoteData.Req_Net_Rlizd_Basic_Rate_Cons__c,2)}</td>
+                <td></td>
+                <td>{!Round(quoteData.Appr_Net_Rlizd_Basic_Rate_Cons__c,2)}</td>
+                <td>{!Round(quoteData.COP__c,2)}</td>
+                <td>{!Round(quoteData.Requested_COP_Factor__c,2)}</td>
+                <td>{!Round(quoteData.Approved_COP_Factor__c,2)}</td>
+                
+            </tr>
+        </table >
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!hideCOP}" >
+        
+        
+        <table class="table"  cellspacing="0">
+            <tr>
+                <th>Product</th>
+                <th>Quantity<br/></th>
+                <th>Price List Date</th>
+                <th>List Price<br/></th>
+                <th style="background-color:  #ffffcc;">Requested Customer Discount %</th>
+                <th style="background-color:  #ffffcc;">Requested Customer Discounted Basic Price</th>
+                <th style="background-color:  #ffffcc;">Approved Customer Discount %</th>
+                <th style="background-color:  #ffffcc;">Approved Customer Discounted Basic price<br/>Total Amount.</th>
+                <th style="background-color: #ffe6e6;">Requested WD Retention % / SAC (on Requested Discounted Basic) %</th>
+                <th style="background-color: #ffe6e6;">Requested WD Retention %/ SAC (on Consumer Basic)</th>
+                <th style="background-color: #ffe6e6;">Approved WD Retention % / SAC (on Approved Discounted Basic) %</th>
+                <th style="background-color: #ffe6e6;">Approved WD Retention % / SAC (on Consumer Basic)</th>
+                <th style="background-color: #ffffcc;">Requested WD/CONT % (on Requested Discounted Basic)</th>
+                <th style="background-color: #ffffcc;">Requested WD/CONT % (on Consumer Basic)</th>
+                <th style="background-color: #ffffcc;">Approved WD/ CONT % (on Approved Discount Basic)</th>
+                <th style="background-color: #ffffcc;">.Approved WD/ CONT % (on Consumer Basic)</th>
+                <th style="background-color: #e6fff2;">Requested Net Realized Basic Discount (%) (on Consumer Basic)</th>
+                <th style="background-color: #e6fff2;">Requested Net Realized Basic Amount Rate / Unit(Rs.) (on Consumer Basic)</th>
+                <th style="background-color: #e6fff2;">Approved Net Realized Basic Discount (%) (On Consumer Basic)</th>
+                <th style="background-color: #e6fff2;">Approved Net Realized Basic Rate / Unit (S Consumer Basic)</th>
+                
+            </tr>
+            
+            <apex:repeat value="{!lstSummations}" var="Summ" >
+                <tr>
+                    <td></td>
+                    
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDRetSACOnReqDiscBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDRetSACOnConsumerBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationAppWDRetReqDiscBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationAppWDRetConsumerBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDCONTOnReqDiscBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDCONTOnConsumerBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedWDCONTOnReqDiscBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedWDCONTOnConsumerBasic_Percentage)}"/></apex:outputText> %</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    
+                </tr>
+                <tr>
+                    <td><apex:outputText value="{!Summ.LOB}"/></td>
+                    
+                    <td></td>
+                    <td></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summation_listPrice)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationUnitPrice_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summation_unitPrice)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedCustomerDiscountedBasicPrice_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedCustomerDiscountedBasicPrice)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDRetSACOnReqDiscBasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDRetSACOnReqDiscBasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationAppWDRetReqDiscbasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationAppWDRetReqDiscbasic)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedWDCONT)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqNetRealizdBsicAmntRateUnit_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationReqNetRealizdBsicAmntRateUnit)}"/></apex:outputText></td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedNetRealizedBasicRateUnit_Percentage)}"/></apex:outputText> %</td>
+                    <td><apex:outputText value="{0,number,#,##0.00}"><apex:param value="{!VALUE(Summ.summationApprovedNetRealizedBasicRateUnit)}"/></apex:outputText></td>
+                    
+                </tr>
+            </apex:repeat>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{!quoteData.Req_WD_Ret_Disc_Basic__c} %</td>
+                <td>{!quoteData.Req_WD_Ret_Cons_Basic__c} %</td>
+                <td>{!quoteData.Appr_WD_Ret_Disc_Basic__c} %</td>
+                <td>{!quoteData.Appr_WD_Ret_Cons_Basic__c} %</td>
+                <td>{!quoteData.Req_WD_CONT__c} %</td>
+                <td>{!quoteData.Req_WD_CONT_Cons_Basic__c} %</td>
+                <td>{!quoteData.Appr_WD_CONT_Disc_Basic__c} %</td>
+                <td>{!quoteData.Appr_WD_CONT_Cons_Basic__c} %</td>
+                <td>{!quoteData.Req_Net_Rlizd_Disc_Cons_Basic__c} %</td>
+                <td></td>
+                <td>{!quoteData.Appr_Net_Relzd_Bsc_Disc_On_Cons_Bsc__c} %</td>
+                <td></td>
+                
+                
+            </tr>
+            <tr>
+                
+                <td>Grand Total</td>
+                <td></td>
+                <td></td>
+                
+                <td>{!ROUND(quoteData.Total_List_Price__c,2)}</td>
+                
+                <td>{!ROUND(quoteData.Req_Cust_Disc__c,2)} %</td>
+                <td>{!ROUND(quoteData.Total_Sales_Price__c,2)}</td>
+                
+                <td>{!Round(quoteData.App_Cust_Disc__c,2)} %</td>
+                <td>{!Round(quoteData.Total_Approved_Customer_Discount_Price__c,2)}</td>
+                <td>{!Round(quoteData.Req_WD_Retention_SAC_Amnt_Req_Disc_Bsc__c,2)}</td>
+                <td>{!Round(quoteData.Req_WD_Retention_SAC_Amnt_Req_Cons_Bsc__c,2)}</td>
+                
+                
+                <td>{!Round(quoteData.Appr_WD_Ret_SAC_Amt_appr_Disc_Bsc__c,2)}</td>
+                <td>{!Round(quoteData.Appr_WD_Ret_SAC_Amt_on_cons_Bsc__c,2)}</td>
+                <td>{!Round(quoteData.Req_WD_CONT_Amt_on_Req_Disc_bsc__c,2)}</td>
+                <td>{!Round(quoteData.Req_WD_CONT_amt_on_cons_bsc__c,2)}</td>
+                <td>{!Round(quoteData.Appr_WD_CONT_Amt_On_Appr_Disc_Bsc__c,2)}</td>
+                <td>{!Round(quoteData.Appr_WD_CONT_Amt_On_Cons_Bsc__c,2)}</td>
+                
+                
+                <td></td>
+                <td>{!Round(quoteData.Req_Net_Rlizd_Basic_Rate_Cons__c,2)}</td>
+                <td></td>
+                <td>{!Round(quoteData.Appr_Net_Rlizd_Basic_Rate_Cons__c,2)}</td>
+                
+                
+            </tr>
+        </table >
+    </apex:outputPanel>
+    
+    <!-- LD clause details -->
+    <div class="label"></div>
+    <table class="headertable" cellspacing="0" style="width:50%;">
+        <tr>
+            <td style="width:25%;">LD Clause </td>
+            <td style="width:25%;"><apex:outputText value="{!IF(quoteData.LD_Clause__c == True, 'Yes', 'No')}"/></td>
+        </tr>
+        <tr>
+            <td style="width:25%;">Details Of LD Clause </td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Details_of_LD_Clause__c}"/></td>
+        </tr>
+    </table>
+    <table class="headertable" cellspacing="0" style="width:100%;">
+        <tr>
+            <td style="width:25%;">Delivery Period Requested (in Weeks)</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Delivery_Period_in_weeks__c}"/></td>
+            <td style="width:25%;">Delivery Period Approved (in Weeks)</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Delivery_Period_Appr_in_weeks__c}"/></td>
+        </tr>
+        <tr>
+            <td style="width:25%;">Delivery Location</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Delivery_Location__c}"/></td>
+            <td style="width:25%;">Payment Terms Required By</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Payment_Terms__c}"/></td>
+        </tr>
+        <tr>
+            <td style="width:25%;">Validity Period Requested</td>
+            <td style="width:25%;"><apex:outputText value="{0,date,dd/MM/yy}"><apex:param value="{!quoteData.Validity_Period_Req__c}"/></apex:outputText></td>
+            <td style="width:25%;">Validity Period Approved</td>
+            <td style="width:25%;"><apex:outputText value="{0,date,dd/MM/yy}"><apex:param value="{!quoteData.Validity_Period_Approved__c}"/></apex:outputText></td>
+            
+        </tr>
+        <tr>
+            <td style="width:25%;">Warranty requested</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Warranty__c}"/></td>
+            <td style="width:25%;">Last Discount Sanctioned</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Last_Disc_Sanctioned__c}"/></td>
+        </tr>
+        <tr>
+            <td style="width:25%;">Warranty Approved</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Warranty_Approved__c}"/></td>
+            <td style="width:25%;">Warranty APO No.</td>
+            <td style="width:25%;"><apex:outputText value="{!quoteData.Warranty_APO_No__c}"/></td>
+        </tr> 
+        
+        
+    </table>
+    <div class="label"></div>
+    <br/>
+    
+    <table class="mytext" cellpadding="6" width="70%" Style="font-size:30px:">
+        <tr>
+            <td style="vertical-align: text-top;">
+                Approve:
+            </td><td>
+            
+            </td>
+            <td style="vertical-align: text-top;">                      
+                Resubmit:
+            </td><td>
+            
+            </td>
+            <td style="vertical-align: text-top;">                      
+                Reject:
+            </td><td>
+            
+            </td>
+        </tr>
+    </table>
+    
+   
+</apex:page>

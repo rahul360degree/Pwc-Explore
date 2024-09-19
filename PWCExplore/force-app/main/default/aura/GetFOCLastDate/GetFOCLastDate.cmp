@@ -1,0 +1,22 @@
+<aura:component controller="GetProjectMilestoneLastDate"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" >
+    
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}"/>  	
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    
+    <!--loading spinner start-->
+    <div class="exampleHolder">
+        <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
+    </div>
+    <!-- Loading spinner end-->   
+    
+    <aura:attribute name="recordId" type="Id" default="{!v.recordId}" />
+    
+    <aura:attribute name="statusMessage" type="String" default="Please wait while we fetch Last Date......" />
+    
+    <div class="slds-text-body_small">{!v.statusMessage}</div>
+
+    
+</aura:component>

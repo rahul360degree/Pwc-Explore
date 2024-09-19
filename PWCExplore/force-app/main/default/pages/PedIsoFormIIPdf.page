@@ -1,0 +1,120 @@
+<apex:page standardController="Order" extensions="PedIsoFormIIController"   renderAs="pdf" standardStylesheets="false" applyBodyTag="false" applyHTMLTag="false" sidebar="false" showHeader="false">
+    <head>  
+        <style type="text/css" style="font-size: 14pt;font-family: Arial, sans-serif;">
+            @page {
+            margin-top: 160px;
+            padding:0px;
+            margin-bottom: 200px;
+            
+            @top-left {
+            content: element(header);
+            }                           
+            @bottom-left {   
+            content: element(footer);
+            } 
+            } 
+            div.header {
+            margin-top:10px;
+            position: running(header);
+            width: 100%;
+            margin-right: 10px;
+            }
+            div.footer {       
+            position: running(footer);
+            width: 100%;
+            margin-left: 170px;
+            }
+            .footer {
+            display: flex;
+            justify-content: right;
+            align-items: right;
+            }
+            .headertable{
+            font-size:14px;
+            }
+            div.pagebreak {
+            page-break-after: always;
+            }
+        </style> </head> 
+    
+    <div class="header" style="font-family: Arial, sans-serif;">
+        <div  style="float:left;">
+            <apex:image url="{!$Resource.godrej_logo}" width="100" height="50"/><br/>
+             <div style="font-size: 14pt;">
+                 PM. MKTG: CONTDOC: REV 6 
+            </div>
+                 <div style="font-size: 12pt;">
+            	 	Dated: 3rd January 2014 
+                 </div>
+            </div>
+        <div  style="float:right;">
+            <div style="font-size: 14pt;padding-top:10px;">
+                <br/><br/><apex:outputText value="PED – Sales & Marketing Dept."/>
+            </div>
+    </div><br/><br/>
+    </div>
+    <div class="pagebreak"  style="font-size: 14pt;font-family: Arial, sans-serif;"> 
+    <center>
+        {!EndUserName} - {!TotalOrderProductQuantity} Nos <br/>
+		<!--Project numbers: PCL100001-04 <br/>--><br/><br/>
+        <u><b><apex:outputText value="CONTRACT DOCUMENTS TRANSMITTAL" style="font-size: 16px;"/></b></u> <br/><br/><br/>
+    </center>
+    
+    <table width="100%" style="border: 1px solid black;">
+        <tr>
+            <td>
+                <center>
+                    List of following Contract Documents have been handed over to<br/><br/>
+					<b>Head – Product Engineering / Authorized representative.</b> <br/><br/><br/><br/><br/>
+                </center>
+                 <table width="100%" >
+                    <tr>
+                        <td  width="60%">
+                            <div id="left" align="left">
+                                For Sales &amp; Marketing Dept.<br/>
+								Name: {!orderData.Quote.Level_1_Approver__r.Name} <br/>
+                                Date: {!today}<br/>
+                            </div>
+                        </td>
+                        <td width="40%">
+                            <div id="right" style="float:right;text-align:left;">
+                             	For Product Engineering Dept.<br/>
+                                Name: {!orderData.Design_Manager__r.Name}<br/>
+                                Date: {!today}<br/>
+                            </div>
+                        </td>
+                    </tr>
+    			</table>
+            </td>
+        </tr>
+    </table>
+   
+    
+	
+        <br/><br/>
+        <u>List:</u><br/><br/>
+
+		1) All offers<br/><br/>
+
+		2) All technical &amp; commercial correspondence <br/><br/>
+
+		3) All enquiry documents  <br/><br/>
+
+		4) LOI/ P.O <br/><br/>
+
+		5) Client Communication 
+    </div>
+    <div style="font-size: 14pt;font-family: Arial, sans-serif;">
+        <table width="100%">
+        <tr>
+            <td  width="15%" style="vertical-align: text-top;">
+                Distribution:
+            </td>
+            <td  width="85%">
+                Original – To Product Engineering Dept.<br/>
+                Copy – With Sales &amp; Marketing Dept. 
+            </td>
+        </tr>
+     </table>
+    </div>
+</apex:page>

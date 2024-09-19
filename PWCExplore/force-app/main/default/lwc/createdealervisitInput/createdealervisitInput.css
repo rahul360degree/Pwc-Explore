@@ -1,0 +1,19 @@
+.decrement-icn{
+    --sds-c-icon-color-foreground-default: red;
+    --sds-c-icon-color-foreground: red;
+ }
+
+
+ .increment-icn{
+    --sds-c-icon-color-foreground-default: green;
+    --sds-c-icon-color-foreground: green;
+ }
+
+
+ .leftpadding{
+   padding-left: 10px !important;
+ }
+
+ .rightpadding{
+   padding-right: 10px !important;
+ }

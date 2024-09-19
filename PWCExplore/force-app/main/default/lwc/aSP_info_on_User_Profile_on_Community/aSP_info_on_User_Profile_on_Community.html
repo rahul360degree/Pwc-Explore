@@ -1,0 +1,17 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    <template if:false={showSpinner}>
+        <lightning-card title="ASP Details">
+            <lightning-record-form 
+                record-id={recordId} 
+                object-api-name="Account" 
+                columns="2" 
+                layout-type="Full"
+                mode="view"
+                onsubmit={handleSubmit}
+            ></lightning-record-form>
+        </lightning-card>
+    </template>
+</template>

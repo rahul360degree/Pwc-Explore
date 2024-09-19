@@ -1,0 +1,220 @@
+<apex:page controller="QuotationController" renderAs="pdf" standardStylesheets="false" applyBodyTag="false" contentType="application/pdf#MyDoc.pdf" applyHTMLTag="false" sidebar="false" showHeader="false" > 
+    <head>  
+    <style type="text/css">
+@page {
+            margin-top: 190px;
+            padding:0px;
+            margin-bottom: 90px;
+            
+            @top-left {
+                content: element(header);
+            }                           
+            @bottom-left {   
+                content: element(footer);
+            } 
+        }        
+        div.header {
+            margin-top:10px;
+            position: running(header);
+            width: 100%;
+            margin-right: 10px;
+        }
+        div.footer {       
+            position: running(footer);
+            width: 100%;
+            margin-left: 170px;
+        }
+        
+        
+        div.pagebreak {
+  page-break-after: always;
+}
+        
+        
+       @page {
+ @bottom-right {
+ content: "Page " counter(page) " of " counter(pages);
+ }
+ }
+        
+      <!--  .repeatTableHeader{-fs-table-paginate: paginate;}  -->
+    </style>
+    </head> 
+    <div class="header">
+<table width="100%" ><tr>
+<td>
+    <apex:outputPanel rendered="{!OR(Quotes.Cluster__c  == 'MUM',Quotes.Cluster__c  == 'MMR')}">
+    <div id="left" align="left">
+        <span style="font-weight:bold; font-size: 16pt; "><b>Construction Division</b></span><br/><b>CM Business</b><br/>Sales office, Nr. Plant-18 RMC<br/>Godrej &amp; Boyce Mfg. Co. Ltd, Vikhroli.<br/>Tel. : 61117111/61117222<br/>Email : rmc@godrej.com<br/>Web : www.godrejrmc.com
+    </div></apex:outputPanel>
+    <apex:outputPanel rendered="{!Quotes.Cluster__c  == 'PUN'}">
+        <div id="left" align="left">
+        <span style="font-weight:bold; font-size: 16pt; "><b>Construction Division</b></span><br/><b>CM Business</b><br/>Pune (Dhayari) RMC Plant<br/>143/11, Lagadmala<br/>Sinhagad Road,Pune-411<br/>Tel. : 80078 31000/41000<br/>Email : rmc@godrej.com<br/>Web : www.godrejrmc.com
+    </div></apex:outputPanel>
+</td>
+<td><div id="right" align="right">
+    <b>Godrej and Boyce Mfg. Co. Ltd.</b><br/>Regd. Office: Pirojshanagar<br/>Vikhroli, Mumbai 400 079, India<br/>T : 91-22-67961700/1800<br/>W : www.godrej.com</div><br/><br/><br/>
+</td>
+    </tr></table>    </div>
+    
+    <div class="footer">
+        <div  style="float:left">
+            <apex:image url="{!$Resource.godrej_construction_logo}" width="320" height="80"/> </div>
+    </div>
+    
+    <br/>
+        <div class="pagebreak">
+     <div>
+        Ref No: GCM-Q-{!YEAR(TODAY())}-{!Quotes.QuoteNumber}<br/><br/>  
+        Date :<apex:outputText value="{0,date,' 'dd' 'MMMMM' 'yyyy}"><apex:param value="{!Quotes.CreatedDate}"/></apex:outputText><br/><br/>
+        To,<br/>{!Account.Name},<br/>
+         <apex:outputText value="{!SUBSTITUTE(Quotes.Primary_Address__c,'\\\n','<br/>')}" style="white-space:pre;" escape="false"/><br/>
+         <br/><br/>
+         Kind Attn: {!Quotes.QuoteToName} ({!Quotes.Contact.Phone})<br/><br/>Dear Sir/Madam,</div><br/>
+             <div align="left">
+            Subject : <b><apex:outputText > Quote for supply of Commercial RMC Products at {!Quotes.Site__c} site</apex:outputText></b><br/><br/>
+            </div>
+     <div>
+        With reference to your inquiry, we are pleased to quote for supply of Commercial RMC Products for the following grades at the below mentioned prices.<br/>		        
+    </div>
+    <apex:variable var="rowcount" value="{!1}" />
+    <apex:pageBlock title="">
+      <apex:pageBlockTable value="{!QuotelineItem_RMC}" var="Products" rendered="{!QuotelineItem_RMC.size > 0}" border="2"  align="center" cellpadding="10" >
+          <apex:column headerValue="Sr No.">
+        {!rowcount} <apex:variable var="rowcount" value="{!rowcount+1}" />
+           </apex:column>
+          <apex:column headerValue="Grade/Product" value="{!Products.Product_Name__c}"/>
+          <apex:column headerValue="Basic Rate (Rs./Cum)" value="{!Products.UnitPrice}"/>
+         <apex:column headerValue="SGST 9% (Rs./Cum)" value="{!Products.C_GST__c}"/>
+         <apex:column headerValue="CGST 9% (Rs./Cum)" value="{!Products.S_GST__c}"/> 
+          <apex:column headerValue="Landed Rate(Rs.)" value="{!Products.Sales_Amount__c}"/>
+          
+        <!--  <apex:column headerValue="Landed Rate (Rs./Cum)" value="{!Products.Total_Price_with_Customer_Discount__c}"/> -->
+      </apex:pageBlockTable>
+   </apex:pageBlock> 
+    
+   <div><ul>
+        <li>Pumping charges shall be extra at <b>Rs.{!Quotes.Pumping_charges_per_cuM__c}</b> per Cum (GST Extra) for single pour of more than <b>{!Quotes.Minimum_Pumping_Quantity__c}cum</b>. For single pour of less than <b>{!Quotes.Minimum_Pumping_Quantity__c}cum</b>, a lump sum charge for pumping shall be charged at <b>Rs.{!Quotes.Total_pumping_charges__c}/-</b> or as per mutual agreement at the time of contract.</li>
+        <li>The above rates are derived based on the cement base rates(GST Extra) at <b>Rs.{!Quotes.Basic_cement_rate__c}</b> per 50 kg bag. Any hike in in cement rates shall apply for RMC basic rate escalation as per the mix design.</li>
+        <li>Escalation of <b>Rs.{!Quotes.Diesel_Escalation_rate__c}</b> per cum basic rates shall be applicable for every Rs.1/liter increase in diesel price.</li>
+        <li>RMC rates are subject to changes as per the revisions in the input cost of material.</li>
+        <li>Above rates are not inclusive of toll charges, additional charges payable (if any) for transport shall be charged on actual, plus applicable GST thereon.</li>
+        <li>All cheques to be drawn in favor of “Godrej &amp; Boyce Mfg. Co. Ltd”.</li>
+        <li>The delivery shall be as per mutually agreed schedule; prior notification shall be of at least 48 hours in advance to ensure timely delivery.</li>
+        <li>Quotation validity is for 15 Days from the date of quotation.</li>
+        <li>The terms of supply shall be in accordance with ‘ANEXURE A’ enclosed.</li>
+        <li>Payment terms: {!Quotes.Payment_Terms__c}<br/></li>
+        <li>Special Remarks: {!Quotes.Additional_Payment_Terms__c}</li>
+        <li>You are requested to release purchase order to start supply</li>
+        <li>The delivery shall be as per mutually agreed schedule; prior notification shall be of at least 48 hrs. to ensure prompt delivery.</li><br/>
+        </ul>
+    </div>  
+    <div>
+        Godrej &amp; Boyce Mfg. Co. Ltd.<br/>PAN: AAACG1395D<br/>GST: 27AAACG1395D1ZU<br/><br/>
+        Godrej NEFT/RTGS details:<br/>  
+        <b>Name of bank:</b> Citibank<br/><b>Branch:</b> DN road, Fort Mumbai 400001<br/><br/>
+        <b>Current Account</b><br/>MICR code: 400037002<br/>
+        <apex:outputPanel rendered="{!OR(Quotes.Cluster__c  == 'MUM',Quotes.Cluster__c  == 'MMR')}">Account no.: 0001020412</apex:outputPanel>
+        <apex:outputPanel rendered="{!Quotes.Cluster__c  == 'PUN'}">Account no.: 0001020374</apex:outputPanel>
+        <br/>IFSC code: CITI0100000<br/><br/><br/><br/>
+    </div>
+    <div>
+        Assuring our best services at all times.<br/>
+        Thanking you,<br/>
+        Yours Faithfully,<br/>
+        For Godrej &amp; Boyce Mfg. Co. Ltd<br/>
+        <apex:outputField value="{!SalesRep.User_signature__c}"/><br/>
+        {!SalesRep.Name}<br/>
+        {!SalesRep.Title}<br/>
+        {!SalesRep.MobilePhone}<br/>
+        {!SalesRep.Email}<br/><br/>
+    </div>
+    </div>
+    <!-- Page Break -->
+    <div>
+    <div align="center">
+        <span style="font-family: Helvetica; align:center font-weight:bold; font-size: 16pt; color: purple ">ANNEXURE A</span><br/><br/>
+        <span style="align:center font-weight:bold; font-size: 17pt; ">TERMS OF CONTRACT</span><br/><br/><br/>
+    </div>
+    <div style="align:center font-size: 13pt; ">
+        General Conditions<br/>
+        <ul>
+            <li>Godrej &amp; Boyce Mfg. Co. Ltd. hereinafter referred to as the Company.</li>
+            <li>This contract is a Unit Rate Contract with a predetermined unit rate to cover supply as well as delivery.</li>
+            <li>The Company shall not be responsible for spreading, vibrating, finishing or any other allied civil works pertaining to the supply of concrete unless agreed otherwise in writing.</li>
+            <li>The Company shall not be responsible for damage to any equipment or injury to person. The   scope of the Company is limited to supply of Concrete as per the orders placed</li>
+            <li>The quantity of each load of concrete is written on the Delivery Challan, any claims regarding the discrepancy of quantity by the Client if any, must be lodged on the date of delivery itself.</li>
+            <li>The Company guarantees the compressive cube strength prepared by its quality technician only and shall not be held responsible or liable if the same is prepared by any other party. In the event of low site cube results, RMC cubes casted at plant &amp; tested at plant in customer's presence shall be deemed to be the final acceptance criteria.</li>
+            <li>The Company does not guarantee the compressive cube strength for concrete which have been added with other materials, water proofing compound, fibers etc. at site by client without the prior written consent of the company.</li>
+            <li>The Company shall not be responsible for cracks developed due to improper compaction, non-covering of fresh concrete with plastic sheet, which may result in evaporation loss, dislocation of your shuttering material etc.</li>            
+        </ul><br/>
+        Orders<br/>
+        <ul>
+            <li>The Client shall issue the Schedule of Concrete to the Company by the 1st week of every Month.</li>
+            <li>The Client shall furnish tentative requirements over and above the Schedule at least 48 hrs in Advance for without pump orders.</li>
+            <li>Any changes to item nos. (a) and (b) above will be intimated to the Company at least 8 hrs Prior to the delivery to enable the Company to supply as per the changes.</li>
+            <li>The Client shall place a requisition for the tentative weekly requirement of Concrete and reconfirmation one day in advance from time to time.</li>
+            <li>The Company reserves the right to reject any requisition for want of advance intimation</li>
+        </ul><br/>
+        Delivery<br/>
+        <ul>
+            <li>The Concrete shall be delivered through Transit Mixers, which shall transport the Concrete from the Plant to the Site. The slurry for priming the pipes shall be provided by the Client, as per standard practice prevalent</li>
+            <li>Every Transit Mixer transporting the Concrete shall be accompanied by a valid computerized docket with Specifications like date &amp; time of mixing, mix grade, volume of concrete, date use and the challan numbers, etc. to be used at Site.</li>
+            <li>The delivery shall be in multiples of 5 cum. each</li>
+            <li>The challan shall be signed by the authorized person of the Client as proof of receipt</li>
+            <li>The ownership of concrete shall pass to the Client on discharge of the concrete from the transit mixer or from the RMC plant to the container provided by the Client, as the case may be.</li>
+            <li>Once the Concrete leaves the plant, it becomes the property of the Client who is liable to pay the Company at the agreed rates.  Under no circumstance such concrete can be taken back.</li>
+        </ul><br/>
+        Invoicing &amp; Payment<br/>
+        <ul>
+            <li>Weekly billing will be done; the Company shall deliver the invoice calculated according to the Company’s reasonable and bona fide calculations of the Price, setting out the date of delivery,the quantity of concrete delivered to the Client and the unit rate.</li>
+            <li>Within 7 days after receipt of the invoice, the Client shall pay the Company the amount mentioned in the invoice. Failing which the Client shall be liable to pay interest at the rate of 24% from the date of the Invoice.</li>
+            <li>All cheques shall be drawn in favour of the ‘Godrej &amp; Boyce Mfg. Co. Ltd.’.</li>
+            <li>Any statutory increase in duties/levies on Concrete by Central/state government would be charged as applicable.</li>
+            <li>The Client shall be responsible for payments of all supplies made by the Company.</li>
+            <li>If the Client fails to make due payment or fails to comply with its obligations under these terms and conditions the Company shall have the right at its option;
+            <ul>
+                <li>To suspend further performances of its obligations hereunder until payment</li>
+                <li>To terminate the Contract at any time, in either case without affecting any right or remedy of clause</li></ul></li>
+        </ul><br/>
+        Obligations of the Client<br/>
+        <ul>
+            <li>The Client shall provide cement slurry required for initial buttering of the pump pipeline and adequate pressurized water for cleaning of the pump at Site.</li>
+            <li>Minimum 40 cums of order is required for Pumping and 5 cum is required for dumping.</li>
+            <li>The Client shall arrange for supporting structure for concrete pump pipeline. Any loss of material due to de- shuttering or faulty props (supports) shall be to the account of the Client.</li>
+            <li>The Client shall ensure good serviceable roads inside the project for plying of vehicles</li>
+            <li>The Client shall ensure that the sample specimen are tested in accordance with I.S.1199 and in a laboratory accredited under Indian Standards.</li>
+            <li>The Client shall intimate the Company of the cube result within 3 days from the date of the 28 days Cube Test Report.</li>
+            <li>In the event of any cube failure, the Client shall inform the Company of the same within 3 days along with the details of delivery.</li>
+        </ul><br/>
+        Obligations of the Company<br/>
+        <ul>
+            <li>The Company is not responsible for damage to any equipment or injury or any loss to human at Site.</li>
+            <li>The scope of the Company is limited to supply of RMC and rest responsibility lies with the Client who had placed the order for the supply of RMC.</li>
+            <li>Since concrete is a perishable item, any unutilized concrete, after the truck has left the Company premises would be chargeable to the Client.</li>
+            <li>We shall reserve our right for delay in supply or no supply due to reasons beyond our control such as Strikes</li>
+            <li>If concrete is returned to the supplying plant through no fault of the Company, the Client shall be liable to pay for the returned concrete and also any resulting disposal costs.</li>
+            <li>This contract is made in good faith and is subject to provisions of force majeure.</li>
+            <li>This Contract shall be governed by the laws of India and subject to the jurisdiction of the courts in Mumbai.</li>
+            <li>Any disputes arising between the Company and the customer as to the terms and conditions of the contract will be referred to arbitration for settlement before further steps are taken.</li>
+        </ul><br/>
+        Safety precautions need to be taken to handle concrete<br/>
+        <ul>
+            <li>Wear impermeable gloves (in PVC, neoprene, latex....) doubled with cotton (no leather gloves).</li>
+            <li>Use before and after work, protective creams more particularly for hands and for forearms.</li>
+            <li>Wear impermeable clothes covering the whole body that will be taken off and washed after work.</li>
+            <li> Wear impermeable boots and impermeable knee pad otherwise feet or knees can go to contact with concrete (when making a screed for example).</li>
+            <li>Wear protective glasses.</li>
+            <li>If despite these precautions, there has been direct contact with eyes or skin (fresh concrete under a watch or into a boot for example), rinse thoroughly and for long time (at least 10 to 15 minutes for eyes with cold and clear water).</li>
+            <li> If clothes are impregnated with fresh concrete, immediately take them off and clean the parts of the body which in contact with these clothes.</li> 
+        </ul>
+    </div>
+    </div>
+  <!--  <div class="footer">
+    ABCD Footer
+    <div align="center">
+        <apex:image url="{!$Resource.godrej_construction_logo}" width="460" height="80"/>
+    </div>        
+    </div>   -->
+        
+</apex:page>

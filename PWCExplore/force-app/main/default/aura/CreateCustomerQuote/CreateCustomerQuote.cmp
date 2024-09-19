@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" controller="CreateCustomerQuoteController">
+    <aura:attribute name="message" type="String" default="{!$Label.c.Customer_Quote_Creation}"/>
+    <aura:handler name="init" action="{!c.createQuote}" value="{!this}"/>
+    {!v.message}
+</aura:component>

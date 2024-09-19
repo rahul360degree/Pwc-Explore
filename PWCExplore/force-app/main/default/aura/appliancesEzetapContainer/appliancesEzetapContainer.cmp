@@ -1,0 +1,14 @@
+<!--
+  @Description       : Component Used to display as a Button on Mobile and Desktop
+  @Author            : Varun Rajpoot
+  @last modified on  : 12-20-2023
+  @last modified by  : Varun Rajpoot
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   12-01-2023   Varun Rajpoot   Initial Version
+-->
+<aura:component implements="force:lightningQuickAction,force:hasRecordId">
+  <aura:if isTrue="{!not(empty(v.recordId))}">
+    <c:appliancesEzetapPayment recordId="{! v.recordId}"></c:appliancesEzetapPayment>
+  </aura:if>
+</aura:component>

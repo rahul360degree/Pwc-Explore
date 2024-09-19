@@ -1,0 +1,98 @@
+<!--
+  @Description       : Display Ezetap Payment Detail
+  @Author            : Varun Rajpoot
+  @last modified on  : 12-18-2023
+  @last modified by  : Varun Rajpoot
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   12-11-2023   Varun Rajpoot   Initial Version
+-->
+<template>
+    <template if:true={calloutResponseTrack}>
+        <div class="slds-grid slds-wrap">
+
+            <template if:true={calloutResponseTrack.errorCode}>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                    Error Code:
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                    {calloutResponseTrack.errorCode}
+                </div>
+            </template>
+
+            <template if:true={calloutResponseTrack.message}>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                    Message
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                    {calloutResponseTrack.message}
+                </div>
+            </template>
+
+            <template if:true={calloutResponseTrack.errorMessage}>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                    Error Message
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                    {calloutResponseTrack.errorMessage}
+                </div>
+            </template>
+            
+            <template if:true={calloutResponseTrack.totalAmount}>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                    <b>Total Amount:</b>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                    <b>{calloutResponseTrack.totalAmount}</b>
+                </div>
+            </template>
+
+            <template if:true={calloutResponseTrack.externalRefNumber}>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                    <b>Refrencet Id:</b>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                    <b>{calloutResponseTrack.externalRefNumber}</b>
+                </div>
+            </template>
+
+            <template if:true={calloutResponseTrack.customerMobile}>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                    Customer Mobile
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                    {calloutResponseTrack.customerMobile}
+                </div>
+            </template>
+
+            <template if:true={calloutResponseTrack.amount}>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                    Amount
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                    {calloutResponseTrack.amount}
+                </div>
+            </template>
+
+            <template if:true={calloutResponseTrack.status}>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                    Status
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                    {calloutResponseTrack.status}
+                </div>
+            </template>
+
+            
+            <template if:true={states}>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                    States
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                    {states}
+                </div>
+            </template>
+
+        </div><!--parent div close here-->
+    </template>
+</template>

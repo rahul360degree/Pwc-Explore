@@ -1,0 +1,121 @@
+<template>  
+    <div class="slds-form-element component-container">  
+        <!--<label class="slds-form-element__label" for="combobox-id-2"></label>-->
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">  
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                    
+                    <!-- Input Element.-->
+                    <div class="input_container-search" style="width: max-content;">
+                        <template if:true={isSearching}>                            
+                            <template if:true={IsDisabled}>
+                                <span class="slds-media__body" style="display:inline-block;">
+                                    <lightning-input
+                                        name="enter-search" label={lookupLabel} value={searchKey} type="search"
+                                        placeholder="Enter search term"
+                                        is-loading disabled>
+                                    </lightning-input>
+                                </span>
+                            </template> 
+                            <template if:false={IsDisabled}>
+                                <span class="slds-media__body" style="display:inline-block;">
+                                    <lightning-input
+                                        name="enter-search" label={lookupLabel} value={searchKey} type="search"
+                                        placeholder="Enter search term"
+                                        is-loading disabled>
+                                    </lightning-input>
+                                </span>
+                                <span class="slds-media__body" style="display:inline-block;">
+                                    <lightning-button-icon icon-name="utility:info"
+                                        alternative-text="All selected products" class="slds-m-left_xx-small" title="All selected products" onclick={onClickInfo}>
+                                    </lightning-button-icon>
+                                </span>
+                            </template>                             
+                        </template>
+                        <template if:false={isSearching}>                            
+                            <template if:true={IsDisabled}>
+                                <span class="slds-media__body" style="display:inline-block;">
+                                    <lightning-input
+                                        name="search-input" label={lookupLabel} value={searchKey} type="search" onkeyup={handleKeyChange}
+                                        placeholder="Enter search term" disabled>
+                                    </lightning-input>
+                                </span>
+                            </template>  
+                            <template if:false={IsDisabled}>
+                                <span class="slds-media__body" style="display:inline-block;">
+                                    <lightning-input
+                                        name="search-input" label={lookupLabel} value={searchKey} type="search" onkeyup={handleKeyChange}
+                                        placeholder="Enter search term">
+                                    </lightning-input>
+                                </span>
+                                <span class="slds-media__body" style="display:inline-block;">
+                                    <lightning-button-icon icon-name="utility:info"
+                                        alternative-text="All selected products" class="slds-m-left_xx-small" title="All selected products" onclick={onClickInfo}>
+                                    </lightning-button-icon>
+                                </span>
+                            </template>                            
+                        </template>
+                    </div>
+
+                    <!-- Checkbox Group Element.-->
+                    <template if:true={recordsList}>
+                        <div id="listbox-id-2-venu" data-key="dropdownresult" class="slds-show slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">  
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                <section aria-describedby="dialog-body-id-26" aria-label="Language Options" class="slds-popover slds-popover_full-width" id="popover-unique-id-02" role="dialog">
+                                    <template if:true={message}>  
+                                        {message}
+                                    </template>
+                                    <template if:false={message}>
+                                        <div class="slds-popover__body slds-popover__body_small" id="dialog-body-id-26">
+                                            <fieldset class="slds-form-element">   
+                                                <lightning-checkbox-group name="Checkbox Group"
+                                                    label={lookupLabel}
+                                                    options={options}
+                                                    value={overallSelectedOptions}
+                                                    onchange={handleCheckboxChange}>
+                                                </lightning-checkbox-group>
+                                            </fieldset>
+                                        </div>
+                                    </template>
+                                    <footer class="slds-popover__footer slds-popover__footer_form">
+                                        <lightning-button variant="success" label="Done" title="Done"
+                                                onclick={handleDoneClick} class="slds-m-left_x-small"></lightning-button>                                
+                                    </footer>
+                                </section>
+                            </ul>  
+                        </div>
+                    </template>
+
+                    <template if:true={isInfoOpen}>
+                        <div if:true={isLoaded} class="cstm-spinner">
+                            <lightning-spinner alternative-text="Loading..."></lightning-spinner>
+                        </div>
+                        <div data-id="resultBox" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                            <div id="combobox-unique-id" role="listbox">
+                                <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+                                    <div class="slds-scrollable option-container">
+                                        <!-- code to show list of countrys -->
+                                        <template for:each={selectedProducts} for:item="product">
+                                            <li key={product.key} role="presentation" class="slds-listbox__item listItemMargin">
+                                                <div data-id={product.key} data-name={product.value} role="option">
+                                                    <span data-id={product.key} class="slds-media__body" style="margin-left: 0.3rem;">
+                                                        <span data-id={product.key} class="slds-truncate" style="color:black;">{product.value}</span>
+                                                    </span>
+                                                    <span data-id={product.key} class="slds-media__body" style="float:right;margin-right: 0.3rem;">
+                                                        <lightning-icon data-id={product.key} icon-name="utility:delete" size="xx-small" onclick={removeRow}>
+                                                        </lightning-icon>
+                                                    </span>
+                                                </div> 
+                                            </li>
+                                        </template>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </template>    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,11 @@
+.modal-hidden
+{
+    display: none;
+}
+
+.error-message
+{
+    color: red;
+    margin-left: 5px;
+    font-size: 0.75rem;
+}

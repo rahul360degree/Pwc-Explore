@@ -1,0 +1,141 @@
+<apex:page standardController="Service_Audit_Report__c" extensions="ServiceAuditReportController" renderAs="pdf">
+    <apex:form >
+        <div style="font-family: Arial, sans-serif;">
+            <apex:pageBlock title="">
+               <div style="padding: 20px; text-align: center">
+                    <apex:image url="{!$Resource.godrej_logo}"/>
+                </div>
+                
+                <div style="border-style:solid; margin-bottom: 10px">
+                    <h1 style="font-size: 22px; margin: 5px;">
+                        Service Audit Report : {!Service_Audit_Report__c.Name}
+                    </h1>
+                </div>
+                
+               
+                <div style = "padding: 5px">
+                     <div style="display:flex; flex-direction: column">
+                        <div style = "font-size: 16px">
+                        <span style="font-weight: bold">
+                        Auditor : 
+                        </span>
+                        <span>{!Service_Audit_Report__c.Auditor__r.Name}
+                        </span>
+                       </div>
+                       <div style = "font-size: 16px">
+                        <span style="font-weight: bold">
+                        Auditee : 
+                        </span>
+                        <span>{!Service_Audit_Report__c.Auditee__r.Name}
+                        </span>
+                        </div>
+                        <div style = "font-size: 16px">
+                        <span style="font-weight: bold">
+                        Audit Type :
+                        </span>
+                        <span>{!Service_Audit_Report__c.Audit_Type__c}
+                        </span>
+                        </div>
+                        <div style = "font-size: 16px">
+                        <span style="font-weight: bold">
+                        Audit Date :
+                        </span>
+                        <span>{!Service_Audit_Report__c.Audit_Date__c}
+                        </span>
+                        </div>
+                      </div>
+                </div>
+                <apex:variable var="areaCount" value="{!1}"/>
+                <apex:repeat value="{!observationAreas}" var="wrapper">
+                    <div style="font-size: 18px; font-weight: bold; padding: 5px; margin-bottom: 10px; ">
+                        <hr/>Observation Title : {!wrapper.area.Name} :: {!wrapper.area.Status__c}<hr/>
+                    </div>
+                    <apex:variable var="questionCount" value="{!1}"/>
+                    <div style="font-family: Arial, sans-serif;font-size: 16px; background-color:#005580; color:white; padding: 5px">
+                        <b>Observation Details</b>
+                    </div>
+                    <apex:repeat value="{!wrapper.lineItems}" var="item">
+                        <div style="margin-bottom: 10px; color:{!IF(item.Percentage_Achieved__c > 70, '#009900', IF(item.Percentage_Achieved__c >= 60 && item.Percentage_Achieved__c <= 70, '#ffaa00', '#cc0000'))}">
+                            <p style="font-family: Arial, sans-serif;"><b>{!areaCount}.{!questionCount} {!item.Observation_Question_LU__r.Question_Text__c}</b> <u><i>(Scored - {!item.Percentage_Achieved__c}%)</i></u></p>
+                        </div>
+                        <p style="font-family: Arial, sans-serif;">{!item.Observation_Details__c}</p>
+                        <apex:variable var="questionCount" value="{!questionCount + 1}"/>
+                    </apex:repeat>
+                    <table style = "width : 100%; border-collapse : collapse">
+                        <tr style = "page-break-inside: avoid">
+                            <th style = "border : 1px solid black; padding : 5px; text-align:center">Possible Root Cause</th>
+                            <th style = "border : 1px solid black; padding : 5px; text-align:center">Implications/Risk</th>
+                            <th style = "border : 1px solid black; padding : 5px; text-align:center">Financial Implication</th>
+                            <th style = "border : 1px solid black; padding : 5px; text-align:center">Observation Category</th>
+                        </tr>
+                        <tr style = "page-break-inside: avoid">
+                            <td style = "border : 1px solid black; padding : 5px; text-align:center">--</td>
+                            <td style = "border : 1px solid black; padding : 5px; text-align:center">--</td>
+                            <td style = "border : 1px solid black; padding : 5px; text-align:center">--</td>
+                            <td style = "border : 1px solid black; padding : 5px; text-align:center">--</td>
+                        </tr>
+                    </table><br/>
+                    <apex:variable var="questionCount" value="{!1}"/>
+                    <div style="font-family: Arial, sans-serif;font-size: 16px; background-color:#732626; color:white; padding: 5px">
+                        <b>Recommendations</b>
+                    </div>
+                    <apex:repeat value="{!wrapper.lineItems}" var="item">
+                        <div style="margin-bottom: 10px;color:{!IF(item.Percentage_Achieved__c > 70, '#009900', IF(item.Percentage_Achieved__c >= 60 && item.Percentage_Achieved__c <= 70, '#ffaa00', '#cc0000'))}">
+                            <p style="font-family: Arial, sans-serif;"><b>{!areaCount}.{!questionCount} {!item.Observation_Question_LU__r.Question_Text__c}</b> <u><i>(Scored - {!item.Percentage_Achieved__c}%)</i></u></p>
+                        </div>
+                            <p style="font-family:Arial, sans-serif;">{!item.Recommendation__c}</p>
+                            <apex:variable var="questionCount" value="{!questionCount + 1}"/>
+                    </apex:repeat>
+                    <hr/><p style = "font-size : 22px;text-align:center">
+                    <i>Response</i>
+                    </p><hr/>
+                    <p>
+                        <b>Corrective Actions:</b>
+                    </p>
+                    <apex:repeat value="{!wrapper.lineItems}" var="item">
+                        {!item.Corrective_Actions__c}
+                    </apex:repeat>
+                    <p>
+                        <b>Preventive Actions:</b>
+                    </p>
+                    <apex:repeat value="{!wrapper.lineItems}" var="item">
+                        {!item.Preventive_Actions__c}
+                    </apex:repeat>
+                    <apex:variable var="areaCount" value="{!areaCount + 1}" />
+                    <br/><hr/>
+                </apex:repeat>
+                <p style = "font-size : 22px;text-align:center">
+                    <i>Detailed Audit</i>
+                </p>
+                <div style = "page-break-inside: avoid">
+                    <apex:repeat value="{!observationAreas}" var="wrapper">
+                    <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif;">
+                        <caption style="font-size: 18px; font-weight: bold; padding: 5px; text-align : left"><u style = "padding : 2px">{!wrapper.area.Name}</u></caption>
+                        <thead>
+                            <tr style="background-color: #f2f2f2;page-break-inside: avoid;">
+            <th style="border: 1px solid black; padding: 8px; text-align: center;">Assessment Area</th>
+            <th style="border: 1px solid black; padding: 8px; text-align: center;">Maximum Score</th>
+            <th style="border: 1px solid black; padding: 8px; text-align: center;">Achieved Score</th>
+            <th style="border: 1px solid black; padding: 8px; text-align: center;">Percentage Achieved</th>
+        </tr>
+    </thead>
+    <tbody>
+        <apex:variable var="index" value="{!0}" />
+        <apex:repeat value="{!wrapper.lineItems}" var="item">
+            <tr style="background-color: {!IF(MOD(index, 2) == 0, '#ffffff', '#f2f2f2')};page-break-inside: avoid;">
+                <td style="border: 1px solid black; padding: 8px; text-align: center;">{!item.Observation_Question_LU__r.Question_Text__c}</td>
+                <td style="border: 1px solid black; padding: 8px; text-align: center;">{!item.Maximum_Score__c}</td>
+                <td style="border: 1px solid black; padding: 8px; text-align: center;">{!item.Achieved_Score__c}</td>
+                <td style="border: 1px solid black; padding: 8px; text-align: center;">{!item.Percentage_Achieved__c}%</td>
+            </tr>
+            <apex:variable var="index" value="{!index + 1}" />
+        </apex:repeat>
+    </tbody>
+                        </table><br/>
+                </apex:repeat>
+                </div>
+                
+            </apex:pageBlock>
+        </div>
+    </apex:form>
+</apex:page>

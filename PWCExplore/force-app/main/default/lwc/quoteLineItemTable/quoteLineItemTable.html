@@ -1,0 +1,40 @@
+<template>
+    <table class="slds-table slds-table_bordered" style="table-layout:fixed">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <template for:each={lineItemColumns} for:item="column"> 
+                    <th key={column.label} class="" scope="col">
+                        <div class="slds-truncate" title={column.label}>{column.label}</div>
+                    </th>
+                </template>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Asset">Asset</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Plans">Plans</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template if:false={isLoading}>
+                <template for:each={quoteLineItemsToShow} for:item="quoteLineItemWrapper">
+                    <c-quote-line-item-row key={quoteLineItemWrapper.lineItem.Id} 
+                        line-item-wrapper={quoteLineItemWrapper} columns-api-names={lineItemColumns}  
+                        onrowupdated={handleRowUpdated} onrefreshparent={handleParentRefresh}>
+                    </c-quote-line-item-row>
+                </template>
+            </template>
+        </tbody>
+    </table>
+    <div class="slds-grid" style="background:white">
+        <div class="slds-col">
+            <lightning-button onclick={handlePrevious} label="Previous" disabled={isPreviousButtonDisabled}></lightning-button>
+        </div>
+        <div class="slds-col">
+            Page : {currentPageNum} of {totalPages}
+        </div>
+        <div class="slds-col">
+            <lightning-button onclick={handleNext} label="Next" disabled={isNexButtonDisabled}></lightning-button>
+        </div>
+    </div>
+</template>
